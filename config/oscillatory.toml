@@ -1,0 +1,38 @@
+[frequency_bands]
+# Biological frequency hierarchy (Hz)
+cellular = {min = 0.1, max = 100.0}
+cardiac = {min = 0.01, max = 10.0}
+respiratory = {min = 0.001, max = 1.0}
+autonomic = {min = 0.0001, max = 0.1}
+circadian = {min = 0.00001, max = 0.01}
+
+[coupling_analysis]
+# Cross-frequency coupling parameters
+enable_cross_frequency = true
+phase_coupling_threshold = 0.5
+amplitude_coupling_threshold = 0.3
+coherence_threshold = 0.6
+
+[decomposition]
+# Oscillatory decomposition parameters
+window_size = 2048
+overlap_ratio = 0.5
+filter_order = 4
+detrend_method = "linear"
+
+[sensors]
+# Sensor-specific oscillatory parameters
+[sensors.ppg]
+sampling_rate = 100.0
+noise_floor = 0.01
+dynamic_range = 20.0
+
+[sensors.accelerometer]
+sampling_rate = 50.0
+sensitivity = 0.001
+calibration_offset = [0.0, 0.0, 9.81]
+
+[sensors.temperature]
+sampling_rate = 1.0
+precision = 0.1
+thermal_time_constant = 30.0

@@ -1,0 +1,1 @@
+# Chronotropic Response - HR response to exercise stress

@@ -1,4 +1,6 @@
-# S-Entropy Coordinate Navigation for Physiological Sensor Analysis (BRUT)
+<div align="center">
+  <img src="assets/img/keith-nobg.png" alt="Brut Logo" width="300"/>
+</div>
 
 ## Abstract
 

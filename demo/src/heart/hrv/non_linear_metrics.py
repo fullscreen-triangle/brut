@@ -242,10 +242,10 @@ def main():
     print("HRV Non-linear Metrics Analysis")
     
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
+        with open('../../public/activity_ppg_records.json', 'r') as f:
             sleep_data = json.load(f)
     except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
+        with open('../../public/activity_ppg_records.json', 'r') as f:
             sleep_data = json.load(f)
     
     results = []

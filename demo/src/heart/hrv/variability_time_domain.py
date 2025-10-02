@@ -19,6 +19,7 @@ from typing import Dict, List, Any, Optional
 import os
 from datetime import datetime
 from scipy import stats
+from pathlib import Path
 
 def rmssd(rr_intervals: List[float]) -> float:
     """Calculate root mean square of successive RR interval differences"""
@@ -273,43 +274,99 @@ def main():
     print("HRV Time Domain Metrics Analysis")
     print("=" * 50)
     
-    # Load sleep data with heart rate information
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent.parent  # From src/heart/hrv/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "hrv_time_domain"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"Error loading sleep data: {e}")
     
-    # Analyze first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Analyzing record {i+1}/10...")
-        result = analyze_hrv_record(record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process activity data if available (look for HR data)
+    if activity_data:
+        print("Processing activity records for HRV metrics...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            result = analyze_hrv_record(record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    # Process sleep data for HRV metrics
+    if sleep_data:
+        print("Processing sleep records for HRV metrics...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Analyzing sleep record {i+1}/10...")
+            result = analyze_hrv_record(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    if not all_results:
+        print("No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/hrv_time_domain'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/hrv_time_domain_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/hrv_time_domain_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/hrv_time_domain_results.json")
+    print(f"Results saved to {output_directory}/hrv_time_domain_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
     # Print summary statistics
     print("\nHRV Time Domain Metrics Summary:")
     print("-" * 40)
     
-    rmssd_vals = [r['rmssd'] for r in results if r['rmssd'] > 0]
-    sdnn_vals = [r['sdnn'] for r in results if r['sdnn'] > 0]
-    pnn50_vals = [r['pnn50'] for r in results if r['pnn50'] > 0]
+    # Separate by data source
+    activity_results = [r for r in all_results if r.get('data_source') == 'activity']
+    sleep_results = [r for r in all_results if r.get('data_source') == 'sleep']
+    
+    print(f"Activity records processed: {len(activity_results)}")
+    print(f"Sleep records processed: {len(sleep_results)}")
+    
+    rmssd_vals = [r['rmssd'] for r in all_results if r['rmssd'] > 0]
+    sdnn_vals = [r['sdnn'] for r in all_results if r['sdnn'] > 0]
+    pnn50_vals = [r['pnn50'] for r in all_results if r['pnn50'] > 0]
     
     if rmssd_vals:
         print(f"RMSSD - Mean: {np.mean(rmssd_vals):.1f}ms, Range: {np.min(rmssd_vals):.1f}-{np.max(rmssd_vals):.1f}ms")

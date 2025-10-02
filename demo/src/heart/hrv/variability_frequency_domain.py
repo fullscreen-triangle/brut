@@ -264,7 +264,7 @@ def main():
     
     # Load sleep data with heart rate information
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
+        with open('../../public/sleep_ppg_records.json', 'r') as f:
             sleep_data = json.load(f)
     except:
         with open('../../public/sleep_ppg_records.json', 'r') as f:

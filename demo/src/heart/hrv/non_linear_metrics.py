@@ -17,6 +17,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from typing import Dict, List, Any
 import os
+from pathlib import Path
 from scipy import stats
 
 def sample_entropy(rr_intervals: List[float], m: int = 2, r: float = 0.2) -> float:
@@ -241,26 +242,86 @@ def main():
     """Main function to analyze HRV non-linear metrics"""
     print("HRV Non-linear Metrics Analysis")
     
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent.parent  # From src/heart/hrv/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "hrv_nonlinear"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../../public/activity_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/activity_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    results = []
-    for i, record in enumerate(sleep_data[:8]):  # Reduced due to computational complexity
-        print(f"Processing record {i+1}/8...")
-        result = analyze_hrv_nonlinear_metrics(record)
-        results.append(result)
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    output_dir = '../results/hrv_nonlinear'
-    os.makedirs(output_dir, exist_ok=True)
+    # Combine and process data
+    all_results = []
     
-    with open(f'{output_dir}/hrv_nonlinear_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    # Process activity data (primary source for HRV non-linear)
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:8]):  # Reduced due to computational complexity
+            print(f"Analyzing activity record {i+1}/8...")
+            result = analyze_hrv_nonlinear_metrics(record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
     
-    print("Analysis complete!")
+    # Process sleep data for context
+    if sleep_data:
+        print("Processing sleep records for context...")
+        for i, record in enumerate(sleep_data[:8]):
+            print(f"Analyzing sleep record {i+1}/8...")
+            result = analyze_hrv_nonlinear_metrics(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
+    
+    # Save results
+    os.makedirs(output_directory, exist_ok=True)
+    
+    with open(f'{output_directory}/hrv_nonlinear_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
+    
+    print(f"✓ Results saved to {output_directory}/hrv_nonlinear_results.json")
+    
+    # Create visualizations
+    print("Creating visualizations...")
+
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

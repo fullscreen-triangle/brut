@@ -17,6 +17,7 @@ import seaborn as sns
 from typing import Dict, List, Any, Optional
 import os
 from datetime import datetime
+from pathlib import Path
 
 def total_sleep_time(sleep_record: Dict[str, Any]) -> float:
     """Calculate actual sleep duration (TST)"""
@@ -256,58 +257,92 @@ def main():
     print("Sleep Timing and Efficiency Metrics Analysis")
     print("=" * 50)
     
-    # Load sleep data
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/sleep/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "sleep_timing_efficiency"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    # Analyze first 15 records for better statistics
-    results = []
-    for i, record in enumerate(sleep_data[:15]):
-        print(f"Analyzing record {i+1}/15...")
-        result = analyze_sleep_timing_efficiency(record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for sleep timing metrics)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:15]):  # Analyze 15 records for better statistics
+            print(f"Analyzing sleep record {i+1}/15...")
+            result = analyze_sleep_timing_efficiency(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    # Process activity data if available (limited sleep timing info)
+    if activity_data:
+        print("Processing activity records for sleep context...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            # Create mock sleep timing data from activity record
+            sleep_record = {
+                'period_id': record.get('period_id', i + len(sleep_data)),
+                'total_in_hrs': 8.0,  # Default sleep duration
+                'awake_in_hrs': 1.0,  # Default wake time
+                'bedtime_start_dt_adjusted': record.get('timestamp', 0),
+                'wakeup_end_dt_adjusted': record.get('timestamp', 0)
+            }
+            result = analyze_sleep_timing_efficiency(sleep_record)
+            result['data_source'] = 'activity_derived'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/sleep_timing_efficiency'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/sleep_timing_efficiency_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/sleep_timing_efficiency_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/sleep_timing_efficiency_results.json")
+    print(f"✓ Results saved to {output_directory}/sleep_timing_efficiency_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
-    
-    # Print summary statistics
-    print("\nSleep Timing and Efficiency Summary:")
-    print("-" * 40)
-    
-    efficiencies = [r['sleep_efficiency_pct'] for r in results]
-    onset_latencies = [r['sleep_onset_latency_min'] for r in results]
-    awakenings = [r['number_of_awakenings'] for r in results]
-    fragmentation = [r['sleep_fragmentation_index'] for r in results]
-    
-    print(f"Sleep Efficiency - Mean: {np.mean(efficiencies):.1f}%, Range: {np.min(efficiencies):.1f}-{np.max(efficiencies):.1f}%")
-    print(f"Sleep Onset Latency - Mean: {np.mean(onset_latencies):.1f}min, Range: {np.min(onset_latencies):.1f}-{np.max(onset_latencies):.1f}min")
-    print(f"Number of Awakenings - Mean: {np.mean(awakenings):.1f}, Range: {np.min(awakenings)}-{np.max(awakenings)}")
-    print(f"Fragmentation Index - Mean: {np.mean(fragmentation):.1f} trans/hr")
-    
-    # Efficiency categories
-    categories = [r['efficiency_category'] for r in results]
-    category_counts = {cat: categories.count(cat) for cat in set(categories)}
-    print(f"\nEfficiency Categories:")
-    for cat, count in category_counts.items():
-        print(f"  {cat}: {count} records ({count/len(results)*100:.1f}%)")
-    
-    print("\nAnalysis complete!")
+    create_visualizations(all_results, output_directory)
 
 if __name__ == "__main__":
     main()

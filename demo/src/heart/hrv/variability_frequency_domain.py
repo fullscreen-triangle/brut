@@ -18,6 +18,7 @@ from typing import Dict, List, Any, Optional, Tuple
 import os
 from datetime import datetime
 from scipy import signal
+from pathlib import Path
 from scipy.fft import fft, fftfreq
 
 def vlf_power(rr_intervals: List[float], sampling_rate: float = 4.0) -> float:
@@ -262,59 +263,92 @@ def main():
     print("HRV Frequency Domain Metrics Analysis")
     print("=" * 50)
     
-    # Load sleep data with heart rate information
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent.parent  # From src/heart/hrv/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "hrv_frequency_domain"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    # Analyze first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Analyzing record {i+1}/10...")
-        result = analyze_hrv_frequency_domain(record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for HRV frequency analysis during rest)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Analyzing sleep record {i+1}/10...")
+            result = analyze_hrv_frequency_domain(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    # Process activity data for additional HRV context
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            result = analyze_hrv_frequency_domain(record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/hrv_frequency_domain'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/hrv_frequency_domain_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/hrv_frequency_domain_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/hrv_frequency_domain_results.json")
+    print(f"✓ Results saved to {output_directory}/hrv_frequency_domain_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
-    # Print summary statistics
-    print("\nHRV Frequency Domain Summary:")
-    print("-" * 40)
+    # Show data source breakdown
+    activity_count = sum(1 for r in all_results if r.get('data_source') == 'activity')
+    sleep_count = sum(1 for r in all_results if r.get('data_source') == 'sleep')
+    print(f"Data sources: {activity_count} activity records, {sleep_count} sleep records")
     
-    lf_vals = [r['lf_power_ms2'] for r in results if r['lf_power_ms2'] > 0]
-    hf_vals = [r['hf_power_ms2'] for r in results if r['hf_power_ms2'] > 0]
-    lf_hf_vals = [r['lf_hf_ratio'] for r in results if r['lf_hf_ratio'] > 0]
-    
-    if lf_vals:
-        print(f"LF Power - Mean: {np.mean(lf_vals):.2f} ms², Range: {np.min(lf_vals):.2f}-{np.max(lf_vals):.2f} ms²")
-    if hf_vals:
-        print(f"HF Power - Mean: {np.mean(hf_vals):.2f} ms², Range: {np.min(hf_vals):.2f}-{np.max(hf_vals):.2f} ms²")
-    if lf_hf_vals:
-        print(f"LF/HF Ratio - Mean: {np.mean(lf_hf_vals):.2f}, Range: {np.min(lf_hf_vals):.2f}-{np.max(lf_hf_vals):.2f}")
-    
-    # Autonomic balance distribution
-    balance_categories = [r['autonomic_balance'] for r in results]
-    balance_counts = {cat: balance_categories.count(cat) for cat in set(balance_categories)}
-    print(f"\nAutonomic Balance Distribution:")
-    for cat, count in balance_counts.items():
-        print(f"  {cat}: {count} records ({count/len(results)*100:.1f}%)")
-    
-    print("\nAnalysis complete!")
+    print("✅ Analysis complete!")
+
 
 if __name__ == "__main__":
     main()

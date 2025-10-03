@@ -14,6 +14,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from typing import Dict, List, Any
 import os
+from pathlib import Path
 
 def time_standing(activity_data: Dict[str, Any]) -> float:
     """Calculate duration in upright posture"""
@@ -129,33 +130,96 @@ def main():
     """Main function to analyze postural metrics"""
     print("Postural Analysis")
     
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/actigraphy/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "postural_analysis"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    results = []
-    for i, sleep_record in enumerate(sleep_data[:10]):
-        # Create mock activity data
-        activity_record = {
-            'period_id': sleep_record.get('period_id', i),
-            'active_minutes': np.random.uniform(60, 180),
-            'sedentary_minutes': np.random.uniform(400, 900),
-            'steps': np.random.randint(3000, 12000)
-        }
-        
-        result = analyze_postural_analysis(activity_record, sleep_record)
-        results.append(result)
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    output_dir = '../results/postural_analysis'
-    os.makedirs(output_dir, exist_ok=True)
+    # Combine and process data
+    all_results = []
     
-    with open(f'{output_dir}/postural_analysis_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    # Process activity data (primary source for postural analysis)
+    if activity_data:
+        print("Processing activity records...")
+        for i, activity_record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            # Find corresponding sleep record if available
+            sleep_record = sleep_data[i] if i < len(sleep_data) else {}
+            result = analyze_postural_analysis(activity_record, sleep_record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
     
-    print("Analysis complete!")
+    # Process sleep data for additional context
+    if sleep_data and len(all_results) < 10:
+        print("Processing sleep records for additional postural context...")
+        remaining_slots = 10 - len(all_results)
+        for i, sleep_record in enumerate(sleep_data[:remaining_slots]):
+            print(f"Analyzing sleep record {i+1}/{remaining_slots}...")
+            # Create basic activity context from sleep data
+            activity_record = {
+                'period_id': sleep_record.get('period_id', i + len(activity_data)),
+                'active_minutes': 60,  # Basic estimate
+                'sedentary_minutes': 480,  # Basic estimate
+                'steps': 8000  # Basic estimate
+            }
+            result = analyze_postural_analysis(activity_record, sleep_record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
+    
+    # Save results
+    os.makedirs(output_directory, exist_ok=True)
+    
+    with open(f'{output_directory}/postural_analysis_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
+    
+    print(f"✓ Results saved to {output_directory}/postural_analysis_results.json")
+    
+    # Create visualizations
+    print("Creating visualizations...")
+
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

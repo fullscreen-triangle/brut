@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List, Tuple, Any, Optional
 import os
+from pathlib import Path
 from datetime import datetime
 
 class DirectionalMapper:
@@ -377,74 +378,164 @@ def main():
     print("Directional Coordinate Mapping Analysis")
     print("=" * 50)
     
-    # Load sleep data
-    with open('../public/sleep_ppg_records.json', 'r') as f:
-        sleep_data = json.load(f)
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/linguistic/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "directional_mapping"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
+    try:
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
+    
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
     # Initialize directional mapper
     mapper = DirectionalMapper()
     
-    # Process first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Processing record {i+1}/10...")
-        
-        # Extract sequences
-        hr_sequence = record.get('hr_5min', [])
-        rmssd_sequence = record.get('rmssd_5min', [])
-        hypnogram = record.get('hypnogram_5min', '')
-        
-        # Map to directional coordinates
-        hr_directional = mapper.map_heart_rate_sequence(hr_sequence)
-        hrv_directional = mapper.map_hrv_sequence(rmssd_sequence)
-        sleep_directional = mapper.map_sleep_stages(hypnogram)
-        
-        # Analyze patterns
-        hr_analysis = mapper.analyze_directional_patterns(hr_directional)
-        hrv_analysis = mapper.analyze_directional_patterns(hrv_directional)
-        sleep_analysis = mapper.analyze_directional_patterns(sleep_directional)
-        
-        result = {
-            'period_id': record.get('period_id', i),
-            'timestamp': record.get('bedtime_start_dt_adjusted', 0),
-            'hr_directional_sequence': hr_directional[:100],  # First 100 chars for readability
-            'hrv_directional_sequence': hrv_directional[:100],
-            'sleep_directional_sequence': sleep_directional[:100],
-            'original_hypnogram': hypnogram[:100],
-            'directional_analysis': {
-                'hr_analysis': hr_analysis,
-                'hrv_analysis': hrv_analysis,
-                'sleep_analysis': sleep_analysis
-            },
-            'sequence_lengths': {
-                'hr': len(hr_directional),
-                'hrv': len(hrv_directional),
-                'sleep': len(sleep_directional)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for directional mapping)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Processing sleep record {i+1}/10...")
+            
+            # Extract sequences
+            hr_sequence = record.get('hr_5min', [])
+            rmssd_sequence = record.get('rmssd_5min', [])
+            hypnogram = record.get('hypnogram_5min', '')
+            
+            # Map to directional coordinates
+            hr_directional = mapper.map_heart_rate_sequence(hr_sequence)
+            hrv_directional = mapper.map_hrv_sequence(rmssd_sequence)
+            sleep_directional = mapper.map_sleep_stages(hypnogram)
+            
+            # Analyze patterns
+            hr_analysis = mapper.analyze_directional_patterns(hr_directional)
+            hrv_analysis = mapper.analyze_directional_patterns(hrv_directional)
+            sleep_analysis = mapper.analyze_directional_patterns(sleep_directional)
+            
+            result = {
+                'period_id': record.get('period_id', i),
+                'timestamp': record.get('bedtime_start_dt_adjusted', 0),
+                'hr_directional_sequence': hr_directional[:100],  # First 100 chars for readability
+                'hrv_directional_sequence': hrv_directional[:100],
+                'sleep_directional_sequence': sleep_directional[:100],
+                'original_hypnogram': hypnogram[:100],
+                'directional_analysis': {
+                    'hr_analysis': hr_analysis,
+                    'hrv_analysis': hrv_analysis,
+                    'sleep_analysis': sleep_analysis
+                },
+                'sequence_lengths': {
+                    'hr': len(hr_directional),
+                    'hrv': len(hrv_directional),
+                    'sleep': len(sleep_directional)
+                },
+                'data_source': 'sleep'
             }
-        }
-        
-        results.append(result)
+            
+            all_results.append(result)
+    
+    # Process activity data for additional context
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Processing activity record {i+1}/10...")
+            
+            # Extract sequences (activity may have different structure)
+            hr_sequence = record.get('hr_5min', [])
+            steps_data = record.get('steps', 0)
+            
+            # Create mock sequences for activity data
+            mock_rmssd = [30, 35, 40, 32, 38] if not hr_sequence else [x * 0.5 for x in hr_sequence[:5]]
+            mock_hypnogram = 'AAARRRLLLDDDRRRAAALLLDDD'  # Mock activity states
+            
+            # Map to directional coordinates
+            hr_directional = mapper.map_heart_rate_sequence(hr_sequence)
+            activity_directional = mapper.map_heart_rate_sequence(mock_rmssd)  # Use HR mapping for activity
+            activity_sleep_directional = mapper.map_sleep_stages(mock_hypnogram)
+            
+            # Analyze patterns
+            hr_analysis = mapper.analyze_directional_patterns(hr_directional)
+            activity_analysis = mapper.analyze_directional_patterns(activity_directional)
+            activity_sleep_analysis = mapper.analyze_directional_patterns(activity_sleep_directional)
+            
+            result = {
+                'period_id': record.get('period_id', i + len(sleep_data)),
+                'timestamp': record.get('timestamp', 0),
+                'hr_directional_sequence': hr_directional[:100],
+                'hrv_directional_sequence': activity_directional[:100],
+                'sleep_directional_sequence': activity_sleep_directional[:100],
+                'original_hypnogram': mock_hypnogram[:100],
+                'directional_analysis': {
+                    'hr_analysis': hr_analysis,
+                    'hrv_analysis': activity_analysis,
+                    'sleep_analysis': activity_sleep_analysis
+                },
+                'sequence_lengths': {
+                    'hr': len(hr_directional),
+                    'hrv': len(activity_directional),
+                    'sleep': len(activity_sleep_directional)
+                },
+                'data_source': 'activity'
+            }
+            
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/directional_mapping'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/directional_mapping_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/directional_mapping_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/directional_mapping_results.json")
+    print(f"✓ Results saved to {output_directory}/directional_mapping_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
     # Print sample directional sequences
     print("\nSample Directional Sequences:")
     print("-" * 40)
-    for i, result in enumerate(results[:3]):
-        print(f"\nRecord {i+1} (Period {result['period_id']}):")
+    for i, result in enumerate(all_results[:3]):
+        print(f"\nRecord {i+1} (Period {result['period_id']}, Source: {result['data_source']}):")
         print(f"  Original Hypnogram: {result['original_hypnogram'][:50]}...")
         print(f"  Sleep Directional:  {result['sleep_directional_sequence'][:50]}...")
         print(f"  HR Directional:     {result['hr_directional_sequence'][:50]}...")
@@ -454,7 +545,12 @@ def main():
         hr_interp = result['directional_analysis']['hr_analysis'].get('interpretation', '')
         print(f"  HR Interpretation: {hr_interp}")
     
-    print("\nAnalysis complete!")
+    # Show data source breakdown
+    activity_count = sum(1 for r in all_results if r.get('data_source') == 'activity')
+    sleep_count = sum(1 for r in all_results if r.get('data_source') == 'sleep')
+    print(f"\nData sources: {activity_count} activity records, {sleep_count} sleep records")
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

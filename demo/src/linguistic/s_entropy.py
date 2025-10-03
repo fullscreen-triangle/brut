@@ -15,6 +15,7 @@ from scipy import signal
 from scipy.fft import fft, fftfreq
 from typing import Dict, List, Tuple, Any
 import os
+from pathlib import Path
 from datetime import datetime
 
 class SEntropyCoordinates:
@@ -296,37 +297,109 @@ def main():
     print("S-Entropy Coordinate Navigation Analysis")
     print("=" * 50)
     
-    # Load sleep data
-    with open('../public/sleep_ppg_records.json', 'r') as f:
-        sleep_data = json.load(f)
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/linguistic/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "s_entropy"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
+    try:
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
+    
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
     # Initialize S-entropy processor
     processor = SEntropyProcessor()
     
-    # Process first 10 sleep records for demo
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Processing record {i+1}/10...")
-        result = processor.process_sleep_record(record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for S-entropy analysis)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Processing sleep record {i+1}/10...")
+            result = processor.process_sleep_record(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    # Process activity data for additional context
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Processing activity record {i+1}/10...")
+            # Convert activity record to sleep-like format for processing
+            mock_sleep_record = {
+                'period_id': record.get('period_id', i + len(sleep_data)),
+                'bedtime_start_dt_adjusted': record.get('timestamp', 0),
+                'hr_5min': record.get('hr_5min', [70, 75, 72, 68, 71]),  # Use activity HR or mock
+                'hypnogram_5min': 'AAARRRLLLAAARRRLLL',  # Mock activity states
+                'rmssd_5min': [30, 35, 32, 38, 33],  # Mock HRV data
+                'efficiency': 85,  # Mock efficiency for activity
+                'total_in_hrs': 8,
+                'deep_in_hrs': 2,
+                'rem_in_hrs': 1.5,
+                'awake_in_hrs': 0.5,
+                'score': 80,
+                'duration_in_hrs': 8,
+                'restless': 15,
+                'temperature_deviation': 0.2,
+                'breath_average': 16
+            }
+            result = processor.process_sleep_record(mock_sleep_record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/s_entropy'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/s_entropy_analysis_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/s_entropy_analysis_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/s_entropy_analysis_results.json")
+    print(f"✓ Results saved to {output_directory}/s_entropy_analysis_results.json")
     
     # Create basic visualization
     coords_data = []
-    for result in results:
+    for result in all_results:
         coords = result['s_entropy_coordinates']
         coords['period_id'] = result['period_id']
         coords['efficiency'] = result['sleep_metrics']['efficiency']
+        coords['data_source'] = result['data_source']
         coords_data.append(coords)
     
     coords_df = pd.DataFrame(coords_data)
@@ -363,11 +436,17 @@ def main():
     axes[1,1].set_title('S-Entropy Coordinate Correlations')
     
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/s_entropy_coordinates.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'{output_directory}/s_entropy_coordinates.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"Visualization saved to {output_dir}/s_entropy_coordinates.png")
-    print("Analysis complete!")
+    print(f"✓ Visualization saved to {output_directory}/s_entropy_coordinates.png")
+    
+    # Show data source breakdown
+    activity_count = sum(1 for r in all_results if r.get('data_source') == 'activity')
+    sleep_count = sum(1 for r in all_results if r.get('data_source') == 'sleep')
+    print(f"Data sources: {activity_count} activity records, {sleep_count} sleep records")
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

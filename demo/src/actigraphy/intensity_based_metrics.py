@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List, Any, Optional, Tuple
 import os
+from pathlib import Path
 
 def light_activity_time(activity_data: Dict[str, Any]) -> float:
     """Calculate low-intensity movement duration (< 3.0 METs)"""
@@ -193,61 +194,108 @@ def main():
     print("Intensity-Based Activity Metrics Analysis")
     print("=" * 50)
     
-    # Load activity data
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/actigraphy/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "intensity_based_metrics"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} records for intensity analysis")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    # Analyze first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Analyzing record {i+1}/10...")
-        
-        # Create mock activity data from sleep record
-        activity_record = {
-            'period_id': record.get('period_id', i),
-            'timestamp': record.get('bedtime_start_dt_adjusted', 0),
-            'steps': np.random.randint(2000, 15000),
-            'active_minutes': np.random.uniform(15, 120),
-            'sedentary_minutes': np.random.uniform(300, 900)
-        }
-        
-        result = analyze_intensity_based_metrics(activity_record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process activity data (primary source for intensity analysis)
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            result = analyze_intensity_based_activity(record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    # Process sleep data for context
+    if sleep_data:
+        print("Processing sleep records for context...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Analyzing sleep record {i+1}/10...")
+            
+            # Create mock activity data from sleep record
+            activity_record = {
+                'period_id': record.get('period_id', i + len(activity_data)),
+                'timestamp': record.get('bedtime_start_dt_adjusted', 0),
+                'steps': np.random.randint(5000, 15000),  # Mock step data
+                'distance': np.random.uniform(3.0, 12.0),  # Mock distance in km
+                'active_minutes': record.get('total_in_hrs', 0) * 60 * 0.3,  # Estimate from sleep data
+                'sedentary_minutes': record.get('awake_in_hrs', 0) * 60,  # Use wake time
+                'activity_counts': [np.random.randint(0, 100) for _ in range(20)]  # Mock activity counts
+            }
+            
+            result = analyze_intensity_based_activity(activity_record)
+            result['data_source'] = 'sleep_derived'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/intensity_based_activity'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/intensity_based_activity_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/intensity_based_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/intensity_based_activity_results.json")
+    print(f"✓ Results saved to {output_directory}/intensity_based_results.json")
     
     # Create visualizations
-    create_visualizations(results, output_dir)
+    print("Creating visualizations...")
+    create_visualizations(all_results, output_directory)
+    
+    print("✅ Analysis complete!")
+
+
+if __name__ == "__main__":
+    main()
     
     # Print summary statistics
     print("\nIntensity-Based Activity Summary:")
     print("-" * 40)
     
-    mvpa_vals = [r['mvpa_minutes'] for r in results]
-    met_vals = [r['met_minutes'] for r in results]
-    
-    print(f"MVPA - Mean: {np.mean(mvpa_vals):.0f} min, Range: {np.min(mvpa_vals):.0f}-{np.max(mvpa_vals):.0f} min")
-    print(f"MET-minutes - Mean: {np.mean(met_vals):.0f}, Range: {np.min(met_vals):.0f}-{np.max(met_vals):.0f}")
-    
-    # Activity level distribution
-    activity_levels = [r['activity_level'] for r in results]
-    level_counts = {level: activity_levels.count(level) for level in set(activity_levels)}
-    print(f"\nActivity Level Distribution:")
-    for level, count in level_counts.items():
-        print(f"  {level}: {count} records ({count/len(results)*100:.1f}%)")
+
     
     print("\nAnalysis complete!")
 

@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List, Tuple, Any, Optional
 import os
+from pathlib import Path
 from datetime import datetime
 from collections import Counter
 import zlib
@@ -456,76 +457,157 @@ def main():
     print("Ambiguous Compression Analysis")
     print("=" * 50)
     
-    # Load sleep data
-    with open('../public/sleep_ppg_records.json', 'r') as f:
-        sleep_data = json.load(f)
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/linguistic/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "ambiguous_compression"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
+    try:
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
+    
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
     # Initialize compressor
     compressor = AmbiguousCompressor()
     
-    # Process first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Processing record {i+1}/10...")
-        
-        # Extract sequences
-        hr_sequence = record.get('hr_5min', [])
-        rmssd_sequence = record.get('rmssd_5min', [])
-        hypnogram = record.get('hypnogram_5min', '')
-        
-        # Apply ambiguous compression
-        hr_compression = compressor.compress_sequence(hr_sequence) if hr_sequence else {}
-        hrv_compression = compressor.compress_sequence(rmssd_sequence) if rmssd_sequence else {}
-        sleep_compression = compressor.compress_directional_sequence(hypnogram) if hypnogram else {}
-        
-        result = {
-            'period_id': record.get('period_id', i),
-            'timestamp': record.get('bedtime_start_dt_adjusted', 0),
-            'compression_analysis': {
-                'hr_compression': hr_compression,
-                'hrv_compression': hrv_compression,
-                'sleep_compression': sleep_compression
-            },
-            'dictionary_size': len(compressor.dictionary)
-        }
-        
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for compression analysis)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Processing sleep record {i+1}/10...")
+            
+            # Extract sequences
+            hr_sequence = record.get('hr_5min', [])
+            rmssd_sequence = record.get('rmssd_5min', [])
+            hypnogram = record.get('hypnogram_5min', '')
+            
+            # Apply ambiguous compression
+            hr_compression = compressor.compress_sequence(hr_sequence) if hr_sequence else {}
+            hrv_compression = compressor.compress_sequence(rmssd_sequence) if rmssd_sequence else {}
+            sleep_compression = compressor.compress_directional_sequence(hypnogram) if hypnogram else {}
+            
+            result = {
+                'period_id': record.get('period_id', i),
+                'timestamp': record.get('bedtime_start_dt_adjusted', 0),
+                'compression_analysis': {
+                    'hr_compression': hr_compression,
+                    'hrv_compression': hrv_compression,
+                    'sleep_compression': sleep_compression
+                },
+                'dictionary_size': len(compressor.dictionary),
+                'data_source': 'sleep'
+            }
+            
+            all_results.append(result)
+    
+    # Process activity data for additional context
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Processing activity record {i+1}/10...")
+            
+            # Extract sequences (activity may have different structure)
+            hr_sequence = record.get('hr_5min', [])
+            steps_sequence = record.get('steps', [])
+            
+            # Apply ambiguous compression
+            hr_compression = compressor.compress_sequence(hr_sequence) if hr_sequence else {}
+            steps_compression = compressor.compress_sequence([steps_sequence] if isinstance(steps_sequence, (int, float)) else steps_sequence) if steps_sequence else {}
+            
+            result = {
+                'period_id': record.get('period_id', i + len(sleep_data)),
+                'timestamp': record.get('timestamp', 0),
+                'compression_analysis': {
+                    'hr_compression': hr_compression,
+                    'steps_compression': steps_compression,
+                    'sleep_compression': {}
+                },
+                'dictionary_size': len(compressor.dictionary),
+                'data_source': 'activity'
+            }
+            
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/ambiguous_compression'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/compression_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/compression_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/compression_results.json")
+    print(f"✓ Results saved to {output_directory}/compression_results.json")
     
     # Save dictionary
-    with open(f'{output_dir}/empty_dictionary.json', 'w') as f:
+    with open(f'{output_directory}/empty_dictionary.json', 'w') as f:
         json.dump(compressor.dictionary, f, indent=2, default=str)
     
-    print(f"Empty dictionary saved to {output_dir}/empty_dictionary.json")
+    print(f"✓ Empty dictionary saved to {output_directory}/empty_dictionary.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
     # Print compression statistics
     print("\nCompression Analysis Summary:")
     print("-" * 40)
     
-    hr_ratios = [r['compression_analysis']['hr_compression'].get('compression_ratio', 1.0) for r in results]
-    hrv_ratios = [r['compression_analysis']['hrv_compression'].get('compression_ratio', 1.0) for r in results]
-    sleep_ratios = [r['compression_analysis']['sleep_compression'].get('compression_ratio', 1.0) for r in results]
+    hr_ratios = [r['compression_analysis']['hr_compression'].get('compression_ratio', 1.0) for r in all_results if 'hr_compression' in r['compression_analysis']]
+    hrv_ratios = [r['compression_analysis']['hrv_compression'].get('compression_ratio', 1.0) for r in all_results if 'hrv_compression' in r['compression_analysis']]
+    sleep_ratios = [r['compression_analysis']['sleep_compression'].get('compression_ratio', 1.0) for r in all_results if 'sleep_compression' in r['compression_analysis'] and r['compression_analysis']['sleep_compression']]
     
-    print(f"HR Compression    - Mean: {np.mean(hr_ratios):.3f}, Std: {np.std(hr_ratios):.3f}")
-    print(f"HRV Compression   - Mean: {np.mean(hrv_ratios):.3f}, Std: {np.std(hrv_ratios):.3f}")
-    print(f"Sleep Compression - Mean: {np.mean(sleep_ratios):.3f}, Std: {np.std(sleep_ratios):.3f}")
+    if hr_ratios:
+        print(f"HR Compression    - Mean: {np.mean(hr_ratios):.3f}, Std: {np.std(hr_ratios):.3f}")
+    if hrv_ratios:
+        print(f"HRV Compression   - Mean: {np.mean(hrv_ratios):.3f}, Std: {np.std(hrv_ratios):.3f}")
+    if sleep_ratios:
+        print(f"Sleep Compression - Mean: {np.mean(sleep_ratios):.3f}, Std: {np.std(sleep_ratios):.3f}")
     
     print(f"\nEmpty Dictionary Entries: {len(compressor.dictionary)}")
-    print("\nAnalysis complete!")
+    
+    # Show data source breakdown
+    activity_count = sum(1 for r in all_results if r.get('data_source') == 'activity')
+    sleep_count = sum(1 for r in all_results if r.get('data_source') == 'sleep')
+    print(f"Data sources: {activity_count} activity records, {sleep_count} sleep records")
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

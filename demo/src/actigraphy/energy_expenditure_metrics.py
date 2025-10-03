@@ -14,6 +14,7 @@ import seaborn as sns
 from typing import Dict, List, Any, Optional
 import os
 from datetime import datetime
+from pathlib import Path
 
 def total_daily_energy_expenditure(activity_data: Dict[str, Any], user_profile: Dict[str, Any] = None) -> float:
     """Calculate complete daily caloric burn (TDEE)"""
@@ -235,17 +236,49 @@ def main():
     print("Energy Expenditure Metrics Analysis")
     print("=" * 50)
     
-    # Load activity data - using sleep data and creating mock activity data
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/actigraphy/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "energy_expenditure"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} records for energy analysis")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    # Mock user profile
+    # Mock user profile (this would normally come from user settings)
     user_profile = {
         'weight_kg': 75.0,
         'height_cm': 175.0,
@@ -253,59 +286,70 @@ def main():
         'sex': 'male'
     }
     
-    # Analyze first 10 records
-    results = []
-    for i, record in enumerate(sleep_data[:10]):
-        print(f"Analyzing record {i+1}/10...")
-        
-        # Create mock activity data from sleep record
-        activity_record = {
-            'period_id': record.get('period_id', i),
-            'timestamp': record.get('bedtime_start_dt_adjusted', 0),
-            'steps': np.random.randint(3000, 12000),  # Mock step data
-            'active_minutes': np.random.uniform(20, 90),  # Mock active minutes
-            'sedentary_minutes': np.random.uniform(400, 800),  # Mock sedentary time
-            'calories_consumed': np.random.uniform(1800, 2500),  # Mock food intake
-            'active_calories': np.random.uniform(200, 600)  # Mock active calories
-        }
-        
-        result = analyze_energy_expenditure(activity_record, user_profile)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process activity data (primary source for energy expenditure)
+    if activity_data:
+        print("Processing activity records...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            result = analyze_energy_expenditure(record, user_profile)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    # Process sleep data for additional context
+    if sleep_data:
+        print("Processing sleep records for context...")
+        for i, record in enumerate(sleep_data[:10]):
+            print(f"Analyzing sleep record {i+1}/10...")
+            # Use sleep record as-is for energy analysis (it may have some activity context)
+            result = analyze_energy_expenditure(record, user_profile)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/energy_expenditure'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/energy_expenditure_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/energy_expenditure_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/energy_expenditure_results.json")
+    print(f"✓ Results saved to {output_directory}/energy_expenditure_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
     # Print summary statistics
     print("\nEnergy Expenditure Summary:")
     print("-" * 40)
     
-    tdee_vals = [r['total_daily_energy_expenditure'] for r in results]
-    active_vals = [r['active_energy_expenditure'] for r in results]
-    bmr_vals = [r['basal_metabolic_rate'] for r in results]
+    tdee_vals = [r['total_daily_energy_expenditure'] for r in all_results]
+    active_vals = [r['active_energy_expenditure'] for r in all_results]
+    bmr_vals = [r['basal_metabolic_rate'] for r in all_results]
     
     print(f"TDEE - Mean: {np.mean(tdee_vals):.0f} cal, Range: {np.min(tdee_vals):.0f}-{np.max(tdee_vals):.0f} cal")
     print(f"Active Calories - Mean: {np.mean(active_vals):.0f} cal, Range: {np.min(active_vals):.0f}-{np.max(active_vals):.0f} cal")
     print(f"BMR - Mean: {np.mean(bmr_vals):.0f} cal (consistent as same user profile)")
     
     # Energy balance summary
-    energy_balances = [r.get('energy_balance', 0) for r in results if 'energy_balance' in r]
+    energy_balances = [r.get('energy_balance', 0) for r in all_results if 'energy_balance' in r]
     if energy_balances:
         surplus_days = sum(1 for eb in energy_balances if eb > 0)
         deficit_days = len(energy_balances) - surplus_days
         print(f"Energy Balance - Surplus days: {surplus_days}, Deficit days: {deficit_days}")
         print(f"Average energy balance: {np.mean(energy_balances):.0f} cal/day")
     
-    print("\nAnalysis complete!")
+    # Show data source breakdown
+    activity_count = sum(1 for r in all_results if r.get('data_source') == 'activity')
+    sleep_count = sum(1 for r in all_results if r.get('data_source') == 'sleep')
+    print(f"Data sources: {activity_count} activity records, {sleep_count} sleep records")
+    
+    print("✅ Analysis complete!")
 
 if __name__ == "__main__":
     main()

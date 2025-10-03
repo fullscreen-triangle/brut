@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List, Any, Optional
 import os
+from pathlib import Path
 
 def slow_wave_sleep_time(sleep_record: Dict[str, Any]) -> float:
     """Calculate total N3 (deep sleep) duration"""
@@ -209,56 +210,87 @@ def main():
     print("Deep Sleep Metrics Analysis")
     print("=" * 50)
     
-    # Load sleep data
+    # Get project root (adjust the number of .parent calls based on your folder depth)
+    project_root = Path(__file__).parent.parent.parent  # From src/sleep/script to project root
+
+    # Define paths relative to project root - EASY TO CHANGE SECTION
+    activity_data_file = "activity_ppg_records.json"    # Change this for different activity files
+    sleep_data_file = "sleep_ppg_records.json"          # Change this for different sleep files
+    data_folder = "public"                              # Change this for different data folders
+    
+    # Construct paths
+    activity_file_path = project_root / data_folder / activity_data_file
+    sleep_file_path = project_root / data_folder / sleep_data_file
+    output_directory = project_root / "results" / "deep_sleep_metrics"
+    
+    # Convert to strings for compatibility
+    activity_file_path = str(activity_file_path)
+    sleep_file_path = str(sleep_file_path)
+    output_directory = str(output_directory)
+    
+    # Load BOTH activity and sleep data
+    activity_data = []
+    sleep_data = []
+    
     try:
-        with open('../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
-    except:
-        with open('../../public/sleep_ppg_records.json', 'r') as f:
-            sleep_data = json.load(f)
+        if os.path.exists(activity_file_path):
+            with open(activity_file_path, 'r') as f:
+                activity_data = json.load(f)
+            print(f"✓ Loaded {len(activity_data)} activity records from {activity_data_file}")
+        else:
+            print(f"⚠️  Activity file not found: {activity_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading activity data: {e}")
     
-    print(f"Loaded {len(sleep_data)} sleep records")
+    try:
+        if os.path.exists(sleep_file_path):
+            with open(sleep_file_path, 'r') as f:
+                sleep_data = json.load(f)
+            print(f"✓ Loaded {len(sleep_data)} sleep records from {sleep_data_file}")
+        else:
+            print(f"⚠️  Sleep file not found: {sleep_file_path}")
+    except Exception as e:
+        print(f"❌ Error loading sleep data: {e}")
     
-    # Analyze first 15 records
-    results = []
-    for i, record in enumerate(sleep_data[:15]):
-        print(f"Analyzing record {i+1}/15...")
-        result = analyze_deep_sleep_metrics(record)
-        results.append(result)
+    # Combine and process data
+    all_results = []
+    
+    # Process sleep data (primary source for deep sleep analysis)
+    if sleep_data:
+        print("Processing sleep records...")
+        for i, record in enumerate(sleep_data[:15]):
+            print(f"Analyzing sleep record {i+1}/15...")
+            result = analyze_deep_sleep_metrics(record)
+            result['data_source'] = 'sleep'
+            all_results.append(result)
+    
+    # Process activity data for context
+    if activity_data:
+        print("Processing activity records for context...")
+        for i, record in enumerate(activity_data[:10]):
+            print(f"Analyzing activity record {i+1}/10...")
+            result = analyze_deep_sleep_metrics(record)
+            result['data_source'] = 'activity'
+            all_results.append(result)
+    
+    if not all_results:
+        print("❌ No data found to analyze!")
+        return
     
     # Save results
-    output_dir = '../results/deep_sleep_metrics'
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     
-    with open(f'{output_dir}/deep_sleep_metrics_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    with open(f'{output_directory}/deep_sleep_results.json', 'w') as f:
+        json.dump(all_results, f, indent=2, default=str)
     
-    print(f"Results saved to {output_dir}/deep_sleep_metrics_results.json")
+    print(f"✓ Results saved to {output_directory}/deep_sleep_results.json")
     
     # Create visualizations
     print("Creating visualizations...")
-    create_visualizations(results, output_dir)
+    create_visualizations(all_results, output_directory)
     
-    # Print summary statistics
-    print("\nDeep Sleep Metrics Summary:")
-    print("-" * 40)
-    
-    sws_times = [r['slow_wave_sleep_time_min'] for r in results]
-    sws_percentages = [r['slow_wave_sleep_percentage'] for r in results]
-    delta_powers = [r['delta_power'] for r in results]
-    
-    print(f"SWS Time - Mean: {np.mean(sws_times):.1f} min, Range: {np.min(sws_times):.1f}-{np.max(sws_times):.1f} min")
-    print(f"SWS Percentage - Mean: {np.mean(sws_percentages):.1f}%, Range: {np.min(sws_percentages):.1f}-{np.max(sws_percentages):.1f}%")
-    print(f"Delta Power - Mean: {np.mean(delta_powers):.1f}, Range: {np.min(delta_powers):.1f}-{np.max(delta_powers):.1f}")
-    
-    # Quality category distribution
-    quality_categories = [r['deep_sleep_quality'] for r in results]
-    quality_counts = {cat: quality_categories.count(cat) for cat in set(quality_categories)}
-    print(f"\nDeep Sleep Quality Distribution:")
-    for cat, count in quality_counts.items():
-        print(f"  {cat}: {count} records ({count/len(results)*100:.1f}%)")
-    
-    print("\nAnalysis complete!")
+    print("✅ Analysis complete!")
+
 
 if __name__ == "__main__":
     main()

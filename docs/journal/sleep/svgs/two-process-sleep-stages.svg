@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360"> <style> .axis{stroke:#aaa;stroke-width:1} .S{stroke:#1f77b4;stroke-width:1.8;fill:none} .C{stroke:#d62728;stroke-width:1.6;fill:none} .gate{stroke:#444;stroke-width:1.2} .title{font-family:Helvetica,Arial,sans-serif;font-weight:bold;font-size:16px;fill:#111} .lbl{font-family:Helvetica,Arial,sans-serif;font-size:13px;fill:#111} .sub{font-family:Helvetica,Arial,sans-serif;font-size:12px;fill:#444} </style> <text x="20" y="24" class="title">Two-Process Sleep Model with Oscillatory Coupling</text> <line class="axis" x1="60" y1="100" x2="840" y2="100"/> <line class="axis" x1="60" y1="220" x2="840" y2="220"/> <!-- S(t) -->
+    <path class="S" d="M60 220
+     C 120 150, 180 270, 240 180
+     C 300 110, 360 250, 420 170
+     C 480 110, 540 230, 600 160
+     C 660 110, 720 230, 780 160"/>
+    
+    <!-- C(t) -->
+    <path class="C" d="M60 100
+     C 150 60, 210 140, 300 100
+     C 390 60, 450 140, 540 100
+     C 630 60, 690 140, 780 100"/>
+    
+    <!-- Wake/Sleep gate --> <rect x="60" y="260" width="720" height="16" fill="#eee" stroke="#ccc"/> <line x1="60" y1="268" x2="240" y2="268" class="gate"/> <line x1="240" y1="268" x2="360" y2="268" class="gate" stroke-dasharray="5 4"/> <line x1="360" y1="268" x2="540" y2="268" class="gate"/> <line x1="540" y1="268" x2="660" y2="268" class="gate" stroke-dasharray="5 4"/> <line x1="660" y1="268" x2="780" y2="268" class="gate"/>
+    <text x="150" y="286" class="sub">Wake</text>
+    <text x="300" y="286" class="sub">Sleep</text>
+    <text x="450" y="286" class="sub">Wake</text>
+    <text x="600" y="286" class="sub">Sleep</text>
+    <text x="730" y="286" class="sub">Wake</text>
+    
+    <text x="450" y="330" text-anchor="middle" class="sub">Coupling terms αS, βS, γC (Eqs. 14–15)</text>
+    </svg>

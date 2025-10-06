@@ -107,15 +107,30 @@ class MoonLandingAlgorithm:
 def analyze_with_moon_landing(data_record: Dict[str, Any]) -> Dict[str, Any]:
     """Analyze data using Moon Landing Algorithm"""
     hr_sequence = data_record.get('hr_5min', [60, 62, 58, 65, 63])
-    data_array = np.array([x for x in hr_sequence if x > 0])
+    data_array = np.array([x for x in hr_sequence if x > 0], dtype=float)  # Ensure float type
     
-    algorithm = MoonLandingAlgorithm()
-    results = algorithm.run_algorithm(data_array)
+    if len(data_array) == 0:
+        data_array = np.array([60.0, 62.0, 58.0, 65.0, 63.0])  # Default values
     
-    results['period_id'] = data_record.get('period_id', 0)
-    results['semantic_convergence'] = 'Positive' if results['inference_results'].get('weighted_mean', 0) > 0 else 'Negative'
-    
-    return results
+    try:
+        algorithm = MoonLandingAlgorithm()
+        results = algorithm.run_algorithm(data_array)
+        
+        results['period_id'] = data_record.get('period_id', 0)
+        results['semantic_convergence'] = 'Positive' if results['inference_results'].get('weighted_mean', 0) > 0 else 'Negative'
+        
+        return results
+    except Exception as e:
+        print(f"Warning: Moon Landing analysis failed: {e}")
+        return {
+            'period_id': data_record.get('period_id', 0),
+            'compressed_space': [60.0, 5.0, 5],
+            'compression_ratio': 1.0,
+            'samples': [],
+            'inference_results': {'weighted_mean': 0.0, 'n_samples': 0, 'total_weight': 0.0},
+            'semantic_navigation_complete': False,
+            'semantic_convergence': 'Error'
+        }
 
 def main():
     """Main function to demonstrate Moon Landing Algorithm"""

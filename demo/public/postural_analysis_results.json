@@ -1,0 +1,122 @@
+[
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "time_standing_min": 0.0,
+    "time_sitting_min": 0.0,
+    "time_lying_min": 0.0,
+    "postural_transitions": 2.0,
+    "postural_stability": 0.0,
+    "primary_sleep_position": "Variable",
+    "sleep_position_stability": "Low",
+    "sleep_position_transitions": 8,
+    "data_source": "activity"
+  }
+]

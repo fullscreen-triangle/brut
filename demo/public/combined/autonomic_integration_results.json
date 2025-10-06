@@ -1,0 +1,72 @@
+[
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 62.542857142857144
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 2,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 55.09848484848485
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 59.01851851851852
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 62.333333333333336
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 63.94230769230769
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 1,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 61.42553191489362
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 2,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 63.27
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 62.50442477876106
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 64.49
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 3,
+    "autonomic_balance_score": 0.5,
+    "activity_hr_mean": 0.0,
+    "sleep_hr_mean": 63.80232558139535
+  }
+]

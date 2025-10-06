@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520"> <defs> <style> .axis{stroke:#111;stroke-width:2} .grid{stroke:#aaa;stroke-width:1;stroke-dasharray:4 6} .label{font:16px sans-serif; fill:#111} .title{font:700 20px sans-serif; fill:#111} .pt{fill:#111} .dashed{stroke:#111;stroke-width:2;stroke-dasharray:6 6} .arrow{stroke:#111;stroke-width:2;marker-end:url(#a)} </style> <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"> <path d="M0,0 L10,3 L0,6 Z" fill="#111"/> </marker> </defs>
+    <text x="500" y="32" text-anchor="middle" class="title">S-Entropy Coordinate Space</text>
+    
+    <!-- 3D axes (knowledge, time, entropy). Context shown as a slider --> <line x1="120" y1="420" x2="840" y2="420" class="axis"/> <line x1="120" y1="420" x2="200" y2="110" class="axis"/> <line x1="120" y1="420" x2="60" y2="360" class="axis"/>
+    <text x="850" y="424" class="label">S_knowledge</text>
+    <text x="195" y="100" class="label">S_time</text>
+    <text x="45" y="355" class="label">S_entropy</text>
+    
+    <!-- grid hints --> <line x1="280" y1="420" x2="320" y2="260" class="grid"/> <line x1="440" y1="420" x2="480" y2="260" class="grid"/> <line x1="600" y1="420" x2="640" y2="260" class="grid"/> <!-- Context slider --> <rect x="860" y="90" width="20" height="320" fill="none" stroke="#111" stroke-width="2"/> <circle cx="870" cy="250" r="8" class="pt"/> <text x="900" y="250" class="label">S_context</text> <!-- Two states psi1 and psi2 in 3D projection --> <circle cx="380" cy="320" r="6" class="pt"/> <text x="392" y="318" class="label">ψ₁</text> <circle cx="620" cy="260" r="6" class="pt"/> <text x="632" y="258" class="label">ψ₂</text> <!-- S-distance dashed connector --> <line x1="380" y1="320" x2="620" y2="260" class="dashed"/> <text x="500" y="290" class="label">S(ψ₁, ψ₂)</text> <!-- Projections to axes (guide lines) --> <line x1="380" y1="320" x2="380" y2="420" class="grid"/> <line x1="620" y1="260" x2="620" y2="420" class="grid"/> <!-- Weighted distance hint -->
+    <text x="140" y="470" class="label">S(ψ₁,ψ₂) = sqrt(∑ w_i (ΔS_i)^2)</text>
+    </svg>

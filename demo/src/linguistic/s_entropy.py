@@ -64,10 +64,14 @@ class BiologicalFrequencyDecomposer:
         if not signal_data or len(signal_data) < 10:
             return {}
         
-        # Clean signal - remove zeros and interpolate
-        clean_signal = self._clean_signal(signal_data)
-        
-        if len(clean_signal) < 10:
+        try:
+            # Clean signal - remove zeros and interpolate
+            clean_signal = self._clean_signal(signal_data)
+            
+            if len(clean_signal) < 10:
+                return {}
+        except Exception as e:
+            print(f"Warning: Signal cleaning failed: {e}")
             return {}
         
         # Compute FFT
@@ -110,7 +114,7 @@ class BiologicalFrequencyDecomposer:
     
     def _clean_signal(self, signal_data: List[float]) -> np.ndarray:
         """Clean signal by removing zeros and interpolating missing values"""
-        signal_array = np.array(signal_data)
+        signal_array = np.array(signal_data, dtype=float)  # Ensure float type
         signal_array[signal_array == 0] = np.nan
         valid_indices = ~np.isnan(signal_array)
         
@@ -140,8 +144,13 @@ class SEntropyProcessor:
         rmssd_sequence = sleep_record.get('rmssd_5min', [])
         
         # 1. Oscillatory decomposition
-        hr_decomposition = self.decomposer.decompose_signal(hr_sequence)
-        rmssd_decomposition = self.decomposer.decompose_signal(rmssd_sequence)
+        try:
+            hr_decomposition = self.decomposer.decompose_signal(hr_sequence)
+            rmssd_decomposition = self.decomposer.decompose_signal(rmssd_sequence)
+        except Exception as e:
+            print(f"Warning: Oscillatory decomposition failed: {e}")
+            hr_decomposition = {}
+            rmssd_decomposition = {}
         
         # 2. Compute S-entropy coordinates
         s_coords = self._compute_s_entropy_coordinates(sleep_record, hr_decomposition)

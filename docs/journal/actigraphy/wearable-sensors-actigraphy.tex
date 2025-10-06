@@ -1,0 +1,526 @@
+\documentclass[12pt,a4paper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+
+% Mathematics and symbols
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{dsfont}
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Tables and formatting
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% References and citations
+\usepackage[backend=biber,style=nature,sorting=none,maxbibnames=10]{biblatex}
+\addbibresource{references.bib}
+
+% Cross-referencing and hyperlinks
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{url}
+
+% Colors and highlighting
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,0,139}
+\definecolor{darkgreen}{RGB}{0,100,0}
+
+% Algorithm and code formatting
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+
+% Custom theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+% Page geometry and spacing
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+\onehalfspacing
+
+% Header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Multi-Scale Oscillatory Analysis of Consumer-Grade Wearable Sensors}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Custom commands for mathematical notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\entropy}[1]{S_{\text{#1}}}
+\newcommand{\oscillatory}[1]{\mathcal{O}_{#1}}
+\newcommand{\coupling}[2]{\mathcal{C}_{#1 \leftrightarrow #2}}
+\newcommand{\sentropy}{\vec{S}}
+\newcommand{\phase}[1]{\phi_{#1}}
+\newcommand{\amplitude}[1]{A_{#1}}
+
+% Title and author information
+\title{
+    \Large \textbf{Multi-Scale Oscillatory Analysis of Consumer-Grade Wearable Sensors: \\
+    A Novel Framework for Actigraphy and Physiological Signal Processing}
+}
+
+\author{
+    Anonymous Author\thanks{Corresponding author: anonymous@institution.edu} \\
+    \small Department of Biomedical Engineering \\
+    \small Institution Name \\
+    \small City, Country
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Consumer-grade wearable sensors provide continuous physiological monitoring capabilities but suffer from measurement imprecision that limits traditional analytical approaches. This study presents a novel multi-scale oscillatory framework for analyzing consumer-grade actigraphy and physiological data that transforms measurement imprecision into meaningful oscillatory signatures. The framework employs S-entropy coordinate transformation, directional sequence encoding, and multi-scale coupling analysis to extract physiological information from photoplethysmography (PPG), accelerometry, and sleep staging data. Validation using continuous monitoring data from consumer wearable devices demonstrates systematic oscillatory patterns across seven measurement domains: basic activity metrics, energy expenditure, intensity-based patterns, movement dynamics, postural analysis, chronotropic response, and activity-sleep correlations. Heart rate directional sequences exhibited characteristic oscillatory signatures with entropy values ranging from 1.454 to 1.830 bits, while heart rate variability sequences demonstrated higher complexity (1.865-1.999 bits). Energy expenditure oscillations ranged from 2,127 to 2,525 kcal/day with systematic coupling to activity patterns. The framework successfully identified distinct oscillatory modes for wake and sleep states, with sleep sequences showing minimal down-direction encoding (0.0-6.7\%) compared to wake states (40.7-57.4\%). Cross-domain oscillatory coupling analysis revealed systematic relationships between energy expenditure and movement patterns (r = 0.67) and cardiac dynamics with activity-sleep correlations (r = 0.54). These results demonstrate that consumer-grade sensors, when analyzed through appropriate oscillatory frameworks, provide systematic physiological information that captures multi-scale biological dynamics. The framework offers a paradigm shift from precision-dependent analysis to pattern-based oscillatory signal processing for consumer wearable technology applications.
+\end{abstract}
+
+\textbf{Keywords:} Actigraphy, Wearable sensors, Oscillatory analysis, S-entropy, Consumer-grade devices, Physiological monitoring, Signal processing, Multi-scale analysis
+
+\section{Introduction}
+
+Consumer-grade wearable devices have revolutionized continuous physiological monitoring through integration of photoplethysmography (PPG), tri-axial accelerometry, and automated sleep staging capabilities. However, the inherent measurement imprecision of consumer-grade sensors presents fundamental challenges for traditional analytical approaches that rely on absolute measurement accuracy. Conventional actigraphy analysis methods assume measurement precision that consumer devices cannot provide, leading to systematic underutilization of available physiological information.
+
+The proliferation of consumer wearable technology has created unprecedented opportunities for continuous physiological monitoring outside clinical settings. Modern devices integrate multiple sensor modalities including PPG for heart rate measurement, tri-axial accelerometry for movement detection, and algorithmic sleep staging for circadian rhythm analysis. Despite widespread adoption, the analytical frameworks applied to consumer-grade sensor data remain largely adapted from clinical-grade instrumentation approaches that assume measurement precision unavailable in consumer devices.
+
+This precision-dependency limitation necessitates development of analytical frameworks specifically designed for consumer-grade sensor characteristics. Rather than attempting to improve sensor precision to match clinical standards, alternative approaches must extract meaningful physiological information from inherently imprecise measurements. The challenge lies in developing mathematical frameworks that transform measurement uncertainty into analytical advantage.
+
+Recent advances in oscillatory analysis and multi-scale signal processing provide theoretical foundations for addressing consumer-grade sensor limitations. Oscillatory approaches recognize that biological systems exhibit inherent variability and that systematic patterns within this variability contain physiological information. Multi-scale analysis techniques enable extraction of information across temporal and amplitude scales, potentially capturing physiological dynamics missed by single-scale approaches.
+
+This study presents a comprehensive multi-scale oscillatory framework specifically designed for consumer-grade wearable sensor analysis. The framework integrates S-entropy coordinate transformation, directional sequence encoding, and multi-domain coupling analysis to extract systematic physiological information from imprecise sensor measurements. Validation employs continuous monitoring data across multiple physiological domains to demonstrate framework effectiveness and establish oscillatory signatures characteristic of different biological systems.
+
+\section{Theoretical Framework}
+
+\subsection{Consumer-Grade Sensor Data Characteristics}
+
+Consumer-grade wearable devices provide continuous physiological monitoring through photoplethysmography (PPG) and tri-axial accelerometry sensors. PPG sensors measure volumetric changes in blood flow through optical absorption at wavelengths typically between 525-590 nm (green light) or 660-940 nm (red/infrared light). The sampling frequency $f_s$ ranges from 25-100 Hz for PPG signals and 50-200 Hz for accelerometry data.
+
+\begin{definition}[PPG Signal Representation]
+The raw PPG signal is represented as:
+\begin{equation}
+\text{PPG}(t) = I_0 \exp(-\epsilon(\lambda) \cdot c \cdot d(t))
+\end{equation}
+where $I_0$ denotes incident light intensity, $\epsilon(\lambda)$ represents wavelength-specific absorption coefficient, $c$ indicates blood chromophore concentration, and $d(t)$ denotes time-varying optical path length through tissue.
+\end{definition}
+
+\begin{definition}[Accelerometry Signal Representation]
+Tri-axial accelerometry data is represented as:
+\begin{equation}
+\mathbf{a}(t) = [a_x(t), a_y(t), a_z(t)]^T
+\end{equation}
+where $a_x(t)$, $a_y(t)$, and $a_z(t)$ represent acceleration components along orthogonal axes measured in units of gravitational acceleration $g = 9.81 \text{ m/s}^2$.
+\end{definition}
+
+\subsection{Measurement Periodicity and Oscillatory Characteristics}
+
+Consumer-grade sensors exhibit inherent measurement periodicity arising from physiological oscillations, device sampling characteristics, and environmental coupling. The fundamental measurement period $T_{\text{base}}$ is determined by the sensor sampling interval:
+
+\begin{equation}
+T_{\text{base}} = \frac{1}{f_s}
+\end{equation}
+
+However, physiological signals contain multiple oscillatory components spanning several orders of magnitude in frequency:
+
+\begin{definition}[Physiological Oscillatory Spectrum]
+The complete physiological oscillatory spectrum captured by consumer sensors encompasses:
+\begin{align}
+f_{\text{cardiac}} &\sim 0.8-3.0 \text{ Hz} \quad \text{(heart rate)} \\
+f_{\text{respiratory}} &\sim 0.1-0.5 \text{ Hz} \quad \text{(breathing rate)} \\
+f_{\text{movement}} &\sim 0.5-15 \text{ Hz} \quad \text{(locomotor activity)} \\
+f_{\text{circadian}} &\sim 1.16 \times 10^{-5} \text{ Hz} \quad \text{(24-hour cycles)} \\
+f_{\text{ultradian}} &\sim 1.39-2.31 \times 10^{-4} \text{ Hz} \quad \text{(90-120 minute cycles)}
+\end{align}
+\end{definition}
+
+\subsection{Activity Quantification Through Oscillatory Analysis}
+
+Traditional activity metrics such as step counts and energy expenditure represent time-averaged quantities that obscure underlying oscillatory dynamics. We define activity through its oscillatory characteristics:
+
+\begin{definition}[Oscillatory Activity Representation]
+Activity at time $t$ is represented as a multi-component oscillatory signal:
+\begin{equation}
+A(t) = A_0 + \sum_{k=1}^{N} A_k \cos(2\pi f_k t + \phi_k) + \eta(t)
+\end{equation}
+where $A_0$ denotes baseline activity level, $A_k$ represents amplitude of oscillatory component $k$, $f_k$ indicates frequency of component $k$, $\phi_k$ denotes phase of component $k$, and $\eta(t)$ represents measurement noise.
+\end{definition}
+
+\subsection{Metabolic Equivalent Task (MET) Oscillatory Dynamics}
+
+Metabolic Equivalent of Task (MET) values quantify energy expenditure relative to resting metabolic rate, where 1 MET = 3.5 mL O₂/kg/min. Consumer devices estimate MET values through accelerometry-based algorithms:
+
+\begin{definition}[MET Estimation from Accelerometry]
+MET values are estimated through:
+\begin{equation}
+\text{MET}(t) = \text{MET}_{\text{rest}} + \alpha \cdot \|\mathbf{a}(t)\| + \beta \cdot \text{VAR}(\mathbf{a}(t))
+\end{equation}
+where $\text{MET}_{\text{rest}} = 1.0$ represents resting metabolic rate, $\alpha$ and $\beta$ denote calibration coefficients, $\|\mathbf{a}(t)\|$ indicates vector magnitude of acceleration, and $\text{VAR}(\mathbf{a}(t))$ represents acceleration variance over a sliding time window.
+\end{definition}
+
+\subsection{Heart Rate Variability as Oscillatory Coupling Indicator}
+
+Heart rate variability (HRV) metrics derived from PPG signals provide direct measurements of autonomic nervous system oscillatory coupling:
+
+\begin{definition}[RMSSD Calculation]
+Root Mean Square of Successive Differences (RMSSD) quantifies short-term HRV:
+\begin{equation}
+\text{RMSSD} = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N-1} (\text{RR}_{i+1} - \text{RR}_i)^2}
+\end{equation}
+where $\text{RR}_i$ represents the $i$-th inter-beat interval measured in milliseconds, and $N$ denotes the total number of intervals.
+\end{definition}
+
+\begin{definition}[SDNN Calculation]
+Standard Deviation of NN intervals (SDNN) quantifies overall HRV:
+\begin{equation}
+\text{SDNN} = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N} (\text{RR}_i - \overline{\text{RR}})^2}
+\end{equation}
+where $\overline{\text{RR}}$ represents the mean inter-beat interval.
+\end{definition}
+
+\subsection{Temporal Resolution and Measurement Windows}
+
+Consumer devices typically provide aggregated measurements over fixed temporal windows. Standard temporal resolutions include:
+
+\begin{itemize}
+\item 1-minute windows: Heart rate, step counts, movement intensity
+\item 5-minute windows: HRV metrics, detailed activity classification
+\item 15-minute windows: Sleep stage estimation, circadian rhythm analysis
+\item 1-hour windows: Energy expenditure, long-term trend analysis
+\end{itemize}
+
+\begin{definition}[Temporal Window Function]
+For a measurement window of duration $\Delta t$, the windowed signal is:
+\begin{equation}
+X_{\text{window}}[n] = \frac{1}{\Delta t} \int_{n\Delta t}^{(n+1)\Delta t} X(t) \, dt
+\end{equation}
+where $X(t)$ represents the continuous physiological signal and $X_{\text{window}}[n]$ denotes the $n$-th windowed measurement.
+\end{definition}
+
+\subsection{Data Imprecision and Oscillatory Robustness}
+
+Consumer-grade sensors exhibit measurement imprecision due to motion artifacts, sensor placement variability, and environmental factors. However, oscillatory analysis provides robustness to measurement noise through frequency-domain filtering and phase relationship preservation:
+
+\begin{theorem}[Oscillatory Measurement Robustness]
+For a noisy measurement $\tilde{X}(t) = X(t) + \epsilon(t)$ where $\epsilon(t)$ represents additive noise with power spectral density $S_\epsilon(f)$, the oscillatory components remain recoverable provided:
+\begin{equation}
+\frac{S_X(f_k)}{S_\epsilon(f_k)} > \gamma_{\text{threshold}}
+\end{equation}
+where $S_X(f_k)$ denotes signal power at frequency $f_k$ and $\gamma_{\text{threshold}}$ represents the minimum signal-to-noise ratio for reliable oscillatory component extraction.
+\end{theorem}
+
+This robustness enables extraction of meaningful oscillatory patterns from imprecise consumer-grade measurements, forming the foundation for multi-scale oscillatory analysis of human activity patterns.
+
+\section{Multi-Scale Oscillatory Framework}
+
+\subsection{Multi-Scale Activity Oscillatory System}
+
+\subsubsection{11-Scale Hierarchical Architecture}
+
+Human activity emerges from coupled oscillatory networks operating across eleven hierarchical scales spanning atmospheric dynamics to quantum membrane processes. Each scale exhibits characteristic frequency ranges and coupling mechanisms:
+
+\begin{definition}[Complete Activity Oscillatory Hierarchy]
+The complete activity oscillatory system consists of:
+\begin{align}
+\text{Scale 0: } &\text{Atmospheric Gas Oscillations} \quad (f_0 \sim 10^{-7}-10^{-4} \text{ Hz}) \label{eq:atmospheric} \\
+\text{Scale 1: } &\text{Quantum Membrane Dynamics} \quad (f_1 \sim 10^{12}-10^{15} \text{ Hz}) \label{eq:quantum} \\
+\text{Scale 2: } &\text{Intracellular Circuit Networks} \quad (f_2 \sim 10^{3}-10^{6} \text{ Hz}) \label{eq:intracellular} \\
+\text{Scale 3: } &\text{Cellular Information Processing} \quad (f_3 \sim 10^{-1}-10^{2} \text{ Hz}) \label{eq:cellular} \\
+\text{Scale 4: } &\text{Tissue Integration Networks} \quad (f_4 \sim 10^{-2}-10^{1} \text{ Hz}) \label{eq:tissue} \\
+\text{Scale 5: } &\text{Neural Processing Networks} \quad (f_5 \sim 1-100 \text{ Hz}) \label{eq:neural} \\
+\text{Scale 6: } &\text{Neuromuscular Control Systems} \quad (f_6 \sim 0.01-20 \text{ Hz}) \label{eq:neuromuscular} \\
+\text{Scale 7: } &\text{Locomotor Pattern Generation} \quad (f_7 \sim 0.5-15 \text{ Hz}) \label{eq:locomotor} \\
+\text{Scale 8: } &\text{Microbiome Community Dynamics} \quad (f_8 \sim 10^{-4}-10^{-1} \text{ Hz}) \label{eq:microbiome} \\
+\text{Scale 9: } &\text{Organ Coordination Networks} \quad (f_9 \sim 10^{-5}-10^{-2} \text{ Hz}) \label{eq:organ} \\
+\text{Scale 10: } &\text{Allometric Organism Dynamics} \quad (f_{10} \sim 10^{-8}-10^{-5} \text{ Hz}) \label{eq:allometric}
+\end{align}
+\end{definition}
+
+\subsubsection{Locomotor Oscillatory Network Equation}
+
+The fundamental equation governing multi-scale activity oscillations is:
+
+\begin{equation}
+\frac{d\mathbf{\Psi}_i}{dt} = \mathbf{H}_i(\mathbf{\Psi}_i, \boldsymbol{\lambda}_i, t) + \sum_{j \neq i} \mathbf{K}_{ij}(\mathbf{\Psi}_i, \mathbf{\Psi}_j, t) + \mathbf{E}_i(t)
+\label{eq:locomotor_network}
+\end{equation}
+
+where:
+\begin{itemize}
+\item $\mathbf{\Psi}_i$ represents the oscillatory state vector for scale $i$
+\item $\mathbf{H}_i(\mathbf{\Psi}_i, \boldsymbol{\lambda}_i, t)$ describes intrinsic oscillatory dynamics at scale $i$ with parameters $\boldsymbol{\lambda}_i$
+\item $\mathbf{K}_{ij}(\mathbf{\Psi}_i, \mathbf{\Psi}_j, t)$ represents coupling between scales $i$ and $j$
+\item $\mathbf{E}_i(t)$ denotes external perturbations at scale $i$
+\end{itemize}
+
+\subsubsection{Activity Pattern Coupling Quantification}
+
+Coupling between activity scales is characterized through phase-amplitude relationships across temporal scales:
+
+\begin{definition}[Activity Coupling Strength]
+The coupling strength between locomotor scales $i$ and $j$ is quantified as:
+\begin{equation}
+K_{ij}(t) = \frac{1}{T} \int_0^T \left| A_i(t) A_j(t) \cos(\phi_i(t) - \phi_j(t)) \right| dt
+\label{eq:activity_coupling}
+\end{equation}
+where $A_i(t)$ and $\phi_i(t)$ represent amplitude and phase of oscillatory component at scale $i$, and $T$ denotes the analysis window duration.
+\end{definition}
+
+\begin{definition}[Phase Coherence Measure]
+Phase coherence between scales $i$ and $j$ is measured as:
+\begin{equation}
+\gamma_{ij} = \left| \frac{1}{N} \sum_{n=1}^{N} e^{i(\phi_i[n] - \phi_j[n])} \right|
+\end{equation}
+where $\phi_i[n]$ represents the instantaneous phase of scale $i$ at time point $n$, and $N$ denotes the number of time points.
+\end{definition}
+
+\begin{definition}[Locomotor Activity as Network Output]
+Observed locomotor activity emerges from network coupling dynamics:
+\begin{equation}
+\text{Activity}(t) = \sum_{i=0}^{10} W_i A_i(t) \cos(\phi_i(t)) \prod_{j \neq i} [1 + \epsilon_{ij} K_{ij}(t)]
+\label{eq:activity_output}
+\end{equation}
+where $W_i$ represents scale-specific weighting factors and $\epsilon_{ij}$ denotes coupling efficiency between scales $i$ and $j$.
+\end{definition}
+
+\subsection{Activity-Sleep Oscillatory Mirror Theory}
+
+\subsubsection{Metabolic Error Accumulation Model}
+
+Daytime metabolic activities generate biochemical error products that accumulate proportionally to energy expenditure intensity above baseline levels:
+
+\begin{definition}[Error Accumulation Rate]
+The rate of metabolic error accumulation is governed by:
+\begin{equation}
+\frac{dE(t)}{dt} = \alpha \cdot \max(0, \text{MET}(t) - \text{MET}_{\text{baseline}})
+\label{eq:error_rate}
+\end{equation}
+where $E(t)$ represents cumulative error load at time $t$, $\alpha = 0.1$ denotes the error accumulation coefficient (error units per MET-minute), $\text{MET}(t)$ indicates metabolic equivalent at time $t$, and $\text{MET}_{\text{baseline}} = 0.9$ represents resting metabolic rate.
+\end{definition}
+
+\begin{definition}[Total Daily Error Accumulation]
+The total daily error accumulation is calculated as:
+\begin{equation}
+E_{\text{total}} = \int_0^{T_{\text{day}}} \alpha \cdot \max(0, \text{MET}(t) - \text{MET}_{\text{baseline}}) \, dt
+\label{eq:total_error}
+\end{equation}
+where $T_{\text{day}} = 24$ hours represents the daily accumulation period.
+\end{definition}
+
+\subsubsection{Sleep Cleanup Efficiency Model}
+
+Sleep stages provide differential cleanup capacities based on neurophysiological restoration mechanisms:
+
+\begin{definition}[Stage-Specific Cleanup Coefficients]
+Sleep cleanup capacity is quantified through stage-specific coefficients:
+\begin{align}
+C_{\text{deep}} &= \beta_{\text{deep}} \cdot T_{\text{deep}} \cdot \eta_{\text{sleep}} \\
+C_{\text{REM}} &= \beta_{\text{REM}} \cdot T_{\text{REM}} \cdot \eta_{\text{sleep}} \\
+C_{\text{total}} &= C_{\text{deep}} + C_{\text{REM}}
+\label{eq:cleanup_capacity}
+\end{align}
+where $\beta_{\text{deep}} = 2.5$ and $\beta_{\text{REM}} = 2.0$ represent stage-specific cleanup coefficients (error units per hour), $T_{\text{deep}}$ and $T_{\text{REM}}$ denote duration in deep and REM sleep stages (hours), and $\eta_{\text{sleep}}$ represents sleep efficiency (fraction).
+\end{definition}
+
+\subsubsection{Mirror Coupling Hypothesis}
+
+The oscillatory mirror hypothesis states that optimal sleep architecture adjusts to match accumulated error load:
+
+\begin{definition}[Mirror Coupling Coefficient]
+The mirror coupling relationship is quantified as:
+\begin{equation}
+\frac{C_{\text{total}}}{E_{\text{total}}} \approx 1 + \delta
+\label{eq:mirror_coefficient}
+\end{equation}
+where $\delta$ represents the oscillatory coupling efficiency parameter. Perfect coupling occurs when $\delta = 0$, indicating exact matching between error accumulation and cleanup capacity.
+\end{definition}
+
+\begin{theorem}[Activity-Sleep Mirror Theorem]
+For a biological system operating under optimal oscillatory coupling, the sleep cleanup capacity adapts to match daytime error accumulation within a bounded coupling efficiency:
+\begin{equation}
+\left| \frac{C_{\text{total}}}{E_{\text{total}}} - 1 \right| \leq \delta_{\text{max}}
+\end{equation}
+where $\delta_{\text{max}}$ represents the maximum allowable coupling deviation for maintaining homeostatic balance.
+\end{theorem}
+
+\subsubsection{Oscillatory Phase Relationships}
+
+Activity and sleep exhibit coupled oscillatory patterns with characteristic phase relationships:
+
+\begin{definition}[Activity-Sleep Phase Coupling]
+The phase relationship between activity and sleep oscillations is characterized by:
+\begin{equation}
+\Phi_{\text{coupling}} = \frac{1}{N} \sum_{n=1}^{N} \cos(\phi_n^{(a)} - \phi_n^{(s)} - \pi)
+\label{eq:phase_coupling}
+\end{equation}
+where $\phi_n^{(a)}$ and $\phi_n^{(s)}$ represent instantaneous phases of activity and sleep oscillations at time point $n$, and the $\pi$ phase offset accounts for the mirror relationship.
+\end{definition}
+
+\begin{definition}[Optimal Phase Coupling]
+Optimal activity-sleep coupling occurs when phase relationships satisfy:
+\begin{equation}
+\phi_{\text{sleep}}(t) = \phi_{\text{activity}}(t - \tau_{\text{optimal}}) + \pi
+\end{equation}
+where $\tau_{\text{optimal}} = 12$ hours represents the optimal phase lag for circadian coupling, and the $\pi$ phase shift indicates the mirror relationship between activity accumulation and sleep cleanup processes.
+\end{definition}
+
+\subsection{Cross-Scale Coupling Dynamics}
+
+\subsubsection{Atmospheric-Biological Coupling}
+
+Atmospheric gas oscillations provide the foundational environmental coupling mechanism for all biological activity oscillations:
+
+\begin{definition}[Atmospheric-Cellular Coupling Coefficient]
+The coupling strength between atmospheric oscillations and cellular activity is:
+\begin{equation}
+\kappa_{\text{atm-cell}} = \int \Psi_{\text{atm}}(\omega) \cdot \Psi_{\text{membrane}}(\omega) \cdot T_{\text{coupling}}(\omega) \, d\omega
+\end{equation}
+where $\Psi_{\text{atm}}(\omega)$ represents atmospheric oscillatory spectrum, $\Psi_{\text{membrane}}(\omega)$ denotes membrane oscillatory response, and $T_{\text{coupling}}(\omega)$ indicates frequency-dependent coupling transfer function.
+\end{definition}
+
+\subsubsection{Multi-Scale Frequency Coupling}
+
+Coupling between different scales occurs through frequency relationships:
+
+\begin{definition}[Scale Frequency Relationships]
+Adjacent scales exhibit frequency coupling through:
+\begin{equation}
+f_{i+1} = \frac{f_i}{n_i} + \Delta f_i
+\end{equation}
+where $f_i$ represents the characteristic frequency of scale $i$, $n_i$ denotes the frequency division factor, and $\Delta f_i$ represents coupling-induced frequency modulation.
+\end{definition}
+
+\subsubsection{Coupling Strength Hierarchy}
+
+Coupling strength decreases with scale separation according to:
+
+\begin{equation}
+K_{ij} = K_0 \exp\left(-\alpha_{\text{coupling}}|i-j|\right) \cos\left(\frac{\omega_i - \omega_j}{\omega_i + \omega_j}\right)
+\end{equation}
+
+where $K_0$ represents maximum coupling strength, $\alpha_{\text{coupling}}$ denotes coupling decay parameter, and the cosine term accounts for frequency matching effects.
+
+
+% Include the S-entropy navigation section
+\input{navigation}
+
+% Include the methodology section
+\input{methodology}
+
+% Include the results and discussion section
+\input{performance}
+
+\section{Limitations and Future Directions}
+
+\subsection{Consumer-Grade Sensor Constraints}
+
+The present analysis acknowledges inherent limitations of consumer-grade sensor technology while demonstrating that meaningful oscillatory information can be extracted despite these constraints. Measurement precision limitations do not prevent detection of systematic oscillatory patterns, supporting the framework's emphasis on pattern recognition over absolute accuracy.
+
+Temporal resolution constraints of consumer devices (typically 1-minute sampling intervals) limit detection of high-frequency oscillatory components. Future framework development should incorporate adaptive sampling strategies and interpolation techniques to enhance temporal resolution capabilities.
+
+\subsection{Framework Extension Opportunities}
+
+The demonstrated success of oscillatory analysis across seven measurement domains suggests potential for framework extension to additional physiological systems. Integration of environmental sensors, biochemical markers, and subjective wellness measures could provide comprehensive oscillatory health assessment capabilities.
+
+Multi-individual analysis approaches could reveal population-level oscillatory patterns and individual deviation signatures. Longitudinal oscillatory pattern tracking may enable early detection of physiological state changes and health trajectory prediction.
+
+\subsection{Technological Integration Pathways}
+
+Real-time implementation of the oscillatory framework on consumer devices requires optimization of computational complexity and power consumption. Edge computing approaches could enable on-device oscillatory analysis while maintaining privacy and reducing data transmission requirements.
+
+Integration with existing health monitoring ecosystems and clinical decision support systems represents a natural extension of the framework's capabilities. Standardization of oscillatory metrics and establishment of reference ranges would facilitate clinical adoption and comparative analysis.
+
+\section{Acknowledgments}
+
+The authors acknowledge the contributions of anonymous participants who provided continuous physiological monitoring data for framework validation. Technical support for data processing and analysis infrastructure is gratefully acknowledged.
+
+\printbibliography
+
+\appendix
+
+\section{Supplementary Mathematical Formulations}
+
+\subsection{S-Entropy Coordinate Transformation Details}
+
+The complete mathematical formulation of S-entropy coordinate transformation includes:
+
+\begin{align}
+S_{\text{knowledge}} &= -\sum_{i} p_i \log_2(p_i) + \alpha \cdot I_{\text{sensor}} \\
+S_{\text{time}} &= \frac{1}{T} \int_0^T \left|\frac{d\phi(t)}{dt}\right| dt \\
+S_{\text{entropy}} &= -\sum_{k} \rho_k \log_2(\rho_k) \\
+S_{\text{context}} &= \sum_{j} \beta_j \cdot C_j
+\end{align}
+
+where $p_i$ represents activity state probabilities, $I_{\text{sensor}}$ denotes sensor information content, $\phi(t)$ indicates instantaneous phase, $\rho_k$ represents oscillatory termination density, and $C_j$ denotes contextual variables with weighting coefficients $\beta_j$.
+
+\subsection{Directional Encoding Algorithm}
+
+The directional sequence encoding algorithm transforms numerical physiological data into navigable coordinate sequences:
+
+\begin{algorithm}
+\caption{Directional Sequence Encoding}
+\begin{algorithmic}
+\REQUIRE Physiological time series $X = \{x_1, x_2, \ldots, x_n\}$
+\ENSURE Directional sequence $D = \{d_1, d_2, \ldots, d_{n-1}\}$
+\FOR{$i = 1$ to $n-1$}
+    \STATE $\Delta x = x_{i+1} - x_i$
+    \IF{$\Delta x > \theta_{\text{up}}$}
+        \STATE $d_i = \text{A}$ (Up/North)
+    \ELSIF{$\Delta x < -\theta_{\text{down}}$}
+        \STATE $d_i = \text{D}$ (Down/South)
+    \ELSIF{$\Delta x > 0$}
+        \STATE $d_i = \text{R}$ (Right/East)
+    \ELSE
+        \STATE $d_i = \text{L}$ (Left/West)
+    \ENDIF
+\ENDFOR
+\RETURN $D$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Multi-Scale Coupling Quantification}
+
+Cross-scale coupling strength is quantified using phase-amplitude coupling (PAC) and phase-phase coupling (PPC) measures:
+
+\begin{align}
+\text{PAC}_{ij}(t) &= \left|\frac{1}{N} \sum_{n=1}^{N} A_j[n] e^{i\phi_i[n]}\right| \\
+\text{PPC}_{ij}(t) &= \left|\frac{1}{N} \sum_{n=1}^{N} e^{i(\phi_i[n] - \phi_j[n])}\right|
+\end{align}
+
+where $A_j[n]$ represents amplitude of scale $j$ at time $n$, and $\phi_i[n]$ denotes phase of scale $i$ at time $n$.
+
+\end{document}

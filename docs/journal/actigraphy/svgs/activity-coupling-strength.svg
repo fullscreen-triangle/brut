@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360"> <style> .title{font-family:Helvetica,Arial,sans-serif;font-weight:bold;font-size:16px;fill:#111} .axis{stroke:#aaa;stroke-width:1} .sigA{stroke:#1f77b4;stroke-width:1.6;fill:none} .sigB{stroke:#d62728;stroke-width:1.6;fill:none} .env{stroke:#888;stroke-dasharray:4 3;stroke-width:1;fill:none} .lbl{font-family:Helvetica,Arial,sans-serif;font-size:13px;fill:#111} .sub{font-family:Helvetica,Arial,sans-serif;font-size:12px;fill:#444} </style> <text x="20" y="24" class="title">Coupling Strength Kij: Amplitude-weighted Phase Alignment</text> <line class="axis" x1="60" y1="110" x2="840" y2="110"/> <line class="axis" x1="60" y1="240" x2="840" y2="240"/> <!-- Signal j (reference) -->
+    <path class="sigB" d="M60 240
+     C140 200, 220 200, 300 240
+     C380 280, 460 280, 540 240
+     C620 200, 700 200, 780 240"/>
+    <text x="70" y="225" class="lbl">φj(t), Aj(t)</text>
+    
+    <!-- Signal i (target) with amplitude envelope -->
+    <path class="sigA" d="M60 110
+     C 90 80, 120 140, 150 110
+     C 180 80, 210 140, 240 110
+     C 270 90, 300 130, 330 110
+     C 360 90, 390 130, 420 110
+     C 450 80, 480 140, 510 110
+     C 540 80, 570 140, 600 110
+     C 630 90, 660 130, 690 110
+     C 720 90, 750 130, 780 110"/>
+    <path class="env" d="M60 110 C 160 60, 260 60, 330 110 C 400 160, 520 160, 600 110 C 680 60, 760 60, 780 110"/>
+    <path class="env" d="M60 110 C 160 160, 260 160, 330 110 C 400 60, 520 60, 600 110 C 680 160, 760 160, 780 110"/>
+    <text x="70" y="90" class="lbl">φi(t), Ai(t)</text>
+    
+    <text x="450" y="325" text-anchor="middle" class="sub">Kij(t) = (1/T)∫ |Ai Aj cos(φi−φj)| dt (Eq. 2)</text>
+    </svg>

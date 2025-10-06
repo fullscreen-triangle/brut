@@ -1,0 +1,222 @@
+[
+  {
+    "period_id": 0,
+    "timestamp": 1641075362000,
+    "respiratory_sinus_arrhythmia": 6.536591471189284,
+    "baroreflex_sensitivity": 1.0441325212389487,
+    "qt_variability": 12.304172181062182,
+    "heart_rate_turbulence_onset": 0.09821836455002285,
+    "heart_rate_turbulence_slope": -0.6666666666666666,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641161158000,
+    "respiratory_sinus_arrhythmia": 4.500289284949595,
+    "baroreflex_sensitivity": 1.0012229571002667,
+    "qt_variability": 8.86210813036228,
+    "heart_rate_turbulence_onset": 0.10587102983638112,
+    "heart_rate_turbulence_slope": 0.6,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641245158000,
+    "respiratory_sinus_arrhythmia": 5.498176178123681,
+    "baroreflex_sensitivity": 1.2990486114692779,
+    "qt_variability": 10.6631295575732,
+    "heart_rate_turbulence_onset": 0.14119861939127706,
+    "heart_rate_turbulence_slope": -4.0,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641334080000,
+    "respiratory_sinus_arrhythmia": 5.514066183515897,
+    "baroreflex_sensitivity": 1.3726251210697293,
+    "qt_variability": 10.534335395373656,
+    "heart_rate_turbulence_onset": 0.12605042016806722,
+    "heart_rate_turbulence_slope": -3.3333333333333335,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641421440000,
+    "respiratory_sinus_arrhythmia": 8.118952989853227,
+    "baroreflex_sensitivity": 1.2520508202466651,
+    "qt_variability": 15.627458386484404,
+    "heart_rate_turbulence_onset": 0.13293233082706768,
+    "heart_rate_turbulence_slope": -3.3333333333333335,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 1,
+    "timestamp": 1641509041000,
+    "respiratory_sinus_arrhythmia": 7.40645008019572,
+    "baroreflex_sensitivity": 1.2879907244893802,
+    "qt_variability": 14.585009388693111,
+    "heart_rate_turbulence_onset": 0.13430897125043298,
+    "heart_rate_turbulence_slope": -9.0,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641604559000,
+    "respiratory_sinus_arrhythmia": 6.172552326362223,
+    "baroreflex_sensitivity": 1.3263899405762205,
+    "qt_variability": 12.155179965759453,
+    "heart_rate_turbulence_onset": 0.13829619092776987,
+    "heart_rate_turbulence_slope": 5.0,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641683459000,
+    "respiratory_sinus_arrhythmia": 9.158962981343464,
+    "baroreflex_sensitivity": 1.5336819504887909,
+    "qt_variability": 16.868305922474292,
+    "heart_rate_turbulence_onset": 0.13941870107805263,
+    "heart_rate_turbulence_slope": 2.0,
+    "cardiovascular_health": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641767909000,
+    "respiratory_sinus_arrhythmia": 8.247507404880258,
+    "baroreflex_sensitivity": 0.9608975754974503,
+    "qt_variability": 14.868745744009477,
+    "heart_rate_turbulence_onset": 0.07310103449039719,
+    "heart_rate_turbulence_slope": -1.6666666666666667,
+    "cardiovascular_health": "Below Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 3,
+    "timestamp": 1641862708000,
+    "respiratory_sinus_arrhythmia": 4.339401694686871,
+    "baroreflex_sensitivity": 0.8348797646687139,
+    "qt_variability": 8.290200252536113,
+    "heart_rate_turbulence_onset": 0.07053034445051941,
+    "heart_rate_turbulence_slope": -4.666666666666667,
+    "cardiovascular_health": "Below Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "respiratory_sinus_arrhythmia": 0.0,
+    "baroreflex_sensitivity": 0.0,
+    "qt_variability": 0.0,
+    "heart_rate_turbulence_onset": 0.0,
+    "heart_rate_turbulence_slope": 0.0,
+    "cardiovascular_health": "Below Average",
+    "data_source": "activity"
+  }
+]

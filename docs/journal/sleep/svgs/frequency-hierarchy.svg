@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520"> <defs> <style> .title{font:700 20px sans-serif; fill:#111} .label{font:14px sans-serif; fill:#111} .small{font:12px sans-serif; fill:#111} .axis{stroke:#111;stroke-width:2} .wave{fill:none;stroke:#111;stroke-width:2} .box{fill:#fff;stroke:#111;stroke-width:2} .arrow{stroke:#111;stroke-width:2;marker-end:url(#a)} .dashed{stroke-dasharray:6 6} </style> <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"> <path d="M0,0 L10,3 L0,6 Z" fill="#111"/> </marker> </defs> <text x="600" y="28" text-anchor="middle" class="title">Frequency Hierarchy and Cross-Scale Coupling</text> <!-- Panels --> <g transform="translate(60,70)"> <text x="0" y="0" class="label">Scale 1: Molecular (~24 h)</text> <line x1="260" y1="-10" x2="1000" y2="-10" class="axis"/> <path d="M260,-10 c60,-20 120,20 180,0 60,-20 120,20 180,0" class="wave"/>
+    <text x="0" y="70" class="label">Scale 2: Cellular (12–36 h)</text>
+<line x1="260" y1="60" x2="1000" y2="60" class="axis"/>
+<path d="M260,60 c80,-15 160,15 240,0 80,-15 160,15 240,0" class="wave"/>
+
+<text x="0" y="140" class="label">Scale 3: CPG (0.1–2 s)</text>
+<line x1="260" y1="130" x2="1000" y2="130" class="axis"/>
+<path d="M260,130 c30,-20 60,20 90,0 30,-20 60,20 90,0 30,-20 60,20 90,0" class="wave"/>
+
+<text x="0" y="210" class="label">Scale 4: Sleep–Wake (1.5–2 h)</text>
+<line x1="260" y1="200" x2="1000" y2="200" class="axis"/>
+<path d="M260,200 c70,-18 140,18 210,0 70,-18 140,18 210,0" class="wave"/>
+
+<text x="0" y="280" class="label">Scale 5: Activity–Rest (12–24 h)</text>
+<line x1="260" y1="270" x2="1000" y2="270" class="axis"/>
+<path d="M260,270 c90,-15 180,15 270,0 90,-15 180,15 270,0" class="wave"/>
+
+<text x="0" y="350" class="label">Scale 6: Seasonal (~365 d)</text>
+<line x1="260" y1="340" x2="1000" y2="340" class="axis"/>
+<path d="M260,340 c120,-10 240,10 360,0" class="wave"/>
+
+<!-- Coupling arrows -->
+<line x1="660" y1="-10" x2="660" y2="200" class="arrow dashed"/>
+<line x1="840" y1="60" x2="840" y2="270" class="arrow dashed"/>
+</g> </svg>

@@ -1,0 +1,188 @@
+\section{Multi-Scale Oscillatory Framework}
+
+\subsection{Multi-Scale Activity Oscillatory System}
+
+\subsubsection{11-Scale Hierarchical Architecture}
+
+Human activity emerges from coupled oscillatory networks operating across eleven hierarchical scales spanning atmospheric dynamics to quantum membrane processes. Each scale exhibits characteristic frequency ranges and coupling mechanisms:
+
+\begin{definition}[Complete Activity Oscillatory Hierarchy]
+The complete activity oscillatory system consists of:
+\begin{align}
+\text{Scale 0: } &\text{Atmospheric Gas Oscillations} \quad (f_0 \sim 10^{-7}-10^{-4} \text{ Hz}) \label{eq:atmospheric} \\
+\text{Scale 1: } &\text{Quantum Membrane Dynamics} \quad (f_1 \sim 10^{12}-10^{15} \text{ Hz}) \label{eq:quantum} \\
+\text{Scale 2: } &\text{Intracellular Circuit Networks} \quad (f_2 \sim 10^{3}-10^{6} \text{ Hz}) \label{eq:intracellular} \\
+\text{Scale 3: } &\text{Cellular Information Processing} \quad (f_3 \sim 10^{-1}-10^{2} \text{ Hz}) \label{eq:cellular} \\
+\text{Scale 4: } &\text{Tissue Integration Networks} \quad (f_4 \sim 10^{-2}-10^{1} \text{ Hz}) \label{eq:tissue} \\
+\text{Scale 5: } &\text{Neural Processing Networks} \quad (f_5 \sim 1-100 \text{ Hz}) \label{eq:neural} \\
+\text{Scale 6: } &\text{Neuromuscular Control Systems} \quad (f_6 \sim 0.01-20 \text{ Hz}) \label{eq:neuromuscular} \\
+\text{Scale 7: } &\text{Locomotor Pattern Generation} \quad (f_7 \sim 0.5-15 \text{ Hz}) \label{eq:locomotor} \\
+\text{Scale 8: } &\text{Microbiome Community Dynamics} \quad (f_8 \sim 10^{-4}-10^{-1} \text{ Hz}) \label{eq:microbiome} \\
+\text{Scale 9: } &\text{Organ Coordination Networks} \quad (f_9 \sim 10^{-5}-10^{-2} \text{ Hz}) \label{eq:organ} \\
+\text{Scale 10: } &\text{Allometric Organism Dynamics} \quad (f_{10} \sim 10^{-8}-10^{-5} \text{ Hz}) \label{eq:allometric}
+\end{align}
+\end{definition}
+
+\subsubsection{Locomotor Oscillatory Network Equation}
+
+The fundamental equation governing multi-scale activity oscillations is:
+
+\begin{equation}
+\frac{d\mathbf{\Psi}_i}{dt} = \mathbf{H}_i(\mathbf{\Psi}_i, \boldsymbol{\lambda}_i, t) + \sum_{j \neq i} \mathbf{K}_{ij}(\mathbf{\Psi}_i, \mathbf{\Psi}_j, t) + \mathbf{E}_i(t)
+\label{eq:locomotor_network}
+\end{equation}
+
+where:
+\begin{itemize}
+\item $\mathbf{\Psi}_i$ represents the oscillatory state vector for scale $i$
+\item $\mathbf{H}_i(\mathbf{\Psi}_i, \boldsymbol{\lambda}_i, t)$ describes intrinsic oscillatory dynamics at scale $i$ with parameters $\boldsymbol{\lambda}_i$
+\item $\mathbf{K}_{ij}(\mathbf{\Psi}_i, \mathbf{\Psi}_j, t)$ represents coupling between scales $i$ and $j$
+\item $\mathbf{E}_i(t)$ denotes external perturbations at scale $i$
+\end{itemize}
+
+\subsubsection{Activity Pattern Coupling Quantification}
+
+Coupling between activity scales is characterized through phase-amplitude relationships across temporal scales:
+
+\begin{definition}[Activity Coupling Strength]
+The coupling strength between locomotor scales $i$ and $j$ is quantified as:
+\begin{equation}
+K_{ij}(t) = \frac{1}{T} \int_0^T \left| A_i(t) A_j(t) \cos(\phi_i(t) - \phi_j(t)) \right| dt
+\label{eq:activity_coupling}
+\end{equation}
+where $A_i(t)$ and $\phi_i(t)$ represent amplitude and phase of oscillatory component at scale $i$, and $T$ denotes the analysis window duration.
+\end{definition}
+
+\begin{definition}[Phase Coherence Measure]
+Phase coherence between scales $i$ and $j$ is measured as:
+\begin{equation}
+\gamma_{ij} = \left| \frac{1}{N} \sum_{n=1}^{N} e^{i(\phi_i[n] - \phi_j[n])} \right|
+\end{equation}
+where $\phi_i[n]$ represents the instantaneous phase of scale $i$ at time point $n$, and $N$ denotes the number of time points.
+\end{definition}
+
+\begin{definition}[Locomotor Activity as Network Output]
+Observed locomotor activity emerges from network coupling dynamics:
+\begin{equation}
+\text{Activity}(t) = \sum_{i=0}^{10} W_i A_i(t) \cos(\phi_i(t)) \prod_{j \neq i} [1 + \epsilon_{ij} K_{ij}(t)]
+\label{eq:activity_output}
+\end{equation}
+where $W_i$ represents scale-specific weighting factors and $\epsilon_{ij}$ denotes coupling efficiency between scales $i$ and $j$.
+\end{definition}
+
+\subsection{Activity-Sleep Oscillatory Mirror Theory}
+
+\subsubsection{Metabolic Error Accumulation Model}
+
+Daytime metabolic activities generate biochemical error products that accumulate proportionally to energy expenditure intensity above baseline levels:
+
+\begin{definition}[Error Accumulation Rate]
+The rate of metabolic error accumulation is governed by:
+\begin{equation}
+\frac{dE(t)}{dt} = \alpha \cdot \max(0, \text{MET}(t) - \text{MET}_{\text{baseline}})
+\label{eq:error_rate}
+\end{equation}
+where $E(t)$ represents cumulative error load at time $t$, $\alpha = 0.1$ denotes the error accumulation coefficient (error units per MET-minute), $\text{MET}(t)$ indicates metabolic equivalent at time $t$, and $\text{MET}_{\text{baseline}} = 0.9$ represents resting metabolic rate.
+\end{definition}
+
+\begin{definition}[Total Daily Error Accumulation]
+The total daily error accumulation is calculated as:
+\begin{equation}
+E_{\text{total}} = \int_0^{T_{\text{day}}} \alpha \cdot \max(0, \text{MET}(t) - \text{MET}_{\text{baseline}}) \, dt
+\label{eq:total_error}
+\end{equation}
+where $T_{\text{day}} = 24$ hours represents the daily accumulation period.
+\end{definition}
+
+\subsubsection{Sleep Cleanup Efficiency Model}
+
+Sleep stages provide differential cleanup capacities based on neurophysiological restoration mechanisms:
+
+\begin{definition}[Stage-Specific Cleanup Coefficients]
+Sleep cleanup capacity is quantified through stage-specific coefficients:
+\begin{align}
+C_{\text{deep}} &= \beta_{\text{deep}} \cdot T_{\text{deep}} \cdot \eta_{\text{sleep}} \\
+C_{\text{REM}} &= \beta_{\text{REM}} \cdot T_{\text{REM}} \cdot \eta_{\text{sleep}} \\
+C_{\text{total}} &= C_{\text{deep}} + C_{\text{REM}}
+\label{eq:cleanup_capacity}
+\end{align}
+where $\beta_{\text{deep}} = 2.5$ and $\beta_{\text{REM}} = 2.0$ represent stage-specific cleanup coefficients (error units per hour), $T_{\text{deep}}$ and $T_{\text{REM}}$ denote duration in deep and REM sleep stages (hours), and $\eta_{\text{sleep}}$ represents sleep efficiency (fraction).
+\end{definition}
+
+\subsubsection{Mirror Coupling Hypothesis}
+
+The oscillatory mirror hypothesis states that optimal sleep architecture adjusts to match accumulated error load:
+
+\begin{definition}[Mirror Coupling Coefficient]
+The mirror coupling relationship is quantified as:
+\begin{equation}
+\frac{C_{\text{total}}}{E_{\text{total}}} \approx 1 + \delta
+\label{eq:mirror_coefficient}
+\end{equation}
+where $\delta$ represents the oscillatory coupling efficiency parameter. Perfect coupling occurs when $\delta = 0$, indicating exact matching between error accumulation and cleanup capacity.
+\end{definition}
+
+\begin{theorem}[Activity-Sleep Mirror Theorem]
+For a biological system operating under optimal oscillatory coupling, the sleep cleanup capacity adapts to match daytime error accumulation within a bounded coupling efficiency:
+\begin{equation}
+\left| \frac{C_{\text{total}}}{E_{\text{total}}} - 1 \right| \leq \delta_{\text{max}}
+\end{equation}
+where $\delta_{\text{max}}$ represents the maximum allowable coupling deviation for maintaining homeostatic balance.
+\end{theorem}
+
+\subsubsection{Oscillatory Phase Relationships}
+
+Activity and sleep exhibit coupled oscillatory patterns with characteristic phase relationships:
+
+\begin{definition}[Activity-Sleep Phase Coupling]
+The phase relationship between activity and sleep oscillations is characterized by:
+\begin{equation}
+\Phi_{\text{coupling}} = \frac{1}{N} \sum_{n=1}^{N} \cos(\phi_n^{(a)} - \phi_n^{(s)} - \pi)
+\label{eq:phase_coupling}
+\end{equation}
+where $\phi_n^{(a)}$ and $\phi_n^{(s)}$ represent instantaneous phases of activity and sleep oscillations at time point $n$, and the $\pi$ phase offset accounts for the mirror relationship.
+\end{definition}
+
+\begin{definition}[Optimal Phase Coupling]
+Optimal activity-sleep coupling occurs when phase relationships satisfy:
+\begin{equation}
+\phi_{\text{sleep}}(t) = \phi_{\text{activity}}(t - \tau_{\text{optimal}}) + \pi
+\end{equation}
+where $\tau_{\text{optimal}} = 12$ hours represents the optimal phase lag for circadian coupling, and the $\pi$ phase shift indicates the mirror relationship between activity accumulation and sleep cleanup processes.
+\end{definition}
+
+\subsection{Cross-Scale Coupling Dynamics}
+
+\subsubsection{Atmospheric-Biological Coupling}
+
+Atmospheric gas oscillations provide the foundational environmental coupling mechanism for all biological activity oscillations:
+
+\begin{definition}[Atmospheric-Cellular Coupling Coefficient]
+The coupling strength between atmospheric oscillations and cellular activity is:
+\begin{equation}
+\kappa_{\text{atm-cell}} = \int \Psi_{\text{atm}}(\omega) \cdot \Psi_{\text{membrane}}(\omega) \cdot T_{\text{coupling}}(\omega) \, d\omega
+\end{equation}
+where $\Psi_{\text{atm}}(\omega)$ represents atmospheric oscillatory spectrum, $\Psi_{\text{membrane}}(\omega)$ denotes membrane oscillatory response, and $T_{\text{coupling}}(\omega)$ indicates frequency-dependent coupling transfer function.
+\end{definition}
+
+\subsubsection{Multi-Scale Frequency Coupling}
+
+Coupling between different scales occurs through frequency relationships:
+
+\begin{definition}[Scale Frequency Relationships]
+Adjacent scales exhibit frequency coupling through:
+\begin{equation}
+f_{i+1} = \frac{f_i}{n_i} + \Delta f_i
+\end{equation}
+where $f_i$ represents the characteristic frequency of scale $i$, $n_i$ denotes the frequency division factor, and $\Delta f_i$ represents coupling-induced frequency modulation.
+\end{definition}
+
+\subsubsection{Coupling Strength Hierarchy}
+
+Coupling strength decreases with scale separation according to:
+
+\begin{equation}
+K_{ij} = K_0 \exp\left(-\alpha_{\text{coupling}}|i-j|\right) \cos\left(\frac{\omega_i - \omega_j}{\omega_i + \omega_j}\right)
+\end{equation}
+
+where $K_0$ represents maximum coupling strength, $\alpha_{\text{coupling}}$ denotes coupling decay parameter, and the cosine term accounts for frequency matching effects.

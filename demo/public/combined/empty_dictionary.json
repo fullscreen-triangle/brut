@@ -1,0 +1,212 @@
+{
+  "00111010": {
+    "meaning": ":",
+    "context": "ambiguous_compression",
+    "frequency": 4
+  },
+  "00100001": {
+    "meaning": "!",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01111110": {
+    "meaning": "~",
+    "context": "ambiguous_compression",
+    "frequency": 4
+  },
+  "01001000": {
+    "meaning": "H",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01001101": {
+    "meaning": "M",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01101011": {
+    "meaning": "k",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00100011": {
+    "meaning": "#",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01110100": {
+    "meaning": "t",
+    "context": "ambiguous_compression",
+    "frequency": 5
+  },
+  "01010100": {
+    "meaning": "T",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00101010": {
+    "meaning": "*",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01110110": {
+    "meaning": "v",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01101001": {
+    "meaning": "i",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01001110": {
+    "meaning": "N",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01011000": {
+    "meaning": "X",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01010010": {
+    "meaning": "R",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01001100": {
+    "meaning": "L",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00101100": {
+    "meaning": ",",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01101110": {
+    "meaning": "n",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00111011": {
+    "meaning": ";",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01010001": {
+    "meaning": "Q",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00110011": {
+    "meaning": "3",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "01100001": {
+    "meaning": "a",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01100100": {
+    "meaning": "d",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01000010": {
+    "meaning": "B",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "00100010": {
+    "meaning": "\"",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01000100": {
+    "meaning": "D",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01100000": {
+    "meaning": "`",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01011110": {
+    "meaning": "^",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00101001": {
+    "meaning": ")",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01011111": {
+    "meaning": "_",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01011001": {
+    "meaning": "Y",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00111001": {
+    "meaning": "9",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01000101": {
+    "meaning": "E",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01111011": {
+    "meaning": "{",
+    "context": "ambiguous_compression",
+    "frequency": 2
+  },
+  "00110100": {
+    "meaning": "4",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01111101": {
+    "meaning": "}",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01110001": {
+    "meaning": "q",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01100101": {
+    "meaning": "e",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01000111": {
+    "meaning": "G",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01010011": {
+    "meaning": "S",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "01011101": {
+    "meaning": "]",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  },
+  "00101000": {
+    "meaning": "(",
+    "context": "ambiguous_compression",
+    "frequency": 1
+  }
+}

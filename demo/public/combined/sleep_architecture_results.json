@@ -1,0 +1,1438 @@
+[
+  {
+    "period_id": 0,
+    "timestamp": 1641075362000,
+    "sleep_architecture": {
+      "a_count": 43,
+      "a_percentage": 28.859060402684566,
+      "a_minutes": 215,
+      "l_count": 77,
+      "l_percentage": 51.67785234899329,
+      "l_minutes": 385,
+      "d_count": 19,
+      "d_percentage": 12.751677852348994,
+      "d_minutes": 95,
+      "r_count": 10,
+      "r_percentage": 6.7114093959731544,
+      "r_minutes": 50,
+      "l_sleep_percentage": 72.64150943396226,
+      "d_sleep_percentage": 17.92452830188679,
+      "r_sleep_percentage": 9.433962264150944,
+      "total_epochs": 149,
+      "total_sleep_epochs": 106
+    },
+    "stage_transitions": {
+      "total_transitions": 50,
+      "transition_rate": 0.33557046979865773,
+      "transition_counts": {
+        "A->L": 13,
+        "L->D": 8,
+        "D->A": 4,
+        "D->L": 5,
+        "L->A": 9,
+        "A->R": 2,
+        "R->A": 3,
+        "A->D": 1,
+        "L->R": 3,
+        "R->L": 2
+      },
+      "transition_probabilities": {
+        "A->L": 0.26,
+        "L->D": 0.16,
+        "D->A": 0.08,
+        "D->L": 0.1,
+        "L->A": 0.18,
+        "A->R": 0.04,
+        "R->A": 0.06,
+        "A->D": 0.02,
+        "L->R": 0.06,
+        "R->L": 0.04
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          13
+        ],
+        [
+          "L->A",
+          9
+        ],
+        [
+          "L->D",
+          8
+        ],
+        [
+          "D->L",
+          5
+        ],
+        [
+          "D->A",
+          4
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 4,
+      "average_duration_min": 147.5,
+      "rem_latency_min": 260,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 52,
+          "duration": 52
+        },
+        {
+          "start": 55,
+          "end": 81,
+          "duration": 27
+        },
+        {
+          "start": 82,
+          "end": 104,
+          "duration": 23
+        },
+        {
+          "start": 112,
+          "end": 127,
+          "duration": 16
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 16,
+      "total_wake_time_min": 205,
+      "average_wake_duration_min": 12.8125,
+      "longest_wake_min": 45
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 68,
+      "calculated_efficiency": 71.14093959731544,
+      "efficiency_category": "Fair",
+      "sleep_onset_latency_min": 12.0,
+      "total_sleep_time_hrs": 8.3666666667
+    },
+    "interpretation": "Sleep analysis: reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641161158000,
+    "sleep_architecture": {
+      "a_count": 49,
+      "a_percentage": 34.751773049645394,
+      "a_minutes": 245,
+      "l_count": 66,
+      "l_percentage": 46.808510638297875,
+      "l_minutes": 330,
+      "d_count": 17,
+      "d_percentage": 12.056737588652481,
+      "d_minutes": 85,
+      "r_count": 9,
+      "r_percentage": 6.382978723404255,
+      "r_minutes": 45,
+      "l_sleep_percentage": 71.73913043478261,
+      "d_sleep_percentage": 18.478260869565215,
+      "r_sleep_percentage": 9.782608695652174,
+      "total_epochs": 141,
+      "total_sleep_epochs": 92
+    },
+    "stage_transitions": {
+      "total_transitions": 43,
+      "transition_rate": 0.3049645390070922,
+      "transition_counts": {
+        "A->R": 4,
+        "R->A": 5,
+        "A->D": 1,
+        "D->L": 3,
+        "L->A": 9,
+        "A->L": 12,
+        "L->D": 5,
+        "D->A": 3,
+        "L->R": 1
+      },
+      "transition_probabilities": {
+        "A->R": 0.09302325581395349,
+        "R->A": 0.11627906976744186,
+        "A->D": 0.023255813953488372,
+        "D->L": 0.06976744186046512,
+        "L->A": 0.20930232558139536,
+        "A->L": 0.27906976744186046,
+        "L->D": 0.11627906976744186,
+        "D->A": 0.06976744186046512,
+        "L->R": 0.023255813953488372
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          12
+        ],
+        [
+          "L->A",
+          9
+        ],
+        [
+          "R->A",
+          5
+        ],
+        [
+          "L->D",
+          5
+        ],
+        [
+          "A->R",
+          4
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 3,
+      "average_duration_min": 168.33333333333334,
+      "rem_latency_min": 20,
+      "cycles": [
+        {
+          "start": 18,
+          "end": 38,
+          "duration": 21
+        },
+        {
+          "start": 43,
+          "end": 97,
+          "duration": 55
+        },
+        {
+          "start": 99,
+          "end": 123,
+          "duration": 25
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 17,
+      "total_wake_time_min": 235,
+      "average_wake_duration_min": 13.823529411764707,
+      "longest_wake_min": 50
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 63,
+      "calculated_efficiency": 65.24822695035462,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 20.500000002,
+      "total_sleep_time_hrs": 7.325
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641245158000,
+    "sleep_architecture": {
+      "a_count": 65,
+      "a_percentage": 44.52054794520548,
+      "a_minutes": 325,
+      "l_count": 64,
+      "l_percentage": 43.83561643835616,
+      "l_minutes": 320,
+      "d_count": 14,
+      "d_percentage": 9.58904109589041,
+      "d_minutes": 70,
+      "r_count": 3,
+      "r_percentage": 2.054794520547945,
+      "r_minutes": 15,
+      "l_sleep_percentage": 79.01234567901234,
+      "d_sleep_percentage": 17.28395061728395,
+      "r_sleep_percentage": 3.7037037037037033,
+      "total_epochs": 146,
+      "total_sleep_epochs": 81
+    },
+    "stage_transitions": {
+      "total_transitions": 52,
+      "transition_rate": 0.3561643835616438,
+      "transition_counts": {
+        "A->D": 2,
+        "D->A": 5,
+        "A->L": 16,
+        "L->D": 7,
+        "D->L": 4,
+        "L->A": 12,
+        "L->R": 2,
+        "R->L": 1,
+        "A->R": 1,
+        "R->A": 2
+      },
+      "transition_probabilities": {
+        "A->D": 0.038461538461538464,
+        "D->A": 0.09615384615384616,
+        "A->L": 0.3076923076923077,
+        "L->D": 0.1346153846153846,
+        "D->L": 0.07692307692307693,
+        "L->A": 0.23076923076923078,
+        "L->R": 0.038461538461538464,
+        "R->L": 0.019230769230769232,
+        "A->R": 0.019230769230769232,
+        "R->A": 0.038461538461538464
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          16
+        ],
+        [
+          "L->A",
+          12
+        ],
+        [
+          "L->D",
+          7
+        ],
+        [
+          "D->A",
+          5
+        ],
+        [
+          "D->L",
+          4
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 3,
+      "average_duration_min": 231.66666666666666,
+      "rem_latency_min": 255,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 51,
+          "duration": 51
+        },
+        {
+          "start": 52,
+          "end": 118,
+          "duration": 67
+        },
+        {
+          "start": 120,
+          "end": 140,
+          "duration": 21
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 19,
+      "total_wake_time_min": 300,
+      "average_wake_duration_min": 15.789473684210526,
+      "longest_wake_min": 75
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 53,
+      "calculated_efficiency": 55.47945205479452,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 3.0,
+      "total_sleep_time_hrs": 6.425
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641334080000,
+    "sleep_architecture": {
+      "a_count": 42,
+      "a_percentage": 36.84210526315789,
+      "a_minutes": 210,
+      "l_count": 50,
+      "l_percentage": 43.859649122807014,
+      "l_minutes": 250,
+      "d_count": 17,
+      "d_percentage": 14.912280701754385,
+      "d_minutes": 85,
+      "r_count": 5,
+      "r_percentage": 4.385964912280701,
+      "r_minutes": 25,
+      "l_sleep_percentage": 69.44444444444444,
+      "d_sleep_percentage": 23.61111111111111,
+      "r_sleep_percentage": 6.944444444444445,
+      "total_epochs": 114,
+      "total_sleep_epochs": 72
+    },
+    "stage_transitions": {
+      "total_transitions": 43,
+      "transition_rate": 0.37719298245614036,
+      "transition_counts": {
+        "A->L": 15,
+        "L->D": 6,
+        "D->A": 8,
+        "L->A": 8,
+        "A->D": 2,
+        "A->R": 1,
+        "R->A": 2,
+        "L->R": 1
+      },
+      "transition_probabilities": {
+        "A->L": 0.3488372093023256,
+        "L->D": 0.13953488372093023,
+        "D->A": 0.18604651162790697,
+        "L->A": 0.18604651162790697,
+        "A->D": 0.046511627906976744,
+        "A->R": 0.023255813953488372,
+        "R->A": 0.046511627906976744,
+        "L->R": 0.023255813953488372
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          15
+        ],
+        [
+          "D->A",
+          8
+        ],
+        [
+          "L->A",
+          8
+        ],
+        [
+          "L->D",
+          6
+        ],
+        [
+          "A->D",
+          2
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 2,
+      "average_duration_min": 257.5,
+      "rem_latency_min": 235,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 48,
+          "duration": 48
+        },
+        {
+          "start": 52,
+          "end": 106,
+          "duration": 55
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 18,
+      "total_wake_time_min": 200,
+      "average_wake_duration_min": 11.11111111111111,
+      "longest_wake_min": 25
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 61,
+      "calculated_efficiency": 63.1578947368421,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 7.5,
+      "total_sleep_time_hrs": 5.7083333333
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641421440000,
+    "sleep_architecture": {
+      "a_count": 45,
+      "a_percentage": 39.473684210526315,
+      "a_minutes": 225,
+      "l_count": 48,
+      "l_percentage": 42.10526315789473,
+      "l_minutes": 240,
+      "d_count": 17,
+      "d_percentage": 14.912280701754385,
+      "d_minutes": 85,
+      "r_count": 4,
+      "r_percentage": 3.508771929824561,
+      "r_minutes": 20,
+      "l_sleep_percentage": 69.56521739130434,
+      "d_sleep_percentage": 24.637681159420293,
+      "r_sleep_percentage": 5.797101449275362,
+      "total_epochs": 114,
+      "total_sleep_epochs": 69
+    },
+    "stage_transitions": {
+      "total_transitions": 44,
+      "transition_rate": 0.38596491228070173,
+      "transition_counts": {
+        "A->L": 12,
+        "L->A": 10,
+        "L->D": 5,
+        "D->A": 3,
+        "A->D": 3,
+        "D->L": 5,
+        "L->R": 3,
+        "R->A": 2,
+        "R->L": 1
+      },
+      "transition_probabilities": {
+        "A->L": 0.2727272727272727,
+        "L->A": 0.22727272727272727,
+        "L->D": 0.11363636363636363,
+        "D->A": 0.06818181818181818,
+        "A->D": 0.06818181818181818,
+        "D->L": 0.11363636363636363,
+        "L->R": 0.06818181818181818,
+        "R->A": 0.045454545454545456,
+        "R->L": 0.022727272727272728
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          12
+        ],
+        [
+          "L->A",
+          10
+        ],
+        [
+          "L->D",
+          5
+        ],
+        [
+          "D->L",
+          5
+        ],
+        [
+          "D->A",
+          3
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 3,
+      "average_duration_min": 175.0,
+      "rem_latency_min": 395,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 80,
+          "duration": 80
+        },
+        {
+          "start": 85,
+          "end": 106,
+          "duration": 22
+        },
+        {
+          "start": 107,
+          "end": 109,
+          "duration": 3
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 15,
+      "total_wake_time_min": 220,
+      "average_wake_duration_min": 14.666666666666666,
+      "longest_wake_min": 75
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 56,
+      "calculated_efficiency": 60.526315789473685,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 85.999999998,
+      "total_sleep_time_hrs": 5.3416666667
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 1,
+    "timestamp": 1641509041000,
+    "sleep_architecture": {
+      "a_count": 51,
+      "a_percentage": 41.80327868852459,
+      "a_minutes": 255,
+      "l_count": 54,
+      "l_percentage": 44.26229508196721,
+      "l_minutes": 270,
+      "d_count": 13,
+      "d_percentage": 10.655737704918032,
+      "d_minutes": 65,
+      "r_count": 4,
+      "r_percentage": 3.278688524590164,
+      "r_minutes": 20,
+      "l_sleep_percentage": 76.05633802816901,
+      "d_sleep_percentage": 18.30985915492958,
+      "r_sleep_percentage": 5.633802816901409,
+      "total_epochs": 122,
+      "total_sleep_epochs": 71
+    },
+    "stage_transitions": {
+      "total_transitions": 33,
+      "transition_rate": 0.27049180327868855,
+      "transition_counts": {
+        "A->D": 3,
+        "D->A": 2,
+        "A->L": 9,
+        "L->A": 10,
+        "D->L": 2,
+        "L->D": 1,
+        "L->R": 2,
+        "R->L": 2,
+        "R->A": 1,
+        "A->R": 1
+      },
+      "transition_probabilities": {
+        "A->D": 0.09090909090909091,
+        "D->A": 0.06060606060606061,
+        "A->L": 0.2727272727272727,
+        "L->A": 0.30303030303030304,
+        "D->L": 0.06060606060606061,
+        "L->D": 0.030303030303030304,
+        "L->R": 0.06060606060606061,
+        "R->L": 0.06060606060606061,
+        "R->A": 0.030303030303030304,
+        "A->R": 0.030303030303030304
+      },
+      "most_common_transitions": [
+        [
+          "L->A",
+          10
+        ],
+        [
+          "A->L",
+          9
+        ],
+        [
+          "A->D",
+          3
+        ],
+        [
+          "D->A",
+          2
+        ],
+        [
+          "D->L",
+          2
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 2,
+      "average_duration_min": 157.5,
+      "rem_latency_min": 325,
+      "cycles": [
+        {
+          "start": 7,
+          "end": 65,
+          "duration": 59
+        },
+        {
+          "start": 66,
+          "end": 69,
+          "duration": 4
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 13,
+      "total_wake_time_min": 230,
+      "average_wake_duration_min": 17.692307692307693,
+      "longest_wake_min": 40
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 56,
+      "calculated_efficiency": 58.19672131147541,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 34.000000002,
+      "total_sleep_time_hrs": 5.6916666667
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641604559000,
+    "sleep_architecture": {
+      "a_count": 41,
+      "a_percentage": 38.67924528301887,
+      "a_minutes": 205,
+      "l_count": 42,
+      "l_percentage": 39.62264150943396,
+      "l_minutes": 210,
+      "d_count": 20,
+      "d_percentage": 18.867924528301888,
+      "d_minutes": 100,
+      "r_count": 3,
+      "r_percentage": 2.8301886792452833,
+      "r_minutes": 15,
+      "l_sleep_percentage": 64.61538461538461,
+      "d_sleep_percentage": 30.76923076923077,
+      "r_sleep_percentage": 4.615384615384616,
+      "total_epochs": 106,
+      "total_sleep_epochs": 65
+    },
+    "stage_transitions": {
+      "total_transitions": 34,
+      "transition_rate": 0.32075471698113206,
+      "transition_counts": {
+        "A->L": 13,
+        "L->D": 4,
+        "D->A": 3,
+        "L->A": 9,
+        "L->R": 2,
+        "R->A": 1,
+        "D->L": 1,
+        "R->L": 1
+      },
+      "transition_probabilities": {
+        "A->L": 0.38235294117647056,
+        "L->D": 0.11764705882352941,
+        "D->A": 0.08823529411764706,
+        "L->A": 0.2647058823529412,
+        "L->R": 0.058823529411764705,
+        "R->A": 0.029411764705882353,
+        "D->L": 0.029411764705882353,
+        "R->L": 0.029411764705882353
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          13
+        ],
+        [
+          "L->A",
+          9
+        ],
+        [
+          "L->D",
+          4
+        ],
+        [
+          "D->A",
+          3
+        ],
+        [
+          "L->R",
+          2
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 2,
+      "average_duration_min": 180.0,
+      "rem_latency_min": 275,
+      "cycles": [
+        {
+          "start": 10,
+          "end": 56,
+          "duration": 47
+        },
+        {
+          "start": 60,
+          "end": 84,
+          "duration": 25
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 13,
+      "total_wake_time_min": 195,
+      "average_wake_duration_min": 15.0,
+      "longest_wake_min": 50
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 59,
+      "calculated_efficiency": 61.32075471698113,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 48.499999998,
+      "total_sleep_time_hrs": 5.15
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | abundant deep sleep | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641683459000,
+    "sleep_architecture": {
+      "a_count": 46,
+      "a_percentage": 36.507936507936506,
+      "a_minutes": 230,
+      "l_count": 47,
+      "l_percentage": 37.301587301587304,
+      "l_minutes": 235,
+      "d_count": 27,
+      "d_percentage": 21.428571428571427,
+      "d_minutes": 135,
+      "r_count": 6,
+      "r_percentage": 4.761904761904762,
+      "r_minutes": 30,
+      "l_sleep_percentage": 58.75,
+      "d_sleep_percentage": 33.75,
+      "r_sleep_percentage": 7.5,
+      "total_epochs": 126,
+      "total_sleep_epochs": 80
+    },
+    "stage_transitions": {
+      "total_transitions": 46,
+      "transition_rate": 0.36507936507936506,
+      "transition_counts": {
+        "A->D": 4,
+        "D->A": 4,
+        "A->L": 13,
+        "L->D": 4,
+        "D->L": 4,
+        "L->A": 13,
+        "L->R": 2,
+        "R->L": 2
+      },
+      "transition_probabilities": {
+        "A->D": 0.08695652173913043,
+        "D->A": 0.08695652173913043,
+        "A->L": 0.2826086956521739,
+        "L->D": 0.08695652173913043,
+        "D->L": 0.08695652173913043,
+        "L->A": 0.2826086956521739,
+        "L->R": 0.043478260869565216,
+        "R->L": 0.043478260869565216
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          13
+        ],
+        [
+          "L->A",
+          13
+        ],
+        [
+          "A->D",
+          4
+        ],
+        [
+          "D->A",
+          4
+        ],
+        [
+          "L->D",
+          4
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 2,
+      "average_duration_min": 217.5,
+      "rem_latency_min": 270,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 54,
+          "duration": 54
+        },
+        {
+          "start": 55,
+          "end": 87,
+          "duration": 33
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 17,
+      "total_wake_time_min": 220,
+      "average_wake_duration_min": 12.941176470588236,
+      "longest_wake_min": 35
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 59,
+      "calculated_efficiency": 63.49206349206349,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 10.000000002,
+      "total_sleep_time_hrs": 6.2
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | abundant deep sleep | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641767909000,
+    "sleep_architecture": {
+      "a_count": 50,
+      "a_percentage": 43.103448275862064,
+      "a_minutes": 250,
+      "l_count": 48,
+      "l_percentage": 41.37931034482759,
+      "l_minutes": 240,
+      "d_count": 12,
+      "d_percentage": 10.344827586206897,
+      "d_minutes": 60,
+      "r_count": 6,
+      "r_percentage": 5.172413793103448,
+      "r_minutes": 30,
+      "l_sleep_percentage": 72.72727272727273,
+      "d_sleep_percentage": 18.181818181818183,
+      "r_sleep_percentage": 9.090909090909092,
+      "total_epochs": 116,
+      "total_sleep_epochs": 66
+    },
+    "stage_transitions": {
+      "total_transitions": 42,
+      "transition_rate": 0.3620689655172414,
+      "transition_counts": {
+        "A->L": 15,
+        "L->A": 11,
+        "L->D": 6,
+        "D->A": 4,
+        "D->L": 2,
+        "L->R": 2,
+        "R->L": 2
+      },
+      "transition_probabilities": {
+        "A->L": 0.35714285714285715,
+        "L->A": 0.2619047619047619,
+        "L->D": 0.14285714285714285,
+        "D->A": 0.09523809523809523,
+        "D->L": 0.047619047619047616,
+        "L->R": 0.047619047619047616,
+        "R->L": 0.047619047619047616
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          15
+        ],
+        [
+          "L->A",
+          11
+        ],
+        [
+          "L->D",
+          6
+        ],
+        [
+          "D->A",
+          4
+        ],
+        [
+          "D->L",
+          2
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 2,
+      "average_duration_min": 260.0,
+      "rem_latency_min": 360,
+      "cycles": [
+        {
+          "start": 1,
+          "end": 75,
+          "duration": 75
+        },
+        {
+          "start": 76,
+          "end": 104,
+          "duration": 29
+        }
+      ]
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 15,
+      "total_wake_time_min": 240,
+      "average_wake_duration_min": 16.0,
+      "longest_wake_min": 75
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 52,
+      "calculated_efficiency": 56.896551724137936,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 87.49999999799999,
+      "total_sleep_time_hrs": 5.025
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 3,
+    "timestamp": 1641862708000,
+    "sleep_architecture": {
+      "a_count": 34,
+      "a_percentage": 37.362637362637365,
+      "a_minutes": 170,
+      "l_count": 29,
+      "l_percentage": 31.868131868131865,
+      "l_minutes": 145,
+      "d_count": 28,
+      "d_percentage": 30.76923076923077,
+      "d_minutes": 140,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 50.877192982456144,
+      "d_sleep_percentage": 49.122807017543856,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 91,
+      "total_sleep_epochs": 57
+    },
+    "stage_transitions": {
+      "total_transitions": 23,
+      "transition_rate": 0.25274725274725274,
+      "transition_counts": {
+        "A->D": 1,
+        "D->A": 4,
+        "A->L": 8,
+        "L->D": 4,
+        "L->A": 5,
+        "D->L": 1
+      },
+      "transition_probabilities": {
+        "A->D": 0.043478260869565216,
+        "D->A": 0.17391304347826086,
+        "A->L": 0.34782608695652173,
+        "L->D": 0.17391304347826086,
+        "L->A": 0.21739130434782608,
+        "D->L": 0.043478260869565216
+      },
+      "most_common_transitions": [
+        [
+          "A->L",
+          8
+        ],
+        [
+          "L->A",
+          5
+        ],
+        [
+          "D->A",
+          4
+        ],
+        [
+          "L->D",
+          4
+        ],
+        [
+          "A->D",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 9,
+      "total_wake_time_min": 155,
+      "average_wake_duration_min": 17.22222222222222,
+      "longest_wake_min": 45
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 64,
+      "calculated_efficiency": 62.637362637362635,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 7.000000002,
+      "total_sleep_time_hrs": 4.8416666667
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | abundant deep sleep | reduced REM sleep.",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 86,
+    "timestamp": 0,
+    "sleep_architecture": {
+      "a_count": 0,
+      "a_percentage": 0.0,
+      "a_minutes": 0,
+      "l_count": 0,
+      "l_percentage": 0.0,
+      "l_minutes": 0,
+      "d_count": 0,
+      "d_percentage": 0.0,
+      "d_minutes": 0,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 0.0,
+      "d_sleep_percentage": 0.0,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 180,
+      "total_sleep_epochs": 180
+    },
+    "stage_transitions": {
+      "total_transitions": 5,
+      "transition_rate": 0.027777777777777776,
+      "transition_counts": {
+        "awake->light": 1,
+        "light->deep": 1,
+        "deep->light": 1,
+        "light->rem": 1,
+        "rem->awake": 1
+      },
+      "transition_probabilities": {
+        "awake->light": 0.2,
+        "light->deep": 0.2,
+        "deep->light": 0.2,
+        "light->rem": 0.2,
+        "rem->awake": 0.2
+      },
+      "most_common_transitions": [
+        [
+          "awake->light",
+          1
+        ],
+        [
+          "light->deep",
+          1
+        ],
+        [
+          "deep->light",
+          1
+        ],
+        [
+          "light->rem",
+          1
+        ],
+        [
+          "rem->awake",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 0,
+      "total_wake_time_min": 0,
+      "average_wake_duration_min": 0,
+      "longest_wake_min": 0
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 0,
+      "calculated_efficiency": 100.0,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 0,
+      "total_sleep_time_hrs": 8.0
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | insufficient deep sleep | reduced REM sleep.",
+    "data_source": "activity_derived"
+  },
+  {
+    "period_id": 87,
+    "timestamp": 0,
+    "sleep_architecture": {
+      "a_count": 0,
+      "a_percentage": 0.0,
+      "a_minutes": 0,
+      "l_count": 0,
+      "l_percentage": 0.0,
+      "l_minutes": 0,
+      "d_count": 0,
+      "d_percentage": 0.0,
+      "d_minutes": 0,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 0.0,
+      "d_sleep_percentage": 0.0,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 180,
+      "total_sleep_epochs": 180
+    },
+    "stage_transitions": {
+      "total_transitions": 5,
+      "transition_rate": 0.027777777777777776,
+      "transition_counts": {
+        "awake->light": 1,
+        "light->deep": 1,
+        "deep->light": 1,
+        "light->rem": 1,
+        "rem->awake": 1
+      },
+      "transition_probabilities": {
+        "awake->light": 0.2,
+        "light->deep": 0.2,
+        "deep->light": 0.2,
+        "light->rem": 0.2,
+        "rem->awake": 0.2
+      },
+      "most_common_transitions": [
+        [
+          "awake->light",
+          1
+        ],
+        [
+          "light->deep",
+          1
+        ],
+        [
+          "deep->light",
+          1
+        ],
+        [
+          "light->rem",
+          1
+        ],
+        [
+          "rem->awake",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 0,
+      "total_wake_time_min": 0,
+      "average_wake_duration_min": 0,
+      "longest_wake_min": 0
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 0,
+      "calculated_efficiency": 100.0,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 0,
+      "total_sleep_time_hrs": 8.0
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | insufficient deep sleep | reduced REM sleep.",
+    "data_source": "activity_derived"
+  },
+  {
+    "period_id": 88,
+    "timestamp": 0,
+    "sleep_architecture": {
+      "a_count": 0,
+      "a_percentage": 0.0,
+      "a_minutes": 0,
+      "l_count": 0,
+      "l_percentage": 0.0,
+      "l_minutes": 0,
+      "d_count": 0,
+      "d_percentage": 0.0,
+      "d_minutes": 0,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 0.0,
+      "d_sleep_percentage": 0.0,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 180,
+      "total_sleep_epochs": 180
+    },
+    "stage_transitions": {
+      "total_transitions": 5,
+      "transition_rate": 0.027777777777777776,
+      "transition_counts": {
+        "awake->light": 1,
+        "light->deep": 1,
+        "deep->light": 1,
+        "light->rem": 1,
+        "rem->awake": 1
+      },
+      "transition_probabilities": {
+        "awake->light": 0.2,
+        "light->deep": 0.2,
+        "deep->light": 0.2,
+        "light->rem": 0.2,
+        "rem->awake": 0.2
+      },
+      "most_common_transitions": [
+        [
+          "awake->light",
+          1
+        ],
+        [
+          "light->deep",
+          1
+        ],
+        [
+          "deep->light",
+          1
+        ],
+        [
+          "light->rem",
+          1
+        ],
+        [
+          "rem->awake",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 0,
+      "total_wake_time_min": 0,
+      "average_wake_duration_min": 0,
+      "longest_wake_min": 0
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 0,
+      "calculated_efficiency": 100.0,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 0,
+      "total_sleep_time_hrs": 8.0
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | insufficient deep sleep | reduced REM sleep.",
+    "data_source": "activity_derived"
+  },
+  {
+    "period_id": 89,
+    "timestamp": 0,
+    "sleep_architecture": {
+      "a_count": 0,
+      "a_percentage": 0.0,
+      "a_minutes": 0,
+      "l_count": 0,
+      "l_percentage": 0.0,
+      "l_minutes": 0,
+      "d_count": 0,
+      "d_percentage": 0.0,
+      "d_minutes": 0,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 0.0,
+      "d_sleep_percentage": 0.0,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 180,
+      "total_sleep_epochs": 180
+    },
+    "stage_transitions": {
+      "total_transitions": 5,
+      "transition_rate": 0.027777777777777776,
+      "transition_counts": {
+        "awake->light": 1,
+        "light->deep": 1,
+        "deep->light": 1,
+        "light->rem": 1,
+        "rem->awake": 1
+      },
+      "transition_probabilities": {
+        "awake->light": 0.2,
+        "light->deep": 0.2,
+        "deep->light": 0.2,
+        "light->rem": 0.2,
+        "rem->awake": 0.2
+      },
+      "most_common_transitions": [
+        [
+          "awake->light",
+          1
+        ],
+        [
+          "light->deep",
+          1
+        ],
+        [
+          "deep->light",
+          1
+        ],
+        [
+          "light->rem",
+          1
+        ],
+        [
+          "rem->awake",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 0,
+      "total_wake_time_min": 0,
+      "average_wake_duration_min": 0,
+      "longest_wake_min": 0
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 0,
+      "calculated_efficiency": 100.0,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 0,
+      "total_sleep_time_hrs": 8.0
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | insufficient deep sleep | reduced REM sleep.",
+    "data_source": "activity_derived"
+  },
+  {
+    "period_id": 90,
+    "timestamp": 0,
+    "sleep_architecture": {
+      "a_count": 0,
+      "a_percentage": 0.0,
+      "a_minutes": 0,
+      "l_count": 0,
+      "l_percentage": 0.0,
+      "l_minutes": 0,
+      "d_count": 0,
+      "d_percentage": 0.0,
+      "d_minutes": 0,
+      "r_count": 0,
+      "r_percentage": 0.0,
+      "r_minutes": 0,
+      "l_sleep_percentage": 0.0,
+      "d_sleep_percentage": 0.0,
+      "r_sleep_percentage": 0.0,
+      "total_epochs": 180,
+      "total_sleep_epochs": 180
+    },
+    "stage_transitions": {
+      "total_transitions": 5,
+      "transition_rate": 0.027777777777777776,
+      "transition_counts": {
+        "awake->light": 1,
+        "light->deep": 1,
+        "deep->light": 1,
+        "light->rem": 1,
+        "rem->awake": 1
+      },
+      "transition_probabilities": {
+        "awake->light": 0.2,
+        "light->deep": 0.2,
+        "deep->light": 0.2,
+        "light->rem": 0.2,
+        "rem->awake": 0.2
+      },
+      "most_common_transitions": [
+        [
+          "awake->light",
+          1
+        ],
+        [
+          "light->deep",
+          1
+        ],
+        [
+          "deep->light",
+          1
+        ],
+        [
+          "light->rem",
+          1
+        ],
+        [
+          "rem->awake",
+          1
+        ]
+      ]
+    },
+    "sleep_cycles": {
+      "cycle_count": 0
+    },
+    "fragmentation_analysis": {
+      "wake_episodes": 0,
+      "total_wake_time_min": 0,
+      "average_wake_duration_min": 0,
+      "longest_wake_min": 0
+    },
+    "efficiency_analysis": {
+      "recorded_efficiency": 0,
+      "calculated_efficiency": 100.0,
+      "efficiency_category": "Poor",
+      "sleep_onset_latency_min": 0,
+      "total_sleep_time_hrs": 8.0
+    },
+    "interpretation": "Sleep analysis: poor sleep efficiency suggesting fragmentation | insufficient deep sleep | reduced REM sleep.",
+    "data_source": "activity_derived"
+  }
+]

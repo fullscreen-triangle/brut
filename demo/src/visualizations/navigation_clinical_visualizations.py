@@ -9,6 +9,7 @@ import seaborn as sns
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 import os
+import math
 from typing import Dict, List, Any, Tuple
 import networkx as nx
 from scipy.stats import multivariate_normal
@@ -325,7 +326,7 @@ class NavigationClinicalVisualizer:
         
         # Show complexity reduction O(n!) → O(log(n/C_ratio))
         n_values = np.arange(5, 20)
-        factorial_complexity = [np.math.factorial(n) for n in n_values]
+        factorial_complexity = [math.factorial(n) for n in n_values]
         log_complexity = [np.log(n/100) for n in n_values]  # C_ratio = 100
         
         ax4.semilogy(n_values, factorial_complexity, 'ro-', linewidth=2, 

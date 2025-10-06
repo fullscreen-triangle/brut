@@ -1,0 +1,102 @@
+[
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 4.68,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 30.06,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 29.74,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 36.4,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 89.39,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 85.73,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 113.38,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 53.74,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 6.85,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "activity_fragmentation": 0.0,
+    "activity_transition_probability": 0.0,
+    "activity_bout_duration": 0.0,
+    "peak_activity_time": 15.0,
+    "activity_amplitude": 215.53,
+    "activity_pattern": "Sustained",
+    "data_source": "activity"
+  }
+]

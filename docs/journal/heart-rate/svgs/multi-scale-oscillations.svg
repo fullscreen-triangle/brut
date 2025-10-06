@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560"> <defs> <style> .axis{stroke:#111;stroke-width:2} .label{font:14px sans-serif; fill:#111} .title{font:700 20px sans-serif; fill:#111} .wave{fill:none;stroke:#111;stroke-width:2} .dotted{stroke-dasharray:4 6} .small{font:12px sans-serif; fill:#111} .box{fill:#fff;stroke:#111;stroke-width:2} .arrow{stroke:#111;stroke-width:2;marker-end:url(#a)} </style> <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"> <path d="M0,0 L10,3 L0,6 Z" fill="#111"/> </marker> </defs>
+    <text x="600" y="32" text-anchor="middle" class="title">Multi-Scale Oscillatory Expression</text>
+    
+    <!-- Five stacked mini-axes --> <g transform="translate(60,80)"> <!-- Scale labels --> <text x="0" y="10" class="label">Cellular (10^-1–10^2 Hz)</text> <text x="0" y="90" class="label">Cardiac (10^-2–10^1 Hz)</text> <text x="0" y="170" class="label">Respiratory (10^-3–10^0 Hz)</text> <text x="0" y="250" class="label">Autonomic (10^-4–10^-1 Hz)</text> <text x="0" y="330" class="label">Circadian (10^-5–10^-2 Hz)</text>
+        <!-- Axes -->
+<line x1="220" y1="0" x2="1040" y2="0" class="axis"/>
+<line x1="220" y1="80" x2="1040" y2="80" class="axis"/>
+<line x1="220" y1="160" x2="1040" y2="160" class="axis"/>
+<line x1="220" y1="240" x2="1040" y2="240" class="axis"/>
+<line x1="220" y1="320" x2="1040" y2="320" class="axis"/>
+
+<!-- Representative waves -->
+<path d="M220,0 c40,-20 80,20 120,0 c40,-20 80,20 120,0 c40,-20 80,20 120,0 c40,-20 80,20 120,0 c40,-20 80,20 120,0" class="wave"/>
+<path d="M220,80 c80,-10 160,10 240,0 c80,-10 160,10 240,0" class="wave"/>
+<path d="M220,160 c120,-8 240,8 360,0" class="wave"/>
+<path d="M220,240 c180,-6 360,6 540,0" class="wave dotted"/>
+<path d="M220,320 c240,-4 480,4 720,0" class="wave dotted"/>
+
+<!-- Modality projection boxes -->
+<rect x="220" y="-50" width="110" height="30" rx="6" class="box"/>
+<text x="275" y="-30" text-anchor="middle" class="small">PPG</text>
+
+<rect x="360" y="30" width="130" height="30" rx="6" class="box"/>
+<text x="425" y="50" text-anchor="middle" class="small">Accelerometer</text>
+
+<rect x="520" y="110" width="140" height="30" rx="6" class="box"/>
+<text x="590" y="130" text-anchor="middle" class="small">Temperature</text>
+
+<!-- Arrows from boxes to respective scales -->
+<line x1="275" y1="-20" x2="275" y2="0" class="arrow"/>
+<line x1="425" y1="60" x2="425" y2="80" class="arrow"/>
+<line x1="590" y1="140" x2="590" y2="160" class="arrow"/>
+</g> <!-- Mixture model note -->
+<text x="600" y="520" text-anchor="middle" class="label">Ψ_sensor(t) = ∑ A_i cos(ω_i t + φ_i) + ε_i(t)</text>
+</svg>

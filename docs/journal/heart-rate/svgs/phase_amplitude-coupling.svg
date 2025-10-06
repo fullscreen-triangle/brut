@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360">
+
+    <style> .title{font-family:Helvetica,Arial,sans-serif;font-weight:bold;font-size:16px;fill:#111} .axis{stroke:#aaa;stroke-width:1} .sig1{stroke:#1f77b4;stroke-width:1.6;fill:none} .env{stroke:#1f77b4;stroke-dasharray:4 3;stroke-width:1.2;fill:none} .sig2{stroke:#d62728;stroke-width:1.6;fill:none} .lbl{font-family:Helvetica,Arial,sans-serif;font-size:13px;fill:#111} .sub{font-family:Helvetica,Arial,sans-serif;font-size:12px;fill:#444} </style>
+    <text x="20" y="24" class="title">Phase–Amplitude Coupling (Cij)</text>
+    
+    <!-- Axes --> <line class="axis" x1="60" y1="80" x2="840" y2="80"/> <line class="axis" x1="60" y1="210" x2="840" y2="210"/> <!-- Low-frequency phase signal (j) -->
+    <path class="sig2" d="M60 210
+     C130 180, 190 180, 260 210
+     C330 240, 390 240, 460 210
+     C530 180, 590 180, 660 210
+     C730 240, 790 240, 840 210"/>
+    <text x="70" y="195" class="lbl">Slow phase φj(t) (e.g., respiratory)</text>
+    
+    <!-- High-frequency amplitude-modulated signal (i) -->
+    <path class="sig1" d="M60 80
+     C 80 50, 100 110, 120 80
+     C 140 50, 160 110, 180 80
+     C 200 50, 220 110, 240 80
+     C 260 60, 280 100, 300 80
+     C 320 60, 340 100, 360 80
+     C 380 60, 400 100, 420 80
+     C 440 50, 460 110, 480 80
+     C 500 50, 520 110, 540 80
+     C 560 60, 580 100, 600 80
+     C 620 60, 640 100, 660 80
+     C 680 50, 700 110, 720 80
+     C 740 50, 760 110, 780 80
+     C 800 60, 820 100, 840 80"/>
+    
+    <!-- Envelope -->
+    <path class="env" d="M60 80
+     C 120 40, 240 40, 300 80
+     C 360 120, 480 120, 540 80
+     C 600 40, 720 40, 780 80
+     C 820 110, 840 110, 840 110"/>
+    <path class="env" d="M60 80
+     C 120 120, 240 120, 300 80
+     C 360 40, 480 40, 540 80
+     C 600 120, 720 120, 780 80
+     C 820 50, 840 50, 840 50"/>
+    <text x="70" y="60" class="lbl">Fast amplitude Ai(t) modulated by φj(t)</text>
+    <text x="450" y="330" text-anchor="middle" class="sub">Cij measures strength of phase(φj)–amplitude(Ai) coupling (Eq. 3)</text>
+    </svg>

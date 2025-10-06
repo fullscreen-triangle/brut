@@ -1,0 +1,119 @@
+\section{Theoretical Framework}
+
+\subsection{Consumer-Grade Sensor Data Characteristics}
+
+Consumer-grade wearable devices provide continuous physiological monitoring through photoplethysmography (PPG) and tri-axial accelerometry sensors. PPG sensors measure volumetric changes in blood flow through optical absorption at wavelengths typically between 525-590 nm (green light) or 660-940 nm (red/infrared light). The sampling frequency $f_s$ ranges from 25-100 Hz for PPG signals and 50-200 Hz for accelerometry data.
+
+\begin{definition}[PPG Signal Representation]
+The raw PPG signal is represented as:
+\begin{equation}
+\text{PPG}(t) = I_0 \exp(-\epsilon(\lambda) \cdot c \cdot d(t))
+\end{equation}
+where $I_0$ denotes incident light intensity, $\epsilon(\lambda)$ represents wavelength-specific absorption coefficient, $c$ indicates blood chromophore concentration, and $d(t)$ denotes time-varying optical path length through tissue.
+\end{definition}
+
+\begin{definition}[Accelerometry Signal Representation]
+Tri-axial accelerometry data is represented as:
+\begin{equation}
+\mathbf{a}(t) = [a_x(t), a_y(t), a_z(t)]^T
+\end{equation}
+where $a_x(t)$, $a_y(t)$, and $a_z(t)$ represent acceleration components along orthogonal axes measured in units of gravitational acceleration $g = 9.81 \text{ m/s}^2$.
+\end{definition}
+
+\subsection{Measurement Periodicity and Oscillatory Characteristics}
+
+Consumer-grade sensors exhibit inherent measurement periodicity arising from physiological oscillations, device sampling characteristics, and environmental coupling. The fundamental measurement period $T_{\text{base}}$ is determined by the sensor sampling interval:
+
+\begin{equation}
+T_{\text{base}} = \frac{1}{f_s}
+\end{equation}
+
+However, physiological signals contain multiple oscillatory components spanning several orders of magnitude in frequency:
+
+\begin{definition}[Physiological Oscillatory Spectrum]
+The complete physiological oscillatory spectrum captured by consumer sensors encompasses:
+\begin{align}
+f_{\text{cardiac}} &\sim 0.8-3.0 \text{ Hz} \quad \text{(heart rate)} \\
+f_{\text{respiratory}} &\sim 0.1-0.5 \text{ Hz} \quad \text{(breathing rate)} \\
+f_{\text{movement}} &\sim 0.5-15 \text{ Hz} \quad \text{(locomotor activity)} \\
+f_{\text{circadian}} &\sim 1.16 \times 10^{-5} \text{ Hz} \quad \text{(24-hour cycles)} \\
+f_{\text{ultradian}} &\sim 1.39-2.31 \times 10^{-4} \text{ Hz} \quad \text{(90-120 minute cycles)}
+\end{align}
+\end{definition}
+
+\subsection{Activity Quantification Through Oscillatory Analysis}
+
+Traditional activity metrics such as step counts and energy expenditure represent time-averaged quantities that obscure underlying oscillatory dynamics. We define activity through its oscillatory characteristics:
+
+\begin{definition}[Oscillatory Activity Representation]
+Activity at time $t$ is represented as a multi-component oscillatory signal:
+\begin{equation}
+A(t) = A_0 + \sum_{k=1}^{N} A_k \cos(2\pi f_k t + \phi_k) + \eta(t)
+\end{equation}
+where $A_0$ denotes baseline activity level, $A_k$ represents amplitude of oscillatory component $k$, $f_k$ indicates frequency of component $k$, $\phi_k$ denotes phase of component $k$, and $\eta(t)$ represents measurement noise.
+\end{definition}
+
+\subsection{Metabolic Equivalent Task (MET) Oscillatory Dynamics}
+
+Metabolic Equivalent of Task (MET) values quantify energy expenditure relative to resting metabolic rate, where 1 MET = 3.5 mL O₂/kg/min. Consumer devices estimate MET values through accelerometry-based algorithms:
+
+\begin{definition}[MET Estimation from Accelerometry]
+MET values are estimated through:
+\begin{equation}
+\text{MET}(t) = \text{MET}_{\text{rest}} + \alpha \cdot \|\mathbf{a}(t)\| + \beta \cdot \text{VAR}(\mathbf{a}(t))
+\end{equation}
+where $\text{MET}_{\text{rest}} = 1.0$ represents resting metabolic rate, $\alpha$ and $\beta$ denote calibration coefficients, $\|\mathbf{a}(t)\|$ indicates vector magnitude of acceleration, and $\text{VAR}(\mathbf{a}(t))$ represents acceleration variance over a sliding time window.
+\end{definition}
+
+\subsection{Heart Rate Variability as Oscillatory Coupling Indicator}
+
+Heart rate variability (HRV) metrics derived from PPG signals provide direct measurements of autonomic nervous system oscillatory coupling:
+
+\begin{definition}[RMSSD Calculation]
+Root Mean Square of Successive Differences (RMSSD) quantifies short-term HRV:
+\begin{equation}
+\text{RMSSD} = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N-1} (\text{RR}_{i+1} - \text{RR}_i)^2}
+\end{equation}
+where $\text{RR}_i$ represents the $i$-th inter-beat interval measured in milliseconds, and $N$ denotes the total number of intervals.
+\end{definition}
+
+\begin{definition}[SDNN Calculation]
+Standard Deviation of NN intervals (SDNN) quantifies overall HRV:
+\begin{equation}
+\text{SDNN} = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N} (\text{RR}_i - \overline{\text{RR}})^2}
+\end{equation}
+where $\overline{\text{RR}}$ represents the mean inter-beat interval.
+\end{definition}
+
+\subsection{Temporal Resolution and Measurement Windows}
+
+Consumer devices typically provide aggregated measurements over fixed temporal windows. Standard temporal resolutions include:
+
+\begin{itemize}
+\item 1-minute windows: Heart rate, step counts, movement intensity
+\item 5-minute windows: HRV metrics, detailed activity classification
+\item 15-minute windows: Sleep stage estimation, circadian rhythm analysis
+\item 1-hour windows: Energy expenditure, long-term trend analysis
+\end{itemize}
+
+\begin{definition}[Temporal Window Function]
+For a measurement window of duration $\Delta t$, the windowed signal is:
+\begin{equation}
+X_{\text{window}}[n] = \frac{1}{\Delta t} \int_{n\Delta t}^{(n+1)\Delta t} X(t) \, dt
+\end{equation}
+where $X(t)$ represents the continuous physiological signal and $X_{\text{window}}[n]$ denotes the $n$-th windowed measurement.
+\end{definition}
+
+\subsection{Data Imprecision and Oscillatory Robustness}
+
+Consumer-grade sensors exhibit measurement imprecision due to motion artifacts, sensor placement variability, and environmental factors. However, oscillatory analysis provides robustness to measurement noise through frequency-domain filtering and phase relationship preservation:
+
+\begin{theorem}[Oscillatory Measurement Robustness]
+For a noisy measurement $\tilde{X}(t) = X(t) + \epsilon(t)$ where $\epsilon(t)$ represents additive noise with power spectral density $S_\epsilon(f)$, the oscillatory components remain recoverable provided:
+\begin{equation}
+\frac{S_X(f_k)}{S_\epsilon(f_k)} > \gamma_{\text{threshold}}
+\end{equation}
+where $S_X(f_k)$ denotes signal power at frequency $f_k$ and $\gamma_{\text{threshold}}$ represents the minimum signal-to-noise ratio for reliable oscillatory component extraction.
+\end{theorem}
+
+This robustness enables extraction of meaningful oscillatory patterns from imprecise consumer-grade measurements, forming the foundation for multi-scale oscillatory analysis of human activity patterns.

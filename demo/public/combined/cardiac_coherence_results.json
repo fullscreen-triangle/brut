@@ -1,0 +1,202 @@
+[
+  {
+    "period_id": 0,
+    "timestamp": 1641075362000,
+    "coherence_ratio": 7.3876505982922644,
+    "coherence_peak": 7.3876505982922644,
+    "coherence_stability": 90.16340734725499,
+    "breath_average": 17.0,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641161158000,
+    "coherence_ratio": 11.104352863116048,
+    "coherence_peak": 11.104352863116048,
+    "coherence_stability": 91.95793844900439,
+    "breath_average": 16.25,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641245158000,
+    "coherence_ratio": 17.48419374109215,
+    "coherence_peak": 17.48419374109215,
+    "coherence_stability": 90.96628496848207,
+    "breath_average": 16.5,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641334080000,
+    "coherence_ratio": 12.803388491824741,
+    "coherence_peak": 12.803388491824741,
+    "coherence_stability": 91.54999834595696,
+    "breath_average": 16.75,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641421440000,
+    "coherence_ratio": 8.815183493444776,
+    "coherence_peak": 8.815183493444776,
+    "coherence_stability": 87.78003253989189,
+    "breath_average": 16.625,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 1,
+    "timestamp": 1641509041000,
+    "coherence_ratio": 5.316625934143248,
+    "coherence_peak": 5.316625934143248,
+    "coherence_stability": 88.12789329288923,
+    "breath_average": 16.25,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641604559000,
+    "coherence_ratio": 6.369821459797347,
+    "coherence_peak": 6.369821459797347,
+    "coherence_stability": 90.39419948967958,
+    "breath_average": 16.25,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641683459000,
+    "coherence_ratio": 4.286100579649813,
+    "coherence_peak": 4.286100579649813,
+    "coherence_stability": 86.50631056746712,
+    "breath_average": 17.375,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641767909000,
+    "coherence_ratio": 17.22894151218956,
+    "coherence_peak": 17.22894151218956,
+    "coherence_stability": 88.47205322995079,
+    "breath_average": 17.75,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 3,
+    "timestamp": 1641862708000,
+    "coherence_ratio": 12.425876081125848,
+    "coherence_peak": 12.425876081125848,
+    "coherence_stability": 93.50321467360939,
+    "breath_average": 16.75,
+    "coherence_quality": "Low",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 0,
+    "coherence_ratio": 0.0,
+    "coherence_peak": 0.0,
+    "coherence_stability": 0.0,
+    "breath_average": 16.0,
+    "coherence_quality": "Low",
+    "data_source": "activity"
+  }
+]

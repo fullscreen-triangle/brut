@@ -1,0 +1,4912 @@
+[
+  {
+    "period_id": 0,
+    "timestamp": 1641075362000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLLLLLLLALLLLLLAAAARRRRRRRRRRRRRRRRRRAARRRRRRRRRRRRRRRRRRDDDRRDDDRRRRDDDDDDDDDDDDDDDDDD",
+    "hrv_directional_sequence": "LLLLLLLLLLDLLLLLLLLLLLLLLLLLLLLLLLLLDDRDDDDDRRDDRRLDRRRRRRRARRRRRRDRDRRRRRRRRRRDRDAARRRRRAAARRAAAAAA",
+    "sleep_directional_sequence": "LRRAAAALLLLLLRAAALRALLLLLLLLLRAARAARRRRRLRRRRARAAALLDLLRRRRRRRRRRLLAARLRLRRRLRRRDDRLLLLRRRRRRRRRRLRR",
+    "original_hypnogram": "ALLDDDDAAAAAALDDDALDAAAAAAAAALDDLDDLLLLLALLLLDLDDDAARAALLLLLLLLLLAADDLALALLLALLLRRLAAAALLLLLLLLLLALL",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.05714285714285714,
+          "R": 0.3142857142857143,
+          "D": 0.4357142857142857,
+          "L": 0.19285714285714287
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 25,
+            "L->A": 2,
+            "A->L": 1,
+            "A->A": 4,
+            "A->R": 3,
+            "R->R": 38,
+            "R->A": 1,
+            "R->D": 5,
+            "D->D": 56,
+            "D->R": 3,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17985611510791366,
+            "L->A": 0.014388489208633094,
+            "A->L": 0.007194244604316547,
+            "A->A": 0.02877697841726619,
+            "A->R": 0.02158273381294964,
+            "R->R": 0.2733812949640288,
+            "R->A": 0.007194244604316547,
+            "R->D": 0.03597122302158273,
+            "D->D": 0.4028776978417266,
+            "D->R": 0.02158273381294964,
+            "D->A": 0.007194244604316547
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.4028776978417266
+            ],
+            [
+              "R->R",
+              0.2733812949640288
+            ],
+            [
+              "L->L",
+              0.17985611510791366
+            ],
+            [
+              "R->D",
+              0.03597122302158273
+            ],
+            [
+              "A->A",
+              0.02877697841726619
+            ]
+          ],
+          "total_transitions": 139
+        },
+        "entropy": 1.740912078589318,
+        "dominant_patterns": [
+          [
+            "DD",
+            56
+          ],
+          [
+            "DDD",
+            51
+          ],
+          [
+            "DDDD",
+            46
+          ],
+          [
+            "DDDDD",
+            43
+          ],
+          [
+            "RR",
+            38
+          ],
+          [
+            "RRR",
+            34
+          ],
+          [
+            "RRRR",
+            31
+          ],
+          [
+            "RRRRR",
+            28
+          ],
+          [
+            "LL",
+            25
+          ],
+          [
+            "LLL",
+            23
+          ]
+        ],
+        "interpretation": "extensive recovery periods (43.6%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.21428571428571427,
+          "R": 0.4142857142857143,
+          "D": 0.11428571428571428,
+          "L": 0.2571428571428571
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 33,
+            "L->D": 3,
+            "D->L": 1,
+            "D->D": 6,
+            "D->R": 8,
+            "R->D": 7,
+            "R->R": 39,
+            "R->L": 1,
+            "R->A": 11,
+            "A->R": 11,
+            "D->A": 1,
+            "A->A": 18
+          },
+          "transition_probabilities": {
+            "L->L": 0.23741007194244604,
+            "L->D": 0.02158273381294964,
+            "D->L": 0.007194244604316547,
+            "D->D": 0.04316546762589928,
+            "D->R": 0.05755395683453238,
+            "R->D": 0.050359712230215826,
+            "R->R": 0.2805755395683453,
+            "R->L": 0.007194244604316547,
+            "R->A": 0.07913669064748201,
+            "A->R": 0.07913669064748201,
+            "D->A": 0.007194244604316547,
+            "A->A": 0.12949640287769784
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.2805755395683453
+            ],
+            [
+              "L->L",
+              0.23741007194244604
+            ],
+            [
+              "A->A",
+              0.12949640287769784
+            ],
+            [
+              "R->A",
+              0.07913669064748201
+            ],
+            [
+              "A->R",
+              0.07913669064748201
+            ]
+          ],
+          "total_transitions": 139
+        },
+        "entropy": 1.8643764766765523,
+        "dominant_patterns": [
+          [
+            "RR",
+            39
+          ],
+          [
+            "LL",
+            33
+          ],
+          [
+            "LLL",
+            31
+          ],
+          [
+            "RRR",
+            29
+          ],
+          [
+            "LLLL",
+            29
+          ],
+          [
+            "LLLLL",
+            27
+          ],
+          [
+            "RRRR",
+            22
+          ],
+          [
+            "AA",
+            18
+          ],
+          [
+            "RRRRR",
+            16
+          ],
+          [
+            "AAA",
+            12
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.12751677852348994,
+          "R": 0.5167785234899329,
+          "D": 0.06711409395973154,
+          "L": 0.28859060402684567
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->R": 13,
+            "R->R": 57,
+            "R->A": 8,
+            "A->A": 10,
+            "A->L": 4,
+            "L->L": 26,
+            "A->R": 5,
+            "R->L": 9,
+            "L->D": 2,
+            "D->L": 3,
+            "L->A": 1,
+            "R->D": 3,
+            "D->D": 5,
+            "D->R": 2
+          },
+          "transition_probabilities": {
+            "L->R": 0.08783783783783784,
+            "R->R": 0.38513513513513514,
+            "R->A": 0.05405405405405406,
+            "A->A": 0.06756756756756757,
+            "A->L": 0.02702702702702703,
+            "L->L": 0.17567567567567569,
+            "A->R": 0.033783783783783786,
+            "R->L": 0.060810810810810814,
+            "L->D": 0.013513513513513514,
+            "D->L": 0.02027027027027027,
+            "L->A": 0.006756756756756757,
+            "R->D": 0.02027027027027027,
+            "D->D": 0.033783783783783786,
+            "D->R": 0.013513513513513514
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.38513513513513514
+            ],
+            [
+              "L->L",
+              0.17567567567567569
+            ],
+            [
+              "L->R",
+              0.08783783783783784
+            ],
+            [
+              "A->A",
+              0.06756756756756757
+            ],
+            [
+              "R->L",
+              0.060810810810810814
+            ]
+          ],
+          "total_transitions": 148
+        },
+        "entropy": 1.6500285755628372,
+        "dominant_patterns": [
+          [
+            "RR",
+            57
+          ],
+          [
+            "RRR",
+            47
+          ],
+          [
+            "RRRR",
+            38
+          ],
+          [
+            "RRRRR",
+            31
+          ],
+          [
+            "LL",
+            26
+          ],
+          [
+            "LLL",
+            17
+          ],
+          [
+            "LR",
+            13
+          ],
+          [
+            "LLLL",
+            12
+          ],
+          [
+            "AA",
+            10
+          ],
+          [
+            "RL",
+            9
+          ]
+        ],
+        "interpretation": "predominantly steady maintenance state (51.7%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 140,
+      "hrv": 140,
+      "sleep": 149
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641161158000,
+    "hr_directional_sequence": "LLLLLLLLLLLLRLLLLLLLAALLLARRRRRRLLRRLARRRRRRRRRRRRRDDRDDDDRDDDDDDDDDDRDDDDDRDDDRRRDDRDDRRRARRRDDDDDD",
+    "hrv_directional_sequence": "LDLDLLLLLLLRLDLLLLLLLLLLLLRDRRLRLDLDDLDRDRRRDDDDRDRRRRARRRRAARDDAAAAAAAAAAARRRRRRRARRRDRRLLDRRRRAARA",
+    "sleep_directional_sequence": "LLLLDDDDLLLLLLLLLLAARLRARRRAALLLLLLLLLDLLLLRRRRLRAAAAAAAALRRLLRRRRRRRRLLRRRRRLRRRRRRRRRRRRRRRRRRRDLR",
+    "original_hypnogram": "AAAARRRRAAAAAAAAAADDLALDLLLDDAAAAAAAAARAAAALLLLALDDDDDDDDALLAALLLLLLLLAALLLLLALLLLLLLLLLLLLLLLLLLRAL",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.03787878787878788,
+          "R": 0.29545454545454547,
+          "D": 0.4772727272727273,
+          "L": 0.1893939393939394
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 20,
+            "L->R": 2,
+            "R->L": 3,
+            "L->A": 3,
+            "A->A": 1,
+            "A->L": 1,
+            "A->R": 3,
+            "R->R": 25,
+            "R->D": 10,
+            "D->D": 53,
+            "D->R": 9,
+            "R->A": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.15267175572519084,
+            "L->R": 0.015267175572519083,
+            "R->L": 0.022900763358778626,
+            "L->A": 0.022900763358778626,
+            "A->A": 0.007633587786259542,
+            "A->L": 0.007633587786259542,
+            "A->R": 0.022900763358778626,
+            "R->R": 0.19083969465648856,
+            "R->D": 0.07633587786259542,
+            "D->D": 0.40458015267175573,
+            "D->R": 0.06870229007633588,
+            "R->A": 0.007633587786259542
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.40458015267175573
+            ],
+            [
+              "R->R",
+              0.19083969465648856
+            ],
+            [
+              "L->L",
+              0.15267175572519084
+            ],
+            [
+              "R->D",
+              0.07633587786259542
+            ],
+            [
+              "D->R",
+              0.06870229007633588
+            ]
+          ],
+          "total_transitions": 131
+        },
+        "entropy": 1.662535278942337,
+        "dominant_patterns": [
+          [
+            "DD",
+            53
+          ],
+          [
+            "DDD",
+            43
+          ],
+          [
+            "DDDD",
+            36
+          ],
+          [
+            "DDDDD",
+            30
+          ],
+          [
+            "RR",
+            25
+          ],
+          [
+            "LL",
+            20
+          ],
+          [
+            "RRR",
+            18
+          ],
+          [
+            "LLL",
+            16
+          ],
+          [
+            "LLLL",
+            13
+          ],
+          [
+            "RRRR",
+            13
+          ]
+        ],
+        "interpretation": "extensive recovery periods (47.7%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2727272727272727,
+          "R": 0.3712121212121212,
+          "D": 0.14393939393939395,
+          "L": 0.21212121212121213
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->D": 7,
+            "D->L": 5,
+            "L->L": 18,
+            "L->R": 3,
+            "R->L": 4,
+            "R->D": 7,
+            "D->R": 8,
+            "R->R": 25,
+            "D->D": 5,
+            "R->A": 12,
+            "A->R": 13,
+            "A->A": 23,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "L->D": 0.05343511450381679,
+            "D->L": 0.03816793893129771,
+            "L->L": 0.13740458015267176,
+            "L->R": 0.022900763358778626,
+            "R->L": 0.030534351145038167,
+            "R->D": 0.05343511450381679,
+            "D->R": 0.061068702290076333,
+            "R->R": 0.19083969465648856,
+            "D->D": 0.03816793893129771,
+            "R->A": 0.0916030534351145,
+            "A->R": 0.09923664122137404,
+            "A->A": 0.17557251908396945,
+            "D->A": 0.007633587786259542
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.19083969465648856
+            ],
+            [
+              "A->A",
+              0.17557251908396945
+            ],
+            [
+              "L->L",
+              0.13740458015267176
+            ],
+            [
+              "A->R",
+              0.09923664122137404
+            ],
+            [
+              "R->A",
+              0.0916030534351145
+            ]
+          ],
+          "total_transitions": 131
+        },
+        "entropy": 1.9189801573386847,
+        "dominant_patterns": [
+          [
+            "RR",
+            25
+          ],
+          [
+            "AA",
+            23
+          ],
+          [
+            "LL",
+            18
+          ],
+          [
+            "LLL",
+            15
+          ],
+          [
+            "AAA",
+            15
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "AR",
+            13
+          ],
+          [
+            "LLLL",
+            13
+          ],
+          [
+            "RA",
+            12
+          ],
+          [
+            "AAAA",
+            12
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.12056737588652482,
+          "R": 0.46808510638297873,
+          "D": 0.06382978723404255,
+          "L": 0.3475177304964539
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 31,
+            "L->D": 4,
+            "D->D": 4,
+            "D->L": 5,
+            "L->A": 1,
+            "A->A": 11,
+            "A->R": 3,
+            "R->L": 9,
+            "L->R": 12,
+            "R->A": 5,
+            "R->R": 51,
+            "A->L": 3,
+            "R->D": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.22142857142857142,
+            "L->D": 0.02857142857142857,
+            "D->D": 0.02857142857142857,
+            "D->L": 0.03571428571428571,
+            "L->A": 0.007142857142857143,
+            "A->A": 0.07857142857142857,
+            "A->R": 0.02142857142857143,
+            "R->L": 0.06428571428571428,
+            "L->R": 0.08571428571428572,
+            "R->A": 0.03571428571428571,
+            "R->R": 0.36428571428571427,
+            "A->L": 0.02142857142857143,
+            "R->D": 0.007142857142857143
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.36428571428571427
+            ],
+            [
+              "L->L",
+              0.22142857142857142
+            ],
+            [
+              "L->R",
+              0.08571428571428572
+            ],
+            [
+              "A->A",
+              0.07857142857142857
+            ],
+            [
+              "R->L",
+              0.06428571428571428
+            ]
+          ],
+          "total_transitions": 140
+        },
+        "entropy": 1.6638989584020578,
+        "dominant_patterns": [
+          [
+            "RR",
+            51
+          ],
+          [
+            "RRR",
+            40
+          ],
+          [
+            "RRRR",
+            32
+          ],
+          [
+            "LL",
+            31
+          ],
+          [
+            "RRRRR",
+            26
+          ],
+          [
+            "LLL",
+            21
+          ],
+          [
+            "LLLL",
+            16
+          ],
+          [
+            "LR",
+            12
+          ],
+          [
+            "AA",
+            11
+          ],
+          [
+            "LLLLL",
+            11
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (34.8%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 132,
+      "hrv": 132,
+      "sleep": 141
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641245158000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLLLLALLLLLLRRRRRRRRRRRDDLLDRDDDDDDDDDDDDDDDDRDDDDRRDDDDDDDDDDDDDDDDDDDDDDDDDDLDDDDDDDR",
+    "hrv_directional_sequence": "LLLRDLLDLLLLLLLLLLDDLLLLLDDRDDLLDRDRARDLRRAAAAAAAARRRRRADRRRRRRARAAAARRRARRRAAARRRRRRRRRRDRLRRRRDRRA",
+    "sleep_directional_sequence": "LAALLLLLLRAARLLLLLLLLLLLLLLLRRALLLLARRRRRARRRRRLRLRDRRLRARRLRRRRRRRRRALLLLLLRRLLLLRLRRRLRRRRRAAAALRR",
+    "original_hypnogram": "ADDAAAAAALDDLAAAAAAAAAAAAAAALLDAAAADLLLLLDLLLLLALALRLLALDLLALLLLLLLLLDAAAAAALLAAAALALLLALLLLLDDDDALL",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.009259259259259259,
+          "R": 0.16666666666666666,
+          "D": 0.5740740740740741,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 23,
+            "L->A": 1,
+            "A->L": 1,
+            "L->R": 1,
+            "R->R": 12,
+            "R->D": 6,
+            "D->D": 54,
+            "D->L": 2,
+            "L->D": 2,
+            "D->R": 5
+          },
+          "transition_probabilities": {
+            "L->L": 0.21495327102803738,
+            "L->A": 0.009345794392523364,
+            "A->L": 0.009345794392523364,
+            "L->R": 0.009345794392523364,
+            "R->R": 0.11214953271028037,
+            "R->D": 0.056074766355140186,
+            "D->D": 0.5046728971962616,
+            "D->L": 0.018691588785046728,
+            "L->D": 0.018691588785046728,
+            "D->R": 0.04672897196261682
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.5046728971962616
+            ],
+            [
+              "L->L",
+              0.21495327102803738
+            ],
+            [
+              "R->R",
+              0.11214953271028037
+            ],
+            [
+              "R->D",
+              0.056074766355140186
+            ],
+            [
+              "D->R",
+              0.04672897196261682
+            ]
+          ],
+          "total_transitions": 107
+        },
+        "entropy": 1.4530283926416026,
+        "dominant_patterns": [
+          [
+            "DD",
+            54
+          ],
+          [
+            "DDD",
+            47
+          ],
+          [
+            "DDDD",
+            42
+          ],
+          [
+            "DDDDD",
+            37
+          ],
+          [
+            "LL",
+            23
+          ],
+          [
+            "LLL",
+            20
+          ],
+          [
+            "LLLL",
+            18
+          ],
+          [
+            "LLLLL",
+            16
+          ],
+          [
+            "RR",
+            12
+          ],
+          [
+            "RRR",
+            9
+          ]
+        ],
+        "interpretation": "extensive recovery periods (57.4%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.23148148148148148,
+          "R": 0.4166666666666667,
+          "D": 0.12962962962962962,
+          "L": 0.2222222222222222
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 17,
+            "L->R": 3,
+            "R->D": 6,
+            "D->L": 5,
+            "L->D": 4,
+            "D->D": 3,
+            "D->R": 6,
+            "R->A": 9,
+            "A->R": 7,
+            "R->R": 29,
+            "A->A": 16,
+            "A->D": 1,
+            "R->L": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.1588785046728972,
+            "L->R": 0.028037383177570093,
+            "R->D": 0.056074766355140186,
+            "D->L": 0.04672897196261682,
+            "L->D": 0.037383177570093455,
+            "D->D": 0.028037383177570093,
+            "D->R": 0.056074766355140186,
+            "R->A": 0.08411214953271028,
+            "A->R": 0.06542056074766354,
+            "R->R": 0.27102803738317754,
+            "A->A": 0.14953271028037382,
+            "A->D": 0.009345794392523364,
+            "R->L": 0.009345794392523364
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.27102803738317754
+            ],
+            [
+              "L->L",
+              0.1588785046728972
+            ],
+            [
+              "A->A",
+              0.14953271028037382
+            ],
+            [
+              "R->A",
+              0.08411214953271028
+            ],
+            [
+              "A->R",
+              0.06542056074766354
+            ]
+          ],
+          "total_transitions": 107
+        },
+        "entropy": 1.8792221039660826,
+        "dominant_patterns": [
+          [
+            "RR",
+            29
+          ],
+          [
+            "RRR",
+            20
+          ],
+          [
+            "LL",
+            17
+          ],
+          [
+            "AA",
+            16
+          ],
+          [
+            "RRRR",
+            13
+          ],
+          [
+            "LLL",
+            12
+          ],
+          [
+            "AAA",
+            11
+          ],
+          [
+            "RA",
+            9
+          ],
+          [
+            "LLLL",
+            9
+          ],
+          [
+            "RRRRR",
+            9
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.0958904109589041,
+          "R": 0.4383561643835616,
+          "D": 0.02054794520547945,
+          "L": 0.4452054794520548
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->A": 2,
+            "A->A": 5,
+            "A->L": 5,
+            "L->L": 45,
+            "L->R": 16,
+            "R->A": 7,
+            "A->R": 4,
+            "R->L": 12,
+            "R->R": 43,
+            "R->D": 2,
+            "D->R": 1,
+            "L->D": 1,
+            "D->L": 2
+          },
+          "transition_probabilities": {
+            "L->A": 0.013793103448275862,
+            "A->A": 0.034482758620689655,
+            "A->L": 0.034482758620689655,
+            "L->L": 0.3103448275862069,
+            "L->R": 0.1103448275862069,
+            "R->A": 0.04827586206896552,
+            "A->R": 0.027586206896551724,
+            "R->L": 0.08275862068965517,
+            "R->R": 0.296551724137931,
+            "R->D": 0.013793103448275862,
+            "D->R": 0.006896551724137931,
+            "L->D": 0.006896551724137931,
+            "D->L": 0.013793103448275862
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.3103448275862069
+            ],
+            [
+              "R->R",
+              0.296551724137931
+            ],
+            [
+              "L->R",
+              0.1103448275862069
+            ],
+            [
+              "R->L",
+              0.08275862068965517
+            ],
+            [
+              "R->A",
+              0.04827586206896552
+            ]
+          ],
+          "total_transitions": 145
+        },
+        "entropy": 1.4808398721826237,
+        "dominant_patterns": [
+          [
+            "LL",
+            45
+          ],
+          [
+            "RR",
+            43
+          ],
+          [
+            "LLL",
+            36
+          ],
+          [
+            "RRR",
+            30
+          ],
+          [
+            "LLLL",
+            28
+          ],
+          [
+            "RRRR",
+            21
+          ],
+          [
+            "LLLLL",
+            21
+          ],
+          [
+            "LR",
+            16
+          ],
+          [
+            "RRRRR",
+            14
+          ],
+          [
+            "RL",
+            12
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (44.5%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 108,
+      "hrv": 108,
+      "sleep": 146
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641334080000,
+    "hr_directional_sequence": "LLLLLLLALRRAALLLLLLRAAAAARRRRRRRRRRRRRRDDDLRRRLDDDDDDDDDRDDDDDDDDDDDDDDDDDDDDDRRRDDDDDRDRRDDRDDD",
+    "hrv_directional_sequence": "LLLLLLLDDRRDLLDDLLLDDDDLDRLLLRDDLLLDDDDARDLDDRLRRAARRRRRRAARRAAAAARRRRRAAAAAAAAAAARRDDLRDRDARRDR",
+    "sleep_directional_sequence": "LRAALRLLLALLRRLRLLLRAALLLRAALLRRLRRRRRRRAALLLLLDDLLLRRRRAAAAALLLRLLLRLRRLLAALLLRRRRRRRRRRRRRRRRRRRRR",
+    "original_hypnogram": "ALDDALAAADAALLALAAALDDAAALDDAALLALLLLLLLDDAAAAARRAAALLLLDDDDDAAALAAALALLAADDAAALLLLLLLLLLLLLLLLLLLLL",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.08333333333333333,
+          "R": 0.2916666666666667,
+          "D": 0.4583333333333333,
+          "L": 0.16666666666666666
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 11,
+            "L->A": 1,
+            "A->L": 2,
+            "L->R": 3,
+            "R->R": 19,
+            "R->A": 2,
+            "A->A": 5,
+            "A->R": 1,
+            "R->D": 6,
+            "D->D": 37,
+            "D->L": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->R": 5
+          },
+          "transition_probabilities": {
+            "L->L": 0.11578947368421053,
+            "L->A": 0.010526315789473684,
+            "A->L": 0.021052631578947368,
+            "L->R": 0.031578947368421054,
+            "R->R": 0.2,
+            "R->A": 0.021052631578947368,
+            "A->A": 0.05263157894736842,
+            "A->R": 0.010526315789473684,
+            "R->D": 0.06315789473684211,
+            "D->D": 0.3894736842105263,
+            "D->L": 0.010526315789473684,
+            "R->L": 0.010526315789473684,
+            "L->D": 0.010526315789473684,
+            "D->R": 0.05263157894736842
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.3894736842105263
+            ],
+            [
+              "R->R",
+              0.2
+            ],
+            [
+              "L->L",
+              0.11578947368421053
+            ],
+            [
+              "R->D",
+              0.06315789473684211
+            ],
+            [
+              "A->A",
+              0.05263157894736842
+            ]
+          ],
+          "total_transitions": 95
+        },
+        "entropy": 1.763911156578927,
+        "dominant_patterns": [
+          [
+            "DD",
+            37
+          ],
+          [
+            "DDD",
+            31
+          ],
+          [
+            "DDDD",
+            26
+          ],
+          [
+            "DDDDD",
+            23
+          ],
+          [
+            "RR",
+            19
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "LL",
+            11
+          ],
+          [
+            "RRRR",
+            11
+          ],
+          [
+            "RRRRR",
+            10
+          ],
+          [
+            "LLL",
+            9
+          ]
+        ],
+        "interpretation": "extensive recovery periods (45.8%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.22916666666666666,
+          "R": 0.2916666666666667,
+          "D": 0.25,
+          "L": 0.22916666666666666
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 13,
+            "L->D": 6,
+            "D->D": 11,
+            "D->R": 5,
+            "R->R": 14,
+            "R->D": 7,
+            "D->L": 6,
+            "R->L": 2,
+            "L->R": 3,
+            "D->A": 2,
+            "A->R": 6,
+            "R->A": 4,
+            "A->A": 16
+          },
+          "transition_probabilities": {
+            "L->L": 0.1368421052631579,
+            "L->D": 0.06315789473684211,
+            "D->D": 0.11578947368421053,
+            "D->R": 0.05263157894736842,
+            "R->R": 0.14736842105263157,
+            "R->D": 0.07368421052631578,
+            "D->L": 0.06315789473684211,
+            "R->L": 0.021052631578947368,
+            "L->R": 0.031578947368421054,
+            "D->A": 0.021052631578947368,
+            "A->R": 0.06315789473684211,
+            "R->A": 0.042105263157894736,
+            "A->A": 0.16842105263157894
+          },
+          "most_common_transitions": [
+            [
+              "A->A",
+              0.16842105263157894
+            ],
+            [
+              "R->R",
+              0.14736842105263157
+            ],
+            [
+              "L->L",
+              0.1368421052631579
+            ],
+            [
+              "D->D",
+              0.11578947368421053
+            ],
+            [
+              "R->D",
+              0.07368421052631578
+            ]
+          ],
+          "total_transitions": 95
+        },
+        "entropy": 1.992670531398638,
+        "dominant_patterns": [
+          [
+            "AA",
+            16
+          ],
+          [
+            "RR",
+            14
+          ],
+          [
+            "LL",
+            13
+          ],
+          [
+            "AAA",
+            12
+          ],
+          [
+            "DD",
+            11
+          ],
+          [
+            "AAAA",
+            10
+          ],
+          [
+            "LLL",
+            8
+          ],
+          [
+            "AAAAA",
+            8
+          ],
+          [
+            "RD",
+            7
+          ],
+          [
+            "RRR",
+            7
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.14912280701754385,
+          "R": 0.43859649122807015,
+          "D": 0.043859649122807015,
+          "L": 0.3684210526315789
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->R": 15,
+            "R->A": 6,
+            "A->A": 9,
+            "A->L": 8,
+            "R->L": 8,
+            "L->L": 23,
+            "L->A": 2,
+            "R->R": 35,
+            "L->D": 1,
+            "D->D": 3,
+            "D->L": 2,
+            "R->D": 1
+          },
+          "transition_probabilities": {
+            "L->R": 0.13274336283185842,
+            "R->A": 0.05309734513274336,
+            "A->A": 0.07964601769911504,
+            "A->L": 0.07079646017699115,
+            "R->L": 0.07079646017699115,
+            "L->L": 0.20353982300884957,
+            "L->A": 0.017699115044247787,
+            "R->R": 0.30973451327433627,
+            "L->D": 0.008849557522123894,
+            "D->D": 0.02654867256637168,
+            "D->L": 0.017699115044247787,
+            "R->D": 0.008849557522123894
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.30973451327433627
+            ],
+            [
+              "L->L",
+              0.20353982300884957
+            ],
+            [
+              "L->R",
+              0.13274336283185842
+            ],
+            [
+              "A->A",
+              0.07964601769911504
+            ],
+            [
+              "A->L",
+              0.07079646017699115
+            ]
+          ],
+          "total_transitions": 113
+        },
+        "entropy": 1.659498347312665,
+        "dominant_patterns": [
+          [
+            "RR",
+            35
+          ],
+          [
+            "RRR",
+            28
+          ],
+          [
+            "RRRR",
+            24
+          ],
+          [
+            "LL",
+            23
+          ],
+          [
+            "RRRRR",
+            20
+          ],
+          [
+            "LR",
+            15
+          ],
+          [
+            "LLL",
+            10
+          ],
+          [
+            "AA",
+            9
+          ],
+          [
+            "LLR",
+            9
+          ],
+          [
+            "AL",
+            8
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (36.8%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 96,
+      "hrv": 96,
+      "sleep": 114
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641421440000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLLLLLLLLLARRRRRRRRRRRRRRDDDDDDDDDRDDDDDRDDDDDDDDDDDDDDDDDDDRDRRDDDDDDDDDDDDDDDDDDDRDDD",
+    "hrv_directional_sequence": "LLLLLLLLLLLLLLLLLLLLLLLLLLDLDDDDDRDDDDRRARRRRRRRAARRDRARARRARRRRRRRRRRAARDADDRAAAAAAAARARRRAAAAARAAA",
+    "sleep_directional_sequence": "LRLLLLLLLLLLLLLLLRALLLLRLRRLRLLLLLAAALLAAALLLRRRRRLRRRRLAARRRRRRARAAARRRRLRLLLRDDLLLLRLRRRRRRRAAARRA",
+    "original_hypnogram": "ALAAAAAAAAAAAAAAALDAAAALALLALAAAAADDDAADDDAAALLLLLALLLLADDLLLLLLDLDDDLLLLALAAALRRAAAALALLLLLLLDDDLLD",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.009615384615384616,
+          "R": 0.20192307692307693,
+          "D": 0.5673076923076923,
+          "L": 0.22115384615384615
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 22,
+            "L->A": 1,
+            "A->R": 1,
+            "R->R": 14,
+            "R->D": 7,
+            "D->D": 52,
+            "D->R": 6
+          },
+          "transition_probabilities": {
+            "L->L": 0.21359223300970873,
+            "L->A": 0.009708737864077669,
+            "A->R": 0.009708737864077669,
+            "R->R": 0.13592233009708737,
+            "R->D": 0.06796116504854369,
+            "D->D": 0.5048543689320388,
+            "D->R": 0.05825242718446602
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.5048543689320388
+            ],
+            [
+              "L->L",
+              0.21359223300970873
+            ],
+            [
+              "R->R",
+              0.13592233009708737
+            ],
+            [
+              "R->D",
+              0.06796116504854369
+            ],
+            [
+              "D->R",
+              0.05825242718446602
+            ]
+          ],
+          "total_transitions": 103
+        },
+        "entropy": 1.4758576914101893,
+        "dominant_patterns": [
+          [
+            "DD",
+            52
+          ],
+          [
+            "DDD",
+            46
+          ],
+          [
+            "DDDD",
+            40
+          ],
+          [
+            "DDDDD",
+            36
+          ],
+          [
+            "LL",
+            22
+          ],
+          [
+            "LLL",
+            21
+          ],
+          [
+            "LLLL",
+            20
+          ],
+          [
+            "LLLLL",
+            19
+          ],
+          [
+            "RR",
+            14
+          ],
+          [
+            "RRR",
+            12
+          ]
+        ],
+        "interpretation": "extensive recovery periods (56.7%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2692307692307692,
+          "R": 0.33653846153846156,
+          "D": 0.1346153846153846,
+          "L": 0.25961538461538464
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 25,
+            "L->D": 2,
+            "D->L": 1,
+            "D->D": 8,
+            "D->R": 4,
+            "R->D": 3,
+            "R->R": 21,
+            "R->A": 11,
+            "A->R": 10,
+            "A->A": 16,
+            "D->A": 1,
+            "A->D": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.24271844660194175,
+            "L->D": 0.019417475728155338,
+            "D->L": 0.009708737864077669,
+            "D->D": 0.07766990291262135,
+            "D->R": 0.038834951456310676,
+            "R->D": 0.02912621359223301,
+            "R->R": 0.20388349514563106,
+            "R->A": 0.10679611650485436,
+            "A->R": 0.0970873786407767,
+            "A->A": 0.1553398058252427,
+            "D->A": 0.009708737864077669,
+            "A->D": 0.009708737864077669
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.24271844660194175
+            ],
+            [
+              "R->R",
+              0.20388349514563106
+            ],
+            [
+              "A->A",
+              0.1553398058252427
+            ],
+            [
+              "R->A",
+              0.10679611650485436
+            ],
+            [
+              "A->R",
+              0.0970873786407767
+            ]
+          ],
+          "total_transitions": 103
+        },
+        "entropy": 1.932980344315065,
+        "dominant_patterns": [
+          [
+            "LL",
+            25
+          ],
+          [
+            "LLL",
+            24
+          ],
+          [
+            "LLLL",
+            23
+          ],
+          [
+            "LLLLL",
+            22
+          ],
+          [
+            "RR",
+            21
+          ],
+          [
+            "AA",
+            16
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "RA",
+            11
+          ],
+          [
+            "RRRR",
+            11
+          ],
+          [
+            "AR",
+            10
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.14912280701754385,
+          "R": 0.42105263157894735,
+          "D": 0.03508771929824561,
+          "L": 0.39473684210526316
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->R": 12,
+            "R->L": 10,
+            "L->L": 29,
+            "R->A": 5,
+            "A->L": 3,
+            "R->R": 30,
+            "L->A": 3,
+            "A->A": 9,
+            "A->R": 5,
+            "R->D": 3,
+            "D->D": 1,
+            "D->L": 2,
+            "D->R": 1
+          },
+          "transition_probabilities": {
+            "L->R": 0.10619469026548672,
+            "R->L": 0.08849557522123894,
+            "L->L": 0.25663716814159293,
+            "R->A": 0.04424778761061947,
+            "A->L": 0.02654867256637168,
+            "R->R": 0.26548672566371684,
+            "L->A": 0.02654867256637168,
+            "A->A": 0.07964601769911504,
+            "A->R": 0.04424778761061947,
+            "R->D": 0.02654867256637168,
+            "D->D": 0.008849557522123894,
+            "D->L": 0.017699115044247787,
+            "D->R": 0.008849557522123894
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.26548672566371684
+            ],
+            [
+              "L->L",
+              0.25663716814159293
+            ],
+            [
+              "L->R",
+              0.10619469026548672
+            ],
+            [
+              "R->L",
+              0.08849557522123894
+            ],
+            [
+              "A->A",
+              0.07964601769911504
+            ]
+          ],
+          "total_transitions": 113
+        },
+        "entropy": 1.6337807363515258,
+        "dominant_patterns": [
+          [
+            "RR",
+            30
+          ],
+          [
+            "LL",
+            29
+          ],
+          [
+            "LLL",
+            22
+          ],
+          [
+            "RRR",
+            20
+          ],
+          [
+            "LLLL",
+            16
+          ],
+          [
+            "RRRR",
+            14
+          ],
+          [
+            "LR",
+            12
+          ],
+          [
+            "LLLLL",
+            12
+          ],
+          [
+            "RL",
+            10
+          ],
+          [
+            "AA",
+            9
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (39.5%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 104,
+      "hrv": 104,
+      "sleep": 114
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 1,
+    "timestamp": 1641509041000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLLLLRRRRRRRDRDDDDDRRRRRDDDDDRRRDRDDDRDDDDDDDDDRRRDDDDDDDDDDDDRDRRDDDDDDDDDDDDDRR",
+    "hrv_directional_sequence": "LLLLLLLRDLLLRAARAADLLDRRDDLRDLLDRRRRARRRRRRDDDLRDDDRRRRDRRRDDRRRDRRRRRRRRAAAADRAAAAAAAAAAAAAAA",
+    "sleep_directional_sequence": "LLLLLLLAALLLRRRRRLLAARRRRRRRRRAAAAAAALLLAARRLLLLRRLLLLRRLRRRRRRRRDRRDDLLLLLLLLDRLLLLRRRRRRRRRLLLLRLL",
+    "original_hypnogram": "AAAAAAADDAAALLLLLAADDLLLLLLLLLDDDDDDDAAADDLLAAAALLAAAALLALLLLLLLLRLLRRAAAAAAAARLAAAALLLLLLLLLAAAALAA",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.0,
+          "R": 0.2765957446808511,
+          "D": 0.5319148936170213,
+          "L": 0.19148936170212766
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 17,
+            "L->R": 1,
+            "R->R": 16,
+            "R->D": 9,
+            "D->R": 9,
+            "D->D": 41
+          },
+          "transition_probabilities": {
+            "L->L": 0.1827956989247312,
+            "L->R": 0.010752688172043012,
+            "R->R": 0.17204301075268819,
+            "R->D": 0.0967741935483871,
+            "D->R": 0.0967741935483871,
+            "D->D": 0.44086021505376344
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.44086021505376344
+            ],
+            [
+              "L->L",
+              0.1827956989247312
+            ],
+            [
+              "R->R",
+              0.17204301075268819
+            ],
+            [
+              "R->D",
+              0.0967741935483871
+            ],
+            [
+              "D->R",
+              0.0967741935483871
+            ]
+          ],
+          "total_transitions": 93
+        },
+        "entropy": 1.4539197858652304,
+        "dominant_patterns": [
+          [
+            "DD",
+            41
+          ],
+          [
+            "DDD",
+            35
+          ],
+          [
+            "DDDD",
+            29
+          ],
+          [
+            "DDDDD",
+            24
+          ],
+          [
+            "LL",
+            17
+          ],
+          [
+            "RR",
+            16
+          ],
+          [
+            "LLL",
+            16
+          ],
+          [
+            "LLLL",
+            15
+          ],
+          [
+            "LLLLL",
+            14
+          ],
+          [
+            "RRR",
+            10
+          ]
+        ],
+        "interpretation": "extensive recovery periods (53.2%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2553191489361702,
+          "R": 0.3829787234042553,
+          "D": 0.19148936170212766,
+          "L": 0.1702127659574468
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 10,
+            "L->R": 4,
+            "R->D": 8,
+            "D->L": 5,
+            "R->A": 5,
+            "A->A": 19,
+            "A->R": 2,
+            "A->D": 2,
+            "L->D": 2,
+            "D->R": 7,
+            "R->R": 23,
+            "D->D": 6
+          },
+          "transition_probabilities": {
+            "L->L": 0.10752688172043011,
+            "L->R": 0.043010752688172046,
+            "R->D": 0.08602150537634409,
+            "D->L": 0.053763440860215055,
+            "R->A": 0.053763440860215055,
+            "A->A": 0.20430107526881722,
+            "A->R": 0.021505376344086023,
+            "A->D": 0.021505376344086023,
+            "L->D": 0.021505376344086023,
+            "D->R": 0.07526881720430108,
+            "R->R": 0.24731182795698925,
+            "D->D": 0.06451612903225806
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.24731182795698925
+            ],
+            [
+              "A->A",
+              0.20430107526881722
+            ],
+            [
+              "L->L",
+              0.10752688172043011
+            ],
+            [
+              "R->D",
+              0.08602150537634409
+            ],
+            [
+              "D->R",
+              0.07526881720430108
+            ]
+          ],
+          "total_transitions": 93
+        },
+        "entropy": 1.924641510239418,
+        "dominant_patterns": [
+          [
+            "RR",
+            23
+          ],
+          [
+            "AA",
+            19
+          ],
+          [
+            "RRR",
+            16
+          ],
+          [
+            "AAA",
+            15
+          ],
+          [
+            "AAAA",
+            13
+          ],
+          [
+            "AAAAA",
+            11
+          ],
+          [
+            "LL",
+            10
+          ],
+          [
+            "RRRR",
+            10
+          ],
+          [
+            "RD",
+            8
+          ],
+          [
+            "DR",
+            7
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.10655737704918032,
+          "R": 0.4426229508196721,
+          "D": 0.03278688524590164,
+          "L": 0.4180327868852459
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 37,
+            "L->A": 3,
+            "A->A": 9,
+            "A->L": 2,
+            "L->R": 9,
+            "R->R": 41,
+            "R->L": 10,
+            "A->R": 2,
+            "R->A": 1,
+            "R->D": 2,
+            "D->R": 2,
+            "D->D": 1,
+            "D->L": 1,
+            "L->D": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.30578512396694213,
+            "L->A": 0.024793388429752067,
+            "A->A": 0.0743801652892562,
+            "A->L": 0.01652892561983471,
+            "L->R": 0.0743801652892562,
+            "R->R": 0.33884297520661155,
+            "R->L": 0.08264462809917356,
+            "A->R": 0.01652892561983471,
+            "R->A": 0.008264462809917356,
+            "R->D": 0.01652892561983471,
+            "D->R": 0.01652892561983471,
+            "D->D": 0.008264462809917356,
+            "D->L": 0.008264462809917356,
+            "L->D": 0.008264462809917356
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.33884297520661155
+            ],
+            [
+              "L->L",
+              0.30578512396694213
+            ],
+            [
+              "R->L",
+              0.08264462809917356
+            ],
+            [
+              "A->A",
+              0.0743801652892562
+            ],
+            [
+              "L->R",
+              0.0743801652892562
+            ]
+          ],
+          "total_transitions": 121
+        },
+        "entropy": 1.552349354831675,
+        "dominant_patterns": [
+          [
+            "RR",
+            41
+          ],
+          [
+            "LL",
+            37
+          ],
+          [
+            "RRR",
+            30
+          ],
+          [
+            "RRRR",
+            25
+          ],
+          [
+            "LLL",
+            24
+          ],
+          [
+            "RRRRR",
+            20
+          ],
+          [
+            "LLLL",
+            15
+          ],
+          [
+            "RL",
+            10
+          ],
+          [
+            "AA",
+            9
+          ],
+          [
+            "LR",
+            9
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (41.8%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 94,
+      "hrv": 94,
+      "sleep": 122
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "timestamp": 1641604559000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLLLLLLLLAALLRRRRRARRRDRRDDDDDDDDDRDDDDDDRDRRRRDDDDDDDDDDDDDDRRDDRDRRDDDDDARRDDDDDDDDDD",
+    "hrv_directional_sequence": "LLLLLLDDLLLLLLLLLLLLLDDDDDDDLDDDDRRRLDRARRRRRRRDRRRARRARADDRRAAARRRRRRRRAARRRAAAAAARARALLLDDRRRAAAAA",
+    "sleep_directional_sequence": "LLLLLLLLLLRAAAAAAAAALLRRAALLLRLLLLLLLRRRRAAAAAAAALRRRLRDDLLLRRLLRRRRRRARRRRRRLRRRRRRDRRLLLLRLLRLLRRL",
+    "original_hypnogram": "AAAAAAAAAALDDDDDDDDDAALLDDAAALAAAAAAALLLLDDDDDDDDALLLALRRAAALLAALLLLLLDLLLLLLALLLLLLRLLAAAALAALAALLA",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.04,
+          "R": 0.23,
+          "D": 0.49,
+          "L": 0.24
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 22,
+            "L->A": 1,
+            "A->A": 1,
+            "A->L": 1,
+            "L->R": 1,
+            "R->R": 13,
+            "R->A": 1,
+            "A->R": 2,
+            "R->D": 9,
+            "D->R": 7,
+            "D->D": 40,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.2222222222222222,
+            "L->A": 0.010101010101010102,
+            "A->A": 0.010101010101010102,
+            "A->L": 0.010101010101010102,
+            "L->R": 0.010101010101010102,
+            "R->R": 0.13131313131313133,
+            "R->A": 0.010101010101010102,
+            "A->R": 0.020202020202020204,
+            "R->D": 0.09090909090909091,
+            "D->R": 0.0707070707070707,
+            "D->D": 0.40404040404040403,
+            "D->A": 0.010101010101010102
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.40404040404040403
+            ],
+            [
+              "L->L",
+              0.2222222222222222
+            ],
+            [
+              "R->R",
+              0.13131313131313133
+            ],
+            [
+              "R->D",
+              0.09090909090909091
+            ],
+            [
+              "D->R",
+              0.0707070707070707
+            ]
+          ],
+          "total_transitions": 99
+        },
+        "entropy": 1.6718381160920823,
+        "dominant_patterns": [
+          [
+            "DD",
+            40
+          ],
+          [
+            "DDD",
+            34
+          ],
+          [
+            "DDDD",
+            29
+          ],
+          [
+            "DDDDD",
+            24
+          ],
+          [
+            "LL",
+            22
+          ],
+          [
+            "LLL",
+            20
+          ],
+          [
+            "LLLL",
+            19
+          ],
+          [
+            "LLLLL",
+            18
+          ],
+          [
+            "RR",
+            13
+          ],
+          [
+            "RD",
+            9
+          ]
+        ],
+        "interpretation": "extensive recovery periods (49.0%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.22,
+          "R": 0.35,
+          "D": 0.19,
+          "L": 0.24
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 19,
+            "L->D": 5,
+            "D->D": 12,
+            "D->L": 2,
+            "D->R": 5,
+            "R->R": 23,
+            "R->L": 1,
+            "R->A": 10,
+            "A->R": 7,
+            "R->D": 1,
+            "A->D": 1,
+            "A->A": 12,
+            "A->L": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.1919191919191919,
+            "L->D": 0.050505050505050504,
+            "D->D": 0.12121212121212122,
+            "D->L": 0.020202020202020204,
+            "D->R": 0.050505050505050504,
+            "R->R": 0.23232323232323232,
+            "R->L": 0.010101010101010102,
+            "R->A": 0.10101010101010101,
+            "A->R": 0.0707070707070707,
+            "R->D": 0.010101010101010102,
+            "A->D": 0.010101010101010102,
+            "A->A": 0.12121212121212122,
+            "A->L": 0.010101010101010102
+          },
+          "most_common_transitions": [
+            [
+              "R->R",
+              0.23232323232323232
+            ],
+            [
+              "L->L",
+              0.1919191919191919
+            ],
+            [
+              "D->D",
+              0.12121212121212122
+            ],
+            [
+              "A->A",
+              0.12121212121212122
+            ],
+            [
+              "R->A",
+              0.10101010101010101
+            ]
+          ],
+          "total_transitions": 99
+        },
+        "entropy": 1.9600349500164223,
+        "dominant_patterns": [
+          [
+            "RR",
+            23
+          ],
+          [
+            "LL",
+            19
+          ],
+          [
+            "LLL",
+            16
+          ],
+          [
+            "RRR",
+            15
+          ],
+          [
+            "LLLL",
+            13
+          ],
+          [
+            "DD",
+            12
+          ],
+          [
+            "AA",
+            12
+          ],
+          [
+            "LLLLL",
+            11
+          ],
+          [
+            "RA",
+            10
+          ],
+          [
+            "RRRR",
+            9
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.18867924528301888,
+          "R": 0.39622641509433965,
+          "D": 0.02830188679245283,
+          "L": 0.3867924528301887
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 27,
+            "L->R": 13,
+            "R->A": 4,
+            "A->A": 16,
+            "A->L": 3,
+            "R->R": 27,
+            "R->L": 9,
+            "R->D": 2,
+            "D->D": 1,
+            "D->L": 1,
+            "A->R": 1,
+            "D->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.2571428571428571,
+            "L->R": 0.12380952380952381,
+            "R->A": 0.0380952380952381,
+            "A->A": 0.1523809523809524,
+            "A->L": 0.02857142857142857,
+            "R->R": 0.2571428571428571,
+            "R->L": 0.08571428571428572,
+            "R->D": 0.01904761904761905,
+            "D->D": 0.009523809523809525,
+            "D->L": 0.009523809523809525,
+            "A->R": 0.009523809523809525,
+            "D->R": 0.009523809523809525
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.2571428571428571
+            ],
+            [
+              "R->R",
+              0.2571428571428571
+            ],
+            [
+              "A->A",
+              0.1523809523809524
+            ],
+            [
+              "L->R",
+              0.12380952380952381
+            ],
+            [
+              "R->L",
+              0.08571428571428572
+            ]
+          ],
+          "total_transitions": 105
+        },
+        "entropy": 1.6587656116767833,
+        "dominant_patterns": [
+          [
+            "LL",
+            27
+          ],
+          [
+            "RR",
+            27
+          ],
+          [
+            "LLL",
+            17
+          ],
+          [
+            "RRR",
+            17
+          ],
+          [
+            "AA",
+            16
+          ],
+          [
+            "LR",
+            13
+          ],
+          [
+            "AAA",
+            13
+          ],
+          [
+            "LLLL",
+            12
+          ],
+          [
+            "AAAA",
+            11
+          ],
+          [
+            "RRRR",
+            11
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (38.7%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 100,
+      "hrv": 100,
+      "sleep": 106
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641683459000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLLLARAAAALLLAARAAARRRAARRRRRRRLRRRRDRRRRRDDRDDDDDRRRRRRRRRRRDRDDDDDRDDDDDDDDDDDDDDDDDDDD",
+    "hrv_directional_sequence": "LLLLLLLLLLLLLLLLLLLLLLLDDDDDLDLDDDLRDDLLLRLDDRRRRRRRRAAAAAAARRRRDRDDRRRRARARAARAAAAAAAAARAAAAAARRRAA",
+    "sleep_directional_sequence": "LAAAAALLLLLLRAARRRAAAAALLLLLLLRLLLAAALLLAAALRLRRLLLLARDRLLLLLRRLLLRLRRRAAAAARAAARLRDDDDDRLRRRRRRRLRL",
+    "original_hypnogram": "ADDDDDAAAAAALDDLLLDDDDDAAAAAAALAAADDDAAADDDALALLAAAADLRLAAAAALLAAALALLLDDDDDLDDDLALRRRRRLALLLLLLLALA",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.10619469026548672,
+          "R": 0.3185840707964602,
+          "D": 0.40707964601769914,
+          "L": 0.168141592920354
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 16,
+            "L->A": 2,
+            "A->R": 4,
+            "R->A": 3,
+            "A->A": 7,
+            "A->L": 1,
+            "R->R": 25,
+            "R->L": 1,
+            "L->R": 1,
+            "R->D": 6,
+            "D->R": 6,
+            "D->D": 40
+          },
+          "transition_probabilities": {
+            "L->L": 0.14285714285714285,
+            "L->A": 0.017857142857142856,
+            "A->R": 0.03571428571428571,
+            "R->A": 0.026785714285714284,
+            "A->A": 0.0625,
+            "A->L": 0.008928571428571428,
+            "R->R": 0.22321428571428573,
+            "R->L": 0.008928571428571428,
+            "L->R": 0.008928571428571428,
+            "R->D": 0.05357142857142857,
+            "D->R": 0.05357142857142857,
+            "D->D": 0.35714285714285715
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.35714285714285715
+            ],
+            [
+              "R->R",
+              0.22321428571428573
+            ],
+            [
+              "L->L",
+              0.14285714285714285
+            ],
+            [
+              "A->A",
+              0.0625
+            ],
+            [
+              "R->D",
+              0.05357142857142857
+            ]
+          ],
+          "total_transitions": 112
+        },
+        "entropy": 1.8296362828167112,
+        "dominant_patterns": [
+          [
+            "DD",
+            40
+          ],
+          [
+            "DDD",
+            36
+          ],
+          [
+            "DDDD",
+            33
+          ],
+          [
+            "DDDDD",
+            30
+          ],
+          [
+            "RR",
+            25
+          ],
+          [
+            "RRR",
+            20
+          ],
+          [
+            "LL",
+            16
+          ],
+          [
+            "RRRR",
+            15
+          ],
+          [
+            "LLL",
+            14
+          ],
+          [
+            "LLLL",
+            12
+          ]
+        ],
+        "interpretation": "extensive recovery periods (40.7%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.34513274336283184,
+          "R": 0.24778761061946902,
+          "D": 0.1415929203539823,
+          "L": 0.26548672566371684
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 24,
+            "L->D": 4,
+            "D->D": 9,
+            "D->L": 4,
+            "L->R": 2,
+            "R->D": 3,
+            "R->L": 1,
+            "D->R": 3,
+            "R->R": 15,
+            "R->A": 8,
+            "A->A": 31,
+            "A->R": 8
+          },
+          "transition_probabilities": {
+            "L->L": 0.21428571428571427,
+            "L->D": 0.03571428571428571,
+            "D->D": 0.08035714285714286,
+            "D->L": 0.03571428571428571,
+            "L->R": 0.017857142857142856,
+            "R->D": 0.026785714285714284,
+            "R->L": 0.008928571428571428,
+            "D->R": 0.026785714285714284,
+            "R->R": 0.13392857142857142,
+            "R->A": 0.07142857142857142,
+            "A->A": 0.2767857142857143,
+            "A->R": 0.07142857142857142
+          },
+          "most_common_transitions": [
+            [
+              "A->A",
+              0.2767857142857143
+            ],
+            [
+              "L->L",
+              0.21428571428571427
+            ],
+            [
+              "R->R",
+              0.13392857142857142
+            ],
+            [
+              "D->D",
+              0.08035714285714286
+            ],
+            [
+              "R->A",
+              0.07142857142857142
+            ]
+          ],
+          "total_transitions": 112
+        },
+        "entropy": 1.935724606472744,
+        "dominant_patterns": [
+          [
+            "AA",
+            31
+          ],
+          [
+            "AAA",
+            25
+          ],
+          [
+            "LL",
+            24
+          ],
+          [
+            "LLL",
+            22
+          ],
+          [
+            "AAAA",
+            21
+          ],
+          [
+            "LLLL",
+            20
+          ],
+          [
+            "LLLLL",
+            19
+          ],
+          [
+            "AAAAA",
+            17
+          ],
+          [
+            "RR",
+            15
+          ],
+          [
+            "RRR",
+            11
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.21428571428571427,
+          "R": 0.373015873015873,
+          "D": 0.047619047619047616,
+          "L": 0.36507936507936506
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->A": 4,
+            "A->A": 19,
+            "A->L": 4,
+            "L->L": 28,
+            "L->R": 13,
+            "R->A": 4,
+            "A->R": 4,
+            "R->R": 28,
+            "R->L": 13,
+            "R->D": 2,
+            "D->R": 2,
+            "D->D": 4
+          },
+          "transition_probabilities": {
+            "L->A": 0.032,
+            "A->A": 0.152,
+            "A->L": 0.032,
+            "L->L": 0.224,
+            "L->R": 0.104,
+            "R->A": 0.032,
+            "A->R": 0.032,
+            "R->R": 0.224,
+            "R->L": 0.104,
+            "R->D": 0.016,
+            "D->R": 0.016,
+            "D->D": 0.032
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.224
+            ],
+            [
+              "R->R",
+              0.224
+            ],
+            [
+              "A->A",
+              0.152
+            ],
+            [
+              "L->R",
+              0.104
+            ],
+            [
+              "R->L",
+              0.104
+            ]
+          ],
+          "total_transitions": 125
+        },
+        "entropy": 1.7467937046887092,
+        "dominant_patterns": [
+          [
+            "LL",
+            28
+          ],
+          [
+            "RR",
+            28
+          ],
+          [
+            "RRR",
+            20
+          ],
+          [
+            "AA",
+            19
+          ],
+          [
+            "LLL",
+            18
+          ],
+          [
+            "RRRR",
+            15
+          ],
+          [
+            "LR",
+            13
+          ],
+          [
+            "RL",
+            13
+          ],
+          [
+            "AAA",
+            12
+          ],
+          [
+            "RRRRR",
+            12
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (36.5%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 113,
+      "hrv": 113,
+      "sleep": 126
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "timestamp": 1641767909000,
+    "hr_directional_sequence": "LLLLLLLLLLLLLALLLLLLLLLAAAARRRRRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRDDDDDDDDDDDDDDDDDDDDDDDD",
+    "hrv_directional_sequence": "LLLLLLLLLLLLDDDDDDDDDDLLLLDRLDDLLLDRRDDRRDRDRRARRRRRDRDRAARRAARAAAAAAAARRRRDRAAAAARRAAARRRAAAAARAAAA",
+    "sleep_directional_sequence": "LRLLLLLLLLLLLLLLLRAAAALLRAARLLLLLRAARRRALLRRLRRLLRRLRRRAALLRRRRLLRRRRRRRDDDDRRRRLLLLRLLLLRALRRRRRRRR",
+    "original_hypnogram": "ALAAAAAAAAAAAAAAALDDDDAALDDLAAAAALDDLLLDAALLALLAALLALLLDDAALLLLAALLLLLLLRRRRLLLLAAAALAAAALDALLLLLLLL",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.05,
+          "R": 0.17,
+          "D": 0.56,
+          "L": 0.22
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 20,
+            "L->A": 2,
+            "A->L": 1,
+            "A->A": 3,
+            "A->R": 1,
+            "R->R": 15,
+            "R->D": 2,
+            "D->D": 54,
+            "D->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.20202020202020202,
+            "L->A": 0.020202020202020204,
+            "A->L": 0.010101010101010102,
+            "A->A": 0.030303030303030304,
+            "A->R": 0.010101010101010102,
+            "R->R": 0.15151515151515152,
+            "R->D": 0.020202020202020204,
+            "D->D": 0.5454545454545454,
+            "D->R": 0.010101010101010102
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.5454545454545454
+            ],
+            [
+              "L->L",
+              0.20202020202020202
+            ],
+            [
+              "R->R",
+              0.15151515151515152
+            ],
+            [
+              "A->A",
+              0.030303030303030304
+            ],
+            [
+              "L->A",
+              0.020202020202020204
+            ]
+          ],
+          "total_transitions": 99
+        },
+        "entropy": 1.5996973895653352,
+        "dominant_patterns": [
+          [
+            "DD",
+            54
+          ],
+          [
+            "DDD",
+            52
+          ],
+          [
+            "DDDD",
+            50
+          ],
+          [
+            "DDDDD",
+            48
+          ],
+          [
+            "LL",
+            20
+          ],
+          [
+            "LLL",
+            18
+          ],
+          [
+            "LLLL",
+            16
+          ],
+          [
+            "RR",
+            15
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "LLLLL",
+            14
+          ]
+        ],
+        "interpretation": "extensive recovery periods (56.0%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.3,
+          "R": 0.29,
+          "D": 0.21,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 16,
+            "L->D": 4,
+            "D->D": 11,
+            "D->L": 2,
+            "D->R": 8,
+            "R->L": 1,
+            "R->R": 14,
+            "R->D": 6,
+            "R->A": 8,
+            "A->R": 7,
+            "A->A": 22
+          },
+          "transition_probabilities": {
+            "L->L": 0.16161616161616163,
+            "L->D": 0.04040404040404041,
+            "D->D": 0.1111111111111111,
+            "D->L": 0.020202020202020204,
+            "D->R": 0.08080808080808081,
+            "R->L": 0.010101010101010102,
+            "R->R": 0.1414141414141414,
+            "R->D": 0.06060606060606061,
+            "R->A": 0.08080808080808081,
+            "A->R": 0.0707070707070707,
+            "A->A": 0.2222222222222222
+          },
+          "most_common_transitions": [
+            [
+              "A->A",
+              0.2222222222222222
+            ],
+            [
+              "L->L",
+              0.16161616161616163
+            ],
+            [
+              "R->R",
+              0.1414141414141414
+            ],
+            [
+              "D->D",
+              0.1111111111111111
+            ],
+            [
+              "D->R",
+              0.08080808080808081
+            ]
+          ],
+          "total_transitions": 99
+        },
+        "entropy": 1.9762022447441612,
+        "dominant_patterns": [
+          [
+            "AA",
+            22
+          ],
+          [
+            "LL",
+            16
+          ],
+          [
+            "AAA",
+            15
+          ],
+          [
+            "RR",
+            14
+          ],
+          [
+            "LLL",
+            13
+          ],
+          [
+            "DD",
+            11
+          ],
+          [
+            "LLLL",
+            10
+          ],
+          [
+            "AAAA",
+            10
+          ],
+          [
+            "DR",
+            8
+          ],
+          [
+            "RA",
+            8
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.10344827586206896,
+          "R": 0.41379310344827586,
+          "D": 0.05172413793103448,
+          "L": 0.43103448275862066
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->R": 15,
+            "R->L": 11,
+            "L->L": 34,
+            "R->A": 6,
+            "A->A": 6,
+            "A->L": 4,
+            "A->R": 2,
+            "R->R": 29,
+            "R->D": 2,
+            "D->D": 4,
+            "D->R": 2
+          },
+          "transition_probabilities": {
+            "L->R": 0.13043478260869565,
+            "R->L": 0.09565217391304348,
+            "L->L": 0.2956521739130435,
+            "R->A": 0.05217391304347826,
+            "A->A": 0.05217391304347826,
+            "A->L": 0.034782608695652174,
+            "A->R": 0.017391304347826087,
+            "R->R": 0.25217391304347825,
+            "R->D": 0.017391304347826087,
+            "D->D": 0.034782608695652174,
+            "D->R": 0.017391304347826087
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.2956521739130435
+            ],
+            [
+              "R->R",
+              0.25217391304347825
+            ],
+            [
+              "L->R",
+              0.13043478260869565
+            ],
+            [
+              "R->L",
+              0.09565217391304348
+            ],
+            [
+              "R->A",
+              0.05217391304347826
+            ]
+          ],
+          "total_transitions": 115
+        },
+        "entropy": 1.6097022491247055,
+        "dominant_patterns": [
+          [
+            "LL",
+            34
+          ],
+          [
+            "RR",
+            29
+          ],
+          [
+            "LLL",
+            23
+          ],
+          [
+            "RRR",
+            20
+          ],
+          [
+            "LLLL",
+            18
+          ],
+          [
+            "LR",
+            15
+          ],
+          [
+            "RRRR",
+            14
+          ],
+          [
+            "LLLLL",
+            13
+          ],
+          [
+            "RL",
+            11
+          ],
+          [
+            "LLR",
+            10
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (43.1%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 100,
+      "hrv": 100,
+      "sleep": 116
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 3,
+    "timestamp": 1641862708000,
+    "hr_directional_sequence": "LLLLLLLLLALLLLLLLLLLRRRRRRRRRRARDDRDDDDRRRRRRDDDDRRRDDDDDDDDDDDDRDDDRRRDDDDDDDDDDDDDDD",
+    "hrv_directional_sequence": "LLLLDDDDLDDDDDDDLLLLLLLRDRDRRRRDRARARRRRRARAAAAARDLDAARAAAAARDRDDAARRLDRRRARRAARARAARA",
+    "sleep_directional_sequence": "LAALLLRRAAAAAAAAAAALLLRRLLRLRRAAALLLRLLRRAAAAAAAARLLLLLLLRRRRRRRRAAAALLLLLLLLLRRRRRRRRRRLLL",
+    "original_hypnogram": "ADDAAALLDDDDDDDDDDDAAALLAALALLDDDAAALAALLDDDDDDDDLAAAAAAALLLLLLLLDDDDAAAAAAAAALLLLLLLLLLAAA",
+    "directional_analysis": {
+      "hr_analysis": {
+        "distribution": {
+          "A": 0.023255813953488372,
+          "R": 0.29069767441860467,
+          "D": 0.46511627906976744,
+          "L": 0.22093023255813954
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 17,
+            "L->A": 1,
+            "A->L": 1,
+            "L->R": 1,
+            "R->R": 18,
+            "R->A": 1,
+            "A->R": 1,
+            "R->D": 6,
+            "D->D": 34,
+            "D->R": 5
+          },
+          "transition_probabilities": {
+            "L->L": 0.2,
+            "L->A": 0.011764705882352941,
+            "A->L": 0.011764705882352941,
+            "L->R": 0.011764705882352941,
+            "R->R": 0.21176470588235294,
+            "R->A": 0.011764705882352941,
+            "A->R": 0.011764705882352941,
+            "R->D": 0.07058823529411765,
+            "D->D": 0.4,
+            "D->R": 0.058823529411764705
+          },
+          "most_common_transitions": [
+            [
+              "D->D",
+              0.4
+            ],
+            [
+              "R->R",
+              0.21176470588235294
+            ],
+            [
+              "L->L",
+              0.2
+            ],
+            [
+              "R->D",
+              0.07058823529411765
+            ],
+            [
+              "D->R",
+              0.058823529411764705
+            ]
+          ],
+          "total_transitions": 85
+        },
+        "entropy": 1.6392397396405776,
+        "dominant_patterns": [
+          [
+            "DD",
+            34
+          ],
+          [
+            "DDD",
+            28
+          ],
+          [
+            "DDDD",
+            23
+          ],
+          [
+            "DDDDD",
+            19
+          ],
+          [
+            "RR",
+            18
+          ],
+          [
+            "LL",
+            17
+          ],
+          [
+            "LLL",
+            15
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "LLLL",
+            13
+          ],
+          [
+            "LLLLL",
+            11
+          ]
+        ],
+        "interpretation": "extensive recovery periods (46.5%) | high variability indicating complex physiological dynamics"
+      },
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.27906976744186046,
+          "R": 0.32558139534883723,
+          "D": 0.23255813953488372,
+          "L": 0.16279069767441862
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 9,
+            "L->D": 4,
+            "D->D": 10,
+            "D->L": 3,
+            "L->R": 1,
+            "R->D": 6,
+            "D->R": 5,
+            "R->R": 11,
+            "R->A": 10,
+            "A->R": 11,
+            "A->A": 12,
+            "D->A": 2,
+            "R->L": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.10588235294117647,
+            "L->D": 0.047058823529411764,
+            "D->D": 0.11764705882352941,
+            "D->L": 0.03529411764705882,
+            "L->R": 0.011764705882352941,
+            "R->D": 0.07058823529411765,
+            "D->R": 0.058823529411764705,
+            "R->R": 0.12941176470588237,
+            "R->A": 0.11764705882352941,
+            "A->R": 0.12941176470588237,
+            "A->A": 0.1411764705882353,
+            "D->A": 0.023529411764705882,
+            "R->L": 0.011764705882352941
+          },
+          "most_common_transitions": [
+            [
+              "A->A",
+              0.1411764705882353
+            ],
+            [
+              "R->R",
+              0.12941176470588237
+            ],
+            [
+              "A->R",
+              0.12941176470588237
+            ],
+            [
+              "D->D",
+              0.11764705882352941
+            ],
+            [
+              "R->A",
+              0.11764705882352941
+            ]
+          ],
+          "total_transitions": 85
+        },
+        "entropy": 1.9566534914291402,
+        "dominant_patterns": [
+          [
+            "AA",
+            12
+          ],
+          [
+            "RR",
+            11
+          ],
+          [
+            "AR",
+            11
+          ],
+          [
+            "DD",
+            10
+          ],
+          [
+            "RA",
+            10
+          ],
+          [
+            "LL",
+            9
+          ],
+          [
+            "LLL",
+            7
+          ],
+          [
+            "DDD",
+            7
+          ],
+          [
+            "RD",
+            6
+          ],
+          [
+            "RRR",
+            6
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.3076923076923077,
+          "R": 0.31868131868131866,
+          "D": 0.0,
+          "L": 0.37362637362637363
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->A": 1,
+            "A->A": 23,
+            "A->L": 4,
+            "L->L": 24,
+            "L->R": 8,
+            "R->R": 20,
+            "R->A": 4,
+            "R->L": 5,
+            "A->R": 1
+          },
+          "transition_probabilities": {
+            "L->A": 0.011111111111111112,
+            "A->A": 0.25555555555555554,
+            "A->L": 0.044444444444444446,
+            "L->L": 0.26666666666666666,
+            "L->R": 0.08888888888888889,
+            "R->R": 0.2222222222222222,
+            "R->A": 0.044444444444444446,
+            "R->L": 0.05555555555555555,
+            "A->R": 0.011111111111111112
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.26666666666666666
+            ],
+            [
+              "A->A",
+              0.25555555555555554
+            ],
+            [
+              "R->R",
+              0.2222222222222222
+            ],
+            [
+              "L->R",
+              0.08888888888888889
+            ],
+            [
+              "R->L",
+              0.05555555555555555
+            ]
+          ],
+          "total_transitions": 90
+        },
+        "entropy": 1.579650428343487,
+        "dominant_patterns": [
+          [
+            "LL",
+            24
+          ],
+          [
+            "AA",
+            23
+          ],
+          [
+            "RR",
+            20
+          ],
+          [
+            "AAA",
+            18
+          ],
+          [
+            "LLL",
+            16
+          ],
+          [
+            "RRR",
+            14
+          ],
+          [
+            "AAAA",
+            14
+          ],
+          [
+            "RRRR",
+            12
+          ],
+          [
+            "AAAAA",
+            11
+          ],
+          [
+            "LLLL",
+            10
+          ]
+        ],
+        "interpretation": "significant stress/transition periods (37.4%) | high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 86,
+      "hrv": 86,
+      "sleep": 91
+    },
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 86,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 87,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 88,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 89,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 90,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 91,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 92,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 93,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 94,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  },
+  {
+    "period_id": 95,
+    "timestamp": 0,
+    "hr_directional_sequence": "",
+    "hrv_directional_sequence": "DRLDA",
+    "sleep_directional_sequence": "LLLDDDRRRAAADDDLLLRRRAAA",
+    "original_hypnogram": "AAARRRLLLDDDRRRAAALLLDDD",
+    "directional_analysis": {
+      "hr_analysis": {},
+      "hrv_analysis": {
+        "distribution": {
+          "A": 0.2,
+          "R": 0.2,
+          "D": 0.4,
+          "L": 0.2
+        },
+        "transitions": {
+          "transition_counts": {
+            "D->R": 1,
+            "R->L": 1,
+            "L->D": 1,
+            "D->A": 1
+          },
+          "transition_probabilities": {
+            "D->R": 0.25,
+            "R->L": 0.25,
+            "L->D": 0.25,
+            "D->A": 0.25
+          },
+          "most_common_transitions": [
+            [
+              "D->R",
+              0.25
+            ],
+            [
+              "R->L",
+              0.25
+            ],
+            [
+              "L->D",
+              0.25
+            ],
+            [
+              "D->A",
+              0.25
+            ]
+          ],
+          "total_transitions": 4
+        },
+        "entropy": 1.9219280948873623,
+        "dominant_patterns": [],
+        "interpretation": "extensive recovery periods (40.0%) | high variability indicating complex physiological dynamics"
+      },
+      "sleep_analysis": {
+        "distribution": {
+          "A": 0.25,
+          "R": 0.25,
+          "D": 0.25,
+          "L": 0.25
+        },
+        "transitions": {
+          "transition_counts": {
+            "L->L": 4,
+            "L->D": 1,
+            "D->D": 4,
+            "D->R": 1,
+            "R->R": 4,
+            "R->A": 2,
+            "A->A": 4,
+            "A->D": 1,
+            "D->L": 1,
+            "L->R": 1
+          },
+          "transition_probabilities": {
+            "L->L": 0.17391304347826086,
+            "L->D": 0.043478260869565216,
+            "D->D": 0.17391304347826086,
+            "D->R": 0.043478260869565216,
+            "R->R": 0.17391304347826086,
+            "R->A": 0.08695652173913043,
+            "A->A": 0.17391304347826086,
+            "A->D": 0.043478260869565216,
+            "D->L": 0.043478260869565216,
+            "L->R": 0.043478260869565216
+          },
+          "most_common_transitions": [
+            [
+              "L->L",
+              0.17391304347826086
+            ],
+            [
+              "D->D",
+              0.17391304347826086
+            ],
+            [
+              "R->R",
+              0.17391304347826086
+            ],
+            [
+              "A->A",
+              0.17391304347826086
+            ],
+            [
+              "R->A",
+              0.08695652173913043
+            ]
+          ],
+          "total_transitions": 23
+        },
+        "entropy": 2.0,
+        "dominant_patterns": [
+          [
+            "LL",
+            4
+          ],
+          [
+            "DD",
+            4
+          ],
+          [
+            "RR",
+            4
+          ],
+          [
+            "AA",
+            4
+          ],
+          [
+            "RA",
+            2
+          ],
+          [
+            "LLL",
+            2
+          ],
+          [
+            "DDD",
+            2
+          ],
+          [
+            "RRR",
+            2
+          ],
+          [
+            "RRA",
+            2
+          ],
+          [
+            "RAA",
+            2
+          ]
+        ],
+        "interpretation": "high variability indicating complex physiological dynamics"
+      }
+    },
+    "sequence_lengths": {
+      "hr": 0,
+      "hrv": 5,
+      "sleep": 24
+    },
+    "data_source": "activity"
+  }
+]

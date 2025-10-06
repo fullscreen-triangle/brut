@@ -1,0 +1,370 @@
+\section{Methodology}
+
+\subsection{Data Collection Framework}
+
+\subsubsection{Consumer-Grade Wearable Device Selection}
+
+Data collection utilized consumer-grade wearable devices providing continuous physiological monitoring capabilities. Primary devices included Oura Ring (Generation 3), Garmin Vivosmart series, and Fitbit Charge series, selected for their photoplethysmography (PPG) and tri-axial accelerometry sensor integration.
+
+\begin{definition}[Device Specification Requirements]
+Selected devices met the following technical specifications:
+\begin{align}
+f_{\text{PPG}} &\geq 25 \text{ Hz} \quad \text{(PPG sampling frequency)} \\
+f_{\text{accel}} &\geq 50 \text{ Hz} \quad \text{(accelerometry sampling frequency)} \\
+\lambda_{\text{PPG}} &= 525-590 \text{ nm} \quad \text{(green light wavelength)} \\
+\text{Resolution}_{\text{accel}} &\leq 0.01 \text{ g} \quad \text{(acceleration resolution)}
+\end{align}
+\end{definition}
+
+\subsubsection{Data Acquisition Protocol}
+
+Continuous monitoring was conducted over periods ranging from 30 to 180 days per subject. Data acquisition followed standardized protocols:
+
+\begin{enumerate}
+\item Device calibration using manufacturer-specified procedures
+\item Baseline measurement period of 7 days for individual parameter estimation
+\item Continuous 24-hour monitoring with device removal only for charging
+\item Data synchronization at 24-hour intervals via manufacturer APIs
+\item Quality control assessment using signal-to-noise ratio thresholds
+\end{enumerate}
+
+\begin{definition}[Data Quality Criteria]
+Measurements were included in analysis if they satisfied:
+\begin{align}
+\text{SNR}_{\text{PPG}} &> 10 \text{ dB} \\
+\text{Coverage} &> 95\% \text{ per 24-hour period} \\
+\text{Artifact Rate} &< 5\% \text{ per measurement window}
+\end{align}
+\end{definition}
+
+\subsection{Multi-Scale Oscillatory Analysis Implementation}
+
+\subsubsection{Oscillatory Component Extraction}
+
+Raw sensor signals were decomposed into oscillatory components using empirical mode decomposition (EMD) and wavelet transform methods:
+
+\begin{definition}[Empirical Mode Decomposition Implementation]
+For a signal $x(t)$, EMD produces intrinsic mode functions (IMFs):
+\begin{equation}
+x(t) = \sum_{i=1}^{N} \text{IMF}_i(t) + r_N(t)
+\end{equation}
+where $\text{IMF}_i(t)$ represents the $i$-th intrinsic mode function and $r_N(t)$ denotes the final residue.
+\end{definition}
+
+\begin{definition}[Continuous Wavelet Transform Application]
+Wavelet coefficients were computed as:
+\begin{equation}
+W(a,b) = \frac{1}{\sqrt{a}} \int_{-\infty}^{\infty} x(t) \psi^*\left(\frac{t-b}{a}\right) dt
+\end{equation}
+where $\psi(t)$ represents the mother wavelet (Morlet wavelet), $a$ denotes scale parameter, $b$ indicates translation parameter, and $*$ represents complex conjugation.
+\end{definition}
+
+\subsubsection{Multi-Scale Frequency Analysis}
+
+The 11-scale hierarchical architecture was analyzed through frequency domain decomposition:
+
+\begin{algorithm}
+\caption{Multi-Scale Frequency Decomposition}
+\begin{algorithmic}
+\Procedure{MultiScaleAnalysis}{RawSignal, FrequencyBands}
+    \For{$i = 0$ to $10$}
+        \State $f_{\text{band}} \leftarrow$ FrequencyBands[$i$]
+        \State $\text{FilteredSignal}_i \leftarrow$ BandpassFilter(RawSignal, $f_{\text{band}}$)
+        \State $A_i(t) \leftarrow$ HilbertTransform($\text{FilteredSignal}_i$).amplitude
+        \State $\phi_i(t) \leftarrow$ HilbertTransform($\text{FilteredSignal}_i$).phase
+        \State $\mathbf{\Psi}_i \leftarrow [A_i(t), \phi_i(t)]$
+    \EndFor
+    \State \Return $\{\mathbf{\Psi}_i\}_{i=0}^{10}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Coupling Strength Quantification}
+
+Inter-scale coupling was quantified using phase-amplitude coupling (PAC) and phase-phase coupling (PPC) measures:
+
+\begin{definition}[Phase-Amplitude Coupling Implementation]
+PAC between scales $i$ and $j$ was computed as:
+\begin{equation}
+\text{PAC}_{ij} = \left| \frac{1}{N} \sum_{n=1}^{N} A_j[n] e^{i\phi_i[n]} \right|
+\end{equation}
+where $A_j[n]$ represents amplitude of scale $j$ at time $n$ and $\phi_i[n]$ denotes phase of scale $i$ at time $n$.
+\end{definition}
+
+\begin{definition}[Phase-Phase Coupling Implementation]
+PPC between scales $i$ and $j$ was calculated as:
+\begin{equation}
+\text{PPC}_{ij} = \left| \frac{1}{N} \sum_{n=1}^{N} e^{i(\phi_i[n] - \phi_j[n])} \right|
+\end{equation}
+\end{definition}
+
+\subsection{Activity-Sleep Mirror Analysis}
+
+\subsubsection{Error Accumulation Calculation}
+
+Metabolic error accumulation was computed from MET time series data using numerical integration:
+
+\begin{algorithm}
+\caption{Error Accumulation Computation}
+\begin{algorithmic}
+\Procedure{ComputeErrorAccumulation}{METTimeSeries, $\alpha$, $\text{MET}_{\text{baseline}}$}
+    \State $E_{\text{total}} \leftarrow 0$
+    \State $\Delta t \leftarrow$ SamplingInterval(METTimeSeries)
+    \For{each $\text{MET}(t)$ in METTimeSeries}
+        \State $\text{ExcessMET} \leftarrow \max(0, \text{MET}(t) - \text{MET}_{\text{baseline}})$
+        \State $\Delta E \leftarrow \alpha \times \text{ExcessMET} \times \Delta t$
+        \State $E_{\text{total}} \leftarrow E_{\text{total}} + \Delta E$
+    \EndFor
+    \State \Return $E_{\text{total}}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Sleep Cleanup Capacity Assessment}
+
+Sleep cleanup capacity was calculated from hypnogram data and sleep efficiency metrics:
+
+\begin{definition}[Hypnogram Processing]
+Sleep stage durations were extracted from 5-minute resolution hypnogram strings:
+\begin{equation}
+T_{\text{stage}} = \frac{\text{Count}(\text{stage})}{12} \text{ hours}
+\end{equation}
+where Count(stage) represents the number of 5-minute epochs in the specified sleep stage.
+\end{definition}
+
+\begin{algorithm}
+\caption{Cleanup Capacity Calculation}
+\begin{algorithmic}
+\Procedure{ComputeCleanupCapacity}{Hypnogram, SleepEfficiency, $\beta_{\text{deep}}$, $\beta_{\text{REM}}$}
+    \State $T_{\text{deep}} \leftarrow$ ExtractStageDuration(Hypnogram, 'D')
+    \State $T_{\text{REM}} \leftarrow$ ExtractStageDuration(Hypnogram, 'R')
+    \State $\eta_{\text{sleep}} \leftarrow$ SleepEfficiency / 100
+    \State $C_{\text{deep}} \leftarrow \beta_{\text{deep}} \times T_{\text{deep}} \times \eta_{\text{sleep}}$
+    \State $C_{\text{REM}} \leftarrow \beta_{\text{REM}} \times T_{\text{REM}} \times \eta_{\text{sleep}}$
+    \State $C_{\text{total}} \leftarrow C_{\text{deep}} + C_{\text{REM}}$
+    \State \Return $C_{\text{total}}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Mirror Coupling Validation}
+
+Mirror coupling coefficients were computed and validated through statistical analysis:
+
+\begin{definition}[Mirror Coefficient Calculation]
+For each activity-sleep pair, the mirror coefficient was computed as:
+\begin{equation}
+\text{MirrorCoeff} = \frac{C_{\text{total}}}{E_{\text{total}}}
+\end{equation}
+with perfect coupling indicated by MirrorCoeff ≈ 1.0.
+\end{definition}
+
+\subsection{S-Entropy Coordinate Transformation}
+
+\subsubsection{4D Coordinate Computation}
+
+S-entropy coordinates were computed from processed sensor data using the following implementation:
+
+\begin{algorithm}
+\caption{S-Entropy Coordinate Transformation}
+\begin{algorithmic}
+\Procedure{ComputeSEntropyCoords}{ActivityData, HRVData, ContextData}
+    \State // Knowledge Coordinate
+    \State $p_i \leftarrow$ ComputeActivityStateProbabilities(ActivityData)
+    \State $S_{\text{knowledge}} \leftarrow -\sum_i p_i \log_2(p_i) + \alpha \times \text{SensorInfoContent}$
+    
+    \State // Time Coordinate  
+    \State $\phi_{\text{activity}}(t) \leftarrow$ ExtractInstantaneousPhase(ActivityData)
+    \State $S_{\text{time}} \leftarrow \frac{1}{T} \int_0^T |\frac{d\phi_{\text{activity}}}{dt}| dt$
+    
+    \State // Entropy Coordinate
+    \State $\rho_k \leftarrow$ ComputeOscillatoryTerminationDensity(ActivityData)
+    \State $S_{\text{entropy}} \leftarrow -\sum_k \rho_k \log_2(\rho_k)$
+    
+    \State // Context Coordinate
+    \State $S_{\text{context}} \leftarrow \beta_1 \times \text{HRV} + \beta_2 \times \text{Temp} + \beta_3 \times \text{CircPhase}$
+    
+    \State \Return $[S_{\text{knowledge}}, S_{\text{time}}, S_{\text{entropy}}, S_{\text{context}}]$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Coordinate Space Navigation}
+
+Navigation through S-entropy coordinate space was implemented using gradient-based optimization:
+
+\begin{definition}[Navigation Velocity Computation]
+The velocity field in S-entropy space was computed as:
+\begin{equation}
+\vec{v}_S = -\nabla_S \mathcal{E}(\vec{S}) + \mathbf{F}_{\text{external}}
+\end{equation}
+where $\mathcal{E}(\vec{S})$ represents the energy function and $\mathbf{F}_{\text{external}}$ denotes external forcing terms.
+\end{definition}
+
+\subsection{Comprehensive Activity Analysis Framework}
+
+\subsubsection{Seven-Domain Analysis Implementation}
+
+The comprehensive activity analysis was implemented through seven specialized modules:
+
+\begin{enumerate}
+\item \textbf{Basic Metrics Module}: Step count, distance, active minutes, sedentary time analysis
+\item \textbf{Energy Expenditure Module}: Total daily energy expenditure, basal metabolic rate calculation
+\item \textbf{Intensity-Based Module}: Activity intensity classification and pattern analysis
+\item \textbf{Movement Pattern Module}: Locomotor pattern recognition and gait analysis
+\item \textbf{Postural Analysis Module}: Body position and orientation pattern analysis
+\item \textbf{Heart Rate Variability Module}: Time-domain and frequency-domain HRV analysis
+\item \textbf{Coupling Analysis Module}: Cross-domain coupling strength quantification
+\end{enumerate}
+
+\subsubsection{Statistical Analysis Framework}
+
+Statistical validation employed multiple analytical approaches:
+
+\begin{definition}[Correlation Analysis]
+Pearson correlation coefficients were computed as:
+\begin{equation}
+r_{xy} = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
+\end{equation}
+where $x_i$ and $y_i$ represent paired observations and $\bar{x}$, $\bar{y}$ denote sample means.
+\end{definition}
+
+\begin{definition}[Cross-Validation Protocol]
+K-fold cross-validation was implemented with $K = 10$:
+\begin{equation}
+\text{CV Error} = \frac{1}{K} \sum_{k=1}^{K} \mathcal{L}(\mathcal{M}_k, \mathcal{D}_k^{\text{test}})
+\end{equation}
+where $\mathcal{M}_k$ represents the model trained on fold $k$ and $\mathcal{L}$ denotes the loss function.
+\end{definition}
+
+\subsection{Predictive Modeling Implementation}
+
+\subsubsection{Multiple Regression Analysis}
+
+Predictive models were developed using multiple regression with polynomial terms:
+
+\begin{definition}[Polynomial Regression Model]
+The general form of polynomial regression models was:
+\begin{equation}
+y = \beta_0 + \sum_{i=1}^{p} \beta_i x_i + \sum_{i=1}^{p} \sum_{j=i}^{p} \beta_{ij} x_i x_j + \epsilon
+\end{equation}
+where $\beta_i$ represent regression coefficients, $x_i$ denote predictor variables, and $\epsilon$ represents error terms.
+\end{definition}
+
+\subsubsection{Model Selection and Validation}
+
+Model selection employed information criteria and cross-validation:
+
+\begin{definition}[Akaike Information Criterion]
+Model selection utilized AIC:
+\begin{equation}
+\text{AIC} = 2k - 2\ln(\mathcal{L})
+\end{equation}
+where $k$ represents the number of parameters and $\mathcal{L}$ denotes the likelihood function.
+\end{definition}
+
+\begin{definition}[Bayesian Information Criterion]
+BIC was computed as:
+\begin{equation}
+\text{BIC} = k\ln(n) - 2\ln(\mathcal{L})
+\end{equation}
+where $n$ represents the sample size.
+\end{definition}
+
+\subsection{Oscillatory Pattern Recognition}
+
+\subsubsection{Fourier Analysis Implementation}
+
+Frequency domain analysis was performed using Fast Fourier Transform (FFT):
+
+\begin{definition}[Power Spectral Density Computation]
+Power spectral density was computed as:
+\begin{equation}
+S_{xx}(f) = \frac{1}{f_s N} \left| \sum_{n=0}^{N-1} x[n] e^{-j2\pi fn/f_s} \right|^2
+\end{equation}
+where $f_s$ represents sampling frequency, $N$ denotes signal length, and $x[n]$ represents discrete signal samples.
+\end{definition}
+
+\subsubsection{Phase Coherence Analysis}
+
+Phase coherence between signals was quantified using the phase-locking value:
+
+\begin{definition}[Phase-Locking Value]
+PLV between signals $x$ and $y$ was computed as:
+\begin{equation}
+\text{PLV}_{xy} = \left| \frac{1}{N} \sum_{n=1}^{N} e^{i(\phi_x[n] - \phi_y[n])} \right|
+\end{equation}
+where $\phi_x[n]$ and $\phi_y[n]$ represent instantaneous phases extracted using the Hilbert transform.
+\end{definition}
+
+\subsection{Data Processing Pipeline}
+
+\subsubsection{Quality Control and Preprocessing}
+
+Raw sensor data underwent systematic quality control and preprocessing:
+
+\begin{algorithm}
+\caption{Data Preprocessing Pipeline}
+\begin{algorithmic}
+\Procedure{PreprocessData}{RawData}
+    \State // Artifact Detection
+    \State ArtifactMask $\leftarrow$ DetectArtifacts(RawData, ThresholdParams)
+    \State CleanData $\leftarrow$ RemoveArtifacts(RawData, ArtifactMask)
+    
+    \State // Signal Filtering
+    \State FilteredData $\leftarrow$ ButterworthFilter(CleanData, CutoffFreqs)
+    
+    \State // Normalization
+    \State NormalizedData $\leftarrow$ ZScoreNormalization(FilteredData)
+    
+    \State // Interpolation for Missing Values
+    \State CompleteData $\leftarrow$ CubicSplineInterpolation(NormalizedData)
+    
+    \State \Return CompleteData
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Temporal Alignment and Synchronization}
+
+Multi-sensor data streams were temporally aligned using cross-correlation:
+
+\begin{definition}[Cross-Correlation Alignment]
+Temporal offset between signals was determined by:
+\begin{equation}
+\tau_{\text{optimal}} = \arg\max_\tau \sum_{n} x[n] y[n+\tau]
+\end{equation}
+where $\tau_{\text{optimal}}$ represents the optimal time delay for signal alignment.
+\end{definition}
+
+\subsection{Computational Implementation}
+
+\subsubsection{Software Framework}
+
+Analysis was implemented using Python 3.8+ with specialized libraries:
+
+\begin{itemize}
+\item \textbf{NumPy 1.21+}: Numerical computations and array operations
+\item \textbf{SciPy 1.7+}: Signal processing and statistical analysis
+\item \textbf{Pandas 1.3+}: Data manipulation and time series analysis
+\item \textbf{Scikit-learn 1.0+}: Machine learning and cross-validation
+\item \textbf{Matplotlib 3.5+}: Visualization and plotting
+\item \textbf{Seaborn 0.11+}: Statistical visualization
+\end{itemize}
+
+\subsubsection{Computational Complexity}
+
+Algorithm complexity was optimized for real-time processing:
+
+\begin{definition}[Computational Complexity Bounds]
+Key algorithms achieved the following complexity bounds:
+\begin{align}
+\text{FFT Analysis} &: O(N \log N) \\
+\text{Wavelet Transform} &: O(N \log N) \\
+\text{Coupling Analysis} &: O(N^2) \\
+\text{S-Entropy Transform} &: O(N)
+\end{align}
+where $N$ represents the number of data points.
+\end{definition}
+
+This comprehensive methodology framework enabled systematic analysis of consumer-grade sensor data through the multi-scale oscillatory framework, providing robust quantification of activity patterns and their coupling relationships across temporal and physiological scales.

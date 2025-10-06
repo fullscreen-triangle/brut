@@ -1,0 +1,112 @@
+[
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.3427472,
+    "steps": 468,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 68.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.9714285714285714,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 2,
+    "activity_sleep_correlation": 0.36551339999999993,
+    "steps": 3006,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 63.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.9,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.3069866,
+    "steps": 2974,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 53.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.7571428571428571,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.36551199999999995,
+    "steps": 3640,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 61.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.8714285714285714,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.42457520000000004,
+    "steps": 8939,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 56.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.8,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 1,
+    "activity_sleep_correlation": 0.4184264,
+    "steps": 8573,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 56.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.8,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 2,
+    "activity_sleep_correlation": 0.4897825999999999,
+    "steps": 11338,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 59.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.8428571428571429,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.38421979999999994,
+    "steps": 5374,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 59.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.8428571428571429,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 0,
+    "activity_sleep_correlation": 0.265486,
+    "steps": 685,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 52.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.7428571428571429,
+    "circadian_alignment_score": 0.8
+  },
+  {
+    "activity_period_id": 0,
+    "sleep_period_id": 3,
+    "activity_sleep_correlation": 0.6975999999999999,
+    "steps": 21553,
+    "activity_intensity": 70.0,
+    "sleep_efficiency": 64.0,
+    "exercise_sleep_latency_impact": 0.0,
+    "recovery_ratio": 0.9142857142857143,
+    "circadian_alignment_score": 0.8
+  }
+]

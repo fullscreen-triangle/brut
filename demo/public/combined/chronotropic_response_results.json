@@ -1,0 +1,182 @@
+[
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 0.0,
+    "predicted_max_hr": 0.0,
+    "chronotropic_index": 0.0,
+    "hr_reserve_used": 0.0,
+    "chronotropic_fitness": "Average",
+    "data_source": "activity"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 76.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.4141689373297003,
+    "hr_reserve_used": 41.41689373297003,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "max_hr_achieved": 67.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.3651226158038147,
+    "hr_reserve_used": 36.51226158038147,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 71.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.3869209809264305,
+    "hr_reserve_used": 38.69209809264305,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 75.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.4087193460490463,
+    "hr_reserve_used": 40.87193460490463,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 82.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.44686648501362397,
+    "hr_reserve_used": 44.6866485013624,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 1,
+    "max_hr_achieved": 84.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.45776566757493187,
+    "hr_reserve_used": 45.776566757493185,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 2,
+    "max_hr_achieved": 78.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.4250681198910082,
+    "hr_reserve_used": 42.50681198910082,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 80.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.4359673024523161,
+    "hr_reserve_used": 43.596730245231605,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 0,
+    "max_hr_achieved": 85.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.46321525885558584,
+    "hr_reserve_used": 46.321525885558586,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  },
+  {
+    "period_id": 3,
+    "max_hr_achieved": 76.0,
+    "predicted_max_hr": 183.5,
+    "chronotropic_index": 0.4141689373297003,
+    "hr_reserve_used": 41.41689373297003,
+    "chronotropic_fitness": "Average",
+    "data_source": "sleep"
+  }
+]

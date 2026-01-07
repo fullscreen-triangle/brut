@@ -1,0 +1,343 @@
+%==============================================================================
+% SECTION 4: THE S-TRANSFORMATION OPERATOR
+%==============================================================================
+
+\section{The S-Transformation Operator}
+\label{sec:transformation}
+
+The S-transformation operator formalises how fluid states evolve as molecules traverse the system. Crucially, this operator encodes both the \emph{aperture structure} (which transitions are allowed) and the \emph{memory structure} (how history affects future transitions).
+
+\subsection{Definition and Properties}
+
+\begin{definition}[S-Transformation Operator]
+\label{def:s_transformation}
+The S-transformation operator $\Toperator: \Sspace \to \Sspace$ maps S-coordinates at position $x$ to S-coordinates at position $x + dx$:
+\begin{equation}
+\Svec(x + dx) = \Toperator_{dx}[\Svec(x)]
+\label{eq:transformation_def}
+\end{equation}
+The operator implicitly depends on:
+\begin{itemize}
+\item The aperture structure $\mathcal{A}(x)$ available at position $x$
+\item The memory state $\mathcal{M}(x)$ encoding phase-lock history
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Composition Property]
+\label{thm:composition}
+S-transformation operators compose:
+\begin{equation}
+\Toperator_{0 \to x} = \Toperator_{(x-dx) \to x} \circ \Toperator_{(x-2dx) \to (x-dx)} \circ \cdots \circ \Toperator_{0 \to dx}
+\label{eq:composition}
+\end{equation}
+For homogeneous systems with position-independent $\Toperator$:
+\begin{equation}
+\Toperator_{0 \to x} = \Toperator_{dx}^{x/dx}
+\label{eq:homogeneous_composition}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By the dimensional reduction theorem (Theorem~\ref{thm:dimensional_reduction}), S-coordinates at position $x$ depend on S-coordinates at $x - dx$ through $\Toperator_{(x-dx) \to x}$. Iterating yields the composition. For homogeneous systems, each $\Toperator_{dx}$ is identical, giving the power form.
+\end{proof}
+
+\begin{remark}[Memory in Composition]
+The composition property reveals how memory accumulates in viscous flow. Each $\Toperator$ application ``remembers'' the phase-lock state from the previous position. In the single-pendulum (laminar) regime, this memory is coherent and sequential. In the double-pendulum (turbulent) regime, memory becomes chaotic.
+\end{remark}
+
+\subsection{Operator Decomposition}
+
+\begin{theorem}[Operator Decomposition]
+\label{thm:operator_decomposition}
+The S-transformation operator decomposes into four components:
+\begin{equation}
+\Toperator = \Toperator_{\text{mem}} \circ \Toperator_{\text{part}} \circ \Toperator_{\text{diff}} \circ \Toperator_{\text{adv}}
+\label{eq:operator_decomposition}
+\end{equation}
+where:
+\begin{itemize}
+\item $\Toperator_{\text{mem}}$: Memory operator (phase-lock history update)
+\item $\Toperator_{\text{part}}$: Partition operator (equilibration through apertures)
+\item $\Toperator_{\text{diff}}$: Diffusion operator (S-spreading)
+\item $\Toperator_{\text{adv}}$: Advection operator (bulk S-transport)
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Physical processes in fluids separate into:
+\begin{enumerate}
+\item \textbf{Memory update}: Phase-lock networks adjust to new configurations.
+\item \textbf{Aperture navigation}: Partitioning through available apertures (molecular bonds)
+\item \textbf{Molecular diffusion}: Random motion spreading S-distribution
+\item \textbf{Bulk advection}: Transport by mean flow velocity
+\end{enumerate}
+
+These processes operate on S-coordinates with different memory requirements:
+\begin{itemize}
+\item Partition affects $S_k$ (changes configuration probability) via aperture selectivity
+\item Diffusion affects all components through spatial spreading
+\item Advection translates the S-profile without changing its shape
+\item Memory accumulates viscous history through phase-lock reconfiguration
+\end{itemize}
+
+Composition captures sequential application, with memory acting last to record the completed transition.
+\end{proof}
+
+\subsection{Memory Operator and Viscosity}
+
+\begin{definition}[Memory Operator]
+\label{def:memory_operator}
+The memory operator $\Toperator_{\text{mem}}$ updates the phase-lock history:
+\begin{equation}
+\Toperator_{\text{mem}}[\Svec, \mathcal{M}] = (\Svec, \mathcal{M} + \Delta\mathcal{M})
+\label{eq:memory_operator}
+\end{equation}
+where $\Delta\mathcal{M}$ is the memory increment from the transition:
+\begin{equation}
+\Delta\mathcal{M} = \sum_{i,j} \tau_{p,ij} \cdot g_{ij} \cdot |\Delta\Svec|
+\label{eq:memory_increment}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Viscosity from Accumulated Memory]
+\label{thm:transformation_viscosity_memory}
+The dynamic viscosity equals the rate of memory accumulation per unit strain:
+\begin{equation}
+\mu = \frac{d\mathcal{M}}{d\gamma}
+\label{eq:viscosity_from_memory}
+\end{equation}
+where $\gamma$ is the shear strain.
+\end{theorem}
+
+\begin{proof}
+Each layer of fluid carries phase-lock memory. Shearing adjacent layers forces phase-locks to break and reform. The memory increment per unit strain is:
+\begin{equation}
+\frac{d\mathcal{M}}{d\gamma} = \sum_{i,j} \tau_{p,ij} \cdot g_{ij}
+\end{equation}
+
+This is precisely the viscosity formula $\mu = \sum \tau_p \cdot g$. Viscosity \emph{is} accumulated memory. \qed
+\end{proof}
+
+\begin{remark}[Memory Reset in Chromatography]
+In chromatography, the memory operator is modified to reset at each theoretical plate:
+\begin{equation}
+\Toperator_{\text{mem}}^{(\text{chrom})}[\Svec, \mathcal{M}] = (\Svec, \emptyset) \quad \text{at each plate boundary}
+\end{equation}
+This memory reset is what distinguishes chromatography (separation) from turbulence (mixing). See Section~\ref{subsec:chromatography_turbulence}.
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_transformation_operator.pdf}
+\caption{\textbf{The S-Stellas Transformation Operator: How Fluids Evolve.}
+(A) Operator definition: $\mathcal{T}: \Svec(x) \to \Svec(x + dx)$ maps S-coordinates at one position to S-coordinates at an adjacent position. The operator encodes both aperture structure (which transitions are allowed) and memory structure (how history affects future transitions). (B) Operator decomposition: $\mathcal{T} = \mathcal{T}_{\text{mem}} \circ \mathcal{T}_{\text{part}} \circ \mathcal{T}_{\text{diff}} \circ \mathcal{T}_{\text{adv}}$. Memory updates phase-lock history; partition navigates apertures; diffusion spreads the S-distribution; advection translates by bulk flow. (C) Flow regime classification: laminar flow uses sequential apertures (single pendulum---deterministic, periodic); turbulent flow uses non-sequential apertures (double pendulum---chaotic, non-periodic); chromatography uses non-sequential apertures with memory reset (memoryless turbulence). (D) Memory reset in chromatography: each theoretical plate resets the phase-lock memory, converting within-plate turbulence into between-plate statistics. This is why chromatography separates (statistical accumulation) rather than mixes (chaotic homogenisation).}
+\label{fig:transformation_operator}
+\end{figure}
+
+\subsection{Partition Operator: Aperture Navigation}
+
+\begin{definition}[Partition Operator]
+\label{def:partition_operator}
+The partition operator $\Toperator_{\text{part}}$ transforms S-coordinates through aperture navigation:
+\begin{equation}
+\Toperator_{\text{part}}[\Svec] = \Svec + \Delta\Svec_{\text{eq}}
+\label{eq:partition_operator}
+\end{equation}
+where $\Delta\Svec_{\text{eq}}$ is the S-coordinate change upon navigating available apertures.
+\end{definition}
+
+\begin{theorem}[Partition S-Change via Apertures]
+\label{thm:partition_change}
+The partition S-change depends on aperture selectivity and S-distance:
+\begin{equation}
+\Delta\Svec_{\text{eq}} = -\kappa \cdot s(\Svec) \cdot (\Svec - \Svec_{\text{target}})
+\label{eq:partition_change}
+\end{equation}
+where $\kappa$ is the equilibration rate constant, $s(\Svec)$ is the aperture selectivity, and $\Svec_{\text{target}}$ is the target S-coordinate (stationary phase in chromatography).
+\end{theorem}
+
+\begin{proof}
+Partition equilibration drives S-coordinates toward the target value, modulated by aperture selectivity. Molecules with $s \approx 1$ (matching aperture) equilibrate quickly; molecules with $s \ll 1$ (blocked by aperture) equilibrate slowly.
+
+The rate is:
+\begin{equation}
+\frac{d\Svec}{dt}\bigg|_{\text{eq}} = -\kappa \cdot s(\Svec) \cdot (\Svec - \Svec_{\text{target}})
+\end{equation}
+
+For small time step $dt$:
+\begin{equation}
+\Delta\Svec_{\text{eq}} = \frac{d\Svec}{dt}\bigg|_{\text{eq}} dt = -\kappa \cdot s \cdot dt \cdot (\Svec - \Svec_{\text{target}})
+\end{equation}
+
+Absorbing $dt$ into $\kappa$ yields Equation~\ref{eq:partition_change}.
+\end{proof}
+
+\begin{corollary}[Partition Coefficient from Aperture Potential]
+\label{cor:partition_coefficient}
+The partition coefficient $K$ between phases is related to the aperture potential:
+\begin{equation}
+K = \exp\left( -\frac{\Phi_a}{\kB T} \right) = \exp\left( \frac{\ln s(\Svec)}{\ln s_0} \right) = s(\Svec)^{1/\ln s_0}
+\label{eq:partition_coefficient}
+\end{equation}
+where $\Phi_a = -\kB T \ln s$ is the aperture potential.
+\end{corollary}
+
+\begin{proof}
+The aperture potential $\Phi_a = -\kB T \ln s$ acts as an effective energy barrier. The probability of being in the target phase relative to the source phase follows the Boltzmann factor:
+\begin{equation}
+K = \exp(-\Phi_a / \kB T) = \exp(\ln s) = s
+\end{equation}
+The partition coefficient \emph{is} the aperture selectivity. High selectivity means strong partitioning.
+\end{proof}
+
+\begin{remark}[Aperture Types]
+Different apertures correspond to different molecular interactions:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Aperture Type} & \textbf{Selectivity} & \textbf{Example} \\
+\midrule
+Hydrogen bond & $s \sim 0.1$ & Water-hydroxyl interaction \\
+Dipole-dipole & $s \sim 0.3$ & Polar molecule retention \\
+Van der Waals & $s \sim 0.5$ & Nonpolar interaction \\
+Size exclusion & $s \sim 0$ or $1$ & Molecular sieve \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remark}
+
+\subsection{Diffusion Operator}
+
+\begin{definition}[Diffusion Operator]
+\label{def:diffusion_operator}
+The diffusion operator $\Toperator_{\text{diff}}$ spreads the S-distribution:
+\begin{equation}
+\Toperator_{\text{diff}}[\Svec] = \Svec + D_S \nabla_S^2 \Svec \cdot dt
+\label{eq:diffusion_operator}
+\end{equation}
+where $D_S$ is the S-diffusion coefficient and $\nabla_S^2$ is the Laplacian in S-space.
+\end{definition}
+
+\begin{theorem}[S-Diffusion Coefficient]
+\label{thm:s_diffusion}
+The S-diffusion coefficient is:
+\begin{equation}
+D_S = \frac{\kB T}{\sum_{i,j} g_{ij}}
+\label{eq:s_diffusion}
+\end{equation}
+where the sum is over phase-lock couplings.
+\end{theorem}
+
+\begin{proof}
+Diffusion in S-space is driven by thermal fluctuations against phase-lock constraints. Higher temperature increases fluctuation magnitude: $D_S \propto T$. Stronger phase-lock coupling restricts motion: $D_S \propto 1/\sum g_{ij}$. Dimensional analysis yields Equation~\ref{eq:s_diffusion}.
+\end{proof}
+
+\subsection{Advection Operator}
+
+\begin{definition}[Advection Operator]
+\label{def:advection_operator}
+The advection operator $\Toperator_{\text{adv}}$ translates the S-profile:
+\begin{equation}
+\Toperator_{\text{adv}}[\Svec](x) = \Svec(x - v \cdot dt)
+\label{eq:advection_operator}
+\end{equation}
+where $v$ is the flow velocity.
+\end{definition}
+
+\begin{theorem}[Advection Velocity from S-Gradient]
+\label{thm:advection_velocity}
+The advection velocity is determined by the S-gradient:
+\begin{equation}
+v = -\frac{1}{\gamma} \nabla_S \Phi
+\label{eq:advection_velocity}
+\end{equation}
+where $\gamma$ is the friction coefficient.
+\end{theorem}
+
+\begin{proof}
+Flow velocity results from the balance between the driving force ($-\nabla_S \Phi$) and friction ($\gamma v$):
+\begin{equation}
+\gamma v = -\nabla_S \Phi
+\end{equation}
+Solving for $v$ yields Equation~\ref{eq:advection_velocity}.
+\end{proof}
+
+\subsection{Complete Transformation}
+
+\begin{theorem}[Complete S-Transformation]
+\label{thm:complete_transformation}
+The complete S-transformation for one step $dx$ is:
+\begin{equation}
+\Svec(x + dx) = \Svec(x) - \kappa s(\Svec)(\Svec - \Svec_{\text{target}}) + D_S \nabla_S^2 \Svec \cdot dt - v \cdot \nabla_x \Svec \cdot dt
+\label{eq:complete_transformation}
+\end{equation}
+with memory update:
+\begin{equation}
+\mathcal{M}(x + dx) = \mathcal{M}(x) + \sum_{i,j} \tau_{p,ij} g_{ij} |\Delta\Svec|
+\label{eq:memory_update}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:operator_decomposition} with the definitions of each operator:
+\begin{align}
+\Toperator[\Svec] &= \Toperator_{\text{mem}} \circ \Toperator_{\text{part}} \circ \Toperator_{\text{diff}} \circ \Toperator_{\text{adv}}[\Svec] \\
+&= \Toperator_{\text{mem}} \circ \Toperator_{\text{part}} \circ \Toperator_{\text{diff}}[\Svec(x - v \cdot dt)] \\
+&= \Toperator_{\text{mem}} \circ \Toperator_{\text{part}}[\Svec(x - v \cdot dt) + D_S \nabla_S^2 \Svec \cdot dt] \\
+&= \Toperator_{\text{mem}}[\Svec(x - v \cdot dt) + D_S \nabla_S^2 \Svec \cdot dt - \kappa s(\Svec - \Svec_{\text{target}})]
+\end{align}
+
+Taylor expanding $\Svec(x - v \cdot dt) \approx \Svec(x) - v \nabla_x \Svec \cdot dt$ yields the S-coordinate update.
+
+The memory operator adds the memory increment from the transition:
+\begin{equation}
+\Delta\mathcal{M} = \sum_{i,j} \tau_{p,ij} g_{ij} |\Delta\Svec|
+\end{equation}
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_s_space.png}
+\caption{\textbf{S-Entropy Coordinate Space: The Three-Dimensional Manifold of Fluid States.}
+All fluid states reside on a three-dimensional manifold defined by S-entropy coordinates $(S_k, S_t, S_e)$. (A) $S_k$ (knowledge entropy): measures how many configurations are consistent with macroscopic observations. High $S_k$ means many equivalent microstates---the fluid is ``uncertain'' about its microscopic configuration. (B) $S_t$ (temporal entropy): measures the timescale of categorical completion. High $S_t$ means slow processes---viscous fluids have high temporal entropy because phase-lock reconfiguration takes time. (C) $S_e$ (evolution entropy): measures how energy is distributed across oscillatory modes. High $S_e$ means energy is spread across many modes (equipartition). (D) S-space navigation: fluid transport is movement through S-space. Diffusion spreads the S-distribution; advection translates it; partition (aperture navigation) changes the shape. The S-sliding window observes one categorical state at a time, traversing the fluid like a reader scanning text. This dimensional reduction---from infinite molecular coordinates to three S-coordinates---is the ``countability revolution'' that makes rigorous fluid dynamics tractable.}
+\label{fig:s_space}
+\end{figure}
+
+\subsection{Special Cases: Laminar, Turbulent, and Chromatographic Flow}
+
+\begin{theorem}[Flow Regime Classification]
+\label{thm:flow_regimes}
+The S-transformation takes different forms in different flow regimes:
+\end{theorem}
+
+\textbf{Case 1: Laminar Flow (Single Pendulum)}
+
+Apertures are sequential; memory is coherent:
+\begin{align}
+\Svec(x + dx) &= \Svec(x) - \kappa s_{\text{seq}}(\Svec - \Svec_{\text{next}}) + D_S \nabla^2 \Svec \cdot dt - v \nabla \Svec \cdot dt \\
+\mathcal{M}(x + dx) &= \mathcal{M}(x) + \mu \cdot |\nabla v| \cdot dx
+\end{align}
+where $s_{\text{seq}}$ is the sequential aperture selectivity and $\Svec_{\text{next}}$ is the next state in the sequence.
+
+\textbf{Case 2: Turbulent Flow (Double Pendulum)}
+
+Apertures are non-sequential; memory is chaotic:
+\begin{align}
+\Svec(x + dx) &= \Svec(x) - \kappa \sum_k s_k(\Svec - \Svec_k) + D_S \nabla^2 \Svec \cdot dt - v \nabla \Svec \cdot dt \\
+\mathcal{M}(x + dx) &= \mathcal{M}(x) + \Delta\mathcal{M}_{\text{chaotic}}
+\end{align}
+where the sum is over all accessible (non-sequential) apertures $k$, and $\Delta\mathcal{M}_{\text{chaotic}}$ includes contributions from distant state jumps.
+
+\textbf{Case 3: Chromatographic Flow (Memoryless Turbulence)}
+
+Apertures are non-sequential within each plate; memory resets at plate boundaries:
+\begin{align}
+\Svec(x + dx) &= \Svec(x) - \kappa \sum_k s_k(\Svec - \Svec_k) + D_S \nabla^2 \Svec \cdot dt - v \nabla \Svec \cdot dt \\
+\mathcal{M}(x + H) &= \emptyset \quad \text{(reset at each plate)}
+\end{align}
+where $H$ is the plate height.
+
+\begin{remark}[Why Chromatography Separates]
+The memory reset in chromatography converts chaotic (turbulent) dynamics within each plate into a statistical process across plates. Without memory, each plate contributes independently to separation, allowing $\Delta t_R \propto N$ (plate count). With memory (turbulence), chaotic mixing would dominate and $\Delta t_R \to 0$.
+\end{remark}
+

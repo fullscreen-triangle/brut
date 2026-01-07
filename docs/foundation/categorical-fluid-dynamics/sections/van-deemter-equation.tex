@@ -1,0 +1,306 @@
+%==============================================================================
+% SECTION 7: VAN DEEMTER EQUATION
+%==============================================================================
+
+\section{Derivation of the Van Deemter Equation}
+\label{sec:vandeemter}
+
+The Van Deemter equation describes chromatographic efficiency. In the aperture-memory framework, each term corresponds to a distinct physical mechanism: path degeneracy (aperture multiplicity), memory leakage (incomplete reset), and equilibration time (aperture traversal rate). The plate height is fundamentally the \emph{pendulum period}---the length required for one complete cycle of equilibration with memory reset.
+
+\subsection{Plate Height as Pendulum Period}
+
+\begin{definition}[Plate Height]
+\label{def:plate_height}
+The plate height $H$ (height equivalent to a theoretical plate) quantifies the column length for one complete pendulum cycle:
+\begin{equation}
+H = \frac{\sigma_x^2}{L}
+\label{eq:plate_height}
+\end{equation}
+where $\sigma_x^2$ is the spatial variance of the analyte band and $L$ is column length.
+
+Equivalently, $H$ is the distance for one complete equilibration-reset cycle.
+\end{definition}
+
+\begin{definition}[Plate Count]
+\label{def:plate_count}
+The plate count $N$ is the number of pendulum cycles:
+\begin{equation}
+N = \frac{L}{H} = \frac{L^2}{\sigma_x^2}
+\label{eq:plate_count}
+\end{equation}
+Each plate represents one complete cycle: entry $\to$ turbulent mixing $\to$ equilibration $\to$ memory reset $\to$ exit.
+\end{definition}
+
+\begin{theorem}[Van Deemter Equation]
+\label{thm:vandeemter}
+The plate height depends on linear velocity $u$ according to:
+\begin{equation}
+H = A + \frac{B}{u} + Cu
+\label{eq:vandeemter}
+\end{equation}
+with coefficients:
+\begin{align}
+A &= 2\lambda d_p \cdot \mathcal{D}_{\text{path}} \label{eq:A_coefficient} \\
+B &= 2\gamma D_m \cdot \tau_{p,\text{res}} \label{eq:B_coefficient} \\
+C &= \frac{d_p^2}{D_s} \cdot \frac{\tau_{p,\text{eq}}}{\tau_0} \label{eq:C_coefficient}
+\end{align}
+where $\lambda$ is packing irregularity, $d_p$ is particle diameter, $\mathcal{D}_{\text{path}}$ is path degeneracy, $\gamma$ is obstruction factor, $D_m$ is molecular diffusion coefficient, $\tau_{p,\text{res}}$ is residue accumulation time, $D_s$ is stationary phase diffusion coefficient, and $\tau_{p,\text{eq}}$ is phase equilibration time.
+\end{theorem}
+
+\subsection{The A-Term: Aperture Multiplicity (Non-Sequential Access)}
+
+\begin{definition}[Path Degeneracy as Aperture Count]
+\label{def:path_degeneracy}
+Path degeneracy $\mathcal{D}_{\text{path}}$ is the number of non-sequential apertures available at each position---the number of categorically equivalent flow paths through the packed bed:
+\begin{equation}
+\mathcal{D}_{\text{path}} = \exp(S_{\text{path}} / \kB) = \text{Number of non-sequential apertures}
+\label{eq:path_degeneracy}
+\end{equation}
+where $S_{\text{path}}$ is the path entropy.
+\end{definition}
+
+\begin{theorem}[A-Term from Aperture Multiplicity]
+\label{thm:A_term}
+The A-term arises from non-sequential aperture accessibility (turbulent-like mixing within each plate):
+\begin{equation}
+A = 2\lambda d_p \cdot \mathcal{D}_{\text{path}}
+\label{eq:A_term}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consider molecules entering a packed bed at the same position. The stationary phase particles create ``subtracted regions'' from the cross-section (see Section~\ref{subsec:chromatography_turbulence}), forcing molecules to navigate around them through non-sequential apertures.
+
+Each particle of diameter $d_p$ creates apertures around its perimeter. For $n_p$ particles, the number of non-sequential apertures is $\mathcal{D} \propto n_p$.
+
+The path entropy is:
+\begin{equation}
+S_{\text{path}} = -\kB \sum_i p_i \ln p_i = \kB \ln \mathcal{D}
+\end{equation}
+for uniform probability over $\mathcal{D}$ paths.
+
+The variance in path length (due to non-sequential access) is:
+\begin{equation}
+\sigma_\ell^2 = \sum_i p_i (\ell_i - \langle \ell \rangle)^2 \propto d_p^2 \cdot \mathcal{D}
+\end{equation}
+
+Plate height contribution:
+\begin{equation}
+H_A = \frac{\sigma_\ell^2}{L} \propto d_p \cdot \mathcal{D}
+\end{equation}
+
+Including the packing parameter $\lambda$:
+\begin{equation}
+A = 2\lambda d_p \cdot \mathcal{D}_{\text{path}}
+\end{equation}
+\end{proof}
+
+\begin{remark}[A-Term as Within-Plate Turbulence]
+The A-term represents the ``double pendulum'' dynamics \emph{within} each plate---the non-sequential apertures created by stationary phase particles. It is velocity-independent because aperture geometry is fixed by packing, not by flow rate.
+
+This is the turbulent-like mixing that enables equilibration within each plate.
+\end{remark}
+
+\subsection{The B-Term: Memory Leakage (Incomplete Reset)}
+
+\begin{definition}[Memory Leakage]
+\label{def:memory_leakage}
+At low flow velocities, memory is not fully reset at plate boundaries. Molecules have time to diffuse between plates, carrying phase-lock memory across boundaries:
+\begin{equation}
+\mathcal{M}_{\text{leaked}} = D_m \cdot t_{\text{res}} = D_m \cdot \frac{L}{u}
+\label{eq:memory_leakage}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[B-Term from Memory Leakage]
+\label{thm:B_term}
+The B-term arises from incomplete memory reset at low velocities:
+\begin{equation}
+B = 2\gamma D_m \cdot \tau_{p,\text{res}}
+\label{eq:B_term}
+\end{equation}
+where $\gamma$ is the obstruction factor and $\tau_{p,\text{res}}$ is the residue accumulation time.
+\end{theorem}
+
+\begin{proof}
+Molecular diffusion allows molecules to wander between plates, carrying memory. The diffusion length in time $t$ is:
+\begin{equation}
+\sigma_{\text{diff}} = \sqrt{2D_m t}
+\end{equation}
+
+In a packed bed with obstruction factor $\gamma$:
+\begin{equation}
+\sigma_{\text{diff}} = \sqrt{2\gamma D_m t}
+\end{equation}
+
+The time available for memory leakage is the residence time $t = L/u$:
+\begin{equation}
+\sigma_x^2 = 2\gamma D_m \cdot \frac{L}{u}
+\end{equation}
+
+Plate height:
+\begin{equation}
+H_B = \frac{\sigma_x^2}{L} = \frac{2\gamma D_m}{u}
+\end{equation}
+
+Thus $B = 2\gamma D_m \cdot \tau_{p,\text{res}}$.
+\end{proof}
+
+\begin{remark}[B-Term as Memory Violation]
+The B-term represents \emph{violation of memory reset}. At low velocities, molecules have time to diffuse across plate boundaries, carrying their phase-lock history. This corrupts the statistical independence of plates, reducing separation efficiency.
+
+Fast flow prevents memory leakage: molecules exit each plate before their memory can diffuse to adjacent plates.
+\end{remark}
+
+\subsection{The C-Term: Aperture Traversal Time (Incomplete Equilibration)}
+
+\begin{definition}[Aperture Traversal Time]
+\label{def:equilibration_time}
+The aperture traversal time $\tau_{p,\text{eq}}$ is the time required for a molecule to navigate through the apertures connecting mobile and stationary phases:
+\begin{equation}
+\tau_{p,\text{eq}} = \frac{d_p^2}{D_s}
+\label{eq:equilibration_time}
+\end{equation}
+where $d_p$ is the diffusion path length (particle size) and $D_s$ is diffusivity in stationary phase.
+
+This is the time for the pendulum to complete its equilibration swing within each plate.
+\end{definition}
+
+\begin{theorem}[C-Term from Incomplete Equilibration]
+\label{thm:C_term}
+The C-term arises when molecules exit plates before completing their equilibration swing:
+\begin{equation}
+C = \frac{d_p^2}{D_s} \cdot \frac{\tau_{p,\text{eq}}}{\tau_0}
+\label{eq:C_term}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Each plate represents one pendulum cycle. For complete equilibration (clean separation), molecules must complete the cycle before exiting.
+
+The contact time is $\tau_{\text{contact}} = d_p / u$.
+
+The non-equilibrium fraction (incomplete pendulum swing) is:
+\begin{equation}
+f_{\text{neq}} = 1 - \exp\left( -\frac{\tau_{p,\text{eq}}}{\tau_{\text{contact}}} \right)
+\end{equation}
+
+For fast flow ($\tau_{\text{contact}} < \tau_{p,\text{eq}}$):
+\begin{equation}
+f_{\text{neq}} \approx \frac{\tau_{p,\text{eq}}}{\tau_{\text{contact}}} = \frac{\tau_{p,\text{eq}} \cdot u}{d_p}
+\end{equation}
+
+Molecules exit before completing equilibration, carrying ``unfinished'' phase-lock states. This corrupts the turbulent mixing within the plate:
+\begin{equation}
+\sigma_x^2 \propto \tau_{p,\text{eq}} \cdot u \cdot L
+\end{equation}
+
+Plate height:
+\begin{equation}
+H_C = \frac{\sigma_x^2}{L} \propto \tau_{p,\text{eq}} \cdot u
+\end{equation}
+
+Thus $C = (d_p^2/D_s) \cdot (\tau_{p,\text{eq}}/\tau_0)$.
+\end{proof}
+
+\begin{remark}[C-Term as Truncated Pendulum]
+The C-term represents \emph{truncated pendulum cycles}. At high velocities, molecules exit each plate before completing their equilibration with the stationary phase. The pendulum is interrupted mid-swing.
+
+Slow flow allows complete equilibration: each molecule fully explores the aperture landscape before moving to the next plate.
+\end{remark}
+
+\subsection{Optimal Velocity}
+
+\begin{theorem}[Optimal Velocity]
+\label{thm:optimal_velocity}
+The plate height is minimised at:
+\begin{equation}
+u_{\text{opt}} = \sqrt{\frac{B}{C}}
+\label{eq:optimal_velocity}
+\end{equation}
+with minimum plate height:
+\begin{equation}
+H_{\text{min}} = A + 2\sqrt{BC}
+\label{eq:minimum_H}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Taking derivative of Van Deemter equation:
+\begin{equation}
+\frac{dH}{du} = -\frac{B}{u^2} + C = 0
+\end{equation}
+
+Solving:
+\begin{equation}
+u_{\text{opt}} = \sqrt{\frac{B}{C}}
+\end{equation}
+
+Substituting back:
+\begin{equation}
+H_{\text{min}} = A + \frac{B}{\sqrt{B/C}} + C\sqrt{\frac{B}{C}} = A + \sqrt{BC} + \sqrt{BC} = A + 2\sqrt{BC}
+\end{equation}
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_vandeemter.pdf}
+\caption{\textbf{The Van Deemter Equation: Three Failure Modes of Tamed Turbulence.}
+The Van Deemter equation $H = A + B/u + Cu$ describes how plate height (inefficiency) depends on flow velocity. Each term represents a distinct failure mode of the aperture-memory framework. (A) A-term (aperture multiplicity): velocity-independent contribution from non-sequential apertures within each plate. This is the irreducible ``turbulent'' contribution---the within-plate double-pendulum dynamics that enable equilibration. Cannot be eliminated, only minimised by uniform packing. (B) B-term (memory leakage): $\propto 1/u$, dominates at low velocity. Molecules diffuse across plate boundaries, carrying phase-lock memory. This violates the memory reset requirement, corrupting statistical independence. Fast flow prevents leakage. (C) C-term (truncated pendulum): $\propto u$, dominates at high velocity. Molecules exit plates before completing equilibration---the pendulum swing is interrupted. Slow flow allows complete equilibration. (D) Optimal velocity: $u_{\text{opt}} = \sqrt{B/C}$ balances memory leakage against truncated equilibration. At this velocity, each plate achieves complete equilibration with full memory reset---chromatography is ``tamed turbulence'' operating at peak efficiency.}
+\label{fig:vandeemter}
+\end{figure}
+
+\subsection{Coefficients from S-Coordinates}
+
+\begin{theorem}[Van Deemter Coefficients from Partition Lag Statistics]
+\label{thm:coefficients_from_s}
+The Van Deemter coefficients can be computed from S-coordinates:
+\begin{align}
+A &= 2\lambda d_p \cdot \exp(S_{k,\text{path}} / \kB) \\
+B &= 2\gamma D_m \cdot \exp(S_{t,\text{res}} / S_0) \\
+C &= \frac{d_p^2}{D_s} \cdot \exp(S_{e,\text{eq}} / S_0)
+\end{align}
+where $S_{k,\text{path}}$, $S_{t,\text{res}}$, $S_{e,\text{eq}}$ are the S-coordinates characterising path degeneracy, residue accumulation, and equilibration respectively.
+\end{theorem}
+
+\begin{proof}
+Each coefficient relates to a specific aspect of the aperture-memory framework:
+
+\textbf{A-coefficient}: Aperture multiplicity (non-sequential access within plates). $\mathcal{D}_{\text{path}} = \exp(S_k / \kB)$ counts available non-sequential apertures.
+
+\textbf{B-coefficient}: Memory leakage (incomplete reset between plates). $\tau_{p,\text{res}} = \tau_0 \exp(S_t / S_0)$ measures how long memory persists across boundaries.
+
+\textbf{C-coefficient}: Aperture traversal time (incomplete equilibration within plates). $\tau_{p,\text{eq}} = \tau_0 \exp(S_e / S_0)$ measures time to complete the pendulum swing.
+\end{proof}
+
+\subsection{Unified Interpretation: The Three Failure Modes}
+
+\begin{theorem}[Van Deemter as Three Failure Modes]
+\label{thm:failure_modes}
+The Van Deemter equation describes three ways chromatographic separation can fail:
+\begin{center}
+\begin{tabular}{lccl}
+\toprule
+\textbf{Term} & \textbf{Velocity} & \textbf{Failure Mode} & \textbf{Physical Meaning} \\
+\midrule
+$A$ & Independent & Geometric mixing & Too many non-sequential apertures \\
+$B/u$ & Decreases & Memory leakage & Too slow: memory crosses plates \\
+$Cu$ & Increases & Truncated swing & Too fast: pendulum interrupted \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{remark}[Optimal Velocity Interpretation]
+The optimal velocity $u_{\text{opt}} = \sqrt{B/C}$ balances memory leakage against truncated equilibration:
+\begin{itemize}
+\item Below $u_{\text{opt}}$: Memory leaks between plates, destroying statistical independence
+\item Above $u_{\text{opt}}$: Pendulum swings truncated, destroying within-plate equilibration
+\item At $u_{\text{opt}}$: Each plate achieves complete equilibration with full memory reset
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Connection to Turbulence]
+Chromatography is ``tamed turbulence''---the non-sequential apertures (A-term) create turbulent-like mixing \emph{within} each plate, but memory reset at plate boundaries prevents global chaos. The Van Deemter equation quantifies the imperfection of this taming: the A-term is the irreducible turbulent contribution, while B and C terms represent memory leakage and incomplete equilibration that corrupt the taming.
+\end{remark}
+

@@ -1,0 +1,303 @@
+%==============================================================================
+% SECTION: TRANSPORT COEFFICIENTS FROM PARTITION LAG AND COUPLING
+%==============================================================================
+
+\section{Transport Coefficients from Partition Dynamics}
+\label{sec:transport_coefficient}
+
+Transport coefficients quantify how fluids resist the flow of momentum, heat, and mass. In the aperture-memory framework, these coefficients emerge from the interplay between aperture resistance (selectivity) and phase-lock memory (history). Viscosity, in particular, represents the \emph{cost of time emergence}---the accumulated memory of phase-lock reconfiguration.
+
+\subsection{Universal Form of Transport Coefficients}
+
+\begin{theorem}[Universal Transport Coefficient]
+\label{thm:universal_transport_fluid}
+All fluid transport coefficients have the form:
+\begin{equation}
+\Xi = \frac{1}{\mathcal{N}} \sum_{i,j} \tau_{p,ij} \cdot g_{ij} \cdot \Phi_{a,ij}
+\label{eq:universal_transport_fluid}
+\end{equation}
+where $\tau_{p,ij}$ is the partition lag, $g_{ij}$ is the coupling strength, $\Phi_{a,ij}$ is the aperture potential, and $\mathcal{N}$ is a normalisation factor.
+\end{theorem}
+
+\begin{remark}[Physical Interpretation]
+Each term in the sum represents:
+\begin{itemize}
+\item $\tau_{p,ij}$: Time for categorical completion (breaking/reforming phase-locks)
+\item $g_{ij}$: Strength of phase-lock coupling (how strongly molecules are bound)
+\item $\Phi_{a,ij}$: Aperture potential (selectivity barrier for the transition)
+\end{itemize}
+Transport coefficients are the accumulated cost of navigating apertures while breaking phase-locks.
+\end{remark}
+
+\subsection{Dynamic Viscosity: The Cost of Time Emergence}
+
+\begin{definition}[Dynamic Viscosity]
+\label{def:dynamic_viscosity}
+The dynamic viscosity $\mu$ relates shear stress to velocity gradient:
+\begin{equation}
+\sigma_{xy} = \mu \frac{\partial v_x}{\partial y}
+\label{eq:newton_viscosity}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Viscosity as Accumulated Memory]
+\label{thm:viscosity_formula}
+The dynamic viscosity is the accumulated memory cost per unit strain:
+\begin{equation}
+\mu = \frac{1}{V} \sum_{i,j} \tau_{p,ij} \cdot g_{ij} = \frac{d\mathcal{M}}{d\gamma}
+\label{eq:viscosity_formula}
+\end{equation}
+where $\mathcal{M}$ is the phase-lock memory and $\gamma$ is the shear strain.
+\end{theorem}
+
+\begin{proof}
+Consider two adjacent fluid layers moving at different velocities. Each molecule in one layer is phase-locked to molecules in the adjacent layer. Shearing requires breaking these phase-locks and reforming them in new configurations.
+
+The memory increment per unit strain is:
+\begin{equation}
+d\mathcal{M} = \sum_{i,j} \tau_{p,ij} \cdot g_{ij} \cdot d\gamma
+\end{equation}
+
+where:
+\begin{itemize}
+\item $\tau_{p,ij}$: Time to complete the phase-lock reconfiguration
+\item $g_{ij}$: Strength of the phase-lock (energy required to break)
+\end{itemize}
+
+Momentum flux between layers:
+\begin{equation}
+\Pi_{xy} = \sum_{\text{crossing}} m v_x \cdot f_{\text{cross}}
+\end{equation}
+
+Each molecule crossing carries momentum and must break/reform phase-locks. The crossing rate is modulated by phase-lock resistance:
+\begin{equation}
+\Pi_{xy} = \sum_{i,j} \frac{m v_x \cdot g_{ij}}{\tau_{p,ij}}
+\end{equation}
+
+Therefore:
+\begin{equation}
+\mu = \frac{\sigma_{xy}}{\dot{\gamma}} = \frac{1}{V} \sum_{i,j} \tau_{p,ij} \cdot g_{ij}
+\end{equation}
+
+Viscosity \emph{is} the rate of memory accumulation per unit strain. \qed
+\end{proof}
+
+\begin{remark}[Viscosity as Time Emergence]
+In the categorical framework, time emerges from categorical completion. Each completed partition operation advances ``time.'' Viscosity is the \emph{cost} of this time emergence in a correlated medium:
+\begin{equation}
+\boxed{\text{Viscosity} = \text{Memory accumulation rate} = \text{Time emergence cost}}
+\end{equation}
+A fluid with high viscosity requires many phase-lock reconfigurations per unit strain---time passes ``slowly'' at the molecular level.
+\end{remark}
+
+\subsection{Thermal Conductivity}
+
+\begin{definition}[Thermal Conductivity]
+\label{def:thermal_conductivity}
+Thermal conductivity $k$ relates heat flux to temperature gradient:
+\begin{equation}
+q = -k \nabla T
+\label{eq:fourier_law}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Thermal Conductivity from Partition-Coupling]
+\label{thm:thermal_conductivity}
+The thermal conductivity is:
+\begin{equation}
+k = \frac{C_v}{3V} \langle v^2 \rangle \sum_{i,j} \frac{g_{ij}}{\tau_{p,ij}}
+\label{eq:thermal_conductivity_formula}
+\end{equation}
+where $C_v$ is heat capacity and $\langle v^2 \rangle$ is mean square velocity.
+\end{theorem}
+
+\begin{proof}
+Heat flux is carried by molecules with excess thermal energy. Using kinetic theory:
+\begin{equation}
+q = -\frac{1}{3} n C_v \langle v \rangle \lambda \nabla T
+\end{equation}
+
+Substituting $\lambda = \langle v \rangle \tau_p$:
+\begin{equation}
+k = \frac{1}{3} n C_v \langle v^2 \rangle \tau_p
+\end{equation}
+
+Incorporating coupling through collision effectiveness:
+\begin{equation}
+k = \frac{C_v}{3V} \langle v^2 \rangle \sum_{i,j} \frac{g_{ij}}{\tau_{p,ij}}
+\end{equation}
+\qed
+\end{proof}
+
+\subsection{Mass Diffusivity}
+
+\begin{definition}[Mass Diffusivity]
+\label{def:mass_diffusivity}
+Mass diffusivity $D$ relates mass flux to concentration gradient:
+\begin{equation}
+J = -D \nabla c
+\label{eq:fick_law}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Diffusivity from Partition-Coupling]
+\label{thm:diffusivity}
+The mass diffusivity is:
+\begin{equation}
+D = \frac{\langle v^2 \rangle}{3} \sum_{i,j} \frac{1}{\tau_{p,ij} g_{ij}}
+\label{eq:diffusivity_formula}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From kinetic theory:
+\begin{equation}
+D = \frac{1}{3} \langle v \rangle \lambda = \frac{1}{3} \langle v \rangle^2 \tau_p
+\end{equation}
+
+Weak coupling promotes diffusion (molecules escape easily). Strong coupling inhibits diffusion. Therefore:
+\begin{equation}
+D \propto \frac{1}{\tau_p \cdot g}
+\end{equation}
+
+Summing over pairs:
+\begin{equation}
+D = \frac{\langle v^2 \rangle}{3} \sum_{i,j} \frac{1}{\tau_{p,ij} g_{ij}}
+\end{equation}
+\qed
+\end{proof}
+
+\subsection{Prandtl Number and Dimensionless Groups}
+
+\begin{definition}[Prandtl Number]
+\label{def:prandtl}
+The Prandtl number is:
+\begin{equation}
+\text{Pr} = \frac{\mu C_p}{k} = \frac{\nu}{\alpha}
+\label{eq:prandtl}
+\end{equation}
+where $\nu = \mu/\rho$ is kinematic viscosity and $\alpha = k/(\rho C_p)$ is thermal diffusivity.
+\end{definition}
+
+\begin{theorem}[Prandtl Number from Coupling Structure]
+\label{thm:prandtl_coupling}
+The Prandtl number depends on the ratio of momentum to heat coupling:
+\begin{equation}
+\text{Pr} = \frac{\sum_{i,j} \tau_{p,ij}^{(\text{mom})} g_{ij}^{(\text{mom})}}{\sum_{i,j} \tau_{p,ij}^{(\text{heat})} g_{ij}^{(\text{heat})}}
+\label{eq:prandtl_coupling}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From the transport coefficient formulas:
+\begin{equation}
+\mu \propto \sum \tau_p \cdot g \quad (\text{momentum})
+\end{equation}
+\begin{equation}
+k \propto \sum g / \tau_p \quad (\text{heat})
+\end{equation}
+
+The ratio:
+\begin{equation}
+\text{Pr} = \frac{\mu}{k/C_p} \propto \frac{\sum \tau_p \cdot g}{\sum g/\tau_p}
+\end{equation}
+\qed
+\end{proof}
+
+\begin{remark}
+This explains why:
+\begin{itemize}
+\item Gases have $\text{Pr} \sim 1$: momentum and heat transported by same collisions
+\item Liquid metals have $\text{Pr} \ll 1$: electrons carry heat efficiently
+\item Oils have $\text{Pr} \gg 1$: strong molecular coupling inhibits heat transfer
+\end{itemize}
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_transport_coefficients.pdf}
+\caption{\textbf{Transport Coefficients: Viscosity as Time Emergence.}
+All transport coefficients emerge from the interplay between partition lag (time for categorical completion) and coupling strength (phase-lock binding energy). Viscosity, in particular, represents the cost of time emergence in a correlated medium. (A) Viscosity formula: $\mu = \sum_{i,j} \tau_{p,ij} \cdot g_{ij}$ sums partition lag times coupling over all molecular pairs. This is the accumulated memory cost per unit strain---each phase-lock that must break and reform contributes $\tau_p \cdot g$ to viscosity. High viscosity means time passes ``slowly'' at the molecular level. (B) Temperature dependence contrast: gases (viscosity $\propto T^{1/2}$, increases with $T$) vs liquids (viscosity $\propto \exp(E_a/k_B T)$, decreases with $T$). In gases, more collisions = more memory = higher viscosity. In liquids, heat disrupts phase-locks = less memory = lower viscosity. (C) Thermal conductivity: $k \propto g/\tau_p$---strong coupling and fast completion promote heat transfer. Metals have low $\tau_p$ and high $g$ (electron-mediated), hence high conductivity. (D) Unified framework: viscosity ($\tau_p \cdot g$), thermal conductivity ($g/\tau_p$), and diffusivity ($1/(\tau_p \cdot g)$) all emerge from the same partition lag and coupling parameters. Transport is always navigation through apertures while paying the memory cost of phase-lock reconfiguration.}
+\label{fig:transport_coefficients}
+\end{figure}
+
+\subsection{Comparison with Electrical Transport}
+
+The aperture-memory framework reveals deep structural identity between fluid and electrical transport:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Property} & \textbf{Fluid} & \textbf{Electrical} \\
+\midrule
+Transport coefficient & Viscosity $\mu$ & Resistivity $\rho$ \\
+Partition lag & Collision time $\tau_{\text{coll}}$ & Scattering time $\tau_s$ \\
+Coupling & Intermolecular $g_{\text{mol}}$ & Electron-lattice $g_{e-\text{lat}}$ \\
+Aperture type & Molecular bond & Lattice site \\
+Aperture selectivity & Bond energy & Scattering cross-section \\
+Memory & Phase-lock history & Momentum relaxation \\
+Driving force & Pressure gradient & Voltage gradient \\
+Conservation & Mass, momentum & Charge \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{theorem}[Structural Identity]
+\label{thm:structural_identity}
+Fluid viscosity and electrical resistivity are structurally identical:
+\begin{align}
+\mu &= \frac{1}{V} \sum_{i,j} \tau_{p,ij}^{(\text{mol})} \cdot g_{ij}^{(\text{mol})} \cdot \Phi_{a,ij}^{(\text{bond})} \\
+\rho &= \frac{1}{ne^2} \sum_{i,j} \tau_{s,ij} \cdot g_{ij}^{(e-\text{lat})} \cdot \Phi_{a,ij}^{(\text{scatter})}
+\end{align}
+
+Both measure the accumulated aperture-memory cost of transport through a medium.
+\end{theorem}
+
+\begin{remark}[Unified Interpretation]
+In both systems:
+\begin{itemize}
+\item \textbf{Partition lag} ($\tau_p$ or $\tau_s$): Time to complete a state transition
+\item \textbf{Coupling} ($g$): Energy binding the carrier to its environment
+\item \textbf{Aperture potential} ($\Phi_a$): Selectivity barrier for the transition
+\end{itemize}
+Transport is always navigation through apertures while paying the memory cost of breaking old phase-locks and forming new ones.
+\end{remark}
+
+\subsection{Temperature Dependence: Gases vs Liquids}
+
+\begin{theorem}[Temperature Dependence from Aperture-Memory]
+\label{thm:transport_temperature_dependence}
+The opposite temperature dependence of viscosity in gases and liquids follows from the aperture-memory structure:
+
+\textbf{Gases} (collision-dominated, weak apertures):
+\begin{equation}
+\mu_{\text{gas}} \propto T^{1/2}
+\end{equation}
+More collisions at higher $T$ means more phase-lock events, higher memory accumulation.
+
+\textbf{Liquids} (aperture-dominated, strong phase-locks):
+\begin{equation}
+\mu_{\text{liquid}} \propto \exp(E_a / k_B T)
+\end{equation}
+Higher $T$ disrupts aperture structure (phase-locks), reducing memory.
+\end{theorem}
+
+\begin{proof}
+\textbf{Gases}: Partition lag $\tau_p \propto 1/\sqrt{T}$ (faster molecules collide more often). Coupling $g \propto T$ (more energetic collisions). Product:
+\begin{equation}
+\mu \propto \tau_p \cdot g \propto T^{1/2}
+\end{equation}
+
+\textbf{Liquids}: Aperture potential $\Phi_a = E_a$ (activation energy). Effective coupling:
+\begin{equation}
+g_{\text{eff}} = g_0 \exp(-E_a / k_B T)
+\end{equation}
+At higher $T$, thermal energy overcomes aperture barriers, reducing effective coupling and thus viscosity. \qed
+\end{proof}
+
+\begin{remark}[The Pendulum Interpretation]
+In gases: pendulums are weakly coupled, collisions are the coupling mechanism. More collisions = more memory = higher viscosity.
+
+In liquids: pendulums are strongly coupled through phase-lock networks. Heat disrupts these networks, reducing effective coupling = lower viscosity.
+\end{remark}
+

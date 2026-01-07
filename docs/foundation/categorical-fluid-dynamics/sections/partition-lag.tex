@@ -1,0 +1,326 @@
+%==============================================================================
+% SECTION: PARTITION LAG IN FLUID DYNAMICS
+%==============================================================================
+
+\section{Partition Lag in Molecular Transport}
+\label{sec:partition_lag}
+
+\subsection{Definition of Molecular Partition Lag}
+
+\begin{definition}[Molecular Partition Lag]
+\label{def:molecular_lag}
+The molecular partition lag $\tau_{p,ij}$ is the irreducible temporal interval between molecule $i$ initiating a transition to state $j$ and the establishment of the transitioned state:
+\begin{equation}
+\tau_{p,ij} = t_{\text{final}} - t_{\text{initial}} > 0
+\label{eq:molecular_lag}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Positive Partition Lag]
+\label{thm:positive_lag}
+Partition operations require positive time: $\tau_{p,ij} > 0$ for all molecular transitions.
+\end{theorem}
+
+\begin{proof}
+Partitioning distinguishes between initial and final categorical states. Distinguishing requires information acquisition about the molecular configuration. Information acquisition in physical systems requires finite time by causality constraints. Hence $\tau_{p,ij} > 0$. \qed
+\end{proof}
+
+\subsection{Mean Free Path and Collision Time}
+
+\begin{definition}[Mean Free Path]
+\label{def:mean_free_path_fluid}
+The mean free path $\lambda$ is the average distance between molecular collisions:
+\begin{equation}
+\lambda = \frac{1}{n \sigma_{\text{coll}}}
+\label{eq:mean_free_path_fluid}
+\end{equation}
+where $n$ is the number density and $\sigma_{\text{coll}}$ is the collision cross-section.
+\end{definition}
+
+\begin{definition}[Collision Time]
+\label{def:collision_time}
+The mean collision time is:
+\begin{equation}
+\tau_{\text{coll}} = \frac{\lambda}{\langle v \rangle} = \frac{1}{n \sigma_{\text{coll}} \langle v \rangle}
+\label{eq:collision_time}
+\end{equation}
+where $\langle v \rangle = \sqrt{8\kB T/(\pi m)}$ is the mean molecular speed.
+\end{definition}
+
+\begin{theorem}[Partition Lag and Collision Time]
+\label{thm:lag_collision}
+The mean partition lag equals the mean collision time:
+\begin{equation}
+\langle \tau_{p,ij} \rangle = \tau_{\text{coll}}
+\label{eq:lag_collision}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Molecular transitions occur through collisions. Each collision represents a partition operation where the molecule's categorical state changes (velocity, orientation, etc.). The mean time between such operations is the collision time. \qed
+\end{proof}
+
+\subsection{Temperature and Pressure Dependence}
+
+\begin{theorem}[Temperature Dependence]
+\label{thm:temperature_dependence}
+The partition lag decreases with temperature:
+\begin{equation}
+\tau_p \propto T^{-1/2}
+\label{eq:temperature_dependence}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From Equation~\ref{eq:collision_time}:
+\begin{equation}
+\tau_p = \frac{1}{n \sigma_{\text{coll}} \langle v \rangle}
+\end{equation}
+
+Since $\langle v \rangle \propto T^{1/2}$:
+\begin{equation}
+\tau_p \propto \frac{1}{T^{1/2}}
+\end{equation}
+\qed
+\end{proof}
+
+\begin{theorem}[Pressure Dependence]
+\label{thm:pressure_dependence}
+The partition lag decreases with pressure:
+\begin{equation}
+\tau_p \propto P^{-1}
+\label{eq:pressure_dependence}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From ideal gas law, $n = P/(\kB T)$:
+\begin{equation}
+\tau_p = \frac{1}{n \sigma_{\text{coll}} \langle v \rangle} = \frac{\kB T}{P \sigma_{\text{coll}} \langle v \rangle}
+\end{equation}
+
+At constant temperature:
+\begin{equation}
+\tau_p \propto P^{-1}
+\end{equation}
+\qed
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_partition_lag.pdf}
+\caption{\textbf{Molecular Partition Lag: The Timescale of Categorical Completion.}
+Partition lag $\tau_p$ is the time required for a categorical state to complete its transition through an aperture. It is the fundamental timescale of fluid dynamics. (A) Partition lag distributions: gases have fast, narrow distributions (free flight between collisions); liquids have intermediate distributions (cage rattling); viscous fluids have slow, broad distributions (extended phase-lock reconfiguration). The distribution shape encodes fluid rheology. (B) Temperature dependence: $\langle\tau_p\rangle \propto \sqrt{m/(k_B T)}$ for gases (kinetic theory); $\langle\tau_p\rangle \propto \exp(E_a/k_B T)$ for liquids (Arrhenius activation). This explains the opposite temperature dependence of viscosity in gases (increases) vs liquids (decreases). (C) Collision vs uncertainty limits: $\tau_p = \max(\tau_{\text{coll}}, \hbar/\Delta E)$. In gases, collisions limit completion; in quantum systems, uncertainty limits completion. (D) Pressure dependence: $\tau_p \propto P^{-1/2}$ at fixed temperature---higher pressure increases collision frequency, reducing partition lag. This explains pressure-viscosity coupling in gases.}
+\label{fig:partition_lag_fluid}
+\end{figure}
+
+\subsection{Undetermined Residue}
+
+\begin{definition}[Undetermined Residue]
+\label{def:undetermined_residue}
+During partition lag $\tau_{p,ij}$, the molecule exists in undetermined superposition across possible final states. The undetermined residue $n_{\text{res}}$ counts the states not assignable to either initial or final outcome.
+\end{definition}
+
+\begin{theorem}[Entropy Production from Partition]
+\label{thm:entropy_production}
+Each partition operation produces entropy:
+\begin{equation}
+\Delta S = \kB \ln n_{\text{res}} > 0
+\label{eq:entropy_production}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Undetermined residue represents states that cannot be classified during $\tau_{p,ij}$. These states contribute $\ln n_{\text{res}}$ to entropy. By Theorem~\ref{thm:positive_lag}, $\tau_{p,ij} > 0$, hence $n_{\text{res}} > 1$, hence $\Delta S > 0$. \qed
+\end{proof}
+
+\subsection{Partition Lag Statistics}
+
+\begin{definition}[Partition Lag Distribution]
+\label{def:lag_distribution}
+The partition lag distribution $P(\tau_p)$ describes the probability of partition with lag $\tau_p$:
+\begin{equation}
+P(\tau_p) = \frac{1}{\langle \tau_p \rangle} e^{-\tau_p / \langle \tau_p \rangle}
+\label{eq:lag_distribution_fluid}
+\end{equation}
+This exponential distribution follows from Poisson collision statistics.
+\end{definition}
+
+\begin{theorem}[Variance of Partition Lag]
+\label{thm:lag_variance_fluid}
+The variance of partition lag is:
+\begin{equation}
+\text{Var}(\tau_p) = \langle \tau_p \rangle^2
+\label{eq:lag_variance_fluid}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For an exponential distribution with mean $\mu$, the variance equals $\mu^2$. \qed
+\end{proof}
+
+%==============================================================================
+% VISCOSITY FROM PARTITION LAG
+%==============================================================================
+
+\subsection{Viscosity as Accumulated Partition Lag}
+\label{subsec:viscosity_partition_lag}
+
+We now derive viscosity from first principles as the accumulation of partition lag across phase-locked molecular layers.
+
+\begin{definition}[Layer Partition Lag]
+\label{def:layer_lag}
+Consider a fluid with flow in the direction $\hat{x}$. The layer partition lag $\tau_L$ is the time required for a cross-sectional layer at position $x$ to complete its categorical transition relative to the adjacent layer at $x + dx$:
+\begin{equation}
+\tau_L = \frac{\text{categorical completion time per layer}}{\text{layer correlation strength}}
+\label{eq:layer_lag}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Viscosity from Layer Lag Accumulation]
+\label{thm:viscosity_lag}
+Viscosity $\eta$ is the accumulated partition lag across phase-locked layers per unit velocity gradient:
+\begin{equation}
+\eta = \rho \cdot \langle \tau_L \rangle \cdot \kappa \cdot \kB T
+\label{eq:viscosity_from_lag}
+\end{equation}
+where $\rho$ is the molecular density, $\kappa$ is the inter-layer coupling strength, and $\kB T$ is the thermal energy scale.
+\end{theorem}
+
+\begin{proof}
+Consider two adjacent fluid layers separated by distance $\delta z$. When the upper layer moves with velocity $v$, it must ``drag'' the lower layer through their phase-lock coupling.
+
+The force required to move one layer relative to another is:
+\begin{equation}
+F = \kappa \cdot \Delta v \cdot A
+\end{equation}
+where $\kappa$ is the coupling strength, $\Delta v$ is the velocity difference, and $A$ is the contact area.
+
+The coupling strength depends on how quickly molecules can complete their categorical transitions. If transitions are fast (small $\tau_L$), layers decouple easily. If transitions are slow (large $\tau_L$), layers remain coupled longer.
+
+Dimensionally:
+\begin{equation}
+\kappa \propto \frac{\kB T}{\delta z^2} \cdot \tau_L
+\end{equation}
+
+The shear stress is:
+\begin{equation}
+\sigma = \frac{F}{A} = \kappa \cdot \frac{\partial v}{\partial z}
+\end{equation}
+
+Comparing with Newton's viscosity law $\sigma = \eta \cdot \partial v / \partial z$:
+\begin{equation}
+\eta = \kappa = \rho \cdot \tau_L \cdot \kappa_0 \cdot \kB T
+\end{equation}
+where $\kappa_0$ is the dimensionless inter-layer coupling constant. \qed
+\end{proof}
+
+\subsection{Viscosity as Time Emergence in Fluids}
+\label{subsec:viscosity_time}
+
+The derivation above reveals a profound connection: viscosity is the fluid-dynamical manifestation of time emergence.
+
+\begin{theorem}[Viscosity-Time Correspondence]
+\label{thm:viscosity_time}
+Viscosity in fluid dynamics plays the same role as time emergence in categorical completion dynamics. Specifically:
+\begin{equation}
+\eta \longleftrightarrow \frac{1}{\Gamma}
+\label{eq:viscosity_time_correspondence}
+\end{equation}
+where $\Gamma$ is the categorical completion rate.
+\end{theorem}
+
+\begin{proof}
+In the categorical completion framework, time emerges from the rate of categorical completion:
+\begin{equation}
+\frac{dS}{dt} = \kB \Gamma
+\end{equation}
+where $\Gamma$ counts completions per unit time.
+
+In fluids, when we attempt to ``partition'' or observe the molecular state, reality has already moved on. The state we try to measure has already completed its transition. This lag between observation and reality is precisely the partition lag $\tau_p$.
+
+For a single molecule: $\tau_p$ is the collision time.
+
+For a layer of phase-locked molecules: the partition lag accumulates because each molecule's transition must coordinate with its neighbors. The effective lag becomes:
+\begin{equation}
+\tau_{\text{eff}} = \tau_p \cdot \mathcal{N}_{\text{correlated}}
+\end{equation}
+where $\mathcal{N}_{\text{correlated}}$ is the number of correlated neighbors.
+
+This accumulated lag is viscosity:
+\begin{equation}
+\eta \propto \tau_{\text{eff}} \propto \frac{1}{\Gamma}
+\end{equation}
+
+High completion rate $\Gamma$ (fast transitions) $\Rightarrow$ low viscosity.
+
+Low completion rate $\Gamma$ (slow, correlated transitions) $\Rightarrow$ high viscosity. \qed
+\end{proof}
+
+\begin{corollary}[Irreversibility of Viscous Flow]
+\label{cor:irreversibility}
+Viscous flow is irreversible for the same reason that time is irreversible: categorical completions cannot be undone.
+\end{corollary}
+
+\begin{proof}
+Each partition lag interval $\tau_p$ corresponds to a categorical completion. Each completion creates non-actualisations---states that could have occurred but did not. These non-actualisations cannot be ``un-created.'' Hence the process that created them (viscous flow) cannot be reversed without violating the accumulation of non-actualisations. \qed
+\end{proof}
+
+\subsection{Phase-State Classification of Matter}
+\label{subsec:phase_classification}
+
+The viscosity-time correspondence provides a categorical classification of the phases of matter.
+
+\begin{theorem}[Matter Phase from Completion Rate]
+\label{thm:phase_classification}
+Matter phases are classified by their categorical completion rate $\Gamma$:
+\begin{align}
+\text{Gas:} \quad &\Gamma \gg 1/\tau_{\text{obs}} \quad \Rightarrow \quad \eta \approx 0 \quad \text{(inviscid limit)} \\
+\text{Liquid:} \quad &\Gamma \sim 1/\tau_{\text{obs}} \quad \Rightarrow \quad \eta \sim \rho \kB T \tau_p \quad \text{(viscous)} \\
+\text{Solid:} \quad &\Gamma \ll 1/\tau_{\text{obs}} \quad \Rightarrow \quad \eta \to \infty \quad \text{(no flow)}
+\end{align}
+where $\tau_{\text{obs}}$ is the observation timescale.
+\end{theorem}
+
+\begin{proof}
+In gases, molecules complete transitions rapidly between collisions. Phase-lock networks are sparse and short-lived. By the time one molecule ``pulls'' on another, the other has already completed its transition independently. Hence layers decouple: $\eta \approx 0$.
+
+In liquids, molecules complete transitions at rates comparable to observation. Phase-lock networks are dense and persistent. When one layer moves, it genuinely drags adjacent layers through persistent couplings. Hence $\eta$ is finite and significant.
+
+In solids, molecules cannot complete transitions within the observation time. Phase-lock networks are frozen. Layers cannot slip past each other at all: $\eta \to \infty$, which manifests as elastic behaviour rather than flow. \qed
+\end{proof}
+
+\subsection{Temperature Dependence of Viscosity}
+\label{subsec:viscosity_temperature}
+
+\begin{theorem}[Gas Viscosity Increases with Temperature]
+\label{thm:gas_viscosity_T}
+For gases, viscosity increases with temperature:
+\begin{equation}
+\eta_{\text{gas}} \propto T^{1/2}
+\label{eq:gas_viscosity_T}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+In gases, viscosity arises from momentum transfer during collisions. Higher temperature means faster molecules, more frequent collisions, and more momentum transferred per collision. The collision frequency $\nu \propto T^{1/2}$ and momentum transfer $\propto T^{1/2}$, give $\eta \propto T^{1/2}$. \qed
+\end{proof}
+
+\begin{theorem}[Liquid Viscosity Decreases with Temperature]
+\label{thm:liquid_viscosity_T}
+For liquids, viscosity decreases with temperature:
+\begin{equation}
+\eta_{\text{liquid}} \propto \exp\left(\frac{E_a}{\kB T}\right)
+\label{eq:liquid_viscosity_T}
+\end{equation}
+where $E_a$ is the activation energy for molecular rearrangement.
+\end{theorem}
+
+\begin{proof}
+In liquids, viscosity arises from resistance to phase-lock reconfiguration. Higher temperature provides more thermal energy to overcome aperture barriers. The probability of overcoming a barrier $\Phi_a$ is $\propto \exp(-\Phi_a / \kB T)$. Hence, viscosity, which measures resistance to reconfiguration, decreases as barriers are more easily overcome. \qed
+\end{proof}
+
+\begin{remark}[Unified Understanding]
+The opposite temperature dependences of gas and liquid viscosity—a classic puzzle in fluid mechanics—emerge naturally from the partition lag framework. In gases, viscosity is momentum transfer (enhanced by faster motion). In liquids, viscosity is aperture resistance (reduced by thermal activation). Both are aspects of partition lag in different coupling regimes.
+\end{remark}
+

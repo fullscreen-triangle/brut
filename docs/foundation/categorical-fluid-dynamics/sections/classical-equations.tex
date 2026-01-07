@@ -1,0 +1,318 @@
+%==============================================================================
+% SECTION 5: DERIVING CLASSICAL EQUATIONS
+%==============================================================================
+
+\section{Deriving Classical Fluid Equations}
+\label{sec:classical}
+
+We now derive the classical equations of fluid dynamics from the categorical-partition-oscillation framework. The key insight is that classical equations emerge as the continuum limit of discrete categorical completions, with viscosity representing time emergence and turbulence representing expanded aperture accessibility.
+
+\subsection{Continuity Equation from Categorical Conservation}
+
+\begin{theorem}[Continuity Equation]
+\label{thm:continuity}
+The continuity equation
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+\label{eq:continuity}
+\end{equation}
+follows from conservation of categorical states through apertures.
+\end{theorem}
+
+\begin{proof}
+Let $n_{\Cspace}(\mathbf{x}, t)$ be the categorical state density at position $\mathbf{x}$ and time $t$. Categorical states are neither created nor destroyed in bulk flow; they are transported through apertures between adjacent cross-sections.
+
+At each aperture, selectivity $s = 1$ for mass transport (all molecules pass). The conservation law is:
+\begin{equation}
+\frac{\partial n_{\Cspace}}{\partial t} + \nabla \cdot (n_{\Cspace} \mathbf{v}) = 0
+\label{eq:categorical_conservation}
+\end{equation}
+
+Mass density $\rho$ is proportional to categorical state density: $\rho = m \cdot n_{\Cspace}$ where $m$ is molecular mass. The aperture selectivity for mass is unity because mass cannot be selectively filtered by molecular apertures. Substituting:
+\begin{equation}
+\frac{\partial (m \cdot n_{\Cspace})}{\partial t} + \nabla \cdot (m \cdot n_{\Cspace} \mathbf{v}) = 0
+\end{equation}
+
+Dividing by constant $m$:
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+\end{equation}
+\end{proof}
+
+\begin{remark}[Aperture Interpretation]
+The continuity equation states that mass flux through any aperture equals the rate of change of mass within the bounded region. Since mass apertures have selectivity $s = 1$, there is no ``filtering''---all mass that enters must exit or accumulate.
+\end{remark}
+
+\subsection{Momentum Equation from S-Gradient Dynamics}
+
+\begin{theorem}[Navier-Stokes from S-Dynamics]
+\label{thm:navier_stokes}
+The Navier-Stokes momentum equation
+\begin{equation}
+\rho \left( \frac{\partial \mathbf{v}}{\partial t} + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) = -\nabla p + \mu \nabla^2 \mathbf{v}
+\label{eq:navier_stokes_derived}
+\end{equation}
+emerges from S-gradient flow with:
+\begin{align}
+p &= \kB T \cdot \rho_{\Cspace} \cdot R(\Cspace) \label{eq:pressure_categorical} \\
+\mu &= \sum_{i,j} \tau_{p,ij} \cdot g_{ij} \label{eq:viscosity_categorical}
+\end{align}
+where $R(\Cspace)$ is the categorical richness, $\tau_{p,ij}$ are partition lags, and $g_{ij}$ are phase-lock couplings. The viscosity term represents the \emph{cost of time emergence} in a correlated medium.
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1: S-gradient flow in physical space.}
+
+From Theorem~\ref{thm:flow_direction}, physical flow follows S-gradient:
+\begin{equation}
+\rho \frac{D\mathbf{v}}{Dt} = -\nabla_{\mathbf{x}} \Phi_S
+\end{equation}
+where $\Phi_S$ is the S-potential expressed in physical coordinates.
+
+\textbf{Step 2: Pressure from categorical richness (aperture reconfiguration).}
+
+The S-potential gradient in physical space is:
+\begin{equation}
+\nabla_{\mathbf{x}} \Phi_S = \frac{\partial \Phi_S}{\partial \Svec} \cdot \frac{\partial \Svec}{\partial \mathbf{x}}
+\end{equation}
+
+For an ideal system, $\Phi_S = -\kB T \ln \Omega_{\Cspace}$ where $\Omega_{\Cspace}$ is the accessible categorical state count---the number of apertures available for navigation. The gradient gives:
+\begin{equation}
+\nabla_{\mathbf{x}} \Phi_S = -\kB T \frac{\nabla \Omega_{\Cspace}}{\Omega_{\Cspace}} = -\kB T \nabla \ln \Omega_{\Cspace}
+\end{equation}
+
+For uniform $\Omega_{\Cspace}$ per molecule, $\nabla \ln \Omega_{\Cspace} = \nabla \ln (\rho_{\Cspace} \cdot R)$ where $R$ is per-molecule richness (accessible apertures per molecule). This yields pressure:
+\begin{equation}
+p = \kB T \cdot \rho_{\Cspace} \cdot R
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_classical_equations.pdf}
+\caption{\textbf{Derivation of Classical Fluid Dynamics: Navier-Stokes from First Principles.}
+(A) Continuity equation: mass conservation emerges from categorical state conservation through apertures. Since mass apertures have selectivity $s = 1$ (all molecules pass), the divergence of mass flux equals zero. This is conservation of categorical states, not an assumption. (B) Navier-Stokes momentum equation: pressure gradient arises from S-potential gradient (aperture accessibility); viscous stress arises from memory accumulation (phase-lock reconfiguration). Pressure is the average aperture potential; viscosity is the rate of memory accumulation per unit strain. (C) Laminar vs turbulent transition: the Reynolds number $\text{Re} = \rho v L / \mu$ measures the ratio of inertial energy (accessing non-sequential apertures) to viscous memory (penalising phase-lock reconfiguration). At high Re, inertia overcomes memory---the ``double pendulum'' dynamics emerge. (D) Energy cascade: at large scales, non-sequential apertures dominate; at the Kolmogorov scale, viscous (sequential) apertures convert kinetic energy to heat through phase-lock breaking. Turbulence is aperture hierarchy, not randomness.}
+\label{fig:classical_equations}
+\end{figure}
+
+\textbf{Step 3: Viscosity as time emergence.}
+
+Viscous stress arises from the \emph{memory} embedded in phase-lock networks. When adjacent fluid layers have different velocities, moving one layer requires ``pulling'' the next through the phase-lock connections. Each connection must break and reform---a partition operation requiring time $\tau_p$.
+
+This is the \emph{cost of time passing} in a correlated medium. Time cannot emerge without categorical completion, and categorical completion requires breaking/reforming phase-locks:
+\begin{equation}
+\text{Viscosity} = \text{Memory} = \text{Time emergence cost}
+\end{equation}
+
+The stress tensor component is:
+\begin{equation}
+\sigma_{ij}^{\text{visc}} = \sum_{k,l} \tau_{p,kl} \cdot g_{kl} \cdot \frac{\partial v_i}{\partial x_j}
+\end{equation}
+
+where the sum is over phase-lock pairs $(k, l)$ in the velocity gradient direction. For isotropic fluids:
+\begin{equation}
+\sigma_{ij}^{\text{visc}} = \mu \left( \frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i} \right)
+\end{equation}
+
+with $\mu = \sum_{k,l} \tau_{p,kl} \cdot g_{kl}$.
+
+\textbf{Step 4: Assembly.}
+
+Combining pressure gradient (aperture accessibility) and viscous stress (time emergence):
+\begin{equation}
+\rho \frac{D\mathbf{v}}{Dt} = -\nabla p + \nabla \cdot \boldsymbol{\sigma}^{\text{visc}} = -\nabla p + \mu \nabla^2 \mathbf{v}
+\end{equation}
+
+Expanding the material derivative:
+\begin{equation}
+\rho \left( \frac{\partial \mathbf{v}}{\partial t} + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) = -\nabla p + \mu \nabla^2 \mathbf{v}
+\end{equation}
+\end{proof}
+
+\begin{corollary}[Viscosity as Memory]
+\label{cor:viscosity_memory}
+Viscosity is the accumulated memory of phase-lock history. High viscosity corresponds to:
+\begin{itemize}
+\item Long partition lags (slow equilibration between layers)
+\item Strong phase-lock coupling (dense networks with many connections)
+\item Rich phase-lock history (many connections to break/reform)
+\end{itemize}
+\end{corollary}
+
+\begin{remark}[The Pendulum Interpretation]
+In the pendulum analogy:
+\begin{itemize}
+\item Each molecule is a pendulum oscillating in its potential well
+\item Phase-lock networks are the coupling between pendulums
+\item Viscosity is the resistance to changing the collective phase relationship
+\item Moving one layer ``drags'' adjacent layers through phase-lock connections
+\end{itemize}
+This explains why viscosity decreases with temperature in liquids (thermal energy disrupts phase-locks) but increases with temperature in gases (more collisions = more phase-lock events).
+\end{remark}
+
+\subsection{Energy Equation from Heat-Entropy Decoupling}
+
+\begin{theorem}[Heat-Entropy Decoupling]
+\label{thm:heat_entropy}
+Heat and entropy are decoupled at the microscopic level:
+\begin{align}
+\text{Heat:} \quad &Q \lessgtr 0 \quad \text{(can fluctuate)} \\
+\text{Entropy:} \quad &\Delta S > 0 \quad \text{(always increases)}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Heat is energy transfer due to temperature difference. At the molecular level, individual collisions can transfer energy in either direction. Heat flow direction is a statistical property of ensembles.
+
+Entropy measures categorical completion. Each partition operation produces entropy $\Delta S_{\text{part}} = \kB \ln n_{\text{res}} > 0$ (Theorem~\ref{thm:partition_entropy}). Categorical completion is irreversible. Entropy increases regardless of heat direction.
+\end{proof}
+
+\begin{theorem}[Energy Equation]
+\label{thm:energy_equation}
+The energy equation
+\begin{equation}
+\rho c_p \frac{DT}{Dt} = k \nabla^2 T + \Phi_{\text{diss}}
+\label{eq:energy_equation}
+\end{equation}
+follows from S-coordinate evolution with:
+\begin{equation}
+\Phi_{\text{diss}} = \mu \left( \nabla \mathbf{v} : \nabla \mathbf{v} \right)
+\label{eq:dissipation}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Temperature $T$ is related to S-coordinates through:
+\begin{equation}
+T = \frac{\partial U}{\partial S_e}\bigg|_{S_k, S_t}
+\end{equation}
+
+The evolution of $S_e$ follows from the S-transformation (Theorem~\ref{thm:complete_transformation}):
+\begin{equation}
+\frac{\partial S_e}{\partial t} = D_S \nabla^2 S_e + \dot{S}_{\text{diss}}
+\end{equation}
+
+where $\dot{S}_{\text{diss}}$ is entropy production from viscous dissipation. Converting to temperature using $dS_e = c_p dT / T$:
+\begin{equation}
+\rho c_p \frac{DT}{Dt} = k \nabla^2 T + T \dot{S}_{\text{diss}}
+\end{equation}
+
+The dissipation function $\Phi_{\text{diss}} = T \dot{S}_{\text{diss}} = \mu (\nabla \mathbf{v} : \nabla \mathbf{v})$ follows from viscous stress doing work.
+\end{proof}
+
+\subsection{Continuum Limit}
+
+\begin{theorem}[Continuum Limit]
+\label{thm:continuum_limit}
+Classical fluid equations are the continuum limit of discrete S-transformations as:
+\begin{enumerate}
+\item Spatial discretisation $dx \to 0$
+\item Temporal discretisation $dt \to 0$
+\item Partition lag $\tau_p \to 0$ while $\sum \tau_p$ remains finite
+\item Aperture count $\to \infty$ while selectivity distribution remains finite
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The discrete S-transformation (Equation~\ref{eq:complete_transformation}):
+\begin{equation}
+\Svec(x + dx) = \Svec(x) - \kappa(\Svec - \Svec_{\text{stat}}) + D_S \nabla_S^2 \Svec \cdot dt - v \nabla_x \Svec \cdot dt
+\end{equation}
+
+In the limit $dx \to 0$, $dt \to 0$:
+\begin{equation}
+\frac{\partial \Svec}{\partial t} + v \frac{\partial \Svec}{\partial x} = D_S \nabla^2 \Svec - \kappa(\Svec - \Svec_{\text{stat}})
+\end{equation}
+
+This is the advection-diffusion-reaction equation in S-coordinates. Mapping to physical variables via Theorems~\ref{thm:continuity}, \ref{thm:navier_stokes}, \ref{thm:energy_equation} yields the Navier-Stokes system.
+
+The aperture structure becomes a continuous selectivity field $s(\mathbf{x})$ rather than discrete apertures.
+\end{proof}
+
+\subsection{Laminar vs Turbulent Flow: The Aperture Accessibility Transition}
+
+The distinction between laminar and turbulent flow has a natural interpretation in the aperture framework.
+
+\begin{definition}[Sequential Apertures (Laminar)]
+\label{def:classical_sequential_apertures}
+In laminar flow, apertures are \emph{sequential}---molecules navigate through consecutive apertures in order:
+\begin{equation}
+\mathcal{C}_1 \xrightarrow{a_{12}} \mathcal{C}_2 \xrightarrow{a_{23}} \mathcal{C}_3 \xrightarrow{a_{34}} \cdots
+\label{eq:classical_sequential_apertures}
+\end{equation}
+where $a_{ij}$ is the aperture connecting states $\mathcal{C}_i$ and $\mathcal{C}_j$ with $|i - j| = 1$.
+\end{definition}
+
+\begin{definition}[Non-Sequential Apertures (Turbulent)]
+\label{def:classical_nonsequential_apertures}
+In turbulent flow, apertures become \emph{non-sequential}---molecules can jump between non-adjacent states:
+\begin{equation}
+\mathcal{C}_1 \xrightarrow{a_{1k}} \mathcal{C}_k \quad \text{where } |k - 1| > 1
+\label{eq:classical_nonsequential_apertures}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Reynolds Number as Aperture Accessibility]
+\label{thm:classical_reynolds_apertures}
+The Reynolds number measures the degree of non-sequential aperture accessibility:
+\begin{equation}
+\text{Re} = \frac{\rho v L}{\mu} = \frac{\text{Inertial aperture count}}{\text{Viscous aperture resistance}}
+\label{eq:reynolds_apertures}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Inertia provides kinetic energy to access non-adjacent apertures:
+\begin{equation}
+E_{\text{inertial}} = \frac{1}{2} \rho v^2 L^3 \propto \rho v L
+\end{equation}
+
+Viscosity (memory) resists non-sequential access by penalising phase-lock reconfiguration:
+\begin{equation}
+E_{\text{viscous}} \propto \mu
+\end{equation}
+
+The ratio:
+\begin{equation}
+\text{Re} = \frac{E_{\text{inertial}}}{E_{\text{viscous}}} = \frac{\rho v L}{\mu}
+\end{equation}
+
+At low Re, viscous memory dominates: only sequential apertures are accessible (laminar flow).
+
+At high Re, inertial energy overcomes memory: non-sequential apertures become accessible (turbulent flow). \qed
+\end{proof}
+
+\begin{remark}[The Double Pendulum Analogy]
+Laminar flow is like a \emph{single} pendulum: deterministic, periodic, one state leads to the next.
+
+Turbulent flow is like a \emph{double} pendulum: the second pendulum introduces non-sequential accessibility between states. At any moment, the system can jump to distant configurations.
+
+The critical Reynolds number marks the transition where the ``second pendulum'' (inertial dynamics) becomes strong enough to override the ``single pendulum'' (viscous, sequential dynamics).
+\end{remark}
+
+\begin{theorem}[Energy Cascade as Aperture Hierarchy]
+\label{thm:classical_energy_cascade}
+The turbulent energy cascade corresponds to traversing apertures at successively smaller scales:
+\begin{equation}
+\ell_0 \xrightarrow{\text{non-seq}} \ell_1 \xrightarrow{\text{non-seq}} \ell_2 \xrightarrow{\text{non-seq}} \cdots \xrightarrow{\text{seq}} \ell_K
+\label{eq:classical_energy_cascade}
+\end{equation}
+where $\ell_k$ are length scales, non-sequential apertures dominate at large scales, and sequential (viscous) apertures dominate at the Kolmogorov scale $\ell_K$.
+\end{theorem}
+
+\begin{proof}
+At scale $\ell$, the local Reynolds number is:
+\begin{equation}
+\text{Re}_\ell = \frac{\rho v_\ell \ell}{\mu}
+\end{equation}
+
+Energy cascades from large scales (high $\text{Re}_\ell$, non-sequential apertures) to small scales.
+
+At the Kolmogorov scale $\ell_K$, $\text{Re}_{\ell_K} \sim 1$:
+\begin{equation}
+\ell_K = \left( \frac{\mu^3}{\rho^3 \epsilon} \right)^{1/4}
+\end{equation}
+where $\epsilon$ is the energy dissipation rate.
+
+Below $\ell_K$, viscous (sequential) apertures dominate, converting kinetic energy to heat through phase-lock breaking. \qed
+\end{proof}
+

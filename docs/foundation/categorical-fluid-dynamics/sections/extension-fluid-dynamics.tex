@@ -1,0 +1,242 @@
+%==============================================================================
+% SECTION 8: EXTENSION TO GENERAL FLUID DYNAMICS
+%==============================================================================
+
+\section{Extension to General Fluid Dynamics}
+\label{sec:extension}
+
+\subsection{Beyond Chromatography: General Flow Systems}
+
+The framework developed for chromatography extends to general fluid dynamics. The key structures—dimensional reduction, S-transformation, and partition lag—apply universally.
+
+\begin{theorem}[Generalisation to Multi-Component Systems]
+\label{thm:generalisation}
+For a fluid with $N$ species, the S-transformation extends to:
+\begin{equation}
+\Svec_{\text{total}} = \bigoplus_{i=1}^{N} \Svec_i
+\label{eq:multicomponent_s}
+\end{equation}
+where $\oplus$ denotes the direct sum in S-space.
+\end{theorem}
+
+\begin{proof}
+Each species has independent S-coordinates. The total S-state is the collection of individual S-states. Transformations operate on each component according to species-specific parameters.
+\end{proof}
+
+\subsection{Turbulence from Partition Lag Amplification}
+
+\begin{definition}[Partition Lag Spectrum]
+\label{def:lag_spectrum}
+The partition lag spectrum $P(\tau_p)$ is the distribution of partition lags across all molecular pairs in the fluid.
+\end{definition}
+
+\begin{theorem}[Turbulence Criterion]
+\label{thm:turbulence}
+Turbulent flow occurs when the partition lag spectrum satisfies:
+\begin{equation}
+\frac{\max(\tau_p)}{\min(\tau_p)} > \text{Re}_c
+\label{eq:turbulence_criterion}
+\end{equation}
+where $\text{Re}_c$ is the critical Reynolds number.
+\end{theorem}
+
+\begin{proof}
+The Reynolds number measures inertial forces relative to viscous forces:
+\begin{equation}
+\text{Re} = \frac{\rho u L}{\mu}
+\end{equation}
+
+Viscosity $\mu = \sum \tau_{p,ij} g_{ij}$ (Theorem~\ref{thm:navier_stokes}). When partition lag variation is large, viscosity fluctuates spatially. Regions of low viscosity (short $\tau_p$) permit rapid S-changes; regions of high viscosity (long $\tau_p$) resist S-changes.
+
+The ratio $\max(\tau_p) / \min(\tau_p)$ quantifies this fluctuation. When fluctuations exceed the critical ratio, laminar flow destabilises. Energy cascades through scales as partition lags amplify.
+\end{proof}
+
+\subsection{Boundary Layers from S-Gradient Steepening}
+
+\begin{definition}[S-Gradient]
+\label{def:s_gradient}
+The S-gradient at position $\mathbf{x}$ is:
+\begin{equation}
+\nabla_S = \frac{\partial \Svec}{\partial \mathbf{x}}
+\label{eq:s_gradient}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Boundary Layer Formation]
+\label{thm:boundary_layer}
+A boundary layer forms where:
+\begin{equation}
+\|\nabla_S\| > \frac{1}{\delta}
+\label{eq:boundary_layer_criterion}
+\end{equation}
+where $\delta$ is the boundary layer thickness.
+\end{theorem}
+
+\begin{proof}
+At a solid boundary, the no-slip condition requires $\mathbf{v} = 0$. In the bulk, $\mathbf{v} \neq 0$. The velocity gradient creates an S-gradient:
+\begin{equation}
+\nabla_S = \frac{\partial \Svec}{\partial \mathbf{v}} \cdot \frac{\partial \mathbf{v}}{\partial y} \propto \frac{v_{\infty}}{\delta}
+\end{equation}
+
+A large S-gradient implies a rapid S-change over a short distance. The layer where this transition occurs is the boundary layer. Its thickness $\delta$ is determined by the balance between advection and diffusion:
+\begin{equation}
+\delta \sim \sqrt{\frac{\mu L}{\rho u}} = \frac{L}{\sqrt{\text{Re}}}
+\end{equation}
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_extension.pdf}
+\caption{\textbf{Extension to Complex Fluid Phenomena: Beyond Newtonian Flow.}
+The aperture-memory framework extends naturally to complex fluids and flow regimes. (A) Turbulence as aperture hierarchy: at large scales, inertia opens non-sequential apertures; energy cascades to smaller scales where viscous (sequential) apertures dissipate kinetic energy. The Kolmogorov scale $\ell_K = (\nu^3/\epsilon)^{1/4}$ marks the transition from non-sequential to sequential aperture dominance. (B) Non-Newtonian fluids: strain-rate-dependent aperture reconfiguration produces shear-dependent viscosity. Shear-thinning (polymer solutions): high shear aligns molecules, reducing aperture resistance. Shear-thickening (cornstarch): high shear creates new apertures through jamming. (C) Multiphase flows: phase boundaries are categorical apertures with distinct selectivities. Liquid-gas interfaces have high selectivity (surface tension); liquid-liquid interfaces have intermediate selectivity (immiscibility). Coalescence and breakup are aperture creation/destruction events. (D) Reactive flows: chemical reactions are partition operations that transform S-coordinates. Combustion creates new apertures (products have different phase-lock networks than reactants); the reaction rate is the aperture traversal rate.}
+\label{fig:extension}
+\end{figure}
+
+\subsection{Phase Transitions from S-Space Topology Change}
+
+\begin{definition}[S-Space Topology]
+\label{def:s_topology}
+The S-space topology of a fluid is the structure of its S-landscape $\Phi_S$: the locations and types of critical points (minima, maxima, and saddles).
+\end{definition}
+
+\begin{theorem}[Phase Transition as Topological Change]
+\label{thm:phase_transition}
+A phase transition occurs when the S-space topology changes:
+\begin{equation}
+\chi(\Sspace_{\text{before}}) \neq \chi(\Sspace_{\text{after}})
+\label{eq:topology_change}
+\end{equation}
+where $\chi$ is the Euler characteristic.
+\end{theorem}
+
+\begin{proof}
+Before the transition, the system occupies the S-space region $\Sspace_1$. After transition, it occupies $\Sspace_2$. Phase boundaries are S-space barriers.
+
+At the transition, the barrier between $\Sspace_1$ and $\Sspace_2$ either disappears or appears. This change alters the connectivity of accessible S-space. A change in connectivity implies a change in the Euler characteristic.
+\end{proof}
+
+\subsection{Mixtures and Solutions}
+
+\begin{definition}[Mixture S-State]
+\label{def:mixture_s}
+A mixture of components $\{a, b, \ldots\}$ with mole fractions $\{x_a, x_b, \ldots\}$ has S-state:
+\begin{equation}
+\Svec_{\text{mix}} = \sum_i x_i \Svec_i + \Svec_{\text{mixing}}
+\label{eq:mixture_s}
+\end{equation}
+where $\Svec_{\text{mixing}}$ is the entropy of the mixing contribution.
+\end{definition}
+
+\begin{theorem}[Entropy of Mixing in S-Coordinates]
+\label{thm:mixing_entropy}
+The mixing contribution is:
+\begin{equation}
+\Svec_{\text{mixing}} = (0, 0, -\sum_i x_i \ln x_i)
+\label{eq:mixing_s}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Mixing increases entropy but does not change the knowledge deficit or temporal position. The entropy increase is the configurational entropy:
+\begin{equation}
+\Delta S_{\text{mix}} = -\kB \sum_i x_i \ln x_i
+\end{equation}
+
+This contributes only to $S_e$ (entropy dimension):
+\begin{equation}
+\Svec_{\text{mixing}} = (0, 0, -\sum_i x_i \ln x_i)
+\end{equation}
+\end{proof}
+
+\subsection{Heat Transfer}
+
+\begin{theorem}[Heat Conduction in S-Coordinates]
+\label{thm:heat_conduction}
+Fourier's law of heat conduction:
+\begin{equation}
+\mathbf{q} = -k \nabla T
+\label{eq:fourier}
+\end{equation}
+emerges from S-coordinate dynamics with thermal conductivity:
+\begin{equation}
+k = \frac{\kB}{m} \sum_{i,j} \omega_{ij} g_{ij}
+\label{eq:thermal_conductivity}
+\end{equation}
+where $\omega_{ij}$ are oscillation frequencies and $g_{ij}$ are phase-lock couplings.
+\end{theorem}
+
+\begin{proof}
+Heat flow results from energy transfer through a phase-lock network. The energy transfer rate is proportional to:
+\begin{enumerate}
+\item Oscillation frequency $\omega_{ij}$ (how fast modes oscillate)
+\item Coupling strength $g_{ij}$ (how strongly modes interact)
+\end{enumerate}
+
+The sum $\sum \omega_{ij} g_{ij}$ gives the total energy transfer capacity. Dividing by molecular mass $m$ and multiplying by $\kB$ gives thermal conductivity.
+
+The temperature  gradient drives energy flow from high-$T$ to low-$T$ regions. Flow rate proportional to gradient and conductivity gives Fourier's law.
+\end{proof}
+
+\subsection{Mass Transfer}
+
+\begin{theorem}[Fick's Law in S-Coordinates]
+\label{thm:ficks_law}
+Fick's law of diffusion:
+\begin{equation}
+\mathbf{J} = -D \nabla c
+\label{eq:fick}
+\end{equation}
+emerges from S-coordinate dynamics with diffusivity:
+\begin{equation}
+D = \frac{\kB T}{\sum_{i,j} g_{ij}}
+\label{eq:diffusivity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Mass diffusion results from molecular random walks constrained by a phase-lock network. Diffusivity is:
+\begin{equation}
+D = \frac{\langle r^2 \rangle}{6t}
+\end{equation}
+
+Mean squared displacement $\langle r^2 \rangle \propto \kB T$ (thermal energy) and $t \propto \sum g_{ij}$ (constraint from the network). Thus:
+\begin{equation}
+D = \frac{\kB T}{\sum g_{ij}}
+\end{equation}
+
+The concentration gradient drives mass flow from high-$c$ to low-$c$ regions. The flow rate proportional to the gradient and diffusivity gives Fick's law.
+\end{proof}
+
+\subsection{Experimental Validation Protocol}
+
+\begin{definition}[S-Coordinate Measurement Protocol]
+\label{def:measurement_protocol}
+S-coordinates are measured by:
+\begin{enumerate}
+\item Mass spectrometry Measures $S_k$ through mass-to-charge distribution
+\item Retention time Measures $S_t$ through temporal position in separation
+\item Calorimetry measures $S_e$ through heat capacity
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Experimental Validation Requirements]
+\label{thm:validation_requirements}
+The framework is validated when:
+\begin{enumerate}
+\item Retention time predictions match measurements: $|t_{R,\text{pred}} - t_{R,\text{obs}}| / t_{R,\text{obs}} < \epsilon_t$
+\item Van Deemter coefficients match fits: $|A_{\text{pred}} - A_{\text{fit}}| / A_{\text{fit}} < \epsilon_A$; similarly for $B$ and $C$
+\item Cross-platform consistency: S-coordinates computed from different platforms agree
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each requirement tests a different aspect:
+\begin{enumerate}
+\item Retention time tests the S-transformation integral (Theorem~\ref{thm:retention_integral})
+\item Van Deemter coefficients test the partition lag derivation (Theorem~\ref{thm:vandeemter})
+\item Cross-platform consistency tests the categorical invariance of S-coordinates
+\end{enumerate}
+
+Validation requires all three to ensure the framework is physically accurate, not just mathematically self-consistent.
+\end{proof}
+

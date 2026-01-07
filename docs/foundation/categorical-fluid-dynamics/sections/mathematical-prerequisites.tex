@@ -1,0 +1,728 @@
+%==============================================================================
+% SECTION 2: MATHEMATICAL PREREQUISITES
+%==============================================================================
+
+\section{Mathematical Prerequisites}
+\label{sec:prerequisites}
+
+This section develops the mathematical foundations required for the categorical derivation of fluid dynamics. We present three frameworks---oscillatory mechanics, categorical mechanics, and partition mechanics---and prove their fundamental equivalence. Rather than treating these as abstract mathematical structures, we develop them through a concrete physical example: the simple pendulum. This example makes transparent the physical meaning of each framework and reveals why they must yield identical predictions.
+
+\subsection{The Simple Pendulum: A Unifying Example}
+
+Consider a simple pendulum: a mass $m$ suspended by a rigid rod of length $L$ in a gravitational field $g$. For small oscillations, the equation of motion is:
+\begin{equation}
+\frac{d^2\theta}{dt^2} + \omega^2 \theta = 0, \quad \omega = \sqrt{\frac{g}{L}}
+\label{eq:pendulum_eom}
+\end{equation}
+
+The solution is:
+\begin{equation}
+\theta(t) = \theta_0 \cos(\omega t + \phi)
+\label{eq:pendulum_solution}
+\end{equation}
+
+The pendulum exhibits periodic motion with period $T = 2\pi/\omega$. This single physical system can be described in three equivalent ways:
+
+\begin{enumerate}
+\item \textbf{Oscillatory description}: The pendulum oscillates between $-\theta_0$ and $+\theta_0$ with a frequency $\omega$. The motion is characterised by oscillatory modes.
+
+\item \textbf{Categorical description}: At each instant $t$, the pendulum occupies a distinguishable position $\theta(t)$. These positions form categorical states that can be distinguished by observation.
+
+\item \textbf{Partition description}: The period $T$ can be divided into intervals. Each division partitions the continuous motion into discrete segments.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_mathematical_prerequisites.pdf}
+\caption{\textbf{Mathematical Foundations: From Pendulum to Phase-Lock Networks.}
+(A) The simple pendulum as unifying example: period $T = 2\pi\sqrt{L/g}$ defines the oscillatory timescale, each point in the period is a category, and the sequence of categories partitions the period. Oscillation, category, and partition are three views of the same phenomenon---the pendulum's motion. (B) Phase-lock networks: molecules in a fluid are coupled pendulums, their phases locked through intermolecular forces. The network $\mathcal{G} = (V, E)$ has molecules as vertices and phase-locks as edges. (C) Memory in networks: moving one layer of fluid requires ``pulling'' adjacent layers through phase-lock connections. This accumulated history is memory $\mathcal{M}$, and the rate of memory accumulation per unit strain is viscosity: $\mu = d\mathcal{M}/d\gamma$. (D) The S-sliding window: observation occurs one categorical state at a time, like a window sliding across text. The window's trajectory through S-space encodes the complete fluid dynamics. This formalism reduces the infinite-dimensional fluid state to a finite, computable representation.}
+\label{fig:mathematical_prerequisites}
+\end{figure}
+
+We now develop each description formally and demonstrate their equivalence.
+
+\subsection{Oscillatory Mechanics}
+\label{subsec:oscillatory}
+
+The oscillatory framework begins with the observation that bounded physical systems exhibit recurrent dynamics.
+
+\subsubsection{Axioms of Oscillatory Systems}
+
+\begin{axiom}[Boundedness]
+\label{axiom:prereq_bounded}
+Physical systems occupy bounded regions of phase space. For any system with generalised coordinates $\{q_i\}$ and momenta $\{p_i\}$, there exist finite bounds:
+\begin{equation}
+|q_i| \leq Q_{\max}, \quad |p_i| \leq P_{\max}
+\end{equation}
+for all degrees of freedom $i = 1, 2, \ldots, M$.
+\end{axiom}
+
+The boundedness axiom reflects physical reality: no system possesses infinite energy. For the pendulum, the angle $\theta$ is bounded by $|\theta| \leq \pi$ (the pendulum cannot rotate beyond vertical), and the angular momentum is bounded by the total energy.
+
+\begin{axiom}[Hamiltonian Dynamics]
+\label{axiom:hamiltonian}
+Time evolution preserves phase space volume (Liouville's theorem):
+\begin{equation}
+\frac{d}{dt}\int_{\Omega} d^{2M}x = 0
+\end{equation}
+for any region $\Omega$ in phase space.
+\end{axiom}
+
+For the pendulum, the phase space is the $(\theta, p_\theta)$ plane, where $p_\theta = mL^2 \dot{\theta}$ is the angular momentum. Trajectories are closed ellipses at constant energy, and phase space volume (area in 2D) is conserved.
+
+\begin{theorem}[Poincaré Recurrence]
+\label{thm:poincare}
+A system satisfying Axioms~\ref{axiom:bounded} and~\ref{axiom:hamiltonian} returns arbitrarily close to any initial state. For any $\epsilon > 0$ and almost every initial state $x_0$, there exists a recurrence time $\tau_{\text{rec}}$ such that:
+\begin{equation}
+|x(\tau_{\text{rec}}) - x_0| < \epsilon
+\end{equation}
+\end{theorem}
+
+For the pendulum, recurrence is exact: the system returns to its initial state after time $T = 2\pi/\omega$. This periodicity is the simplest example of Poincaré recurrence.
+
+\begin{theorem}[Bounded Systems Oscillate]
+\label{thm:bounded_oscillate}
+Every system satisfying the above axioms exhibits oscillatory behaviour. The dynamics can be decomposed into a spectrum of oscillatory modes:
+\begin{equation}
+q_i(t) = \sum_{k=1}^{M} A_{ik} \cos(\omega_k t + \phi_{ik})
+\end{equation}
+where $\omega_k$ are the characteristic frequencies and $A_{ik}$ are amplitudes.
+\end{theorem}
+
+\begin{proof}
+Poincaré recurrence (Theorem~\ref{thm:poincare}) guarantees that trajectories return to neighbourhoods of initial points. For the return to be exact (as for integrable systems) or approximate (as for chaotic systems), the motion must oscillate rather than approach a fixed point. A Fourier decomposition of any bounded, recurrent trajectory yields the oscillatory mode expansion.
+\end{proof}
+
+\subsubsection{The Pendulum as Oscillator}
+
+For the simple pendulum, the oscillatory description is immediate. The single degree of freedom ($\theta$) exhibits a single mode with frequency $\omega = \sqrt{g/L}$. The phase space trajectory is an ellipse:
+\begin{equation}
+\frac{\theta^2}{\theta_0^2} + \frac{p_\theta^2}{(mL^2 \omega \theta_0)^2} = 1
+\end{equation}
+
+In quantum mechanics, the oscillatory mode admits discrete energy levels:
+\begin{equation}
+E_n = \hbar \omega \left( n + \frac{1}{2} \right), \quad n = 0, 1, 2, \ldots, n_{\max}
+\end{equation}
+
+The maximum quantum number $n_{\max}$ is determined by the total energy available to the mode. At temperature $T$, the thermally accessible states are those with $E_n \lesssim \kB T$, giving:
+\begin{equation}
+n_{\max} \approx \frac{\kB T}{\hbar \omega}
+\end{equation}
+
+\begin{definition}[Oscillatory Mode]
+\label{def:oscillatory_mode}
+An \emph{oscillatory mode} is an independent degree of freedom characterised by:
+\begin{itemize}
+\item A frequency $\omega$
+\item An amplitude $A$
+\item A set of $n$ distinguishable quantum states $\{|0\rangle, |1\rangle, \ldots, |n-1\rangle\}$
+\end{itemize}
+\end{definition}
+
+\subsubsection{Oscillatory Entropy}
+
+\begin{theorem}[Oscillatory Entropy]
+\label{thm:oscillatory_entropy}
+For a system with $M$ oscillatory modes, each admitting $n$ distinguishable states, the entropy is:
+\begin{equation}
+\boxed{S_{\text{osc}} = \kB M \ln n}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The microstate is specified by the quantum numbers $(n_1, n_2, \ldots, n_M)$, where each $n_i \in \{0, 1, \ldots, n-1\}$. The total number of microstates is:
+\begin{equation}
+W_{\text{osc}} = \underbrace{n \times n \times \cdots \times n}_{M \text{ factors}} = n^M
+\end{equation}
+
+Applying Boltzmann's relation $S = \kB \ln W$:
+\begin{equation}
+S_{\text{osc}} = \kB \ln(n^M) = \kB M \ln n
+\end{equation}
+\end{proof}
+
+For the pendulum with $M = 1$ mode and $n$ accessible states:
+\begin{equation}
+S_{\text{pendulum}} = \kB \ln n
+\end{equation}
+
+\subsection{Categorical Mechanics}
+\label{subsec:categorical}
+
+The categorical framework focusses on distinguishable states rather than dynamical evolution.
+
+\subsubsection{Axioms of Categorical Spaces}
+
+\begin{axiom}[Categorical Distinguishability]
+\label{axiom:distinguishable}
+A \emph{categorical state} is a configuration that can be distinguished from all other configurations by an observer. Two states $C$ and $C'$ are categorically distinct if and only if there exists an observable $\mathcal{O}$ such that $\mathcal{O}(C) \neq \mathcal{O}(C')$.
+\end{axiom}
+
+This axiom formalises the operational criterion for identity: two states are the same if and only if no measurement can distinguish them. For the pendulum, two positions $\theta_1$ and $\theta_2$ are categorically distinct if $|\theta_1 - \theta_2| > \Delta\theta$, where $\Delta\theta$ is the measurement precision.
+
+\begin{axiom}[Dimensional Structure]
+\label{axiom:dimensional}
+Categorical space admits decomposition into $M$ orthogonal dimensions:
+\begin{equation}
+\mathcal{C} = \mathcal{C}_1 \times \mathcal{C}_2 \times \cdots \times \mathcal{C}_M
+\end{equation}
+where orthogonality means distinctions along dimension $i$ are independent of distinctions along dimension $j$ for $i \neq j$.
+\end{axiom}
+
+For a single pendulum, $M = 1$. The categorical space is one-dimensional: the angle $\theta$. For a system of two independent pendulums, $M = 2$, and the categorical space is $\mathcal{C} = \mathcal{C}_1 \times \mathcal{C}_2$.
+
+\begin{axiom}[Finite Resolution]
+\label{axiom:resolution}
+Each dimension $\mathcal{C}_i$ admits a finite number $n$ of distinguishable levels. The number of distinguishable values in a range $[\theta_{\min}, \theta_{\max}]$ with precision $\Delta\theta$ is:
+\begin{equation}
+n = \left\lfloor \frac{\theta_{\max} - \theta_{\min}}{\Delta\theta} \right\rfloor + 1
+\end{equation}
+\end{axiom}
+
+This axiom reflects physical limitations on measurement precision. For the pendulum, if the angle ranges from $-\theta_0$ to $+\theta_0$ and the precision is $\Delta\theta$, then:
+\begin{equation}
+n = \left\lfloor \frac{2\theta_0}{\Delta\theta} \right\rfloor + 1
+\end{equation}
+
+\subsubsection{The Pendulum as Categorical System}
+
+At each instant, the pendulum occupies a position $\theta(t)$. With finite measurement precision $\Delta\theta$, we can distinguish $n$ categorical states:
+\begin{equation}
+\{C_1, C_2, \ldots, C_n\} = \{[-\theta_0, -\theta_0 + \Delta\theta), [-\theta_0 + \Delta\theta, -\theta_0 + 2\Delta\theta), \ldots, [\theta_0 - \Delta\theta, \theta_0]\}
+\end{equation}
+
+The pendulum traverses these categories sequentially as it oscillates. During one period $T$, it visits each category exactly twice (once while swinging right, once while swinging left).
+
+\begin{definition}[Categorical Space]
+\label{def:categorical_space}
+A \emph{categorical space} is the tuple $(\mathcal{C}, M, n)$ where:
+\begin{itemize}
+\item $\mathcal{C}$ is the set of all categorical states
+\item $M$ is the number of categorical dimensions
+\item $n$ is the number of distinguishable levels per dimension
+\end{itemize}
+The categorical space has cardinality $|\mathcal{C}| = n^M$.
+\end{definition}
+
+\subsubsection{Categorical Entropy}
+
+\begin{theorem}[Categorical Entropy]
+\label{thm:categorical_entropy}
+For a categorical space with $M$ dimensions and $n$ levels per dimension, the entropy is:
+\begin{equation}
+\boxed{S_{\text{cat}} = \kB M \ln n}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The total number of categorical states is $|\mathcal{C}| = n^M$ by Axiom~\ref{axiom:dimensional} and~\ref{axiom:resolution}. In the microcanonical ensemble with all states equally accessible:
+\begin{equation}
+p_i = \frac{1}{|\mathcal{C}|} = \frac{1}{n^M}
+\end{equation}
+
+The Shannon entropy is:
+\begin{equation}
+H = -\sum_{i=1}^{n^M} p_i \ln p_i = -n^M \cdot \frac{1}{n^M} \ln \frac{1}{n^M} = \ln(n^M) = M \ln n
+\end{equation}
+
+Converting to thermodynamic entropy:
+\begin{equation}
+S_{\text{cat}} = \kB H = \kB M \ln n
+\end{equation}
+\end{proof}
+
+For the pendulum with $M = 1$ dimension and $n$ levels:
+\begin{equation}
+S_{\text{pendulum}} = \kB \ln n
+\end{equation}
+
+This is identical to the oscillatory entropy—the first hint of equivalence.
+
+\subsection{Partition Mechanics}
+\label{subsec:partition}
+
+The partition framework views structure as arising from the division of wholes into parts.
+
+\subsubsection{Axioms of Partition Operations}
+
+\begin{axiom}[Partition Existence]
+\label{axiom:partition_exist}
+Any system $X$ with structure can be partitioned into subsystems. A \emph{partition} of $X$ is a collection $\mathcal{P} = \{X_1, X_2, \ldots, X_n\}$ such that:
+\begin{enumerate}[(i)]
+\item \textbf{Disjointness:} $X_i \cap X_j = \emptyset$ for $i \neq j$
+\item \textbf{Exhaustiveness:} $\bigcup_{i=1}^{n} X_i = X$
+\item \textbf{Non-triviality:} Each $X_i$ is non-empty
+\end{enumerate}
+\end{axiom}
+
+\begin{axiom}[Branching Factor]
+\label{axiom:branching}
+Each partition operation divides a system into $n$ subsystems, where $n \geq 2$ is the \emph{branching factor}.
+\end{axiom}
+
+\begin{axiom}[Recursive Partitionability]
+\label{axiom:recursive_part}
+Each subsystem $X_i$ produced by a partition is itself partitionable with the same branching factor.
+\end{axiom}
+
+\subsubsection{The Pendulum as Partition System}
+
+The period $T$ of the pendulum can be partitioned into intervals. Divide $T$ into $n$ equal subintervals:
+\begin{equation}
+\{[0, T/n), [T/n, 2T/n), \ldots, [(n-1)T/n, T]\}
+\end{equation}
+
+This partition divides the continuous motion into $n$ discrete temporal segments. Each segment corresponds to a range of angular positions—precisely the categorical levels defined earlier.
+
+The partition operation creates boundaries in time. The boundary at $t = kT/n$ separates ``before'' from ``after,'' creating a distinction that did not exist in the continuous motion.
+
+\begin{definition}[Partition Tree]
+\label{def:partition_tree}
+A \emph{partition tree} of depth $M$ with a branching factor of $n$ is the hierarchical structure produced by $M$ successive partition operations. The tree has:
+\begin{itemize}
+\item Root (level 0): the undivided system
+\item Level $k$: $n^k$ nodes, each a subsystem
+\item Leaves (level $M$): $n^M$ terminal subsystems
+\end{itemize}
+\end{definition}
+
+For multiple pendulums, we can partition each independently. With $M$ pendulums and $n$ partitions per pendulum, the total structure is a tree of depth $M$ with branching $n$.
+
+\subsubsection{Partition Entropy}
+
+\begin{theorem}[Partition Entropy]
+\label{thm:prereq_partition_entropy}
+For a partition tree of depth $M$ with a branching factor $n$, the entropy is:
+\begin{equation}
+\boxed{S_{\text{part}} = \kB M \ln n}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The number of leaf nodes (terminal partitions) is $n^M$. Each partition operation at each level contributes $\ln n$ to the entropy (the information required to specify which of $n$ branches is taken). With $M$ levels:
+\begin{equation}
+S_{\text{part}} = \kB \sum_{k=1}^{M} \ln n = \kB M \ln n
+\end{equation}
+
+Alternatively, by Boltzmann's relation with $W = n^M$ leaves:
+\begin{equation}
+S_{\text{part}} = \kB \ln(n^M) = \kB M \ln n
+\end{equation}
+\end{proof}
+
+For the pendulum with $M = 1$ level of partitioning into $n$ intervals:
+\begin{equation}
+S_{\text{pendulum}} = \kB \ln n
+\end{equation}
+
+Again, identical to the oscillatory and categorical entropies.
+
+\subsection{The Fundamental Equivalence}
+\label{subsec:equivalence}
+
+The three frameworks yield identical entropy formulas. This is not a coincidence—they describe the same physical reality.
+
+\subsubsection{Parameter Identification}
+
+\begin{theorem}[Triple Equivalence]
+\label{thm:triple_equivalence}
+The oscillatory, categorical, and partition frameworks are mathematically equivalent:
+\begin{equation}
+\boxed{\text{Oscillation} \equiv \text{Category} \equiv \text{Partition}}
+\end{equation}
+with entropy:
+\begin{equation}
+\boxed{S = S_{\text{osc}} = S_{\text{cat}} = S_{\text{part}} = \kB M \ln n}
+\end{equation}
+\end{theorem}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel1_triple_equivalence.png}
+\caption{\textbf{The Triple Equivalence: Oscillation $\equiv$ Category $\equiv$ Partition.}
+This foundational diagram establishes the mathematical identity at the heart of our framework. (A) Oscillatory dynamics: any bounded system exhibits periodic behaviour by Poincar\'{e} recurrence, here visualised as a pendulum tracing a closed orbit in phase space. The pendulum is our canonical example---each swing represents one complete categorical cycle. (B) Categorical structure: the oscillation defines equivalence classes of states; points at the same phase of the cycle are categorically identical. This partitions the continuous trajectory into discrete categorical states $\mathcal{C}_1, \mathcal{C}_2, \ldots$ (C) Partition geometry: categories are partitions of phase space; boundaries between categories are apertures through which the system transitions. The three representations are mathematically equivalent: what appears as oscillation in dynamics, appears as categorical structure in logic, and appears as partition geometry in space. This triple equivalence is the foundation upon which we derive all fluid dynamics from first principles.}
+\label{fig:triple_equivalence}
+\end{figure}
+
+\begin{proof}
+We establish the equivalence by identifying the parameters across frameworks.
+
+\textbf{Oscillatory $\leftrightarrow$ Categorical:}
+
+An oscillatory mode with $n$ quantum states $\{|0\rangle, |1\rangle, \ldots, |n-1\rangle\}$ corresponds to a categorical dimension with $n$ distinguishable levels $\{C_0, C_1, \ldots, C_{n-1}\}$. The correspondence is:
+\begin{equation}
+\text{Quantum state } |k\rangle \quad \longleftrightarrow \quad \text{Categorical level } C_k
+\end{equation}
+
+Both are distinguished by energy: $|k\rangle$ has energy $E_k = \hbar\omega(k + 1/2)$; $C_k$ is distinguished from $C_j$ because $E_k \neq E_j$.
+
+\textbf{Categorical $\leftrightarrow$ Partition:}
+
+A categorical dimension with $n$ levels corresponds to a partition with branching factor $n$. The correspondence is:
+\begin{equation}
+\text{Categorical level } C_k \quad \longleftrightarrow \quad \text{Partition branch } X_k
+\end{equation}
+
+Making a categorical distinction (determining which level is occupied) is the same as performing a partition (dividing the state space into $n$ disjoint regions).
+
+\textbf{Oscillatory $\leftrightarrow$ Partition:}
+
+An oscillatory transition from state $|k\rangle$ to state $|k'\rangle$ partitions the system's history into ``before the transition''and ``after.'' The transition time $t_0$ creates a boundary:
+\begin{equation}
+\text{Oscillatory transition at } t_0 \quad \longleftrightarrow \quad \text{Temporal partition at } t_0
+\end{equation}
+
+\textbf{Unified Parameter Interpretation:}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Concept} & \textbf{Oscillatory} & \textbf{Categorical} & \textbf{Partition} \\
+\midrule
+Degrees of freedom ($M$) & Modes & Dimensions & Levels \\
+States per DOF ($n$) & Quantum states & Categorical levels & Branches \\
+Total states ($n^M$) & Hilbert space dim. & $|\mathcal{C}|$ & Leaf nodes \\
+Entropy ($\kB M \ln n$) & Mode counting & State counting & Path counting \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The three frameworks count the same states in different languages. The entropy $S = \kB M \ln n$ is invariant across descriptions.
+\end{proof}
+
+\subsubsection{The Pendulum Unifies All Three}
+
+Returning to our example, the simple pendulum demonstrates the equivalence concretely:
+
+\begin{itemize}
+\item \textbf{Oscillation}: The pendulum oscillates with a period $T = 2\pi\sqrt{L/g}$. With quantised energy levels, there are $n$ accessible quantum states.
+
+\item \textbf{Category}: Each angular position $\theta$ is a categorical state. With precision $\Delta\theta$, there are $n = 2\theta_0/\Delta\theta$ distinguishable positions.
+
+\item \textbf{Partition}: The period $T$ can be divided into $n$ intervals. Each interval corresponds to a range of positions.
+\end{itemize}
+
+All three describe the same physical system—the swinging pendulum. The entropy $S = \kB \ln n$ measures how many distinguishable configurations exist, regardless of which language we use to describe them.
+
+\subsection{S-Entropy Coordinates}
+\label{subsec:s_coordinates}
+
+The categorical framework admits a coordinate representation that compresses molecular complexity into sufficient statistics.
+
+\begin{definition}[S-Entropy Coordinates]
+\label{def:s_coordinates}
+The S-entropy coordinate of a molecular configuration is the triple $\Svec = (S_k, S_t, S_e) \in \mathbb{R}^3$ where:
+\begin{align}
+S_k &= -\log_2 P_{\text{config}} && \text{(knowledge entropy: information deficit)} \label{eq:sk_def} \\
+S_t &= \log_{10}(\tau / \tau_0) && \text{(temporal entropy: ordering position)} \label{eq:st_def} \\
+S_e &= -\sum_i p_i \log_2 p_i && \text{(evolution entropy: phase distribution)} \label{eq:se_def}
+\end{align}
+with $P_{\text{config}}$ the configuration probability, $\tau$ the temporal position in the categorical sequence, and $\{p_i\}$ the phase distribution over oscillatory modes.
+\end{definition}
+
+For the pendulum:
+\begin{itemize}
+\item $S_k$ measures how surprising the current position is (rare positions have high $S_k$)
+\item $S_t$ measures the phase within the oscillation cycle
+\item $S_e$ measures the spread of energy across modes (for a single pendulum, $S_e = 0$)
+\end{itemize}
+
+\begin{definition}[S-Distance]
+\label{def:s_distance}
+The S-distance between configurations is:
+\begin{equation}
+d_S(\Svec_1, \Svec_2) = \|\Svec_1 - \Svec_2\|_2 = \sqrt{(S_{k,1} - S_{k,2})^2 + (S_{t,1} - S_{t,2})^2 + (S_{e,1} - S_{e,2})^2}
+\label{eq:s_distance}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Sufficiency]
+\label{thm:sufficiency}
+S-coordinates are sufficient statistics for categorical state identification:
+\begin{equation}
+P(\text{optimal decision} \mid \Svec, \text{all molecular details}) = P(\text{optimal decision} \mid \Svec)
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Categorical equivalence classes partition the configuration space. Configurations within the same equivalence class produce identical observables at the categorical level. S-coordinates uniquely identify equivalence classes. Optimal categorical decisions depend only on equivalence class membership; hence, they depend solely on S-coordinates.
+\end{proof}
+
+\subsection{The S-Sliding Window}
+\label{subsec:sliding_window}
+
+A key property enabling dimensional reduction is the S-sliding window.
+
+\begin{definition}[S-Window]
+\label{def:s_window}
+The S-window at categorical state $C_i$ with radius $\epsilon$ is:
+\begin{equation}
+W_\epsilon(C_i) = \{ C_j \in \Cspace : d_S(\Svec_i, \Svec_j) < \epsilon \}
+\label{eq:s_window}
+\end{equation}
+\end{definition}
+
+The S-window contains all states ``reachable'' from $C_i$ in a single step. For the pendulum, the window at position $\theta$ contains nearby positions within angular distance $\epsilon/\omega$ (the distance traversed in time $\epsilon$).
+
+\begin{theorem}[Window Connectivity]
+\label{thm:window_connectivity}
+For sufficiently large $\epsilon$, S-windows form a connected covering of $\Cspace$: for any $C_i, C_j \in \Cspace$, there exists a chain $C_i = C_{(0)}, C_{(1)}, \ldots, C_{(k)} = C_j$ such that $C_{(m+1)} \in W_\epsilon(C_{(m)})$.
+\end{theorem}
+
+\begin{proof}
+Categorical states form a metric space under $d_S$. For compact $\Cspace$ and $\epsilon$ exceeding the Lebesgue number of the covering $\{W_\epsilon(C)\}_{C \in \Cspace}$, every point lies within a distance $\epsilon$ of some covering centre. Path-connectedness of $\Cspace$ implies the chain property.
+\end{proof}
+
+\begin{corollary}[Navigation Principle]
+\label{cor:navigation}
+Traversing the categorical state space requires visiting only window-adjacent states. The total state count is irrelevant; only the path length matters.
+\end{corollary}
+
+This corollary is the foundation for dimensional reduction: instead of tracking all $n^M$ states, we navigate through a connected chain of windows.
+
+\subsection{Partition Lag}
+\label{subsec:partition_lag}
+
+Partition operations are not instantaneous. The time required to establish a partition is called the \emph{partition lag}.
+
+\begin{definition}[Partition Lag]
+\label{def:partition_lag}
+The partition lag $\tau_p$ is the irreducible temporal interval between initiating a partition operation and establishing the result:
+\begin{equation}
+\tau_p = t_{\text{result}} - t_{\text{initiate}} > 0
+\label{eq:partition_lag}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Positive Partition Time]
+\label{thm:positive_partition}
+Partition operations require positive time: $\tau_p > 0$.
+\end{theorem}
+
+\begin{proof}
+Partition distinguishes categorical states. Distinguishing requires information acquisition. Information acquisition in physical systems requires finite time due to causality constraints (signals propagate at finite speed). Hence $\tau_p > 0$.
+\end{proof}
+
+For the pendulum, $\tau_p$ is the time required to measure the angular position with precision $\Delta\theta$. Faster measurements require more energy (Heisenberg uncertainty), creating a trade-off between precision and lag.
+
+\begin{definition}[Undetermined Residue]
+\label{def:prereq_undetermined_residue}
+During partition lag $\tau_p$, the system exists in an undetermined superposition of partition outcomes. The undetermined residue $n_{\text{res}}$ is the count of states not assignable to either outcome during $\tau_p$.
+\end{definition}
+
+\begin{theorem}[Partition Entropy Production]
+\label{thm:prereq_partition_entropy_production}
+Each partition operation produces entropy:
+\begin{equation}
+\Delta S_{\text{partition}} = \kB \ln n_{\text{res}} > 0
+\label{eq:partition_entropy}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Undetermined residue represents states that cannot be classified during $\tau_p$. These states contribute $\ln n_{\text{res}}$ to entropy. By Theorem~\ref{thm:positive_partition}, $\tau_p > 0$, hence $n_{\text{res}} > 1$, hence $\Delta S_{\text{partition}} > 0$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel2_entropy_derivation.png}
+\caption{\textbf{Entropy from Categorical Completion: The Undetermined Residue.}
+This figure derives entropy from first principles using the partition framework. (A) Partition operation: when a categorical state $\mathcal{C}$ is partitioned into substates, information is gained about which substate obtains, but an ``undetermined residue'' remains---the information that was destroyed by the partition boundary. (B) Entropy formula: $\Delta S = k_B \ln n_{\text{res}}$ where $n_{\text{res}}$ counts the residue microstates. This is Shannon entropy in thermodynamic form. (C) Irreversibility: the undetermined residue cannot be recovered because it was never determined---it represents possibilities that were excluded, not selected. This is why entropy increases: each partition creates new residue. (D) Connection to time: entropy production is categorical completion; time emerges as the ordering of completed partitions. In fluid dynamics, this entropy production manifests as viscous dissipation---the ``cost of time emergence'' in a correlated medium. Each partition operation advances the fluid's internal clock.}
+\label{fig:entropy_derivation}
+\end{figure}
+
+\subsection{Phase-Lock Networks}
+\label{subsec:phase_lock}
+
+In systems with multiple oscillatory modes, the modes can become correlated through phase-locking.
+
+\begin{definition}[Phase-Lock Graph]
+\label{def:phase_lock_graph}
+The phase-lock graph $\phaselockgraph = (V, E)$ of a molecular system has:
+\begin{itemize}
+\item Vertices $V$: molecular oscillatory modes
+\item Edges $E$: phase-lock relationships between modes
+\end{itemize}
+Edge weight $g_{ij}$ quantifies the coupling strength between modes $i$ and $j$.
+\end{definition}
+
+For a pair of coupled pendulums, the phase-lock graph has two vertices (the two pendulums) connected by an edge with weight proportional to the coupling strength.
+
+\begin{theorem}[Phase-Lock Kinetic Independence]
+\label{thm:kinetic_independence}
+The phase-lock graph is independent of molecular kinetic energy:
+\begin{equation}
+\frac{\partial \phaselockgraph}{\partial E_{\text{kin}}} = 0
+\label{eq:kinetic_independence}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Phase-lock relationships arise from interaction potentials (Van der Waals, dipole-dipole, hydrogen bonding). These depend on molecular geometry and electronic structure, not translational velocity. Kinetic energy determines velocity magnitudes but not the interaction topology.
+\end{proof}
+
+\subsection{Categorical Enthalpy}
+\label{subsec:categorical_enthalpy}
+
+The triple equivalence extends beyond entropy to the thermodynamic potential of enthalpy. We now derive a categorical formulation of enthalpy that reduces to the classical $H = U + PV$ in the appropriate limit.
+
+\subsubsection{Apertures and Selectivity}
+
+\begin{definition}[Aperture]
+\label{def:aperture}
+An \emph{aperture} $a$ is a geometric constraint on a boundary that selectively allows certain configurations to pass. The selectivity is:
+\begin{equation}
+s_a = \frac{\Omega_{\text{pass}}}{\Omega_{\text{total}}}
+\end{equation}
+where $\Omega_{\text{pass}}$ is the number of configurations that can pass and $\Omega_{\text{total}}$ is the total number of configurations.
+\end{definition}
+
+An aperture is not merely a hole but a selective philtre. For the pendulum, the turning points $\pm\theta_0$ act as ``apertures'' in phase space: only configurations with sufficient energy can reach these extremes.
+
+\begin{definition}[Categorical Potential]
+\label{def:categorical_potential}
+The categorical potential of an aperture $a$ at temperature $T$ is:
+\begin{equation}
+\Phi_a(T) = -\kB T \ln s_a = -\kB T \ln\left(\frac{\Omega_{\text{pass}}}{\Omega_{\text{total}}}\right)
+\label{eq:categorical_potential}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Selectivity-Potential Relation]
+\label{thm:selectivity_potential}
+The categorical potential has the following properties:
+\begin{itemize}
+\item If $s = 1$ (all pass): $\Phi_a = 0$ (no barrier)
+\item If $s \to 0$ (none pass): $\Phi_a \to +\infty$ (impermeable)
+\item If $0 < s < 1$: $\Phi_a > 0$ (finite barrier)
+\end{itemize}
+\end{theorem}
+
+\subsubsection{Categorical Enthalpy Definition}
+
+\begin{definition}[Categorical Enthalpy]
+\label{def:categorical_enthalpy}
+The categorical enthalpy of a system is:
+\begin{equation}
+\boxed{\mathcal{H} = U + \sum_{a \in \mathcal{A}} n_a \cdot \Phi_a}
+\label{eq:categorical_enthalpy}
+\end{equation}
+where:
+\begin{itemize}
+\item $U$ is the internal energy
+\item $\mathcal{A}$ is the set of all apertures (boundaries) in the system
+\item $n_a$ is the number of apertures of type $a$
+\item $\Phi_a$ is the categorical potential of aperture $a$
+\end{itemize}
+\end{definition}
+
+The enthalpy is the sum of internal energy (energy of the molecules) and categorical potential energy (energy stored in selective boundaries).
+
+\subsubsection{Recovery of Classical Enthalpy}
+
+\begin{theorem}[Classical Limit]
+\label{thm:classical_limit}
+When apertures are infinitely numerous and completely non-selective, categorical enthalpy reduces to classical enthalpy:
+\begin{equation}
+\lim_{\substack{n_a \to \infty \\ s_a \to 1}} \mathcal{H} = U + PV
+\label{eq:classical_limit}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consider a boundary $\partial\Omega$ with aperture density $\rho_a$ (number per unit area) and selectivity $s_a$. The total aperture contribution is:
+\begin{equation}
+\sum_a n_a \Phi_a = \rho_a \cdot A \cdot (-\kB T \ln s_a)
+\end{equation}
+where $A$ is the surface area.
+
+Take the limit $s_a \to 1$ while increasing $\rho_a$ such that:
+\begin{equation}
+P = \lim_{s_a \to 1} \rho_a \cdot (-\kB T \ln s_a)
+\end{equation}
+remains finite. This defines the pressure $P$ as the limiting aperture potential density.
+
+For expansion work, the sum becomes:
+\begin{equation}
+\sum_a n_a \Phi_a \to \int_{\partial\Omega} P \, dA = P \cdot V
+\end{equation}
+
+Therefore:
+\begin{equation}
+\mathcal{H} = U + \sum_a n_a \Phi_a \to U + PV
+\end{equation}
+\end{proof}
+
+\begin{corollary}[Pressure as Emergent Quantity]
+\label{cor:pressure_emergent}
+Pressure is not fundamental but emergent—it is the coarse-grained limit of aperture potentials:
+\begin{equation}
+P = \langle \rho_a \cdot \Phi_a \rangle_{\text{non-selective limit}}
+\end{equation}
+\end{corollary}
+
+\subsubsection{The Unified Enthalpy Formula}
+
+\begin{theorem}[General Categorical Enthalpy]
+\label{thm:general_enthalpy}
+The most general form of enthalpy, with continuously varying selectivity, is:
+\begin{equation}
+\boxed{\mathcal{H} = U + \int_{\partial\Omega} \sigma(x) \cdot \phi(x) \, dA}
+\label{eq:general_enthalpy}
+\end{equation}
+where:
+\begin{itemize}
+\item $\partial\Omega$ is the set of all boundaries
+\item $\sigma(x)$ is the selectivity at point $x$ ($0 \leq \sigma \leq 1$)
+\item $\phi(x)$ is the categorical potential density at point $x$
+\end{itemize}
+\end{theorem}
+
+\begin{corollary}[Special Cases]
+\begin{enumerate}[(i)]
+\item \emph{Classical enthalpy}: If $\sigma(x) = 1$ and $\phi(x) = P$ are everywhere:
+\begin{equation}
+\mathcal{H} = U + P \int_{\partial\Omega} dA = U + PV
+\end{equation}
+
+\item \emph{Selective membranes}: If $0 < \sigma(x) < 1$, the boundary is a selective membrane with finite categorical potential.
+
+\item \emph{Impermeable partitions}: If $\sigma(x) = 0$ on some regions, those regions are completely impermeable.
+\end{enumerate}
+\end{corollary}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel3_categorical_enthalpy.png}
+\caption{\textbf{Categorical Enthalpy: From Apertures to Pressure.}
+This figure extends thermodynamics to include aperture work, revealing pressure as a coarse-grained manifestation of aperture reconfiguration. (A) Categorical enthalpy definition: $\mathcal{H} = U + \int_{\partial\Omega} \sigma(\mathbf{x}) \cdot \phi(\mathbf{x})\, dA$ where $\sigma$ is aperture selectivity and $\phi$ is aperture potential. The boundary integral sums over all apertures at the system surface. (B) Classical limit: when apertures are uniform ($\sigma = 1$, $\phi = P \cdot V / A$), the integral reduces to $PV$, recovering classical enthalpy $H = U + PV$. Pressure is thus the \emph{average aperture potential per unit area}. (C) Aperture work: expanding a fluid against external pressure requires reconfiguring apertures at the boundary---breaking old phase-locks and forming new ones. This is the microscopic origin of $P\,dV$ work. (D) Implications for fluid dynamics: pressure gradients drive flow because they represent gradients in aperture potential. Molecules flow from high aperture potential (crowded, many blocked configurations) to low aperture potential (sparse, many available configurations).}
+\label{fig:categorical_enthalpy}
+\end{figure}
+
+\subsection{Summary: The Mathematical Foundation}
+\label{subsec:summary}
+
+We have established:
+
+\begin{enumerate}
+\item \textbf{Triple Equivalence}: Oscillation, category, and partition are mathematically equivalent descriptions of physical systems, all yielding entropy $S = \kB M \ln n$.
+
+\item \textbf{Pendulum Demonstration}: The simple pendulum unifies all three perspectives:
+\begin{itemize}
+\item Oscillation: periodic motion with frequency $\omega$
+\item Category: $n$ distinguishable angular positions
+\item Partition: period divided into $n$ intervals
+\end{itemize}
+
+\item \textbf{S-Coordinates}: Molecular complexity compresses into three sufficient statistics $(S_k, S_t, S_e)$.
+
+\item \textbf{S-Sliding Window}: Navigation through categorical space requires only local window transitions, enabling dimensional reduction.
+
+\item \textbf{Partition Lag}: Partition operations require positive time $\tau_p > 0$, producing entropy.
+
+\item \textbf{Categorical Enthalpy}: $\mathcal{H} = U + \sum n_a \Phi_a$ reduces to classical $H = U + PV$ when apertures become non-selective.
+\end{enumerate}
+
+These foundations enable the categorical derivation of fluid dynamics in subsequent sections.
+

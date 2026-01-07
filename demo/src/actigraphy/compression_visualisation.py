@@ -82,15 +82,19 @@ def create_compression_visualization(df):
     hrv_ambig = df['compression_analysis'].apply(lambda x: x['hrv_compression']['ambiguous_bits']['percentage'])
     sleep_ambig = df['compression_analysis'].apply(lambda x: x['sleep_compression']['ambiguous_bits']['percentage'])
 
-    ax3.plot(df['period_id'], hr_ambig, 'o-', linewidth=3, markersize=10,
-             label='HR', color=colors[0], markerfacecolor='white',
-             markeredgewidth=2.5, markeredgecolor=colors[0])
-    ax3.plot(df['period_id'], hrv_ambig, 's-', linewidth=3, markersize=10,
-             label='HRV', color=colors[1], markerfacecolor='white',
-             markeredgewidth=2.5, markeredgecolor=colors[1])
-    ax3.plot(df['period_id'], sleep_ambig, '^-', linewidth=3, markersize=10,
-             label='Sleep', color=colors[2], markerfacecolor='white',
-             markeredgewidth=2.5, markeredgecolor=colors[2])
+    # Create grouped bar chart
+    x = np.arange(len(df))
+    width = 0.25
+
+    ax3.bar(x - width, hr_ambig, width, label='HR', color=colors[0],
+            alpha=0.8, edgecolor='black', linewidth=1)
+    ax3.bar(x, hrv_ambig, width, label='HRV', color=colors[1],
+            alpha=0.8, edgecolor='black', linewidth=1)
+    ax3.bar(x + width, sleep_ambig, width, label='Sleep', color=colors[2],
+            alpha=0.8, edgecolor='black', linewidth=1)
+
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(df['period_id'])
 
     ax3.set_xlabel('Period ID', fontweight='bold', fontsize=12)
     ax3.set_ylabel('Ambiguous Bits (%)', fontweight='bold', fontsize=12)
@@ -155,9 +159,17 @@ def create_compression_visualization(df):
     sleep_bitlen = df['compression_analysis'].apply(lambda x: x['sleep_compression']['bit_length'])
 
     x = np.arange(len(df))
-    ax6.plot(x, hr_bitlen, 'o-', linewidth=2.5, markersize=8, label='HR', color=colors[0])
-    ax6.plot(x, hrv_bitlen, 's-', linewidth=2.5, markersize=8, label='HRV', color=colors[1])
-    ax6.plot(x, sleep_bitlen, '^-', linewidth=2.5, markersize=8, label='Sleep', color=colors[2])
+    width = 0.25
+
+    ax6.bar(x - width, hr_bitlen, width, label='HR', color=colors[0],
+            alpha=0.8, edgecolor='black', linewidth=1)
+    ax6.bar(x, hrv_bitlen, width, label='HRV', color=colors[1],
+            alpha=0.8, edgecolor='black', linewidth=1)
+    ax6.bar(x + width, sleep_bitlen, width, label='Sleep', color=colors[2],
+            alpha=0.8, edgecolor='black', linewidth=1)
+
+    ax6.set_xticks(x)
+    ax6.set_xticklabels(df['period_id'])
 
     ax6.set_xlabel('Period ID', fontweight='bold', fontsize=11)
     ax6.set_ylabel('Bit Length', fontweight='bold', fontsize=11)
@@ -249,6 +261,21 @@ def main():
     print(f"Columns: {df.columns.tolist()}")
 
     print("Creating compression visualizations...")
+
+    # Debug: Check the structure of the first record
+    print("First record structure:")
+    print(f"Keys in compression_analysis: {list(df.iloc[0]['compression_analysis'].keys())}")
+    print(f"Keys in hr_compression: {list(df.iloc[0]['compression_analysis']['hr_compression'].keys())}")
+
+    # Check if compression_ratio exists
+    first_hr = df.iloc[0]['compression_analysis']['hr_compression']
+    print(f"HR compression keys: {list(first_hr.keys())}")
+    if 'compression_ratio' in first_hr:
+        print(f"compression_ratio found: {first_hr['compression_ratio']}")
+    else:
+        print("compression_ratio NOT found!")
+        print(f"Available keys: {list(first_hr.keys())}")
+
     fig = create_compression_visualization(df)
 
     plt.savefig('compression_analysis.png', dpi=300, bbox_inches='tight', facecolor='white')

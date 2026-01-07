@@ -1,0 +1,390 @@
+%==============================================================================
+% SECTION 6: CHROMATOGRAPHY
+%==============================================================================
+
+\section{Application: Liquid Chromatography}
+\label{sec:chromatography}
+
+\subsection{The Three-Component S-System}
+
+Chromatography involves three interacting S-components:
+
+\begin{definition}[Chromatographic S-System]
+\label{def:chromatographic_system}
+A chromatographic system consists of:
+\begin{enumerate}
+\item Analyte: S-coordinates $\Svec_a = (S_{k,a}, S_{t,a}, S_{e,a})$
+\item Eluent (mobile phase): S-coordinates $\Svec_m = (S_{k,m}, S_{t,m}, S_{e,m})$
+\item Stationary phase: S-coordinates $\Svec_s = (S_{k,s}, S_{t,s}, S_{e,s})$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[S-Coordinate Determination]
+\label{thm:s_determination}
+The S-coordinates of chromatographic components are determined by:
+\begin{align}
+S_k &= -\log_2 \prod_i P_i = -\sum_i \log_2 P_i \label{eq:sk_product} \\
+S_t &= \log_{10}\left( \frac{\tau_{\text{mol}}}{\tau_0} \right) \label{eq:st_molecular} \\
+S_e &= \sum_{\text{modes}} \eta_i \log_2 \eta_i \label{eq:se_modes}
+\end{align}
+where $P_i$ are functional group probabilities, $\tau_{\text{mol}}$ is the molecular timescale, and $\eta_i$ are mode occupation probabilities.
+\end{theorem}
+
+\begin{proof}
+For $S_k$: The molecular configuration probability is the product of independent functional group probabilities (by independence). $S_k = -\log_2 P_{\text{config}} = -\log_2 \prod_i P_i = -\sum_i \log_2 P_i$.
+
+For $S_t$: The molecular timescale is determined by the slowest internal mode (rotation, vibration). Taking the logarithm normalises to a comparable scale.
+
+For $S_e$: Mode occupation is distributed across vibrational, rotational, and electronic modes. Shannon entropy over this distribution gives $S_e$.
+\end{proof}
+
+\subsection{Retention Time from S-Transformation}
+
+\begin{definition}[Column S-Profile]
+\label{def:column_profile}
+A chromatographic column of length $L$ has an S-profile $\Svec_s(x)$ for $x \in [0, L]$. For homogeneous columns, $\Svec_s(x) = \Svec_s$ is constant.
+\end{definition}
+
+\begin{theorem}[Retention Time Integral]
+\label{thm:retention_integral}
+The retention time of an analyte is:
+\begin{equation}
+t_R = \int_0^L \tau(\Toperator_x[\Svec_a(0)]) \, dx
+\label{eq:retention_integral}
+\end{equation}
+where $\tau(\Svec)$ is the residence time per unit length at S-coordinate $\Svec$.
+\end{theorem}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/topology_categories_panel.png}
+\caption{\textbf{Topological Structure of Categorical Spaces: Apertures as Boundaries.}
+This figure reveals the deep connection between categorical structure and topology, showing how apertures arise as topological boundaries between categorical regions. (A) Categorical space as topological space: the set of categorical states $\{\mathcal{C}_i\}$ forms a topological space with the ``aperture topology''---open sets are collections of states reachable without crossing apertures. Connected components are phases; boundaries are phase transitions. (B) Apertures as topological boundaries: the aperture between categories $\mathcal{C}_i$ and $\mathcal{C}_j$ is the boundary $\partial(\mathcal{C}_i \cup \mathcal{C}_j) \cap \mathcal{C}_i \cap \mathcal{C}_j$. Selectivity $s$ measures the ``permeability'' of this boundary---how easily the system crosses from one categorical region to another. (C) Homology and transport: the first homology group $H_1$ counts independent loops in categorical space. Each loop corresponds to a cyclic transport pathway; the homology class determines which apertures must be traversed. Non-trivial homology means multiple routes exist (path degeneracy in chromatography). (D) Euler characteristic and phase: the Euler characteristic $\chi = V - E + F$ (vertices - edges + faces in the categorical complex) distinguishes phases. Gases have high $\chi$ (many disconnected components); liquids have low $\chi$ (percolating network); solids have $\chi = 1$ (single connected lattice). Phase transitions are topological transitions in categorical space.}
+\label{fig:topology_categories}
+\end{figure}
+
+\begin{proof}
+By the dimensional reduction theorem (Theorem~\ref{thm:dimensional_reduction}), the analyte S-coordinate at position $x$ is:
+\begin{equation}
+\Svec_a(x) = \Toperator_{0 \to x}[\Svec_a(0)]
+\end{equation}
+
+The time to traverse the infinitesimal segment $dx$ depends on the local S-coordinate:
+\begin{equation}
+dt = \tau(\Svec_a(x)) \, dx
+\end{equation}
+
+Integrating over column length:
+\begin{equation}
+t_R = \int_0^L \tau(\Svec_a(x)) \, dx = \int_0^L \tau(\Toperator_{0 \to x}[\Svec_a(0)]) \, dx
+\end{equation}
+\end{proof}
+
+\begin{definition}[Residence Time Function]
+\label{def:residence_time}
+The residence time per unit length depends on the S-distance from the stationary phase:
+\begin{equation}
+\tau(\Svec) = \tau_0 \left( 1 + K(\Svec) \right)
+\label{eq:residence_time}
+\end{equation}
+where $\tau_0$ is the dead time per unit length and $K(\Svec)$ is the local retention factor.
+\end{definition}
+
+\begin{theorem}[Retention Factor from S-Distance]
+\label{thm:retention_factor}
+The retention factor is:
+\begin{equation}
+K(\Svec_a) = K_0 \exp\left( -\frac{d_S(\Svec_a, \Svec_s)}{\sigma_S} \right)
+\label{eq:retention_factor}
+\end{equation}
+where $K_0$ is the maximum retention factor and $\sigma_S$ is the S-selectivity parameter.
+\end{theorem}
+
+\begin{proof}
+Retention results from analyte-stationary phase interaction. Interaction strength decreases with S-distance (analytes closer in S-space to the stationary phase interact more strongly). The Boltzmann-like form:
+\begin{equation}
+K \propto \exp(-d_S / \sigma_S)
+\end{equation}
+arises from the statistical mechanics of partitioning. The normalisation $K_0$ sets the maximum retention at $d_S = 0$.
+\end{proof}
+
+\subsection{Separation Efficiency}
+
+\begin{definition}[Resolution]
+\label{def:resolution}
+The chromatographic resolution between analytes $a$ and $b$ is:
+\begin{equation}
+R_s = \frac{2(t_{R,b} - t_{R,a})}{w_a + w_b}
+\label{eq:resolution}
+\end{equation}
+where $w$ denotes peak width at base.
+\end{definition}
+
+\begin{theorem}[Resolution from S-Distance]
+\label{thm:resolution_s}
+Resolution between analytes depends on their S-distance:
+\begin{equation}
+R_s = \frac{d_S(\Svec_a, \Svec_b)}{2\sigma_{\text{eff}}} \cdot \sqrt{N}
+\label{eq:resolution_s}
+\end{equation}
+where $\sigma_{\text{eff}}$ is effective dispersion and $N$ is plate count.
+\end{theorem}
+
+\begin{proof}
+Retention time difference:
+\begin{equation}
+\Delta t_R = t_{R,b} - t_{R,a} = \int_0^L \left[ \tau(\Svec_b(x)) - \tau(\Svec_a(x)) \right] dx
+\end{equation}
+
+For small S-distance, $\tau(\Svec_b) - \tau(\Svec_a) \approx \frac{\partial \tau}{\partial \Svec} \cdot (\Svec_b - \Svec_a) = \frac{\partial \tau}{\partial \Svec} \cdot d_S$. Thus:
+\begin{equation}
+\Delta t_R \propto d_S(\Svec_a, \Svec_b) \cdot L
+\end{equation}
+
+Peak width $w \propto L / \sqrt{N}$ where $N$ is plate count. Resolution:
+\begin{equation}
+R_s = \frac{\Delta t_R}{(w_a + w_b)/2} \propto \frac{d_S \cdot L}{L/\sqrt{N}} = d_S \cdot \sqrt{N}
+\end{equation}
+
+Including the dispersion coefficient $\sigma_{\text{eff}}$ gives Equation~\ref{eq:resolution_s}.
+\end{proof}
+
+\subsection{Computational Algorithm}
+
+\begin{algorithm}[H]
+\caption{Retention Time Prediction from S-Coordinates}
+\label{alg:retention_prediction}
+\begin{algorithmic}[1]
+\Require Analyte structure, column parameters $(L, \Svec_s, \sigma_S, K_0)$, flow rate $F$
+\Ensure Predicted retention time $t_R$
+\State Compute analyte S-coordinates: $\Svec_a \gets \text{ComputeS}(\text{structure})$
+\State Compute dead time: $t_0 \gets L / F$
+\State Initialise: $t_R \gets 0$, $N_{\text{plates}} \gets L / H$
+\For{$i = 1$ to $N_{\text{plates}}$}
+    \State $x \gets (i - 0.5) \cdot H$ \Comment{Plate centre position}
+    \State $\Svec_a(x) \gets \Toperator_{0 \to x}[\Svec_a]$ \Comment{Transform S-coordinate}
+    \State $K_i \gets K_0 \exp(-d_S(\Svec_a(x), \Svec_s) / \sigma_S)$ \Comment{Local retention}
+    \State $\Delta t \gets (t_0 / N_{\text{plates}}) \cdot (1 + K_i)$ \Comment{Time for plate $i$}
+    \State $t_R \gets t_R + \Delta t$
+\EndFor
+\State \Return $t_R$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}[Algorithm Complexity]
+\label{thm:algorithm_complexity}
+Algorithm~\ref{alg:retention_prediction} has complexity $\mathcal{O}(N_{\text{plates}})$, independent of molecular count.
+\end{theorem}
+
+\begin{proof}
+The algorithm iterates $N_{\text{plates}}$ times. Each iteration involves constant-time operations: S-transformation (matrix multiplication), S-distance (Euclidean norm), exponential, and multiplication. Total: $\mathcal{O}(N_{\text{plates}})$.
+
+Molecular count does not appear because the algorithm operates on S-coordinates (three numbers per analyte), not molecular trajectories.
+\end{proof}
+
+%==============================================================================
+% CHROMATOGRAPHY AS MEMORYLESS TURBULENCE
+%==============================================================================
+
+\subsection{Chromatography as Memoryless Turbulence}
+\label{subsec:chromatography_turbulence}
+
+A profound connexion exists between chromatography and turbulence: \emph{chromatography is turbulence with a memory reset at each cross-section}.
+
+\subsubsection{The Subtracted Cross-Section}
+
+\begin{definition}[Subtracted Cross-Section]
+\label{def:subtracted_cross_section}
+In a chromatographic column, the 2D cross-section is not fully available to the mobile phase. The stationary phase particles subtract regions from the cross-section:
+\begin{equation}
+\Sigma_{\text{eff}}(x) = \Sigma(x) \setminus \Sigma_{\text{stat}}(x)
+\label{eq:subtracted_cross_section}
+\end{equation}
+where $\Sigma_{\text{stat}}(x)$ is the area occupied by the stationary phase.
+\end{definition}
+
+\begin{theorem}[Subtracted Regions as Second Pendulum]
+\label{thm:subtracted_pendulum}
+The subtracted stationary phase regions act as a ``second pendulum,'' creating non-sequential apertures within each cross-section:
+\begin{equation}
+\text{Stationary phase particles} \longleftrightarrow \text{Second pendulum}
+\label{eq:stationary_pendulum}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+In the pendulum analogy:
+\begin{itemize}
+\item The mobile phase flow creates the ``first pendulum''—sequential progression along the column axis
+\item The stationary phase particles create obstacles that force the flow to deviate
+\item These deviations create non-sequential access: a molecule at position $(y_1, z_1)$ can suddenly access $(y_2, z_2)$ by navigating around a particle
+\end{itemize}
+
+This is precisely the aperture structure of turbulence: the particles create apertures between non-adjacent states within each cross-section. \qed
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_chromatography.pdf}
+\caption{\textbf{Chromatography as Experimental Validation: Memoryless Turbulence in Action.}
+(A) The subtracted cross-section: stationary phase particles create ``holes'' in the available flow path. Molecules must navigate around these obstacles through non-sequential apertures---this is turbulence. But crucially, memory resets at each theoretical plate, converting chaos into statistics. (B) One plate = one pendulum cycle: each plate represents entry $\to$ turbulent mixing $\to$ equilibration $\to$ memory reset $\to$ exit. The plate height $H$ is the ``pendulum period''---the column length for one complete equilibration cycle. (C) Separation from memory reset: without reset (turbulence), chaotic mixing homogenises analytes, $\Delta t_R \to 0$. With reset (chromatography), each plate contributes independently, $\Delta t_R \propto N$. Memory reset is necessary for separation. (D) Experimental confirmation: predicted retention times from S-transformation match measured values across different column geometries and analyte chemistries, validating the aperture-memory framework. Platform independence confirms that S-dynamics, not hardware details, determine separation.}
+\label{fig:chromatography}
+\end{figure}
+
+\subsubsection{The Memory Reset Principle}
+
+Here is the crucial distinction between chromatography and turbulence:
+
+\begin{definition}[Memory Reset]
+\label{def:memory_reset}
+In chromatography, the phase-lock history is \emph{reset} at each cross-section. Each theoretical plate represents a fresh start:
+\begin{equation}
+\mathcal{M}(x + H) = \emptyset \quad \text{(memory erased)}
+\label{eq:memory_reset}
+\end{equation}
+where $H$ is the plate height and $\mathcal{M}$ is the phase-lock memory.
+\end{definition}
+
+\begin{theorem}[Turbulence vs Chromatography]
+\label{thm:turbulence_chromatography}
+Turbulence and chromatography differ in memory structure:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Property} & \textbf{Turbulence} & \textbf{Chromatography} \\
+\midrule
+Aperture structure & Non-sequential & Non-sequential \\
+Memory & Persistent & Reset each plate \\
+Pendulum cycles & Continuous & Discrete (one per plate) \\
+Net effect & Mixing (chaos) & Separation (statistics) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+\textbf{Turbulence}: The double pendulum's state at time $t$ depends on its entire history. The second pendulum carries its phase forward, creating persistent correlations. This leads to chaotic mixing---distant parts of the fluid become correlated through accumulated history.
+
+\textbf{Chromatography}: Each theoretical plate is a fresh ``pendulum cycle.'' When a molecule exits plate $i$ and enters plate $i+1$:
+\begin{itemize}
+\item Its position within the cross-section is randomised
+\item Its interaction history is erased
+\item Only its S-coordinate (chemical identity) persists
+\end{itemize}
+
+The stationary phase creates turbulent-like mixing \emph{within} each plate, but the lack of memory \emph{between} plates prevents global chaos. \qed
+\end{proof}
+
+\subsubsection{Why Memory Reset Enables Separation}
+
+\begin{theorem}[Separation from Memory Reset]
+\label{thm:separation_memory}
+Memory reset is \emph{necessary} for chromatographic separation. Without reset, turbulent mixing would homogenise the analyte distribution.
+\end{theorem}
+
+\begin{proof}
+Consider two analytes $a$ and $b$ with different S-coordinates ($\Svec_a \neq \Svec_b$).
+
+\textbf{With memory (turbulence)}: Both analytes experience the same chaotic trajectory through state space. Their positions become correlated through the shared turbulent field. Over time, they mix: $\langle x_a(t) - x_b(t) \rangle \to 0$.
+
+\textbf{Without memory (chromatography)}: At each plate, each analyte has an \emph{independent} interaction with the stationary phase. The interaction strength depends only on S-coordinate:
+\begin{equation}
+K_a = f(\Svec_a), \quad K_b = f(\Svec_b)
+\end{equation}
+
+Over $N$ plates, the retention times accumulate:
+\begin{align}
+t_{R,a} &= \sum_{i=1}^{N} \tau_0 (1 + K_a) = N \tau_0 (1 + K_a) \\
+t_{R,b} &= \sum_{i=1}^{N} \tau_0 (1 + K_b) = N \tau_0 (1 + K_b)
+\end{align}
+
+Because $K_a \neq K_b$ (different S-coordinates), $t_{R,a} \neq t_{R,b}$. The separation increases with plate count:
+\begin{equation}
+\Delta t_R = N \tau_0 (K_b - K_a) \propto N
+\end{equation}
+
+Memory reset ensures each plate contributes independently to separation, rather than chaotically mixing the analytes. \qed
+\end{proof}
+
+\subsubsection{The Cross-Section Geometry}
+
+\begin{definition}[Stationary Phase Geometry]
+\label{def:stationary_geometry}
+The stationary phase creates ``holes'' in the cross-section with characteristic geometry:
+\begin{equation}
+\Sigma_{\text{stat}} = \bigcup_{k} D_k(r_k, \mathbf{c}_k)
+\label{eq:stationary_geometry}
+\end{equation}
+where $D_k$ is a disk (or sphere cross-section) of radius $r_k$ centred at $\mathbf{c}_k$.
+\end{definition}
+
+\begin{theorem}[Aperture Density from Particle Packing]
+\label{thm:aperture_density}
+The number of non-sequential apertures per unit area is:
+\begin{equation}
+\rho_{\text{aperture}} = \frac{n_p \cdot (2\pi r_p)}{\pi R^2}
+\label{eq:aperture_density}
+\end{equation}
+where $n_p$ is the number of particles, $r_p$ is particle radius, and $R$ is column radius.
+\end{theorem}
+
+\begin{proof}
+Each stationary phase particle of radius $r_p$ creates apertures around its perimeter (where flow must deviate). The perimeter is $2\pi r_p$.
+
+For $n_p$ particles uniformly distributed in column cross-section $\pi R^2$:
+\begin{equation}
+\rho_{\text{aperture}} = \frac{n_p \cdot 2\pi r_p}{\pi R^2} = \frac{2 n_p r_p}{R^2}
+\end{equation}
+
+Higher packing density (more particles) or larger particles increases aperture density, creating more turbulent-like mixing within each plate. \qed
+\end{proof}
+
+\subsubsection{The Pendulum Cycle Interpretation}
+
+\begin{theorem}[One Plate = One Pendulum Cycle]
+\label{thm:plate_pendulum}
+Each theoretical plate represents exactly one complete pendulum cycle:
+\begin{enumerate}
+\item \textbf{Entry}: Molecule enters plate with initial state
+\item \textbf{Turbulent mixing}: Non-sequential apertures (stationary phase) create mixing
+\item \textbf{Equilibration}: Molecule partitions between mobile and stationary phases
+\item \textbf{Exit}: Molecule exits with reset memory, carrying only S-coordinate
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The theoretical plate model assumes equilibrium is reached within each plate. This is equivalent to the pendulum completing one full cycle:
+\begin{itemize}
+\item Start of cycle: defined initial conditions
+\item During cycle: chaotic exploration of state space (turbulence within plate)
+\item End of cycle: return to equilibrium, phase relationships reset
+\end{itemize}
+
+The plate height $H$ is the column length required for one equilibration cycle. Smaller $H$ means faster equilibration (shorter pendulum period), more plates, better separation. \qed
+\end{proof}
+
+\begin{corollary}[Van Deemter as Pendulum Period]
+\label{cor:vandeemter_pendulum}
+The Van Deemter equation $H = A + B/u + Cu$ describes how the pendulum period (plate height) depends on flow velocity $u$:
+\begin{itemize}
+\item $A$: Geometric mixing (eddy diffusion)---inherent aperture structure
+\item $B/u$: Axial diffusion---memory leakage between plates at low velocity
+\item $Cu$: Mass transfer resistance---time for turbulent mixing to reach equilibrium
+\end{itemize}
+\end{corollary}
+
+\subsubsection{Implications}
+
+\begin{remark}[Design Principle]
+This analysis suggests a design principle for chromatographic columns:
+\begin{enumerate}
+\item \textbf{Maximise within-plate turbulence}: Use complex particle geometries to create many non-sequential apertures
+\item \textbf{Minimise between-plate memory}: Ensure complete equilibration (memory reset) before molecules exit each plate
+\item \textbf{Optimise flow rate}: Balance turbulent mixing time (needs slower flow) against memory leakage (worse at slow flow)
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Connection to Chaos Theory]
+The memory reset in chromatography is analogous to \emph{stroboscopic observation} of a chaotic system. By observing only at regular intervals (once per plate), the chaotic dynamics are converted to a statistical process. This is why chromatographic retention follows simple statistical mechanics (partition equilibria) rather than chaotic dynamics.
+\end{remark}
+

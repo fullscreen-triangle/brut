@@ -231,66 +231,88 @@ if __name__ == "__main__":
 
     def create_peak_activity_clock(df):
         """
-        Creates a circular clock-style visualization of peak activity times
+        Creates a radar plot showing activity amplitude arranged in a circular pattern
+        Since all entries have the same period_id, we arrange them circularly by measurement order
         """
         fig = plt.figure(figsize=(12, 12))
         ax = fig.add_subplot(111, projection='polar')
 
-        # Convert peak activity time to radians (15:00 = 3 PM)
-        peak_time = df['peak_activity_time'].iloc[0]  # All are 15.0
-        theta = (peak_time / 24) * 2 * np.pi - np.pi / 2  # Adjust so 12 is at top
+        # Since all period_ids are the same (0), arrange data points circularly by index
+        n_points = len(df)
+        angles = np.linspace(0, 2 * np.pi, n_points, endpoint=False)
 
-        # Create clock face
-        hours = np.arange(0, 24)
-        hour_angles = (hours / 24) * 2 * np.pi - np.pi / 2
-
-        # Plot activity amplitude at peak time for each day
+        # Get activity amplitudes
         amplitudes = df['activity_amplitude'].values
-        days = df['day'].values
 
-        # Normalize amplitudes for radius
-        max_amp = df['activity_amplitude'].max()
-        radii = amplitudes / max_amp
+        # Close the radar plot by adding the first point at the end
+        angles_closed = np.concatenate([angles, [angles[0]]])
+        amplitudes_closed = np.concatenate([amplitudes, [amplitudes[0]]])
 
-        # Create color map based on amplitude
-        colors = plt.cm.viridis(amplitudes / max_amp)
+        # Create the radar plot
+        ax.plot(angles_closed, amplitudes_closed, 'o-', linewidth=3, markersize=10,
+                color='#2E86AB', markerfacecolor='white', markeredgewidth=2.5,
+                markeredgecolor='#2E86AB', label='Activity Amplitude')
 
-        # Plot each day as a wedge
-        width = 2 * np.pi / len(df)
-        for i, (day, amp, radius, color) in enumerate(zip(days, amplitudes, radii, colors)):
-            angle = theta + (i - len(df) / 2) * width / 2
-            ax.bar(angle, radius, width=width * 0.8, bottom=0.0,
-                   alpha=0.8, color=color, edgecolor='black', linewidth=1.5,
-                   label=f'Day {day}' if i < 3 else '')
+        # Fill the area under the curve
+        ax.fill(angles_closed, amplitudes_closed, alpha=0.25, color='#2E86AB')
 
-            # Add hour labels
-        ax.set_theta_zero_location('N')
-        ax.set_theta_direction(-1)
-        ax.set_xticks(hour_angles)
-        ax.set_xticklabels([f'{h:02d}:00' for h in hours], fontsize=10, fontweight='bold')
+        # Add individual data points with different colors based on amplitude
+        colors = plt.cm.viridis(amplitudes / amplitudes.max())
+        for angle, amp, color in zip(angles, amplitudes, colors):
+            ax.scatter(angle, amp, s=200, c=[color], edgecolors='black',
+                      linewidths=2, zorder=5, alpha=0.8)
 
-        # Customize radial axis
-        ax.set_ylim(0, 1)
-        ax.set_yticks([0.25, 0.5, 0.75, 1.0])
-        ax.set_yticklabels(['25%', '50%', '75%', '100%'], fontsize=9)
-        ax.set_rlabel_position(45)
+        # Customize the plot
+        ax.set_theta_zero_location('N')  # Start from top (North)
+        ax.set_theta_direction(-1)  # Clockwise direction
+
+        # Set angular labels (measurement indices)
+        ax.set_xticks(angles)
+        ax.set_xticklabels([f'M{i+1}' for i in range(n_points)],
+                          fontsize=11, fontweight='bold')
+
+        # Set radial limits and labels
+        max_amp = amplitudes.max()
+        ax.set_ylim(0, max_amp * 1.1)
+
+        # Create nice radial tick marks
+        radial_ticks = np.linspace(0, max_amp, 5)
+        ax.set_yticks(radial_ticks)
+        ax.set_yticklabels([f'{tick:.0f}' for tick in radial_ticks],
+                          fontsize=10, fontweight='bold')
+        ax.set_rlabel_position(45)  # Position radial labels at 45 degrees
 
         # Add grid
-        ax.grid(True, linestyle='--', alpha=0.5)
+        ax.grid(True, linestyle='--', alpha=0.7, linewidth=1)
 
-        # Highlight peak activity time
-        ax.plot([theta, theta], [0, 1.1], 'r-', linewidth=4, alpha=0.7, label='Peak Time (15:00)')
-        ax.scatter([theta], [1.15], s=500, c='red', marker='v', edgecolors='black',
-                   linewidths=2, zorder=5)
+        # Add concentric circles for reference
+        for tick in radial_ticks[1:-1]:  # Skip 0 and max
+            circle = plt.Circle((0, 0), tick, fill=False, linestyle=':',
+                              alpha=0.5, color='gray', transform=ax.transData._b)
 
-        # Add title and legend
-        plt.title('Activity Amplitude Distribution by Peak Time\n(Radial Clock Visualization)',
+        # Add statistics text
+        stats_text = f"""
+        Max: {amplitudes.max():.1f}
+        Min: {amplitudes.min():.1f}
+        Mean: {amplitudes.mean():.1f}
+        Std: {amplitudes.std():.1f}
+        """
+
+        # Position stats in the upper right
+        ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,
+                fontsize=11, verticalalignment='top', fontweight='bold',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8,
+                         edgecolor='black', linewidth=1.5))
+
+        # Add title
+        plt.title('Activity Amplitude Radar Plot\n(Circular Arrangement of Measurements)',
                   fontsize=14, fontweight='bold', pad=30)
 
         # Create custom legend
         from matplotlib.lines import Line2D
         legend_elements = [
-            Line2D([0], [0], color='red', linewidth=4, label='Peak Activity Time'),
+            Line2D([0], [0], color='#2E86AB', linewidth=3, marker='o',
+                   markersize=8, label='Activity Pattern'),
             Line2D([0], [0], marker='o', color='w', markerfacecolor='purple',
                    markersize=10, label='Low Amplitude', markeredgecolor='black'),
             Line2D([0], [0], marker='o', color='w', markerfacecolor='yellow',

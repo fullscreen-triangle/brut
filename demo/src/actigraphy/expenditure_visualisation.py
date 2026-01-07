@@ -33,20 +33,22 @@ def create_energy_expenditure_visualization(df):
 
     # Panel A: Total Daily Energy Expenditure
     ax1 = fig.add_subplot(gs[0, :2])
-    ax1.plot(df['period_id'], df['total_daily_energy_expenditure'], 'o-',
-             color=colors[0], linewidth=3, markersize=12,
-             markerfacecolor=colors[1], markeredgewidth=2.5,
-             markeredgecolor=colors[0])
+    bars = ax1.bar(df['period_id'], df['total_daily_energy_expenditure'],
+                   color=colors[1], alpha=0.8, edgecolor=colors[0], linewidth=2)
 
     mean_tdee = df['total_daily_energy_expenditure'].mean()
     ax1.axhline(y=mean_tdee, color='red', linestyle='--',
                 linewidth=2.5, alpha=0.7, label=f'Mean: {mean_tdee:.1f}')
-    ax1.fill_between(df['period_id'], df['total_daily_energy_expenditure'],
-                     alpha=0.3, color=colors[1])
+
+    # Add value labels on bars
+    for bar, val in zip(bars, df['total_daily_energy_expenditure']):
+        ax1.text(bar.get_x() + bar.get_width()/2, val + 20,
+                 f'{val:.0f}', ha='center', va='bottom',
+                 fontweight='bold', fontsize=9)
 
     ax1.set_xlabel('Period ID', fontweight='bold', fontsize=12)
     ax1.set_ylabel('TDEE (calories)', fontweight='bold', fontsize=12)
-    ax1.set_title('A) Total Daily Energy Expenditure Over Time',
+    ax1.set_title('A) Total Daily Energy Expenditure by Period',
                   fontweight='bold', loc='left', pad=15, fontsize=13)
     ax1.legend(frameon=True, fancybox=True, shadow=True)
     ax1.grid(True, alpha=0.3, linestyle='--')
@@ -125,26 +127,23 @@ def create_energy_expenditure_visualization(df):
     ax5.spines['top'].set_visible(False)
     ax5.spines['right'].set_visible(False)
 
-    # Panel F: Cumulative Energy Expenditure
+    # Panel F: Energy Components Stacked Bar Chart
     ax6 = fig.add_subplot(gs[2, 1:])
-    cumulative_active = df['active_energy_expenditure'].cumsum()
-    cumulative_bmr = df['basal_metabolic_rate'].cumsum()
-    cumulative_total = df['total_daily_energy_expenditure'].cumsum()
 
-    ax6.fill_between(df['period_id'], cumulative_total, alpha=0.3,
-                     color=colors[0], label='Total')
-    ax6.plot(df['period_id'], cumulative_total, 'o-', color=colors[0],
-             linewidth=3, markersize=10, markerfacecolor='white',
-             markeredgewidth=2.5, markeredgecolor=colors[0])
-
-    ax6.fill_between(df['period_id'], cumulative_active, alpha=0.3,
-                     color=colors[2], label='Active')
-    ax6.plot(df['period_id'], cumulative_active, 's-', color=colors[2],
-             linewidth=2.5, markersize=8)
+    # Create stacked bar chart
+    width = 0.6
+    ax6.bar(df['period_id'], df['basal_metabolic_rate'], width,
+            label='BMR', color=colors[0], alpha=0.8, edgecolor='black', linewidth=1)
+    ax6.bar(df['period_id'], df['active_energy_expenditure'], width,
+            bottom=df['basal_metabolic_rate'], label='Active',
+            color=colors[2], alpha=0.8, edgecolor='black', linewidth=1)
+    ax6.bar(df['period_id'], df['thermic_effect_of_food'], width,
+            bottom=df['basal_metabolic_rate'] + df['active_energy_expenditure'],
+            label='TEF', color=colors[4], alpha=0.8, edgecolor='black', linewidth=1)
 
     ax6.set_xlabel('Period ID', fontweight='bold', fontsize=12)
     ax6.set_ylabel('Cumulative Energy (calories)', fontweight='bold', fontsize=12)
-    ax6.set_title('F) Cumulative Energy Expenditure',
+    ax6.set_title('F) Energy Components by Period',
                   fontweight='bold', loc='left', pad=15, fontsize=13)
     ax6.legend(frameon=True, fancybox=True, shadow=True)
     ax6.grid(True, alpha=0.3, linestyle='--')

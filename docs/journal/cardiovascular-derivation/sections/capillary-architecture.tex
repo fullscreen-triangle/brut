@@ -1,0 +1,178 @@
+\section{Capillary Architecture from Diffusion Constraints}
+\label{sec:capillary}
+
+\subsection{The Krogh Tissue Cylinder Model}
+
+August Krogh established the geometric framework for analyzing capillary oxygen delivery in 1919 \cite{krogh1919number}. The model treats each capillary as a cylindrical source supplying oxygen to a surrounding tissue cylinder. At steady state, oxygen diffusion balances metabolic consumption.
+
+The oxygen concentration $C(r)$ at radial distance $r$ from a capillary satisfies
+\begin{equation}
+D_{\mathrm{tissue}} \nabla^{2} C = M_{\mathrm{tissue}}
+\end{equation}
+where $D_{\mathrm{tissue}}$ is tissue diffusion coefficient (approximately $1.5 \times 10^{-5}$ cm$^{2}$/s in muscle) and $M_{\mathrm{tissue}}$ is oxygen consumption rate per unit volume.
+
+In cylindrical coordinates with radial symmetry:
+\begin{equation}
+D_{\mathrm{tissue}} \frac{1}{r} \frac{d}{dr}\left(r \frac{dC}{dr}\right) = M_{\mathrm{tissue}}
+\end{equation}
+
+Integrating twice with boundary conditions $C(r_{\mathrm{cap}}) = C_{\mathrm{cap}}$ (capillary wall oxygen concentration) and $dC/dr|_{r=R} = 0$ (symmetry at cylinder boundary) yields
+\begin{equation}
+C(r) = C_{\mathrm{cap}} - \frac{M_{\mathrm{tissue}}}{4D_{\mathrm{tissue}}}(R^{2} - r^{2})
+\label{eq:krogh}
+\end{equation}
+where $R$ is the tissue cylinder radius.
+
+\subsection{Critical Capillary Spacing}
+
+Tissue becomes hypoxic when oxygen concentration falls to zero. The critical radius $R_{\mathrm{crit}}$ where $C(R_{\mathrm{crit}}) = 0$ is
+\begin{equation}
+R_{\mathrm{crit}} = \sqrt{\frac{4D_{\mathrm{tissue}} C_{\mathrm{cap}}}{M_{\mathrm{tissue}}}}
+\end{equation}
+
+This determines maximum intercapillary spacing. For tissue to remain aerobic everywhere, capillaries must be spaced closer than $2R_{\mathrm{crit}}$.
+
+For resting skeletal muscle:
+\begin{itemize}
+\item $D_{\mathrm{tissue}} = 1.5 \times 10^{-5}$ cm$^{2}$/s
+\item $C_{\mathrm{cap}} = 0.05$ mL O$_{2}$/mL tissue (from $P_{\mathrm{O}_{2}} \approx 40$ mmHg and solubility)
+\item $M_{\mathrm{tissue}} = 0.5$ mL O$_{2}$/(100 mL tissue·min) = $8.3 \times 10^{-5}$ mL O$_{2}$/(mL·s)
+\end{itemize}
+
+This gives
+\begin{equation}
+R_{\mathrm{crit}} = \sqrt{\frac{4 \times 1.5 \times 10^{-5} \times 0.05}{8.3 \times 10^{-5}}} \approx 9.5 \times 10^{-3}~\mathrm{cm} = 95~\mu\mathrm{m}
+\end{equation}
+
+Capillaries must be spaced within approximately 190 μm in resting muscle. Measurements typically show intercapillary distances of 50-100 μm \cite{hudlicka1992muscle}, providing safety margin above critical spacing.
+
+For brain tissue with 6-fold higher metabolic rate:
+\begin{equation}
+R_{\mathrm{crit,brain}} = \frac{R_{\mathrm{crit,muscle}}}{\sqrt{6}} \approx 39~\mu\mathrm{m}
+\end{equation}
+
+Brain capillaries must be spaced within 78 μm. Morphometric studies report average intercapillary distance 40-50 μm in cerebral cortex \cite{pawlik1981quantitative}, confirming the prediction.
+
+\subsection{Capillary Diameter from Red Blood Cell Geometry}
+
+Capillary diameter is constrained by red blood cell dimensions. Red cells are biconcave disks approximately 8 μm in diameter and 2 μm thick at periphery. To pass through capillaries, cells must deform.
+
+The optimal capillary diameter balances competing requirements:
+
+\textbf{Minimum diameter}: Cells must fit through. Complete blockage occurs below approximately 3-4 μm. Severe deformation increases viscous resistance and hemolysis risk.
+
+\textbf{Maximum diameter}: Larger lumens reduce resistance but also reduce oxygen extraction efficiency. Optimal diameter maintains cells in near-contact with walls, minimizing diffusion distance to tissue.
+
+The compromise yields capillary diameters of 5-10 μm, with mode near 7 μm \cite{zweifach1973morphometric}. At this diameter, red cells pass in single file, undergoing modest deformation that maintains mechanical stability while optimizing oxygen delivery.
+
+From partition theory, the cell-wall contact during transit reduces partition lag for oxygen transfer from hemoglobin to plasma to tissue. Larger capillaries would increase this lag, reducing delivery efficiency.
+
+\subsection{Capillary Density and Metabolic Heterogeneity}
+
+Capillary density (capillaries per mm$^{2}$ tissue cross-section) correlates strongly with tissue metabolic rate. Table \ref{tab:capillary_density} shows representative values.
+
+\begin{table}[h]
+\centering
+\caption{Capillary density in various tissues}
+\label{tab:capillary_density}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Tissue} & \textbf{$\boldsymbol{M_{\mathrm{tissue}}}$ (mL O$_{2}$/100g/min)} & \textbf{Density (cap/mm$^{2}$)} & \textbf{Reference} \\
+\midrule
+Cardiac muscle & 8-10 & 3000-4000 & \cite{rakusan1971quantitative} \\
+Brain cortex & 3-4 & 300-400 & \cite{pawlik1981quantitative} \\
+Skeletal muscle (red) & 2-3 & 400-600 & \cite{hudlicka1992muscle} \\
+Skeletal muscle (white) & 0.5-1.0 & 150-250 & \cite{hudlicka1992muscle} \\
+Liver & 1.5-2.5 & 200-300 & \cite{rappaport1973hepatic} \\
+Kidney cortex & 4-6 & 500-700 & \cite{beeuwkes1975renal} \\
+Adipose tissue & 0.2-0.5 & 50-100 & \cite{crandall1997microvascular} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The correlation between metabolic rate and capillary density validates the Krogh model—tissues with higher $M_{\mathrm{tissue}}$ require smaller $R_{\mathrm{crit}}$, necessitating higher capillary density.
+
+Quantitatively, if capillaries are arranged in a square lattice with spacing $d$, the density is
+\begin{equation}
+\rho_{\mathrm{cap}} = \frac{1}{d^{2}}
+\end{equation}
+
+For $d = 2R_{\mathrm{crit}}$:
+\begin{equation}
+\rho_{\mathrm{cap}} = \frac{M_{\mathrm{tissue}}}{16D_{\mathrm{tissue}} C_{\mathrm{cap}}}
+\end{equation}
+
+This predicts capillary density proportional to metabolic rate, as observed experimentally.
+
+\subsection{Capillary Recruitment During Exercise}
+
+At rest, not all capillaries perfuse continuously. Approximately 25-40\% of skeletal muscle capillaries remain closed or have intermittent flow. During exercise, arteriolar vasodilation opens these reserve capillaries, increasing functional capillary density without requiring angiogenesis.
+
+This recruitment serves two functions:
+
+\textbf{Reduces diffusion distance}: Opening more capillaries decreases effective $R$ in the Krogh model, maintaining adequate oxygenation despite elevated $M_{\mathrm{tissue}}$.
+
+\textbf{Reduces vascular resistance}: Parallel capillaries reduce total resistance, facilitating increased blood flow with moderate pressure elevation.
+
+Maximum capillary recruitment can increase functional density 2-3 fold in skeletal muscle, providing acute adaptation to increased metabolic demand. Chronic training stimulates angiogenesis, permanently increasing capillary density and enhancing oxidative capacity.
+
+\subsection{Longitudinal Oxygen Gradient}
+
+The Krogh model analyzes radial diffusion but oxygen also decreases along capillary length as it is extracted by tissue. The longitudinal concentration profile $C(x)$ where $x$ is distance along capillary satisfies
+\begin{equation}
+Q_{\mathrm{cap}} \frac{dC}{dx} = -2\pi r_{\mathrm{cap}} D_{\mathrm{tissue}} \left.\frac{\partial C}{\partial r}\right|_{r=r_{\mathrm{cap}}}
+\end{equation}
+
+This couples longitudinal convection (left side) with radial diffusion (right side). Solving the coupled system yields oxygen concentration decreasing exponentially along capillary length:
+\begin{equation}
+C(x) = C_{0} \exp\left(-\frac{2\pi r_{\mathrm{cap}} D_{\mathrm{tissue}} L}{Q_{\mathrm{cap}} r_{\mathrm{tissue}}}\right)
+\end{equation}
+where $L$ is capillary length.
+
+For typical parameters (capillary length 500-1000 μm, flow rate $\sim$10 pL/s), oxygen extraction is 20-30\% along capillary length. This validates the assumption of relatively uniform capillary oxygen concentration used in the radial Krogh model.
+
+\subsection{Angiogenic Adaptation}
+
+Chronic tissue hypoxia triggers angiogenesis—formation of new capillaries. The signal transduction cascade involves hypoxia-inducible factor (HIF), which upregulates vascular endothelial growth factor (VEGF). VEGF stimulates endothelial proliferation and migration, forming new vessels.
+
+From the partition perspective, hypoxia represents excessive partition lag between oxygen supply and demand. Angiogenesis reduces this lag by increasing capillary density, decreasing $R$ in the Krogh model.
+
+The threshold for angiogenesis corresponds to tissue PO$_{2}$ falling below approximately 20-25 mmHg—roughly the critical value where $C(R) \to 0$ in the Krogh equation. This suggests angiogenic signaling activates when tissue approaches critical oxygen deficit.
+
+Altitude training exploits this mechanism. Sustained exposure to hypoxia (reduced atmospheric PO$_{2}$) activates HIF signaling, increasing capillary density in skeletal muscle and improving oxidative capacity. The effect requires weeks of exposure but persists for several weeks after return to sea level, providing performance advantage.
+
+\subsection{Pathological Microvascular Rarefaction}
+
+Several disease states reduce capillary density (rarefaction):
+
+\textbf{Diabetes}: Chronic hyperglycemia damages endothelium and impairs angiogenic signaling. Capillary density in diabetic muscle is reduced 15-30\%, contributing to exercise intolerance and delayed wound healing.
+
+\textbf{Hypertension}: Chronic pressure elevation causes arteriolar remodeling and capillary rarefaction. Reduced capillary density increases effective $R$ in Krogh model, predisposing to tissue hypoxia.
+
+\textbf{Heart failure}: Reduced cardiac output and neurohormonal activation cause microvascular dysfunction. Capillary rarefaction contributes to skeletal muscle fatigue—the characteristic symptom of heart failure.
+
+\textbf{Aging}: Progressive capillary loss occurs with aging, reducing density approximately 10-15\% per decade after age 40. This contributes to reduced exercise capacity and increased frailty in elderly populations.
+
+Understanding these conditions through the partition framework suggests therapeutic targets: interventions that promote angiogenesis (exercise, VEGF therapy, nitric oxide donors) may restore optimal capillary density and improve tissue oxygenation.
+
+\subsection{Experimental Validation}
+
+Table \ref{tab:capillary_validation} compares Krogh model predictions with experimental measurements.
+
+\begin{table}[h]
+\centering
+\caption{Capillary spacing: predicted versus measured}
+\label{tab:capillary_validation}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Tissue} & \textbf{$\boldsymbol{R_{\mathrm{crit}}}$ (μm)} & \textbf{Predicted spacing (μm)} & \textbf{Measured spacing (μm)} & \textbf{Reference} \\
+\midrule
+Resting muscle & 95 & $<$190 & 50-100 & \cite{hudlicka1992muscle} \\
+Brain cortex & 39 & $<$78 & 40-50 & \cite{pawlik1981quantitative} \\
+Cardiac muscle & 31 & $<$62 & 15-20 & \cite{rakusan1971quantitative} \\
+Kidney cortex & 47 & $<$94 & 30-40 & \cite{beeuwkes1975renal} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In all cases, actual capillary spacing is well below critical values, providing safety margin against tissue hypoxia. The agreement validates the Krogh diffusion model and confirms that capillary architecture emerges from oxygen transport constraints.

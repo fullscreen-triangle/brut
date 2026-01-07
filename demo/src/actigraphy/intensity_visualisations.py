@@ -105,7 +105,7 @@ def create_intensity_activity_visualization(df):
 
     ax3.set_xlabel('Period ID', fontweight='bold', fontsize=12)
     ax3.set_ylabel('Cumulative Time (minutes)', fontweight='bold', fontsize=12)
-    ax3.set_title('C) Stacked Activity Time Distribution',
+    ax3.set_title('C) Activity Time Distribution by Period',
                   fontweight='bold', loc='left', pad=15, fontsize=13)
     ax3.legend(frameon=True, fancybox=True, shadow=True, loc='upper left')
     ax3.grid(True, alpha=0.3, linestyle='--')
@@ -114,16 +114,18 @@ def create_intensity_activity_visualization(df):
 
     # Panel D: Light Activity Time Series
     ax4 = fig.add_subplot(gs[2, 0])
-    ax4.plot(df['period_id'], df['light_activity_time_min'], 'o-',
-             color=colors[0], linewidth=3, markersize=10,
-             markerfacecolor='white', markeredgewidth=2.5,
-             markeredgecolor=colors[0])
-    ax4.fill_between(df['period_id'], df['light_activity_time_min'],
-                     alpha=0.3, color=colors[0])
+    bars = ax4.bar(df['period_id'], df['light_activity_time_min'],
+                   color=colors[0], alpha=0.8, edgecolor='black', linewidth=1)
 
     mean_light = df['light_activity_time_min'].mean()
     ax4.axhline(y=mean_light, color='red', linestyle='--',
                 linewidth=2, alpha=0.7, label=f'Mean: {mean_light:.1f}')
+
+    # Add value labels on bars
+    for bar, val in zip(bars, df['light_activity_time_min']):
+        ax4.text(bar.get_x() + bar.get_width()/2, val + 1,
+                 f'{val:.0f}', ha='center', va='bottom',
+                 fontweight='bold', fontsize=8)
 
     ax4.set_xlabel('Period ID', fontweight='bold', fontsize=11)
     ax4.set_ylabel('Time (min)', fontweight='bold', fontsize=11)
@@ -135,16 +137,18 @@ def create_intensity_activity_visualization(df):
 
     # Panel E: Moderate Activity Time Series
     ax5 = fig.add_subplot(gs[2, 1])
-    ax5.plot(df['period_id'], df['moderate_activity_time_min'], 'o-',
-             color=colors[1], linewidth=3, markersize=10,
-             markerfacecolor='white', markeredgewidth=2.5,
-             markeredgecolor=colors[1])
-    ax5.fill_between(df['period_id'], df['moderate_activity_time_min'],
-                     alpha=0.3, color=colors[1])
+    bars = ax5.bar(df['period_id'], df['moderate_activity_time_min'],
+                   color=colors[1], alpha=0.8, edgecolor='black', linewidth=1)
 
     mean_mod = df['moderate_activity_time_min'].mean()
     ax5.axhline(y=mean_mod, color='red', linestyle='--',
                 linewidth=2, alpha=0.7, label=f'Mean: {mean_mod:.1f}')
+
+    # Add value labels on bars
+    for bar, val in zip(bars, df['moderate_activity_time_min']):
+        ax5.text(bar.get_x() + bar.get_width()/2, val + 1,
+                 f'{val:.0f}', ha='center', va='bottom',
+                 fontweight='bold', fontsize=8)
 
     ax5.set_xlabel('Period ID', fontweight='bold', fontsize=11)
     ax5.set_ylabel('Time (min)', fontweight='bold', fontsize=11)
@@ -156,16 +160,18 @@ def create_intensity_activity_visualization(df):
 
     # Panel F: Vigorous Activity Time Series
     ax6 = fig.add_subplot(gs[2, 2])
-    ax6.plot(df['period_id'], df['vigorous_activity_time_min'], 'o-',
-             color=colors[2], linewidth=3, markersize=10,
-             markerfacecolor='white', markeredgewidth=2.5,
-             markeredgecolor=colors[2])
-    ax6.fill_between(df['period_id'], df['vigorous_activity_time_min'],
-                     alpha=0.3, color=colors[2])
+    bars = ax6.bar(df['period_id'], df['vigorous_activity_time_min'],
+                   color=colors[2], alpha=0.8, edgecolor='black', linewidth=1)
 
     mean_vig = df['vigorous_activity_time_min'].mean()
     ax6.axhline(y=mean_vig, color='red', linestyle='--',
                 linewidth=2, alpha=0.7, label=f'Mean: {mean_vig:.1f}')
+
+    # Add value labels on bars
+    for bar, val in zip(bars, df['vigorous_activity_time_min']):
+        ax6.text(bar.get_x() + bar.get_width()/2, val + 1,
+                 f'{val:.0f}', ha='center', va='bottom',
+                 fontweight='bold', fontsize=8)
 
     ax6.set_xlabel('Period ID', fontweight='bold', fontsize=11)
     ax6.set_ylabel('Time (min)', fontweight='bold', fontsize=11)

@@ -1,0 +1,190 @@
+\section{Cardiac Output from Metabolic Requirements}
+\label{sec:cardiac}
+
+\subsection{Fick's Principle}
+
+Cardiac output must satisfy metabolic oxygen demand. This fundamental constraint connects circulation to cellular respiration through Fick's principle, derived by Adolf Fick in 1870 \cite{fick1870diffusion}. The principle states that oxygen consumption equals the product of blood flow and arteriovenous oxygen difference:
+\begin{equation}
+\dot{V}\mathrm{O}_{2} = \mathrm{CO} \times (C_{a}\mathrm{O}_{2} - C_{v}\mathrm{O}_{2})
+\label{eq:fick}
+\end{equation}
+where $\dot{V}\mathrm{O}_{2}$ is oxygen consumption rate (mL O$_{2}$/min), CO is cardiac output (L/min), $C_{a}\mathrm{O}_{2}$ is arterial oxygen content (mL O$_{2}$/L blood), and $C_{v}\mathrm{O}_{2}$ is mixed venous oxygen content.
+
+This equation directly determines cardiac output from metabolic state—it is not a physiological regulation but a mass balance constraint that must be satisfied.
+
+\subsection{Resting Metabolic Oxygen Consumption}
+
+Basal metabolic rate for a 70 kg adult is approximately 1500-1800 kcal/day. Converting to oxygen consumption using the caloric equivalent of oxygen (approximately 5 kcal per liter O$_{2}$):
+\begin{equation}
+\dot{V}\mathrm{O}_{2} = \frac{1650~\mathrm{kcal/day}}{5~\mathrm{kcal/L~O}_{2}} = 330~\mathrm{L/day} = 229~\mathrm{mL/min}
+\end{equation}
+
+More direct measurements via respiratory gas analysis typically yield $\dot{V}\mathrm{O}_{2} \approx 250$ mL/min at rest for a 70 kg individual \cite{weir1949new}.
+
+This consumption reflects:
+\begin{itemize}
+\item Baseline cellular metabolism: ∼100 mL/min
+\item Brain: ∼50 mL/min (20\% of total despite 2\% of body mass)
+\item Heart: ∼30 mL/min
+\item Kidneys: ∼20 mL/min
+\item Liver: ∼20 mL/min
+\item Skeletal muscle at rest: ∼20 mL/min
+\item Other tissues: ∼10 mL/min
+\end{itemize}
+
+The brain's disproportionate consumption reflects high energy cost of neuronal signaling and synaptic transmission, requiring continuous ATP production.
+
+\subsection{Arterial and Venous Oxygen Content}
+
+Arterial oxygen content depends on hemoglobin concentration and saturation:
+\begin{equation}
+C_{a}\mathrm{O}_{2} = ([\mathrm{Hb}] \times 1.34 \times S_{a}\mathrm{O}_{2}) + (0.003 \times P_{a}\mathrm{O}_{2})
+\end{equation}
+where [Hb] is hemoglobin concentration (g/dL), 1.34 is Hüfner's constant (mL O$_{2}$ per g Hb), $S_{a}\mathrm{O}_{2}$ is arterial saturation (fraction), and the dissolved term is typically negligible.
+
+For normal hemoglobin (15 g/dL) at arterial saturation (97\%):
+\begin{equation}
+C_{a}\mathrm{O}_{2} = 15 \times 1.34 \times 0.97 \approx 19.5~\mathrm{mL~O}_{2}/\mathrm{dL} = 195~\mathrm{mL~O}_{2}/\mathrm{L}
+\end{equation}
+
+Mixed venous oxygen content reflects the integrated oxygen extraction across all tissues. At rest, mixed venous saturation is typically 75\%:
+\begin{equation}
+C_{v}\mathrm{O}_{2} = 15 \times 1.34 \times 0.75 \approx 15.1~\mathrm{mL~O}_{2}/\mathrm{dL} = 151~\mathrm{mL~O}_{2}/\mathrm{L}
+\end{equation}
+
+The arteriovenous difference is
+\begin{equation}
+C_{a}\mathrm{O}_{2} - C_{v}\mathrm{O}_{2} = 195 - 151 = 44~\mathrm{mL~O}_{2}/\mathrm{L}
+\end{equation}
+
+This means blood delivers 44 mL of oxygen per liter as it circulates through systemic tissues.
+
+\subsection{Deriving Resting Cardiac Output}
+
+Applying Fick's principle (Equation \ref{eq:fick}):
+\begin{equation}
+\mathrm{CO} = \frac{\dot{V}\mathrm{O}_{2}}{C_{a}\mathrm{O}_{2} - C_{v}\mathrm{O}_{2}} = \frac{250~\mathrm{mL/min}}{44~\mathrm{mL/L}} \approx 5.7~\mathrm{L/min}
+\end{equation}
+
+This derived value matches direct measurements of resting cardiac output, typically 5.0-5.5 L/min for a 70 kg adult \cite{holt1968hemodynamic}. The agreement confirms that cardiac output is determined by metabolic requirements rather than being an independent physiological parameter.
+
+\subsection{Heart Rate and Stroke Volume}
+
+Cardiac output factors into heart rate (HR) and stroke volume (SV):
+\begin{equation}
+\mathrm{CO} = \mathrm{HR} \times \mathrm{SV}
+\end{equation}
+
+At rest, typical values are HR = 70 beats/min and SV = 70-80 mL/beat, yielding CO = 4.9-5.6 L/min.
+
+The specific allocation between HR and SV emerges from optimization. Heart rate is constrained by diastolic filling time—higher rates reduce filling duration, limiting stroke volume. Stroke volume is constrained by myocardial stretch (Frank-Starling mechanism) and ejection work.
+
+The optimal heart rate minimizes total cardiac work per minute. Each heartbeat performs work
+\begin{equation}
+W_{\mathrm{beat}} = \int P \, dV \approx P_{\mathrm{mean}} \times \mathrm{SV}
+\end{equation}
+
+With mean arterial pressure $P_{\mathrm{mean}} \approx 90$ mmHg = 12 kPa:
+\begin{equation}
+W_{\mathrm{beat}} = (12 \times 10^{3}~\mathrm{Pa})(75 \times 10^{-6}~\mathrm{m}^{3}) \approx 0.9~\mathrm{J}
+\end{equation}
+
+At 70 beats/min, cardiac power output is
+\begin{equation}
+\dot{W}_{\mathrm{cardiac}} = 0.9~\mathrm{J} \times 70/60~\mathrm{Hz} \approx 1.05~\mathrm{W}
+\end{equation}
+
+With cardiac efficiency approximately 20-25\%, metabolic power requirement for the heart is approximately 4-5 W, consistent with observed myocardial oxygen consumption of 30 mL/min.
+
+\subsection{Exercise Responses}
+
+During exercise, metabolic oxygen consumption increases dramatically. At maximal exertion, $\dot{V}\mathrm{O}_{2}$ can reach 3-4 L/min in trained athletes. Cardiac output must increase proportionally.
+
+The arteriovenous oxygen difference can widen from 44 mL/L at rest to approximately 150 mL/L during maximal exercise (arterial remains 195 mL/L, venous decreases to 45 mL/L as extraction increases). This gives maximum cardiac output
+\begin{equation}
+\mathrm{CO}_{\max} = \frac{3500~\mathrm{mL/min}}{150~\mathrm{mL/L}} \approx 23~\mathrm{L/min}
+\end{equation}
+
+This 4-5 fold increase is achieved through combined elevation of heart rate (to 180-200 bpm) and stroke volume (to 120-140 mL/beat). The relative contributions reflect mechanical constraints—heart rate can triple while stroke volume increases by approximately 70-80\%.
+
+The limits on maximum cardiac output ultimately constrain athletic performance. Training increases maximum output through:
+\begin{itemize}
+\item Increased myocardial contractility (greater stroke volume)
+\item Enhanced venous return (Frank-Starling optimization)
+\item Reduced vascular resistance (improved endothelial function)
+\item Increased blood volume (plasma expansion)
+\item Elevated hemoglobin (altitude training, doping)
+\end{itemize}
+
+All these adaptations serve to increase oxygen delivery capacity via Fick's principle.
+
+\subsection{Allometric Scaling}
+
+Cardiac output scales with body mass according to
+\begin{equation}
+\mathrm{CO} \propto M^{3/4}
+\end{equation}
+
+This follows from the metabolic scaling of oxygen consumption \cite{west1997general}. For mammals ranging from mice (30 g) to elephants (3000 kg), the relationship
+\begin{equation}
+\mathrm{CO} \approx 0.18 \, M^{0.75}~\mathrm{L/min}
+\end{equation}
+(with mass in kg) describes cardiac output across species.
+
+For humans (70 kg):
+\begin{equation}
+\mathrm{CO} = 0.18 \times 70^{0.75} \approx 0.18 \times 26.2 \approx 4.7~\mathrm{L/min}
+\end{equation}
+
+The close match validates both the allometric scaling and Fick's principle derivation.
+
+Heart rate and stroke volume also exhibit allometric relationships:
+\begin{align}
+\mathrm{HR} &\propto M^{-0.25} \\
+\mathrm{SV} &\propto M^{1.0}
+\end{align}
+
+Smaller animals have higher heart rates and smaller stroke volumes, while larger animals exhibit the reverse pattern. A mouse heart beats at 600 bpm with 0.02 mL stroke volume, while an elephant heart beats at 30 bpm with 4-5 L stroke volume. These patterns emerge from constraints on cardiovascular biomechanics and the physics of pulsatile flow.
+
+\subsection{Pathological States}
+
+\textbf{Heart failure}: When cardiac output falls below metabolic requirements, tissues become hypoxic. The body compensates by widening arteriovenous difference (increased extraction) and redistributing flow to vital organs. However, these compensations have limits—maximum extraction cannot exceed approximately 75\% of arterial content. Chronic heart failure ultimately requires reducing metabolic demand (rest, sedation) or augmenting cardiac function (inotropes, mechanical support).
+
+\textbf{Anemia}: Reduced hemoglobin concentration decreases arterial oxygen content, requiring increased cardiac output to maintain delivery:
+\begin{equation}
+\mathrm{CO}_{\mathrm{anemic}} = \mathrm{CO}_{\mathrm{normal}} \times \frac{[\mathrm{Hb}]_{\mathrm{normal}}}{[\mathrm{Hb}]_{\mathrm{anemic}}}
+\end{equation}
+
+At [Hb] = 8 g/dL (severe anemia), cardiac output must double to maintain oxygen delivery. This increases cardiac work and can precipitate heart failure if sustained.
+
+\textbf{Hyperthyroidism}: Elevated metabolic rate increases oxygen consumption. Fick's principle requires proportional increase in cardiac output. Untreated hyperthyroidism can present with cardiac output 8-10 L/min at rest, imposing chronic high workload on the heart.
+
+\subsection{Experimental Validation}
+
+Direct measurement of cardiac output remains challenging. Methods include:
+
+\textbf{Thermodilution}: Cold saline injection with downstream temperature sensing yields CO = 5.0 ± 0.6 L/min (mean ± SD) in healthy adults \cite{ganz1971new}.
+
+\textbf{Doppler echocardiography}: Velocity-time integral across aortic valve yields SV; multiplying by HR gives CO = 4.8-5.4 L/min \cite{lewis1984pulsed}.
+
+\textbf{Direct Fick}: Simultaneous measurement of $\dot{V}\mathrm{O}_{2}$ and arteriovenous O$_{2}$ content yields CO = 5.1 ± 0.5 L/min \cite{lafarge1970pulmonary}.
+
+Table \ref{tab:cardiac_validation} summarizes validation data.
+
+\begin{table}[h]
+\centering
+\caption{Cardiac output: predicted versus measured values}
+\label{tab:cardiac_validation}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Method} & \textbf{$\boldsymbol{n}$} & \textbf{Predicted (L/min)} & \textbf{Measured (L/min)} & \textbf{Reference} \\
+\midrule
+Fick calculation & — & 5.7 & 5.1 ± 0.5 & \cite{lafarge1970pulmonary} \\
+Thermodilution & 126 & — & 5.0 ± 0.6 & \cite{ganz1971new} \\
+Doppler echo & 89 & — & 5.1 ± 0.7 & \cite{lewis1984pulsed} \\
+Allometric scaling & — & 4.7 & — & \cite{west1997general} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The convergence of methods confirms cardiac output as physically determined by metabolic oxygen requirements through Fick's principle, not as a regulated physiological variable.

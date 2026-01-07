@@ -37,21 +37,25 @@ def create_basic_activity_visualization(df):
     color_tertiary = '#FF6B35'
     color_quaternary = '#5FA8D3'
 
-    # Panel A: Step Count Time Series
+    # Panel A: Step Count by Period
     ax1 = fig.add_subplot(gs[0, :2])
-    ax1.plot(df['period_id'], df['step_count'], 'o-',
-             color=color_primary, linewidth=3, markersize=12,
-             markerfacecolor=color_secondary, markeredgewidth=2.5,
-             markeredgecolor=color_primary)
+    bars = ax1.bar(df['period_id'], df['step_count'],
+                   color=color_secondary, alpha=0.8, edgecolor=color_primary, linewidth=2)
 
     mean_steps = df['step_count'].mean()
     ax1.axhline(y=mean_steps, color='red', linestyle='--',
                 linewidth=2, alpha=0.7, label=f'Mean: {mean_steps:.1f}')
-    ax1.fill_between(df['period_id'], df['step_count'], alpha=0.3, color=color_secondary)
+
+    # Add value labels on bars
+    for bar, val in zip(bars, df['step_count']):
+        if val > 0:  # Only show labels for non-zero values
+            ax1.text(bar.get_x() + bar.get_width()/2, val + max(df['step_count']) * 0.01,
+                     f'{val:.0f}', ha='center', va='bottom',
+                     fontweight='bold', fontsize=8)
 
     ax1.set_xlabel('Period ID', fontweight='bold', fontsize=12)
     ax1.set_ylabel('Step Count', fontweight='bold', fontsize=12)
-    ax1.set_title('A) Step Count Over Time', fontweight='bold', loc='left', pad=15, fontsize=13)
+    ax1.set_title('A) Step Count by Period', fontweight='bold', loc='left', pad=15, fontsize=13)
     ax1.legend(frameon=True, fancybox=True, shadow=True)
     ax1.grid(True, alpha=0.3, linestyle='--')
     ax1.spines['top'].set_visible(False)
@@ -124,16 +128,20 @@ def create_basic_activity_visualization(df):
     ax5.spines['top'].set_visible(False)
     ax5.spines['right'].set_visible(False)
 
-    # Panel F: Cumulative Steps
+    # Panel F: Step Count Distribution by Period
     ax6 = fig.add_subplot(gs[2, :2])
-    cumulative = df['step_count'].cumsum()
-    ax6.fill_between(df['period_id'], cumulative, alpha=0.4, color=color_tertiary)
-    ax6.plot(df['period_id'], cumulative, 'o-', color=color_tertiary,
-             linewidth=3, markersize=10, markerfacecolor='white',
-             markeredgewidth=2.5, markeredgecolor=color_tertiary)
+    bars = ax6.bar(df['period_id'], df['step_count'], color=color_tertiary,
+                   alpha=0.7, edgecolor='black', linewidth=1.5)
+
+    # Add trend line
+    if len(df) > 1:
+        z = np.polyfit(df['period_id'], df['step_count'], 1)
+        p = np.poly1d(z)
+        ax6.plot(df['period_id'], p(df['period_id']), "r--", linewidth=2.5, alpha=0.7, label='Trend')
+
     ax6.set_xlabel('Period ID', fontweight='bold', fontsize=12)
-    ax6.set_ylabel('Cumulative Steps', fontweight='bold', fontsize=12)
-    ax6.set_title('F) Cumulative Step Count', fontweight='bold', loc='left', pad=15, fontsize=13)
+    ax6.set_ylabel('Step Count', fontweight='bold', fontsize=12)
+    ax6.set_title('F) Step Count Distribution by Period', fontweight='bold', loc='left', pad=15, fontsize=13)
     ax6.grid(True, alpha=0.3, linestyle='--')
     ax6.spines['top'].set_visible(False)
     ax6.spines['right'].set_visible(False)
@@ -205,7 +213,7 @@ def main():
     fig = create_basic_activity_visualization(df)
 
     # Save figures
-    plt.savefig('basic_activity_metrics_analysis.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('basic_activity_metrics_analysis_bars.png', dpi=300, bbox_inches='tight', facecolor='white')
     plt.savefig('basic_activity_metrics_analysis.pdf', bbox_inches='tight', facecolor='white')
     print("Visualizations saved successfully!")
 

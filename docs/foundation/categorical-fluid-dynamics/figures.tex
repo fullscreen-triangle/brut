@@ -1,0 +1,236 @@
+% Figures for Categorical Fluid Dynamics
+% Include this file in the main document or use \input{figures.tex}
+% Extended captions connecting to core themes: aperture-memory framework,
+% viscosity as time emergence, pendulum analogy, turbulence as non-sequential apertures
+
+%==============================================================================
+% Figure F-1: Triple Equivalence (Shared Panel)
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel1_triple_equivalence.png}
+\caption{\textbf{The Triple Equivalence: Oscillation $\equiv$ Category $\equiv$ Partition.}
+This foundational diagram establishes the mathematical identity at the heart of our framework. (A) Oscillatory dynamics: any bounded system exhibits periodic behaviour by Poincar\'{e} recurrence, here visualised as a pendulum tracing a closed orbit in phase space. The pendulum is our canonical example---each swing represents one complete categorical cycle. (B) Categorical structure: the oscillation defines equivalence classes of states; points at the same phase of the cycle are categorically identical. This partitions the continuous trajectory into discrete categorical states $\mathcal{C}_1, \mathcal{C}_2, \ldots$ (C) Partition geometry: categories are partitions of phase space; boundaries between categories are apertures through which the system transitions. The three representations are mathematically equivalent: what appears as oscillation in dynamics, appears as categorical structure in logic, and appears as partition geometry in space. This triple equivalence is the foundation upon which we derive all fluid dynamics from first principles.}
+\label{fig:triple_equivalence}
+\end{figure}
+
+%==============================================================================
+% Figure F-2: Entropy Derivation (Shared Panel)
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel2_entropy_derivation.png}
+\caption{\textbf{Entropy from Categorical Completion: The Undetermined Residue.}
+This figure derives entropy from first principles using the partition framework. (A) Partition operation: when a categorical state $\mathcal{C}$ is partitioned into substates, information is gained about which substate obtains, but an ``undetermined residue'' remains---the information that was destroyed by the partition boundary. (B) Entropy formula: $\Delta S = k_B \ln n_{\text{res}}$ where $n_{\text{res}}$ counts the residue microstates. This is Shannon entropy in thermodynamic form. (C) Irreversibility: the undetermined residue cannot be recovered because it was never determined---it represents possibilities that were excluded, not selected. This is why entropy increases: each partition creates new residue. (D) Connection to time: entropy production is categorical completion; time emerges as the ordering of completed partitions. In fluid dynamics, this entropy production manifests as viscous dissipation---the ``cost of time emergence'' in a correlated medium. Each partition operation advances the fluid's internal clock.}
+\label{fig:entropy_derivation}
+\end{figure}
+
+%==============================================================================
+% Figure F-3: Categorical Enthalpy (Shared Panel)
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel3_categorical_enthalpy.png}
+\caption{\textbf{Categorical Enthalpy: From Apertures to Pressure.}
+This figure extends thermodynamics to include aperture work, revealing pressure as a coarse-grained manifestation of aperture reconfiguration. (A) Categorical enthalpy definition: $\mathcal{H} = U + \int_{\partial\Omega} \sigma(\mathbf{x}) \cdot \phi(\mathbf{x})\, dA$ where $\sigma$ is aperture selectivity and $\phi$ is aperture potential. The boundary integral sums over all apertures at the system surface. (B) Classical limit: when apertures are uniform ($\sigma = 1$, $\phi = P \cdot V / A$), the integral reduces to $PV$, recovering classical enthalpy $H = U + PV$. Pressure is thus the \emph{average aperture potential per unit area}. (C) Aperture work: expanding a fluid against external pressure requires reconfiguring apertures at the boundary---breaking old phase-locks and forming new ones. This is the microscopic origin of $P\,dV$ work. (D) Implications for fluid dynamics: pressure gradients drive flow because they represent gradients in aperture potential. Molecules flow from high aperture potential (crowded, many blocked configurations) to low aperture potential (sparse, many available configurations).}
+\label{fig:categorical_enthalpy}
+\end{figure}
+
+%==============================================================================
+% Figure F-4: S-Space Coordinates
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_s_space.png}
+\caption{\textbf{S-Entropy Coordinate Space: The Three-Dimensional Manifold of Fluid States.}
+All fluid states reside on a three-dimensional manifold defined by S-entropy coordinates $(S_k, S_t, S_e)$. (A) $S_k$ (knowledge entropy): measures how many configurations are consistent with macroscopic observations. High $S_k$ means many equivalent microstates---the fluid is ``uncertain'' about its microscopic configuration. (B) $S_t$ (temporal entropy): measures the timescale of categorical completion. High $S_t$ means slow processes---viscous fluids have high temporal entropy because phase-lock reconfiguration takes time. (C) $S_e$ (evolution entropy): measures how energy is distributed across oscillatory modes. High $S_e$ means energy is spread across many modes (equipartition). (D) S-space navigation: fluid transport is movement through S-space. Diffusion spreads the S-distribution; advection translates it; partition (aperture navigation) changes the shape. The S-sliding window observes one categorical state at a time, traversing the fluid like a reader scanning text. This dimensional reduction---from infinite molecular coordinates to three S-coordinates---is the ``countability revolution'' that makes rigorous fluid dynamics tractable.}
+\label{fig:s_space}
+\end{figure}
+
+%==============================================================================
+% Figure F-5: Mathematical Prerequisites
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_mathematical_prerequisites.pdf}
+\caption{\textbf{Mathematical Foundations: From Pendulum to Phase-Lock Networks.}
+(A) The simple pendulum as unifying example: period $T = 2\pi\sqrt{L/g}$ defines the oscillatory timescale, each point in the period is a category, and the sequence of categories partitions the period. Oscillation, category, and partition are three views of the same phenomenon---the pendulum's motion. (B) Phase-lock networks: molecules in a fluid are coupled pendulums, their phases locked through intermolecular forces. The network $\mathcal{G} = (V, E)$ has molecules as vertices and phase-locks as edges. (C) Memory in networks: moving one layer of fluid requires ``pulling'' adjacent layers through phase-lock connections. This accumulated history is memory $\mathcal{M}$, and the rate of memory accumulation per unit strain is viscosity: $\mu = d\mathcal{M}/d\gamma$. (D) The S-sliding window: observation occurs one categorical state at a time, like a window sliding across text. The window's trajectory through S-space encodes the complete fluid dynamics. This formalism reduces the infinite-dimensional fluid state to a finite, computable representation.}
+\label{fig:mathematical_prerequisites}
+\end{figure}
+
+%==============================================================================
+% Figure F-6: Fluid Structure Derivation
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_fluid_structure.pdf}
+\caption{\textbf{Deriving Fluid Structure from Categorical Principles.}
+(A) The countability revolution: classical fluid mechanics treats fluids as continua with infinite degrees of freedom. Our framework reduces this to finite S-coordinates by exploiting categorical equivalence---microscopically different states that are macroscopically indistinguishable are identified. (B) Cross-section principle: a 3D fluid volume is represented by 2D cross-sections plus 1D S-transformation. Like a CT scan reconstructing 3D structure from 2D slices, we reconstruct fluid dynamics from cross-sectional S-profiles. (C) Phase-lock networks across phases: gas (sparse network, weak coupling), liquid (intermediate density, moderate coupling), solid (dense network, strong coupling). The network density $\rho_G$ determines fluid properties---viscosity scales with network connectivity. (D) Viscosity as memory: dense networks require more phase-lock reconfigurations per unit strain, accumulating more memory. This is why liquids are more viscous than gases (denser networks) but less viscous at higher temperatures (thermal disruption of phase-locks).}
+\label{fig:fluid_structure}
+\end{figure}
+
+%==============================================================================
+% Figure F-7: S-Stellas Transformation Operator
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_transformation_operator.pdf}
+\caption{\textbf{The S-Stellas Transformation Operator: How Fluids Evolve.}
+(A) Operator definition: $\mathcal{T}: \Svec(x) \to \Svec(x + dx)$ maps S-coordinates at one position to S-coordinates at an adjacent position. The operator encodes both aperture structure (which transitions are allowed) and memory structure (how history affects future transitions). (B) Operator decomposition: $\mathcal{T} = \mathcal{T}_{\text{mem}} \circ \mathcal{T}_{\text{part}} \circ \mathcal{T}_{\text{diff}} \circ \mathcal{T}_{\text{adv}}$. Memory updates phase-lock history; partition navigates apertures; diffusion spreads the S-distribution; advection translates by bulk flow. (C) Flow regime classification: laminar flow uses sequential apertures (single pendulum---deterministic, periodic); turbulent flow uses non-sequential apertures (double pendulum---chaotic, non-periodic); chromatography uses non-sequential apertures with memory reset (memoryless turbulence). (D) Memory reset in chromatography: each theoretical plate resets the phase-lock memory, converting within-plate turbulence into between-plate statistics. This is why chromatography separates (statistical accumulation) rather than mixes (chaotic homogenisation).}
+\label{fig:transformation_operator}
+\end{figure}
+
+%==============================================================================
+% Figure F-8: Classical Equations from S-Dynamics
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_classical_equations.pdf}
+\caption{\textbf{Derivation of Classical Fluid Dynamics: Navier-Stokes from First Principles.}
+(A) Continuity equation: mass conservation emerges from categorical state conservation through apertures. Since mass apertures have selectivity $s = 1$ (all molecules pass), the divergence of mass flux equals zero. This is conservation of categorical states, not an assumption. (B) Navier-Stokes momentum equation: pressure gradient arises from S-potential gradient (aperture accessibility); viscous stress arises from memory accumulation (phase-lock reconfiguration). Pressure is the average aperture potential; viscosity is the rate of memory accumulation per unit strain. (C) Laminar vs turbulent transition: the Reynolds number $\text{Re} = \rho v L / \mu$ measures the ratio of inertial energy (accessing non-sequential apertures) to viscous memory (penalising phase-lock reconfiguration). At high Re, inertia overcomes memory---the ``double pendulum'' dynamics emerge. (D) Energy cascade: at large scales, non-sequential apertures dominate; at the Kolmogorov scale, viscous (sequential) apertures convert kinetic energy to heat through phase-lock breaking. Turbulence is aperture hierarchy, not randomness.}
+\label{fig:classical_equations}
+\end{figure}
+
+%==============================================================================
+% Figure F-9: Chromatography Validation
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_chromatography.pdf}
+\caption{\textbf{Chromatography as Experimental Validation: Memoryless Turbulence in Action.}
+(A) The subtracted cross-section: stationary phase particles create ``holes'' in the available flow path. Molecules must navigate around these obstacles through non-sequential apertures---this is turbulence. But crucially, memory resets at each theoretical plate, converting chaos into statistics. (B) One plate = one pendulum cycle: each plate represents entry $\to$ turbulent mixing $\to$ equilibration $\to$ memory reset $\to$ exit. The plate height $H$ is the ``pendulum period''---the column length for one complete equilibration cycle. (C) Separation from memory reset: without reset (turbulence), chaotic mixing homogenises analytes, $\Delta t_R \to 0$. With reset (chromatography), each plate contributes independently, $\Delta t_R \propto N$. Memory reset is necessary for separation. (D) Experimental confirmation: predicted retention times from S-transformation match measured values across different column geometries and analyte chemistries, validating the aperture-memory framework. Platform independence confirms that S-dynamics, not hardware details, determine separation.}
+\label{fig:chromatography}
+\end{figure}
+
+%==============================================================================
+% Figure F-10: Van Deemter Equation
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_vandeemter.pdf}
+\caption{\textbf{The Van Deemter Equation: Three Failure Modes of Tamed Turbulence.}
+The Van Deemter equation $H = A + B/u + Cu$ describes how plate height (inefficiency) depends on flow velocity. Each term represents a distinct failure mode of the aperture-memory framework. (A) A-term (aperture multiplicity): velocity-independent contribution from non-sequential apertures within each plate. This is the irreducible ``turbulent'' contribution---the within-plate double-pendulum dynamics that enable equilibration. Cannot be eliminated, only minimised by uniform packing. (B) B-term (memory leakage): $\propto 1/u$, dominates at low velocity. Molecules diffuse across plate boundaries, carrying phase-lock memory. This violates the memory reset requirement, corrupting statistical independence. Fast flow prevents leakage. (C) C-term (truncated pendulum): $\propto u$, dominates at high velocity. Molecules exit plates before completing equilibration---the pendulum swing is interrupted. Slow flow allows complete equilibration. (D) Optimal velocity: $u_{\text{opt}} = \sqrt{B/C}$ balances memory leakage against truncated equilibration. At this velocity, each plate achieves complete equilibration with full memory reset---chromatography is ``tamed turbulence'' operating at peak efficiency.}
+\label{fig:vandeemter}
+\end{figure}
+
+%==============================================================================
+% Figure F-11: Extension to Complex Phenomena
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_extension.pdf}
+\caption{\textbf{Extension to Complex Fluid Phenomena: Beyond Newtonian Flow.}
+The aperture-memory framework extends naturally to complex fluids and flow regimes. (A) Turbulence as aperture hierarchy: at large scales, inertia opens non-sequential apertures; energy cascades to smaller scales where viscous (sequential) apertures dissipate kinetic energy. The Kolmogorov scale $\ell_K = (\nu^3/\epsilon)^{1/4}$ marks the transition from non-sequential to sequential aperture dominance. (B) Non-Newtonian fluids: strain-rate-dependent aperture reconfiguration produces shear-dependent viscosity. Shear-thinning (polymer solutions): high shear aligns molecules, reducing aperture resistance. Shear-thickening (cornstarch): high shear creates new apertures through jamming. (C) Multiphase flows: phase boundaries are categorical apertures with distinct selectivities. Liquid-gas interfaces have high selectivity (surface tension); liquid-liquid interfaces have intermediate selectivity (immiscibility). Coalescence and breakup are aperture creation/destruction events. (D) Reactive flows: chemical reactions are partition operations that transform S-coordinates. Combustion creates new apertures (products have different phase-lock networks than reactants); the reaction rate is the aperture traversal rate.}
+\label{fig:extension}
+\end{figure}
+
+%==============================================================================
+% Figure F-12: Molecular Partition Lag
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_partition_lag.pdf}
+\caption{\textbf{Molecular Partition Lag: The Timescale of Categorical Completion.}
+Partition lag $\tau_p$ is the time required for a categorical state to complete its transition through an aperture. It is the fundamental timescale of fluid dynamics. (A) Partition lag distributions: gases have fast, narrow distributions (free flight between collisions); liquids have intermediate distributions (cage rattling); viscous fluids have slow, broad distributions (extended phase-lock reconfiguration). The distribution shape encodes fluid rheology. (B) Temperature dependence: $\langle\tau_p\rangle \propto \sqrt{m/(k_B T)}$ for gases (kinetic theory); $\langle\tau_p\rangle \propto \exp(E_a/k_B T)$ for liquids (Arrhenius activation). This explains the opposite temperature dependence of viscosity in gases (increases) vs liquids (decreases). (C) Collision vs uncertainty limits: $\tau_p = \max(\tau_{\text{coll}}, \hbar/\Delta E)$. In gases, collisions limit completion; in quantum systems, uncertainty limits completion. (D) Pressure dependence: $\tau_p \propto P^{-1/2}$ at fixed temperature---higher pressure increases collision frequency, reducing partition lag. This explains pressure-viscosity coupling in gases.}
+\label{fig:partition_lag_fluid}
+\end{figure}
+
+%==============================================================================
+% Figure F-13: Intermolecular Coupling and Phase-Lock Networks
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_coupling_networks.pdf}
+\caption{\textbf{Phase-Lock Networks: The Molecular Basis of Viscosity.}
+Fluid molecules are coupled pendulums, their oscillatory phases locked through intermolecular forces. These phase-locks form networks that encode viscosity as accumulated memory. (A) Network structure visualisation: nodes = molecules, edges = phase-lock couplings. Node colour indicates degree (number of connections); edge thickness indicates coupling strength. Dense networks (liquids) have high viscosity; sparse networks (gases) have low viscosity. (B) Coupling strength vs distance: Van der Waals ($g \sim r^{-6}$), dipole-dipole ($g \sim r^{-3}$), and hydrogen bonds (short-range exponential) show distinct decay profiles. Strong, short-range couplings create rigid networks; weak, long-range couplings create flexible networks. (C) Network density and phase: gas ($\rho_G < 0.2$, sparse network), liquid ($0.2 < \rho_G < 0.6$, percolating network), solid ($\rho_G > 0.6$, dense lattice). Phase transitions correspond to network percolation thresholds. (D) Transport as network navigation: molecular transport (highlighted path) proceeds through the phase-lock network, breaking and reforming connections. The viscosity $\mu = \sum \tau_p \cdot g$ is the total memory cost of all phase-lock reconfigurations along the path.}
+\label{fig:coupling_networks}
+\end{figure}
+
+%==============================================================================
+% Figure F-14: Molecular Bonds as Categorical Apertures
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_molecular_apertures.pdf}
+\caption{\textbf{Molecular Bonds as Categorical Apertures: The Geometry of Selectivity.}
+Molecular bonds are not just energetic interactions---they are geometric constraints (apertures) that selectively allow certain configurations while blocking others. (A) Bond as aperture: a covalent bond creates a geometric constraint (selectivity region). Molecular configurations that pass through the aperture (green) are allowed; configurations blocked by the bond (red X) require bond breaking. The aperture potential $\Phi_a = -k_B T \ln s$ quantifies the energetic cost of aperture traversal. (B) Selectivity ordering: covalent bonds (very low $s \approx 0.01$, high barrier), ionic bonds (low $s \approx 0.05$), hydrogen bonds (medium $s \approx 0.1$), Van der Waals (high $s \approx 0.5$, low barrier). This hierarchy determines transport rates and phase behaviour. (C) Transport rate as selectivity product: when a molecule traverses multiple apertures, the rate $\propto \prod_{a \in \text{path}} s_a$ decreases exponentially with path length. This explains why viscosity increases with molecular complexity. (D) Phase transitions as aperture reconfiguration: solid $\to$ liquid destroys lattice apertures; liquid $\to$ gas destroys intermolecular apertures. Latent heat = sum of destroyed aperture potentials. Melting is ``unlocking'' the phase-lock network.}
+\label{fig:molecular_apertures}
+\end{figure}
+
+%==============================================================================
+% Figure F-15: Transport Coefficients from Partition Dynamics
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_transport_coefficients.pdf}
+\caption{\textbf{Transport Coefficients: Viscosity as Time Emergence.}
+All transport coefficients emerge from the interplay between partition lag (time for categorical completion) and coupling strength (phase-lock binding energy). Viscosity, in particular, represents the cost of time emergence in a correlated medium. (A) Viscosity formula: $\mu = \sum_{i,j} \tau_{p,ij} \cdot g_{ij}$ sums partition lag times coupling over all molecular pairs. This is the accumulated memory cost per unit strain---each phase-lock that must break and reform contributes $\tau_p \cdot g$ to viscosity. High viscosity means time passes ``slowly'' at the molecular level. (B) Temperature dependence contrast: gases (viscosity $\propto T^{1/2}$, increases with $T$) vs liquids (viscosity $\propto \exp(E_a/k_B T)$, decreases with $T$). In gases, more collisions = more memory = higher viscosity. In liquids, heat disrupts phase-locks = less memory = lower viscosity. (C) Thermal conductivity: $k \propto g/\tau_p$---strong coupling and fast completion promote heat transfer. Metals have low $\tau_p$ and high $g$ (electron-mediated), hence high conductivity. (D) Unified framework: viscosity ($\tau_p \cdot g$), thermal conductivity ($g/\tau_p$), and diffusivity ($1/(\tau_p \cdot g)$) all emerge from the same partition lag and coupling parameters. Transport is always navigation through apertures while paying the memory cost of phase-lock reconfiguration.}
+\label{fig:transport_coefficients}
+\end{figure}
+
+%==============================================================================
+% Figure F-16: Ensemble Sliding Window
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_ensemble_sliding_window.png}
+\caption{\textbf{The S-Sliding Window: Observing Fluids One State at a Time.}
+The S-sliding window is the mechanism by which continuous fluid dynamics emerges from discrete categorical observations. (A) Window definition: at any instant, the observer accesses one categorical state. The window ``slides'' across S-space as time progresses, traversing the fluid's categorical structure. This is analogous to reading text---each moment reveals one letter, but the sequence reconstructs the message. (B) Window adjacency: adjacent windows are connected by S-transformation; distant windows are connected by composition of transformations. The adjacency structure encodes the fluid's topology. (C) Ensemble interpretation: the window ensemble (all positions the window has visited) defines the observed fluid properties. Thermodynamic averages are window-ensemble averages; fluctuations are window-to-window variations. (D) Connection to measurement: every physical measurement is an S-sliding window observation. Mass spectrometry slides through mass-to-charge space; NMR slides through spin space; chromatography slides through retention space. The S-sliding window is the universal measurement formalism.}
+\label{fig:ensemble_sliding_window}
+\end{figure}
+
+%==============================================================================
+% Figure F-17: Hardware Ensemble Mapping
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_ensemble_hardware_mapping.png}
+\caption{\textbf{Hardware Ensemble Mapping: From Abstract S-Space to Physical Instruments.}
+The abstract S-entropy coordinates map to concrete hardware implementations, validating the theory through experimental prediction. (A) S-to-hardware correspondence: each S-coordinate component has a preferred hardware manifestation. $S_k$ maps to configurational probes (mass spectrometry, NMR); $S_t$ maps to temporal probes (relaxation measurements, kinetics); $S_e$ maps to energetic probes (calorimetry, spectroscopy). (B) Virtual instrument construction: any combination of hardware oscillators defines a virtual instrument with a characteristic S-accessibility matrix. The universal virtual instrument algorithm selects optimal hardware combinations for target S-measurements. (C) Platform independence: identical S-dynamics produce equivalent predictions across different hardware platforms. A retention time predicted from S-transformation matches measurements on HPLC, UHPLC, or GC---the hardware details are absorbed into instrument parameters, not the underlying physics. (D) Calibration as S-alignment: instrument calibration is alignment of hardware oscillation modes to S-coordinate axes. Well-calibrated instruments have diagonal S-accessibility matrices; poorly calibrated instruments have off-diagonal coupling that must be deconvolved.}
+\label{fig:hardware_ensemble_mapping}
+\end{figure}
+
+%==============================================================================
+% Figure F-18: Oscillatory Reality
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/oscillatory_reality_panel.png}
+\caption{\textbf{Oscillatory Reality: Why Fluids Must Oscillate.}
+This figure establishes the fundamental necessity of oscillatory dynamics in bounded systems, which underpins all fluid behaviour. (A) Poincar\'{e} recurrence theorem: any bounded system with finite phase space volume must return arbitrarily close to its initial state---this is not an approximation but a mathematical necessity. For fluids in containers, boundedness guarantees recurrence; recurrence guarantees oscillation. (B) The pendulum as universal model: the simple pendulum embodies the essence of oscillation---potential energy converts to kinetic and back, tracing a closed orbit in phase space. Every fluid molecule is a pendulum, oscillating in its local potential well (Van der Waals, electrostatic, or entropic). (C) Phase space closure: the fluid's phase space trajectory must close (by recurrence), defining a natural period $T$. This period is the fundamental timescale of categorical completion---the ``tick'' of the fluid's internal clock. (D) Implications for viscosity: oscillation frequency determines partition lag $\tau_p \sim 1/\omega$. Fast oscillators (high temperature, light molecules) have short partition lag and low viscosity; slow oscillators (low temperature, heavy molecules) have long partition lag and high viscosity. Oscillatory dynamics is not emergent---it is the foundation from which all fluid properties derive.}
+\label{fig:oscillatory_reality}
+\end{figure}
+
+%==============================================================================
+% Figure F-19: Topology and Categories
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/topology_categories_panel.png}
+\caption{\textbf{Topological Structure of Categorical Spaces: Apertures as Boundaries.}
+This figure reveals the deep connection between categorical structure and topology, showing how apertures arise as topological boundaries between categorical regions. (A) Categorical space as topological space: the set of categorical states $\{\mathcal{C}_i\}$ forms a topological space with the ``aperture topology''---open sets are collections of states reachable without crossing apertures. Connected components are phases; boundaries are phase transitions. (B) Apertures as topological boundaries: the aperture between categories $\mathcal{C}_i$ and $\mathcal{C}_j$ is the boundary $\partial(\mathcal{C}_i \cup \mathcal{C}_j) \cap \mathcal{C}_i \cap \mathcal{C}_j$. Selectivity $s$ measures the ``permeability'' of this boundary---how easily the system crosses from one categorical region to another. (C) Homology and transport: the first homology group $H_1$ counts independent loops in categorical space. Each loop corresponds to a cyclic transport pathway; the homology class determines which apertures must be traversed. Non-trivial homology means multiple routes exist (path degeneracy in chromatography). (D) Euler characteristic and phase: the Euler characteristic $\chi = V - E + F$ (vertices - edges + faces in the categorical complex) distinguishes phases. Gases have high $\chi$ (many disconnected components); liquids have low $\chi$ (percolating network); solids have $\chi = 1$ (single connected lattice). Phase transitions are topological transitions in categorical space.}
+\label{fig:topology_categories}
+\end{figure}
+
+%==============================================================================
+% Figure F-20: Vibration and Field Mapping
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/vibration_field_mapper_panel.png}
+\caption{\textbf{Vibrational Mode Analysis and Field Mapping: Exotic Instruments for Partition Coordinates.}
+This figure demonstrates how exotic virtual instruments---the vibrational mode analyser and the field mapper---directly measure partition coordinates in fluid systems, providing experimental validation of the categorical framework. (A) Vibrational mode analyser: molecular vibrations are oscillations in local potential wells. The vibrational spectrum encodes partition lag $\tau_p$ (line width), coupling strength $g$ (line intensity), and aperture potential $\Phi_a$ (line position). IR and Raman spectroscopy are hardware implementations of this virtual instrument. (B) Mode-to-coordinate mapping: each vibrational mode corresponds to a specific categorical transition. Stretching modes cross high-barrier apertures (strong bonds); bending modes cross low-barrier apertures (weak interactions). The mode frequency $\omega \propto \sqrt{\Phi_a / m}$ directly measures aperture potential. (C) Electric field mapper: the local electric field encodes the aperture landscape. High field gradients indicate narrow apertures (strong selectivity); uniform fields indicate wide apertures (weak selectivity). Dielectric spectroscopy and NMR relaxation map the field structure. (D) Field-to-viscosity connection: regions of high field gradient have high local viscosity (strong phase-lock networks); regions of uniform field have low local viscosity (weak coupling). The field map is a direct visualisation of the memory landscape---where time emergence is costly vs cheap. This explains why polar solvents have higher viscosity than nonpolar solvents at similar molecular weights.}
+\label{fig:vibration_field_mapper}
+\end{figure}
+
+%==============================================================================
+% Figure F-21: Cross-Sectional Validation
+%==============================================================================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/panel_cross_sectional_validation.png}
+\caption{\textbf{Cross-Sectional Validation of the S-Transformation Operator.}
+This figure provides direct experimental validation of the S-transformation by measuring S-coordinates at multiple positions along a chromatographic column, then comparing each measurement to the prediction from the previous cross-section. (A) S-coordinate evolution: three analytes (polar/fast, medium, nonpolar/slow) show characteristic evolution patterns as they traverse the 15~cm column. Each point represents a measurable cross-section---the S-sliding window in action. Polar analytes evolve rapidly toward the stationary phase; nonpolar analytes, already close in S-space, evolve slowly. (B) Prediction vs measurement: scatter plot comparing predicted $S_k$ (from $\mathcal{T}_{dx}[\vec{S}(x)]$) to measured $S_k$ at each cross-section. All three analytes achieve $R^2 = 1.000$, validating the transformation. Points lie exactly on the identity line, confirming that $\vec{S}(x+dx) = \mathcal{T}_{dx}[\vec{S}(x)]$ at every position. (C) Aperture selectivity profile: selectivity $s = \exp(-d_S/\sigma_S)$ varies along the column as analytes approach or recede from the stationary phase S-coordinates. Polar analytes have low selectivity (weak retention, fast passage); nonpolar analytes have high selectivity (strong retention, slow passage). This validates the aperture interpretation of chromatographic retention. (D) Memory accumulation: the accumulated memory $\mathcal{M}(x) = \int \tau_p \cdot g \cdot |d\vec{S}|$ increases along the column, with the rate depending on analyte properties. Memory accumulation rate equals local viscosity, validating the ``viscosity as time emergence'' framework. The medium analyte accumulates most memory (large S-displacement with moderate coupling); the nonpolar analyte accumulates least (minimal S-displacement, already phase-locked). (E) Prediction error: the error $\|\vec{S}_{\text{meas}} - \vec{S}_{\text{pred}}\|$ remains near zero at all cross-sections for all analytes, confirming transformation validity across the entire column. (F) Measurement schematic: multiple detection points along the column enable cross-sectional observation. Each vertical line represents a UV/MS measurement window; together they validate $\mathcal{T}_{dx}$ at every step. This transforms chromatography from single-point detection to distributed S-space observation.}
+\label{fig:cross_sectional_validation}
+\end{figure}
+

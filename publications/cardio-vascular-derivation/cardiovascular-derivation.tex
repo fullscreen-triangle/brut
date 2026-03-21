@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,twocolumn,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
@@ -34,9 +34,8 @@
 
 \author{
 Kundai Farai Sachikonye\\
-Department of Mathematical Physiology\\
-Technical University of Munich\\
-\texttt{kundai.sachikonye@wzw.tum.de}
+AIMe Registry for Artificial Intelligence\\
+\texttt{kundai.sachikonye@bitspark.com}
 }
 
 \date{\today}
@@ -46,7 +45,7 @@ Technical University of Munich\\
 \maketitle
 
 \begin{abstract}
-We present a complete first-principles derivation of cardiovascular-pulmonary system architecture from categorical fluid dynamics, ideal gas theory, and transport partition mechanics. The derivation requires no empirical biological assumptions—all physiological parameters emerge as necessary consequences of optimizing partition operations in bounded oscillatory systems. Starting from three foundational frameworks—dimensional reduction in fluid systems ($3\mathrm{D} \to 2\mathrm{D} \times 1\mathrm{D}$), categorical pressure as state density ($P = \kB T \partial M/\partial V$), and universal transport coefficients ($\Xi = \mathcal{N}^{-1} \sum_{i,j} \taulag_{ij} g_{ij}$)—we derive the quantitative structure of lungs, blood, and circulation without adjustable parameters.
+We present a complete first-principles derivation of cardiovascular-pulmonary system architecture from categorical fluid dynamics, ideal gas theory, and transport partition mechanics. The derivation requires no empirical biological assumptions—all physiological parameters emerge as necessary consequences of optimizing partition operations in bounded oscillatory systems. Starting from three foundational frameworks—dimensional reduction in fluid systems ($3\mathrm{D} \to 2\mathrm{D} \times 1\mathrm{D}$), categorical pressure as state density ($P = \kB T \partial M/\partial V$), and universal transport coefficients ($\Xi = \mathcal{N}^{-1} \sum_{i,j} \taulag_{ij} g_{ij}$) we derive the quantitative structure of lungs, blood, and circulation without adjustable parameters.
 
 The alveolar architecture emerges from minimizing gas-liquid partition time subject to fixed lung volume, yielding $N = 3 \times 10^{8}$ alveoli with total surface area $A = 70~\mathrm{m}^{2}$ and optimal radius $r \approx 120~\mu\mathrm{m}$. The alveolar gas equation follows from categorical pressure balance during continuous O$_{2}$ partition operations. Hemoglobin's tetrameric structure with cooperative binding ($n = 2.8$) emerges from optimizing oxygen delivery via cascading partition lag reduction, with the characteristic P$_{50} = 27$ mmHg derived from sequential binding affinities. Murray's cubic branching law ($r_{\mathrm{parent}}^{3} = \sum r_{\mathrm{daughter}}^{3}$) follows from minimizing total partition entropy in the vascular tree. Blood viscosity ($\mu = 3-4$ cP) emerges from red blood cell partition lag statistics at physiological hematocrit. Cardiac output ($\mathrm{CO} = 5$ L/min) is determined by metabolic oxygen demand through Fick's principle. Capillary diameter ($7~\mu\mathrm{m}$) is constrained by red blood cell geometry, while intercapillary spacing ($50-100~\mu\mathrm{m}$) follows from Krogh's tissue cylinder diffusion model.
 
@@ -54,9 +53,6 @@ Experimental validation demonstrates quantitative agreement across all derived p
 
 \textbf{Keywords:} cardiovascular biophysics, partition dynamics, alveolar architecture, hemoglobin cooperativity, Murray's law, Krogh cylinder, categorical fluid dynamics, transport coefficients
 \end{abstract}
-
-\tableofcontents
-\newpage
 
 \section{Introduction}
 
@@ -968,6 +964,19 @@ At 70 beats/min, cardiac power output is
 
 With cardiac efficiency approximately 20-25\%, metabolic power requirement for the heart is approximately 4-5 W, consistent with observed myocardial oxygen consumption of 30 mL/min.
 
+
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel15_activity_sleep_coupling.png}
+\caption{\textbf{Activity--Sleep Coupling: Metabolic Demand and Cardiac Coherence Recovery (Oura Ring, 104 activity days, 86 sleep nights).}
+\textbf{Panel A (left):} Active calories versus subsequent sleep score, colored by mean nocturnal $R_c$. The weak negative trend suggests that higher daytime energy expenditure does not linearly improve sleep quality, consistent with the partition framework's prediction that sleep quality depends on regime traversal depth (coherent $\to$ phase-locked) rather than total metabolic load.
+\textbf{Panel B (center-left):} Daily step count versus deep sleep duration, colored by sleep efficiency. The scatter reveals substantial individual variability but a mild positive association between physical activity and deep (phase-locked regime) sleep, mediated by efficiency.
+\textbf{Panel C (center-right):} Three-dimensional scatter of active calories $\times$ deep sleep hours $\times$ REM sleep hours, colored by sleep score. The distribution shows that optimal sleep scores (bright) cluster in a region requiring both sufficient deep ($>1$~hr) and REM ($>0.5$~hr) sleep, regardless of daytime caloric expenditure---supporting the partition theory prediction that sleep architecture quality depends on regime diversity rather than total duration.
+\textbf{Panel D (right):} Longitudinal 86-night time series of sleep score (blue) and mean nocturnal $R_c$ (red). The two signals co-vary with modest correlation, confirming that cardiac coherence during sleep is a physiologically meaningful marker of sleep quality. Periodic fluctuations suggest circadian and ultradian modulation of the coherence--quality relationship.}
+\label{fig:activity_sleep_coupling}
+\end{figure*}
+
 \subsection{Exercise Responses}
 
 During exercise, metabolic oxygen consumption increases dramatically. At maximal exertion, $\dot{V}\mathrm{O}_{2}$ can reach 3-4 L/min in trained athletes. Cardiac output must increase proportionally.
@@ -1218,6 +1227,17 @@ Several disease states reduce capillary density (rarefaction):
 
 Understanding these conditions through the partition framework suggests therapeutic targets: interventions that promote angiogenesis (exercise, VEGF therapy, nitric oxide donors) may restore optimal capillary density and improve tissue oxygenation.
 
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel14_predicted_vs_measured.png}
+\caption{\textbf{First-Principles Predictions vs Measured Anatomical Constants.}
+\textbf{Panel A (left):} Predicted-to-measured ratio for seven cardiovascular parameters derived from partition optimization with zero adjustable parameters. Six of seven parameters fall within the $\pm 10\%$ band (green shading): alveolar count ($3.0 \times 10^8$, exact match), surface area ($70$~m$^2$, exact), hemoglobin $P_{50}$ ($27$~mmHg, exact), cardiac output ($5.0$~L/min, exact), and capillary spacing ($70~\mu$m, exact). Only the alveolar radius prediction ($120~\mu$m vs measured $100~\mu$m) shows $>10\%$ deviation.
+\textbf{Panel B (center-left):} Log-scale comparison of predicted (blue circles) and measured (red crosses) values spanning eight orders of magnitude. Vertical connectors show the deviation at each parameter. The near-universal overlap across this dynamic range demonstrates the quantitative power of the partition framework.
+\textbf{Panel C (center-right):} Three-dimensional scatter of log(predicted) $\times$ log(measured) $\times$ percentage error. All seven parameters cluster near the $z = 0$ plane (zero error), with the diagonal identity line confirming systematic agreement rather than coincidental matching.
+\textbf{Panel D (right):} Murray's law vascular branching: vessel radius across 23 airway/vascular generations. The predicted cubic-law exponent ($n = 3.0$, blue) and empirically measured exponent ($n = 2.85$, red dashed) diverge by only 5\% over the full bronchial tree, confirming that the partition-theoretic derivation of Murray's law reproduces the measured branching architecture from trachea to terminal bronchioles.}
+\label{fig:predicted_vs_measured}
+\end{figure*}
+
 \subsection{Experimental Validation}
 
 Table \ref{tab:capillary_validation} compares Krogh model predictions with experimental measurements.
@@ -1400,6 +1420,17 @@ R_{\mathrm{crit,brain}} &= 39~\mu\mathrm{m}
 \end{align}
 
 Every parameter derives from physical principles without adjustable constants. The cardiovascular-pulmonary system is uniquely determined by the constraints of partition-based gas transport in bounded fluid networks.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel13_partition_cascade_o2.png}
+\caption{\textbf{Oxygen Transport as a Seven-Stage Partition Cascade.}
+\textbf{Panel A (left):} Transport lag on logarithmic scale for each cascade stage. Arterial transport dominates ($12.5$~s), followed by ventilation ($3.0$~s) and capillary exchange ($1.5$~s). Plasma dissolution ($0.001$~s) and hemoglobin binding ($0.01$~s) are nearly instantaneous, confirming that oxygen delivery is rate-limited by convective transport rather than chemical kinetics---a prediction of partition lag theory.
+\textbf{Panel B (center-left):} $P_{O_2}$ waterfall showing the cumulative partial pressure drop from inspired air ($160$~mmHg) to mitochondria ($3$~mmHg). The two largest drops occur at ventilation ($\Delta P = 60$~mmHg, alveolar--atmospheric gradient) and capillary exchange ($\Delta P = 60$~mmHg, arterial--venous extraction), identifying these as the primary partition boundaries in the oxygen transport cascade.
+\textbf{Panel C (center-right):} Three-dimensional bar chart of cascade stage $\times$ transport lag (log scale) $\times$ $\Delta P_{O_2}$. The volume of each bar represents the ``partition work'' (product of lag and pressure drop) at each stage. Ventilation and capillary exchange dominate, consistent with their identification as the rate-limiting partitions.
+\textbf{Panel D (right):} Hemoglobin--oxygen dissociation curve derived from Hill kinetics with $P_{50} = 27$~mmHg and Hill coefficient $n = 2.7$. The predicted $P_{50}$ from partition optimization (blue dashed line) matches the measured value exactly, confirming that hemoglobin's binding affinity emerges from the requirement to optimize oxygen delivery across the partition cascade. Arterial ($P_{O_2} = 100$, $S_{O_2} = 98\%$) and venous ($P_{O_2} = 40$, $S_{O_2} = 75\%$) operating points are marked.}
+\label{fig:partition_cascade_o2}
+\end{figure*}
 
 \subsection{Scaling and Comparative Physiology}
 

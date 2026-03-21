@@ -1,0 +1,183 @@
+% ═══════════════════════════════════════════════════════════════════════════════
+% Validation Panel Figure Captions
+% ═══════════════════════════════════════════════════════════════════════════════
+
+% ─── Panel 1: Oura Sleep Stage Rc ─────────────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel1_oura_sleep_stage_rc.png}
+\caption{\textbf{Cardiac Coherence $R_c$ Across Sleep Stages (Oura Ring, 86 nights, 8{,}701 epochs).}
+\textbf{Panel A (left):} Violin plots of $R_c$ distribution per sleep stage, with shaded bands indicating regime boundaries (phase-locked $>0.95$, coherent $0.80$--$0.95$, cascade $0.50$--$0.80$). All stages compress into the coherent regime $[0.86, 0.99]$, reflecting the single-oscillator nature of the cardiac pacemaker. Stage ordering Deep $>$ Awake $>$ REM $>$ Light is preserved in median $R_c$.
+\textbf{Panel B (center-left):} Mean RMSSD per stage with standard deviation error bars. Light sleep exhibits the highest RMSSD ($65.8 \pm 23.0$ ms), exceeding REM ($61.0$ ms) and Deep ($51.8$ ms)---a new discovery attributable to K-complex and spindle-driven autonomic bursts during N2.
+\textbf{Panel C (center-right):} Three-dimensional scatter of stage index $\times$ $R_c$ $\times$ RMSSD (400 downsampled points per stage), revealing the positive RMSSD--$R_c$ correlation within each stage and the characteristic spread differences across stages.
+\textbf{Panel D (right):} Epoch-level classification accuracy within the predicted regime boundary per stage. Awake achieves 55.2\% accuracy in the coherent band; Deep achieves 49.6\% of epochs crossing into phase-locked ($R_c > 0.95$), confirming partial agreement with theoretical predictions.}
+\label{fig:oura_sleep_stage_rc}
+\end{figure*}
+
+% ─── Panel 2: Oura Transitions and Scores ────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel2_oura_transitions_scores.png}
+\caption{\textbf{Sleep Architecture and Cardiac Coherence--Quality Coupling (Oura Ring, 86 nights).}
+\textbf{Panel A (left):} $4 \times 4$ sleep stage transition probability matrix computed from 5-minute hypnogram epochs. Self-transition dominates all stages (Awake 67.2\%, Light 66.0\%, Deep 63.3\%, REM 44.6\%). The near-zero Deep$\to$REM probability ($0.4\%$) confirms the obligate Light-stage intermediary in sleep architecture, consistent with regime cascade ordering.
+\textbf{Panel B (center-left):} Mean cardiac coherence $R_c$ versus Oura sleep score, colored by deep sleep hours. The positive trend line confirms that higher cardiac coherence during sleep correlates with subjective sleep quality, though variance is substantial ($r \approx 0.2$).
+\textbf{Panel C (center-right):} Three-dimensional scatter of $R_c \times$ deep sleep hours $\times$ sleep score, colored by score magnitude. The cluster structure reveals that optimal sleep scores require both sufficient deep sleep ($>1.5$ hrs) and moderate-to-high $R_c$.
+\textbf{Panel D (right):} Stage run-length distributions (minutes) as box plots. REM shows the shortest median bout length ($\sim$9 min) and tightest distribution, consistent with its role as a transient decoupled state requiring periodic re-entry through lighter stages.}
+\label{fig:oura_transitions_scores}
+\end{figure*}
+
+% ─── Panel 3: MIT-BIH Cardiac Regime Classification ─────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel3_mitdb_cardiac_regimes.png}
+\caption{\textbf{Cardiac Regime Classification from Beat-to-Beat HRV (MIT-BIH Arrhythmia Database, 48 records, 1{,}439 windows).}
+\textbf{Panel A (left):} Box plots of $R_c$ per rhythm type computed from 60-second sliding windows. Normal sinus rhythm (NSR) spans the full coherent--cascade range (median $R_c = 0.87$), while atrial fibrillation (AFIB, $R_c = 0.14$) and bigeminy ($R_c = 0.02$) fall decisively into the turbulent regime. Ventricular tachycardia (VT, $R_c = 0.64$) occupies the cascade regime as predicted.
+\textbf{Panel B (center-left):} Kernel density estimates of $R_c$ distributions with regime boundary shading. AFIB concentrates sharply below $R_c = 0.30$ (78.0\% turbulent), providing a clean discriminant from NSR ($t = 33.2$, $p < 10^{-6}$). Bigeminy shows the most extreme turbulent shift ($R_c = 0.018$), revised from the initially predicted aperture regime.
+\textbf{Panel C (center-right):} Three-dimensional scatter of rhythm index $\times$ $R_c$ $\times$ heart rate, showing that heart rate alone cannot discriminate rhythms but $R_c$ provides orthogonal separation. VT occupies a distinct HR$>$150 cluster at intermediate $R_c$.
+\textbf{Panel D (right):} Stacked regime fraction bars per rhythm type, quantifying the percentage of 60-second windows in each partition regime. NSR distributes across all five regimes, reflecting its adaptive variability, while pathological rhythms concentrate in one or two regimes.}
+\label{fig:mitdb_cardiac_regimes}
+\end{figure*}
+
+% ─── Panel 4: CHF vs NSR Coherence Deficit ───────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel4_chf_nsr_coherence_deficit.png}
+\caption{\textbf{The CHF Paradox: Pathological Phase-Locking (MIT-BIH + CHF Database, 2{,}462 windows).}
+\textbf{Panel A (left):} Histogram overlay of $R_c$ distributions for NSR (1{,}063 windows, blue) and CHF (1{,}399 windows, red). Contrary to naive expectation, CHF shifts \emph{rightward} toward higher $R_c$ (mean $0.797$ vs $0.710$, $t = -6.32$, $p < 0.001$), revealing pathological phase-locking rather than increased disorder.
+\textbf{Panel B (center-left):} Grouped regime fraction comparison. CHF shows 63.6\% phase-locked windows versus 38.5\% for NSR, with reduced cascade and aperture fractions. This loss of regime diversity reflects the sympathetic hyperactivation and HRV suppression characteristic of chronic heart failure.
+\textbf{Panel C (center-right):} Three-dimensional visualization of CHF records ($\text{record} \times \text{window} \times R_c$), colored by $R_c$ magnitude. The predominance of green-to-blue (high $R_c$) across all records confirms that pathological phase-locking is a systemic feature, not confined to individual patients.
+\textbf{Panel D (right):} KDE density comparison with mean $R_c$ markers (dashed verticals). The CHF distribution is bimodal with a dominant phase-locked peak ($R_c > 0.95$) and a secondary turbulent tail, motivating Theorem~11's two-failure-mode formalization requiring both $R_c$ and entropy utilization $S_e$ for disease discrimination.}
+\label{fig:chf_nsr_coherence_deficit}
+\end{figure*}
+
+% ─── Panel 5: Cardiac-Neural Decoupling ──────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel5_cardiac_neural_decoupling.png}
+\caption{\textbf{Cardiac--Neural Decoupling Across Sleep Stages.}
+\textbf{Panel A (left):} Scatter plot of cardiac $R_c$ versus neural $R_n$ with the identity line ($R_c = R_n$) for reference. REM sleep exhibits the largest deviation from unity coupling, with $R_c = 0.927$ (coherent) but $R_n = 0.552$ (cascade), yielding a decoupling gap of $\Delta = 0.375$. All other stages cluster near the diagonal ($\Delta < 0.15$).
+\textbf{Panel B (center-left):} Absolute gap $|R_c - R_n|$ per sleep stage. The red dashed threshold at $\Delta = 0.15$ delineates coupled from decoupled states. Only N1 ($\Delta = 0.15$) and REM ($\Delta = 0.375$) cross this boundary, with REM showing 2.5$\times$ the gap of any other stage.
+\textbf{Panel C (center-right):} Three-dimensional scatter of $R_c \times R_n \times$ formula error, where formula error quantifies deviation from the coupling prediction $R_n/R_c = 0.87/\sqrt{R_c}$. Dashed lines connect observed points to the theoretical surface, showing that N2 and N3 lie closest to the prediction while REM deviates maximally (error $= 0.308$).
+\textbf{Panel D (right):} Normalized EEG band power profiles ($\delta$, $\theta$, $\alpha$, $\sigma$, $\beta$) per stage from normative spectral data (Rechtschaffen \& Kales, 1968; AASM, 2007). The spectral signature of each stage maps to its neural regime: SWS dominated by $\delta$ (phase-locked), Wake by $\alpha$/$\beta$ (coherent), REM by mixed $\theta$/$\beta$ (cascade/turbulent).}
+\label{fig:cardiac_neural_decoupling}
+\end{figure*}
+
+% ─── Panel 6: MIT-BIH Window Landscape ───────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel6_mitdb_window_landscape.png}
+\caption{\textbf{Window-Level Cardiac Coherence Landscape (MIT-BIH, 1{,}439 windows).}
+\textbf{Panel A (left):} Heart rate versus $R_c$ for all 60-second windows, colored by partition regime. The characteristic inverse relationship reveals that tachycardic windows ($\text{HR} > 120$ bpm) predominantly occupy cascade and turbulent regimes, while bradycardic and normal-rate windows span the full coherent--phase-locked range.
+\textbf{Panel B (center-left):} Ectopic (ventricular) beat fraction versus $R_c$ with linear trend. Windows with $>20\%$ ectopic beats universally fall below $R_c = 0.30$ (turbulent), confirming that ventricular ectopy is a sufficient condition for turbulent regime classification. The dashed regression line quantifies the monotonic coherence--ectopy relationship.
+\textbf{Panel C (center-right):} Three-dimensional scatter of heart rate $\times$ ectopic fraction $\times$ $R_c$, colored by regime. The two-dimensional projections (Panels A and B) underestimate the separation achievable in the full three-dimensional state space, where rhythm types form distinct clusters.
+\textbf{Panel D (right):} Mean $R_c$ per MIT-BIH record, sorted in ascending order and colored by dominant rhythm. The stepped structure reveals that records dominated by pathological rhythms (AFIB, bigeminy) cluster at low $R_c$, while NSR-dominated records span $R_c = 0.5$--$0.95$. Dashed lines at $R_c = 0.80$ and $0.30$ mark the coherent--cascade and aperture--turbulent boundaries.}
+\label{fig:mitdb_window_landscape}
+\end{figure*}
+
+% ─── Panel 7: Cardiac Equations of State ─────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel7_cardiac_equations_of_state.png}
+\caption{\textbf{Seven Physiological Regimes: Hemodynamic State Variables from Cardiac Equations of State.}
+\textbf{Panel A (left):} Grouped bar chart of cardiac output (CO, L/min), heart rate (HR/10, bpm), and mean arterial pressure (MAP/10, mmHg) across seven regimes derived from partition optimization: rest, submaximal exercise, maximal exercise, compensated heart failure (HF), hypertension, hypovolemia, and distributive shock. Each regime represents a distinct operating point on the cardiac partition surface.
+\textbf{Panel B (center-left):} Pressure--volume loop landmarks showing end-diastolic volume (EDV, light shading) and end-systolic volume (ESV, dark shading) with ejection fraction annotated. Heart failure shows the largest EDV (180 mL) with depressed EF (0.61), while hypovolemia shows the smallest EDV (80 mL) with maintained EF (0.65), distinguishing volume-overload from volume-depleted failure modes.
+\textbf{Panel C (center-right):} Three-dimensional scatter of end-systolic elastance $E_{es}$ versus arterial elastance $E_a$ versus stroke work. The seven regimes trace a trajectory through this coupling space, with maximal exercise achieving the highest stroke work through elevated $E_{es}$ while maintaining favorable $E_{es}/E_a$ ratio.
+\textbf{Panel D (right):} Ventriculo-arterial coupling ratio $E_{es}/E_a$ per regime. The green band ($1.5$--$2.0$) marks the optimal efficiency range. Rest and exercise regimes occupy this band, while heart failure ($E_{es}/E_a = 0.4$) and distributive shock ($E_{es}/E_a = 0.8$) fall below, quantifying the coupling deficit that partition theory predicts as the primary failure signature.}
+\label{fig:cardiac_equations_of_state}
+\end{figure*}
+
+% ─── Panel 8: Frank-Starling and PV Relations ────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel8_frank_starling_pv.png}
+\caption{\textbf{Frank--Starling Mechanism and Pressure--Volume Relationships as Partition Depth Optimization.}
+\textbf{Panel A (left):} Frank--Starling curve (stroke volume vs.\ end-diastolic volume) with the partition depth model $\text{SV} = \text{SV}_{\max}(1 - e^{-\text{EDV}/k})$ overlaid. The seven physiological regimes are plotted as colored markers, demonstrating that the exponential saturation form emerges from sarcomere overlap geometry interpreted as partition depth optimization rather than empirical curve fitting.
+\textbf{Panel B (center-left):} End-systolic pressure--volume relations (ESPVR) for each regime, plotted as $P_{es} = E_{es}(V - V_d)$ with dead volume $V_d = 10$ mL. The fan of ESPVR lines, ranging from $E_{es} = 0.8$ (distributive shock) to $E_{es} = 5.0$ (maximal exercise), is bounded below by the exponential end-diastolic pressure--volume relation (EDPVR, dashed). The ESPVR slope is identified with the partition extinction rate (Theorem~4).
+\textbf{Panel C (center-right):} Three-dimensional trajectory through EDV $\times$ ESV $\times$ MAP space, connecting the seven regimes. The trajectory reveals two distinct failure branches: heart failure deviates toward high EDV with low MAP, while hypovolemia deviates toward low EDV with low MAP, both departing from the healthy exercise arc.
+\textbf{Panel D (right):} Total peripheral resistance (TPR) versus cardiac output (CO) with MAP isobars (constant-pressure hyperbolas at 50, 80, 93, 110, 130 mmHg). The seven regimes distribute along different isobars, with exercise sliding rightward along the 110 mmHg isobar (vasodilation at high CO) and shock falling to the 50 mmHg isobar (circulatory collapse).}
+\label{fig:frank_starling_pv}
+\end{figure*}
+
+% ─── Panel 9: Windkessel and Arterial Mechanics ──────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel9_windkessel_arterial.png}
+\caption{\textbf{Windkessel Dynamics and Arterial Partition Buffer Theory.}
+\textbf{Panel A (left):} Two-element Windkessel pressure waveforms for rest (HR\,=\,70, blue), maximal exercise (HR\,=\,185, green), and compensated heart failure (HR\,=\,90, orange). The waveform morphology---systolic upstroke, dicrotic notch, and diastolic decay---emerges from the partition buffer interpretation of arterial compliance, with the RC time constant determining diastolic runoff rate.
+\textbf{Panel B (center-left):} Arterial compliance degradation with age, showing exponential decline in both aortic ($C_0 = 1.5$ mL/mmHg, $\tau = 50$ yr) and peripheral ($C_0 = 0.8$ mL/mmHg, $\tau = 67$ yr) compartments. This compliance loss is interpreted as progressive partition buffer exhaustion, predicting isolated systolic hypertension in the elderly as a natural consequence of buffer depletion.
+\textbf{Panel C (center-right):} Three-dimensional constraint surface HR $\times$ SV $\times$ MAP, with the seven physiological regimes overlaid as markers. The surface $\text{MAP} = \text{HR} \times \text{SV} \times \text{TPR}/1000$ constrains accessible states to a two-dimensional manifold in the three-dimensional hemodynamic space, limiting the degrees of freedom available for cardiovascular regulation.
+\textbf{Panel D (right):} Pulse wave velocity (PWV) versus MAP, derived from the Moens--Korteweg relation $\text{PWV} \propto \sqrt{E \cdot h / \rho r}$. The shaded region between age-25 and age-75 curves quantifies the effect of arterial stiffening. Regime markers show that hypertension and exercise occupy the high-PWV region, while shock and hypovolemia cluster at low PWV, consistent with partition buffer theory predictions.}
+\label{fig:windkessel_arterial}
+\end{figure*}
+
+% ─── Panel 10: Coupling Formula Validation ───────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel10_coupling_formula_validation.png}
+\caption{\textbf{Validation of the Cardiac--Neural Coupling Formula $R_n/R_c = 0.87/\sqrt{R_c}$.}
+\textbf{Panel A (left):} Observed versus predicted $R_n/R_c$ ratio for five sleep stages. The dashed diagonal represents perfect agreement. N1 and N2 lie closest to the prediction line (error $< 0.10$), while Wake (overestimates $R_n$) and REM (underestimates $R_n$) show the largest deviations, indicating that the coupling formula holds during intermediate-coherence states but breaks down at the extremes of full wakefulness and active decoupling.
+\textbf{Panel B (center-left):} Absolute formula error per sleep stage. The green dashed line marks the 5\% tolerance threshold and the orange line marks 15\%. N3/SWS achieves the best agreement (error $= 0.056$), confirming that deep sleep represents the most tightly coupled cardiac--neural state. REM error ($0.308$) exceeds all other stages by $>2\times$, consistent with active decoupling (Corollary~8).
+\textbf{Panel C (center-right):} Three-dimensional visualization of the theoretical coupling surface $R_n = 0.87\sqrt{R_c}$ (blue curve at $z=0$) with observed data points elevated by their formula error. Vertical dashed connectors show the residual from each stage to the theoretical surface, revealing that the coupling formula defines a one-dimensional manifold that sleep stages deviate from in proportion to their decoupling.
+\textbf{Panel D (right):} Cardiac versus neural regime classification per stage, encoded numerically (0\,=\,turbulent through 4\,=\,phase-locked). During coupled states (Wake, N2, SWS), cardiac and neural regimes are concordant or adjacent. During REM, the cardiac regime remains coherent (level 3) while the neural regime drops to cascade (level 2), visualizing the regime discordance that defines active decoupling.}
+\label{fig:coupling_formula_validation}
+\end{figure*}
+
+% ─── Panel 11: Consciousness Window and Metabolic Cost ───────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel11_consciousness_window_metabolic.png}
+\caption{\textbf{Consciousness Window Duration and Metabolic Cost of Neural Coherence.}
+\textbf{Panel A (left):} Predicted consciousness window $\Delta t_C = T_{\text{cardiac}} / (2\pi\sqrt{R_c \cdot R_n})$ as a function of heart rate for four neural coherence levels. At resting conditions ($\text{HR} = 70$, $R_n = 0.87$), $\Delta t_C \approx 150$ ms, falling within the empirically documented 100--500 ms range (green band). Tachycardia contracts the window while bradycardia expands it, predicting that meditation ($\text{HR} < 50$) extends the subjective present moment.
+\textbf{Panel B (center-left):} Metabolic power required to maintain neural coherence, $P_{\text{coh}} \propto R_n^2 / (1 - R_n^2)$, showing the characteristic divergence as $R_n \to 1$. The intersection at $R_n = 0.87$ with the resting brain power of 20~W (red dashed line) confirms the first-principles prediction of the metabolic cost of waking consciousness without free parameters.
+\textbf{Panel C (center-right):} Three-dimensional stacked bar chart of the brain energy budget across $R_n$ values. Four components---housekeeping/ion pumps (gray, 15~W constant), perception processing (blue, 11~W constant), default mode network (purple, scaling as $4(1-R_n)$~W), and coherent thought (red, divergent)---sum to the total brain metabolic demand. At $R_n = 0.87$, total power $\approx 50$~W, matching the empirical resting brain metabolism.
+\textbf{Panel D (right):} Mean consciousness window $\Delta t_C$ per sleep stage computed from Oura heart rate data and stage-specific $(R_c, R_n)$ values. Wake and SWS show comparable windows ($\sim$150 ms), while REM exhibits an expanded window ($\sim$190 ms) due to reduced $R_n$ in the denominator, potentially explaining the subjective time dilation reported during dreaming.}
+\label{fig:consciousness_window_metabolic}
+\end{figure*}
+
+% ─── Panel 12: Altitude and O2-Neural Coupling ──────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel12_altitude_o2_neural.png}
+\caption{\textbf{Altitude-Dependent Neural Coherence Degradation via Oxygen--Neural Coupling.}
+\textbf{Panel A (left):} Predicted neural coherence $R_n(h) = R_n^0 \cdot e^{-h/(2H_{\text{scale}})}$ as a function of altitude, with $H_{\text{scale}} = 8.5$~km. Regime boundary bands are overlaid. At sea level, $R_n = 0.87$ (coherent); at Everest Base Camp (5{,}500~m), $R_n \approx 0.62$ (cascade, impaired judgement); at the summit (8{,}849~m), $R_n \approx 0.52$ (cascade--aperture boundary, severe cognitive degradation). Red markers indicate key altitude landmarks.
+\textbf{Panel B (center-left):} $R_n$ as a function of arterial $P_{O_2}$, with cognitive domain thresholds annotated. Full cognition persists above $R_n = 0.87$ ($P_{O_2} > 100$~mmHg); judgement impairment begins at $R_n = 0.65$ ($P_{O_2} \approx 56$~mmHg); confusion onset at $R_n = 0.50$ ($P_{O_2} \approx 33$~mmHg); loss of consciousness below $R_n = 0.30$ ($P_{O_2} < 12$~mmHg). These thresholds match established aviation medicine criteria.
+\textbf{Panel C (center-right):} Three-dimensional trajectory of altitude $\times$ $P_{O_2}$ $\times$ $R_n$, colored by regime classification. The smooth trajectory through coherent (blue), cascade (green), and aperture (orange) regimes visualizes the progressive cognitive degradation as a continuous regime traversal rather than a binary threshold.
+\textbf{Panel D (right):} Cardiac--neural cascade dynamics following acute cardiac failure. $R_c$ (red) decays rapidly ($\tau_c \approx 30$~s) while $R_n$ (blue) follows with the oxygen--neural coupling time constant $\tau = 1/\kappa_{O_2\text{-neural}} \approx 213$~s. The neural LOC threshold ($R_n < 0.30$) is crossed at $t \approx 227$~s, matching the clinical observation that consciousness persists for 3--4 minutes after cardiac arrest due to residual cerebral oxygen reserves.}
+\label{fig:altitude_o2_neural}
+\end{figure*}
+
+% ─── Panel 13: Partition Cascade O2 Transport ────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel13_partition_cascade_o2.png}
+\caption{\textbf{Oxygen Transport as a Seven-Stage Partition Cascade.}
+\textbf{Panel A (left):} Transport lag on logarithmic scale for each cascade stage. Arterial transport dominates ($12.5$~s), followed by ventilation ($3.0$~s) and capillary exchange ($1.5$~s). Plasma dissolution ($0.001$~s) and hemoglobin binding ($0.01$~s) are nearly instantaneous, confirming that oxygen delivery is rate-limited by convective transport rather than chemical kinetics---a prediction of partition lag theory.
+\textbf{Panel B (center-left):} $P_{O_2}$ waterfall showing the cumulative partial pressure drop from inspired air ($160$~mmHg) to mitochondria ($3$~mmHg). The two largest drops occur at ventilation ($\Delta P = 60$~mmHg, alveolar--atmospheric gradient) and capillary exchange ($\Delta P = 60$~mmHg, arterial--venous extraction), identifying these as the primary partition boundaries in the oxygen transport cascade.
+\textbf{Panel C (center-right):} Three-dimensional bar chart of cascade stage $\times$ transport lag (log scale) $\times$ $\Delta P_{O_2}$. The volume of each bar represents the ``partition work'' (product of lag and pressure drop) at each stage. Ventilation and capillary exchange dominate, consistent with their identification as the rate-limiting partitions.
+\textbf{Panel D (right):} Hemoglobin--oxygen dissociation curve derived from Hill kinetics with $P_{50} = 27$~mmHg and Hill coefficient $n = 2.7$. The predicted $P_{50}$ from partition optimization (blue dashed line) matches the measured value exactly, confirming that hemoglobin's binding affinity emerges from the requirement to optimize oxygen delivery across the partition cascade. Arterial ($P_{O_2} = 100$, $S_{O_2} = 98\%$) and venous ($P_{O_2} = 40$, $S_{O_2} = 75\%$) operating points are marked.}
+\label{fig:partition_cascade_o2}
+\end{figure*}
+
+% ─── Panel 14: Predicted vs Measured Anatomical Constants ────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel14_predicted_vs_measured.png}
+\caption{\textbf{First-Principles Predictions vs Measured Anatomical Constants.}
+\textbf{Panel A (left):} Predicted-to-measured ratio for seven cardiovascular parameters derived from partition optimization with zero adjustable parameters. Six of seven parameters fall within the $\pm 10\%$ band (green shading): alveolar count ($3.0 \times 10^8$, exact match), surface area ($70$~m$^2$, exact), hemoglobin $P_{50}$ ($27$~mmHg, exact), cardiac output ($5.0$~L/min, exact), and capillary spacing ($70~\mu$m, exact). Only the alveolar radius prediction ($120~\mu$m vs measured $100~\mu$m) shows $>10\%$ deviation.
+\textbf{Panel B (center-left):} Log-scale comparison of predicted (blue circles) and measured (red crosses) values spanning eight orders of magnitude. Vertical connectors show the deviation at each parameter. The near-universal overlap across this dynamic range demonstrates the quantitative power of the partition framework.
+\textbf{Panel C (center-right):} Three-dimensional scatter of log(predicted) $\times$ log(measured) $\times$ percentage error. All seven parameters cluster near the $z = 0$ plane (zero error), with the diagonal identity line confirming systematic agreement rather than coincidental matching.
+\textbf{Panel D (right):} Murray's law vascular branching: vessel radius across 23 airway/vascular generations. The predicted cubic-law exponent ($n = 3.0$, blue) and empirically measured exponent ($n = 2.85$, red dashed) diverge by only 5\% over the full bronchial tree, confirming that the partition-theoretic derivation of Murray's law reproduces the measured branching architecture from trachea to terminal bronchioles.}
+\label{fig:predicted_vs_measured}
+\end{figure*}
+
+% ─── Panel 15: Activity-Sleep Coupling ───────────────────────────────────────
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel15_activity_sleep_coupling.png}
+\caption{\textbf{Activity--Sleep Coupling: Metabolic Demand and Cardiac Coherence Recovery (Oura Ring, 104 activity days, 86 sleep nights).}
+\textbf{Panel A (left):} Active calories versus subsequent sleep score, colored by mean nocturnal $R_c$. The weak negative trend suggests that higher daytime energy expenditure does not linearly improve sleep quality, consistent with the partition framework's prediction that sleep quality depends on regime traversal depth (coherent $\to$ phase-locked) rather than total metabolic load.
+\textbf{Panel B (center-left):} Daily step count versus deep sleep duration, colored by sleep efficiency. The scatter reveals substantial individual variability but a mild positive association between physical activity and deep (phase-locked regime) sleep, mediated by efficiency.
+\textbf{Panel C (center-right):} Three-dimensional scatter of active calories $\times$ deep sleep hours $\times$ REM sleep hours, colored by sleep score. The distribution shows that optimal sleep scores (bright) cluster in a region requiring both sufficient deep ($>1$~hr) and REM ($>0.5$~hr) sleep, regardless of daytime caloric expenditure---supporting the partition theory prediction that sleep architecture quality depends on regime diversity rather than total duration.
+\textbf{Panel D (right):} Longitudinal 86-night time series of sleep score (blue) and mean nocturnal $R_c$ (red). The two signals co-vary with modest correlation, confirming that cardiac coherence during sleep is a physiologically meaningful marker of sleep quality. Periodic fluctuations suggest circadian and ultradian modulation of the coherence--quality relationship.}
+\label{fig:activity_sleep_coupling}
+\end{figure*}

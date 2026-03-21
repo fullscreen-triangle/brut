@@ -4,7 +4,9 @@
       "Bash(find /c/Users/kunda/Documents/health/brut -maxdepth 2 -type f -name *.md -o -type f -name *.json -o -type f -name *.yaml -o -type f -name *.yml -o -type f -name *.toml)",
       "Bash(find /c/Users/kunda/Documents/health/brut -maxdepth 2 -not -path */.git/* -type d)",
       "Bash(xargs wc:*)",
-      "Bash(wc -l /c/Users/kunda/Documents/health/brut/docs/foundation/derivations/*.tex)"
+      "Bash(wc -l /c/Users/kunda/Documents/health/brut/docs/foundation/derivations/*.tex)",
+      "Bash(find /c/Users/kunda/Documents/health/brut -name *cardiac*equations* -o -name *cardio*neural*)",
+      "Bash(ls c:/Users/kunda/Documents/health/brut/demo/src/validation/panels/*.png)"
     ]
   }
 }

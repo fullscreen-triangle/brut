@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,twocolumn,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
@@ -71,10 +71,9 @@ Partition-Theoretic Derivation of Ventricular Mechanics \\
 Across Physiological Regimes}}
 
 \author{
-Kundai Farai Sachikonye \\
-Department of Mathematical Physiology \\
-Technical University of Munich \\
-\texttt{kundai.sachikonye@wzw.tum.de}
+Kundai Farai Sachikonye\\
+AIMe Registry for Artificial Intelligence\\
+\texttt{kundai.sachikonye@bitspark.com}
 }
 
 \date{\today}
@@ -283,6 +282,17 @@ $\EDV$ (mL) & $\Ls~(\mu\mathrm{m})$ & $h(\Ls)$ & $\SV$ pred. (mL) & $\SV$ meas. 
 \end{tabular}
 \end{table}
 
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel8_frank_starling_pv.png}
+\caption{\textbf{Frank--Starling Mechanism and Pressure--Volume Relationships as Partition Depth Optimization.}
+\textbf{Panel A (left):} Frank--Starling curve (stroke volume vs.\ end-diastolic volume) with the partition depth model $\text{SV} = \text{SV}_{\max}(1 - e^{-\text{EDV}/k})$ overlaid. The seven physiological regimes are plotted as colored markers, demonstrating that the exponential saturation form emerges from sarcomere overlap geometry interpreted as partition depth optimization rather than empirical curve fitting.
+\textbf{Panel B (center-left):} End-systolic pressure--volume relations (ESPVR) for each regime, plotted as $P_{es} = E_{es}(V - V_d)$ with dead volume $V_d = 10$ mL. The fan of ESPVR lines, ranging from $E_{es} = 0.8$ (distributive shock) to $E_{es} = 5.0$ (maximal exercise), is bounded below by the exponential end-diastolic pressure--volume relation (EDPVR, dashed). The ESPVR slope is identified with the partition extinction rate (Theorem~4).
+\textbf{Panel C (center-right):} Three-dimensional trajectory through EDV $\times$ ESV $\times$ MAP space, connecting the seven regimes. The trajectory reveals two distinct failure branches: heart failure deviates toward high EDV with low MAP, while hypovolemia deviates toward low EDV with low MAP, both departing from the healthy exercise arc.
+\textbf{Panel D (right):} Total peripheral resistance (TPR) versus cardiac output (CO) with MAP isobars (constant-pressure hyperbolas at 50, 80, 93, 110, 130 mmHg). The seven regimes distribute along different isobars, with exercise sliding rightward along the 110 mmHg isobar (vasodilation at high CO) and shock falling to the 50 mmHg isobar (circulatory collapse).}
+\label{fig:frank_starling_pv}
+\end{figure*}
+
 %==============================================================================
 \section{The Hill Force-Velocity Relation from Partition Lag Cascade}
 \label{sec:hill}
@@ -384,6 +394,17 @@ derived from momentum balance in the vascular tree (equivalent to Ohm's law for 
 \end{equation}
 
 Equations \ref{eq:co_identity}--\ref{eq:fick} together constitute the cardiac \textit{equations of conservation}, holding universally regardless of physiological state.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel7_cardiac_equations_of_state.png}
+\caption{\textbf{Seven Physiological Regimes: Hemodynamic State Variables from Cardiac Equations of State.}
+\textbf{Panel A (left):} Grouped bar chart of cardiac output (CO, L/min), heart rate (HR/10, bpm), and mean arterial pressure (MAP/10, mmHg) across seven regimes derived from partition optimization: rest, submaximal exercise, maximal exercise, compensated heart failure (HF), hypertension, hypovolemia, and distributive shock. Each regime represents a distinct operating point on the cardiac partition surface.
+\textbf{Panel B (center-left):} Pressure--volume loop landmarks showing end-diastolic volume (EDV, light shading) and end-systolic volume (ESV, dark shading) with ejection fraction annotated. Heart failure shows the largest EDV (180 mL) with depressed EF (0.61), while hypovolemia shows the smallest EDV (80 mL) with maintained EF (0.65), distinguishing volume-overload from volume-depleted failure modes.
+\textbf{Panel C (center-right):} Three-dimensional scatter of end-systolic elastance $E_{es}$ versus arterial elastance $E_a$ versus stroke work. The seven regimes trace a trajectory through this coupling space, with maximal exercise achieving the highest stroke work through elevated $E_{es}$ while maintaining favorable $E_{es}/E_a$ ratio.
+\textbf{Panel D (right):} Ventriculo-arterial coupling ratio $E_{es}/E_a$ per regime. The green band ($1.5$--$2.0$) marks the optimal efficiency range. Rest and exercise regimes occupy this band, while heart failure ($E_{es}/E_a = 0.4$) and distributive shock ($E_{es}/E_a = 0.8$) fall below, quantifying the coupling deficit that partition theory predicts as the primary failure signature.}
+\label{fig:cardiac_equations_of_state}
+\end{figure*}
 
 %==============================================================================
 \section{The Pressure-Volume State Space}
@@ -494,6 +515,7 @@ For the simplified case $\Vd = 0$:
     \label{eq:total_energy_simple}
 \end{equation}
 representing the total partition energy stored at end-diastole.
+
 
 %==============================================================================
 \section{Ventricular-Arterial Coupling from Partition Energy Optimization}
@@ -627,6 +649,17 @@ where $T_d = T - T_s$ is diastolic duration. For typical values ($T_s = 0.3$~s, 
 \end{equation}
 
 Combined with the resistive component $\TPR/T = 1.3$ mmHg/mL, the total effective $\Ea \approx 1.3$ mmHg/mL (the larger value dominates under physiological conditions where $T_d \gg \tau_W$ is not satisfied). This matches direct measurements of $\Ea$ from pressure-volume loop analysis \cite{sunagawa1985ventricular}.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel9_windkessel_arterial.png}
+\caption{\textbf{Windkessel Dynamics and Arterial Partition Buffer Theory.}
+\textbf{Panel A (left):} Two-element Windkessel pressure waveforms for rest (HR\,=\,70, blue), maximal exercise (HR\,=\,185, green), and compensated heart failure (HR\,=\,90, orange). The waveform morphology---systolic upstroke, dicrotic notch, and diastolic decay---emerges from the partition buffer interpretation of arterial compliance, with the RC time constant determining diastolic runoff rate.
+\textbf{Panel B (center-left):} Arterial compliance degradation with age, showing exponential decline in both aortic ($C_0 = 1.5$ mL/mmHg, $\tau = 50$ yr) and peripheral ($C_0 = 0.8$ mL/mmHg, $\tau = 67$ yr) compartments. This compliance loss is interpreted as progressive partition buffer exhaustion, predicting isolated systolic hypertension in the elderly as a natural consequence of buffer depletion.
+\textbf{Panel C (center-right):} Three-dimensional constraint surface HR $\times$ SV $\times$ MAP, with the seven physiological regimes overlaid as markers. The surface $\text{MAP} = \text{HR} \times \text{SV} \times \text{TPR}/1000$ constrains accessible states to a two-dimensional manifold in the three-dimensional hemodynamic space, limiting the degrees of freedom available for cardiovascular regulation.
+\textbf{Panel D (right):} Pulse wave velocity (PWV) versus MAP, derived from the Moens--Korteweg relation $\text{PWV} \propto \sqrt{E \cdot h / \rho r}$. The shaded region between age-25 and age-75 curves quantifies the effect of arterial stiffening. Regime markers show that hypertension and exercise occupy the high-PWV region, while shock and hypovolemia cluster at low PWV, consistent with partition buffer theory predictions.}
+\label{fig:windkessel_arterial}
+\end{figure*}
 
 %==============================================================================
 \section{Autonomic Partition Rate Control}
@@ -860,6 +893,8 @@ In sepsis, anaphylaxis, or neurogenic shock, profound vasodilation reduces $\TPR
 
 Equation DS7--DS8 describes the defining feature of distributive shock: \textit{oxygen delivery is adequate or elevated, but tissue utilization is impaired}. In partition terms, the oxygen delivery pathway is functioning (the transport partition operations complete), but the mitochondrial reduction of oxygen (the terminal partition operation in the respiratory chain) is blocked. This is partition uncoupling—a situation where the upstream partition (O$_2$ delivery) is disconnected from the downstream partition (ATP synthesis).
 
+
+
 %==============================================================================
 \section{The Unified Cardiac Phase Diagram}
 \label{sec:phase}
@@ -948,6 +983,17 @@ The boundaries between regimes in Figure \ref{fig:phase_diagram_schematic} are n
 \end{itemize}
 
 These boundaries are partition phase transitions analogous to thermodynamic phase boundaries: the system crosses a threshold where one set of constraint equations (one phase) replaces another.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/panel3_mitdb_cardiac_regimes.png}
+\caption{\textbf{Cardiac Regime Classification from Beat-to-Beat HRV (MIT-BIH Arrhythmia Database, 48 records, 1{,}439 windows).}
+\textbf{Panel A (left):} Box plots of $R_c$ per rhythm type computed from 60-second sliding windows. Normal sinus rhythm (NSR) spans the full coherent--cascade range (median $R_c = 0.87$), while atrial fibrillation (AFIB, $R_c = 0.14$) and bigeminy ($R_c = 0.02$) fall decisively into the turbulent regime. Ventricular tachycardia (VT, $R_c = 0.64$) occupies the cascade regime as predicted.
+\textbf{Panel B (center-left):} Kernel density estimates of $R_c$ distributions with regime boundary shading. AFIB concentrates sharply below $R_c = 0.30$ (78.0\% turbulent), providing a clean discriminant from NSR ($t = 33.2$, $p < 10^{-6}$). Bigeminy shows the most extreme turbulent shift ($R_c = 0.018$), revised from the initially predicted aperture regime.
+\textbf{Panel C (center-right):} Three-dimensional scatter of rhythm index $\times$ $R_c$ $\times$ heart rate, showing that heart rate alone cannot discriminate rhythms but $R_c$ provides orthogonal separation. VT occupies a distinct HR$>$150 cluster at intermediate $R_c$.
+\textbf{Panel D (right):} Stacked regime fraction bars per rhythm type, quantifying the percentage of 60-second windows in each partition regime. NSR distributes across all five regimes, reflecting its adaptive variability, while pathological rhythms concentrate in one or two regimes.}
+\label{fig:mitdb_cardiac_regimes}
+\end{figure*}
 
 %==============================================================================
 \section{Experimental Validation}

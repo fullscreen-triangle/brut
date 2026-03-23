@@ -6,7 +6,15 @@
       "Bash(xargs wc:*)",
       "Bash(wc -l /c/Users/kunda/Documents/health/brut/docs/foundation/derivations/*.tex)",
       "Bash(find /c/Users/kunda/Documents/health/brut -name *cardiac*equations* -o -name *cardio*neural*)",
-      "Bash(ls c:/Users/kunda/Documents/health/brut/demo/src/validation/panels/*.png)"
+      "Bash(ls c:/Users/kunda/Documents/health/brut/demo/src/validation/panels/*.png)",
+      "Bash(python3:*)",
+      "Bash(python demo/src/validation/sensor_disambiguation_validation.py)",
+      "Bash(python demo/src/validation/generate_sensor_panels.py)",
+      "Bash(ls -la c:/Users/kunda/Documents/health/brut/demo/src/validation/panels/panel1*.png c:/Users/kunda/Documents/health/brut/demo/src/validation/panels/panel2*.png)",
+      "Bash(ls -la c:/Users/kunda/Documents/health/brut/demo/src/validation/results/pchr* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/sentropy* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/tcc* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/csci* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/rars*)",
+      "Bash(npm run:*)",
+      "Bash(npx next:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

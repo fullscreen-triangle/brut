@@ -154,7 +154,7 @@ export default function Home() {
                   modelPath="/model/beating-heart.glb"
                   autoRotate={true}
                   rotationSpeed={0.4}
-                  modelScale={2.5}
+                  modelScale={12.5}
                   modelPosition={[0, -0.5, 0]}
                   cameraPosition={[0, 0, 5]}
                   cameraFov={45}

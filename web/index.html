@@ -7,39 +7,75 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="app">
-      <header>
-        <h1>BRUT Observatory</h1>
+    <!-- Camera + per-pixel coherence layer (full-screen, behind everything) -->
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="overlay"></canvas>
+    <canvas id="gpu"></canvas>
+
+    <!-- Top-left lungs corner widget -->
+    <section id="lungs-corner" class="corner corner-tl" aria-label="lungs">
+      <canvas id="lungs-canvas"></canvas>
+      <div class="corner-label">
+        <span class="lbl">respiration</span>
+        <span class="val" id="rr-mini">— bpm</span>
+      </div>
+    </section>
+
+    <!-- Top-right heart corner widget -->
+    <section id="heart-corner" class="corner corner-tr" aria-label="heart">
+      <canvas id="heart-canvas"></canvas>
+      <div class="corner-label">
+        <span class="lbl">cardiac</span>
+        <span class="val" id="hr-mini">— bpm</span>
+      </div>
+    </section>
+
+    <!-- Header strip with status + start/stop -->
+    <header id="header">
+      <h1>BRUT Observatory</h1>
+      <div class="hdr-tools">
         <span id="status">init</span>
+        <button id="start">start</button>
+        <button id="stop" disabled>stop</button>
+      </div>
+    </header>
+
+    <!-- Left slide-in panel: respiration analysis -->
+    <aside id="lungs-panel" class="side-panel side-panel-left" aria-hidden="true">
+      <header>
+        <h2>respiration analysis</h2>
+        <button class="close" data-close="lungs-panel" aria-label="close">×</button>
       </header>
+      <div class="panel-body" id="lungs-panel-body"></div>
+    </aside>
 
-      <main>
-        <section id="stage">
-          <video id="video" autoplay playsinline muted></video>
-          <canvas id="overlay"></canvas>
-          <canvas id="gpu"></canvas>
-        </section>
+    <!-- Right slide-in panel: cardiac analysis -->
+    <aside id="heart-panel" class="side-panel side-panel-right" aria-hidden="true">
+      <header>
+        <h2>cardiac analysis</h2>
+        <button class="close" data-close="heart-panel" aria-label="close">×</button>
+      </header>
+      <div class="panel-body" id="heart-panel-body"></div>
+    </aside>
 
-        <aside id="panel">
-          <div class="row"><label>HR</label><span id="hr">—</span><span class="unit">bpm</span></div>
-          <div class="row"><label>RMSSD</label><span id="rmssd">—</span><span class="unit">ms</span></div>
-          <div class="row"><label>R_c</label><span id="rc">—</span></div>
-          <div class="row"><label>regime</label><span id="regime">—</span></div>
-          <div class="row"><label>S_k</label><span id="sk">—</span></div>
-          <div class="row"><label>S_t</label><span id="st">—</span></div>
-          <div class="row"><label>S_e</label><span id="se">—</span></div>
-          <div class="row"><label>face SNR</label><span id="snr">—</span><span class="unit">dB</span></div>
-          <div class="row"><label>spatial R_c spread</label><span id="rcspread">—</span></div>
-          <hr />
-          <button id="start">start</button>
-          <button id="stop" disabled>stop</button>
-        </aside>
-      </main>
-
-      <footer>
-        <pre id="log"></pre>
-      </footer>
+    <!-- Bottom drawer: crossfilter dashboard -->
+    <div id="drawer-handle" class="drawer-handle" aria-label="open dashboard">
+      <span>dashboard</span>
+      <span class="caret">▲</span>
     </div>
+    <section id="drawer" class="drawer" aria-hidden="true">
+      <header>
+        <h2>crossfilter dashboard</h2>
+        <button class="close" data-close="drawer" aria-label="close">×</button>
+      </header>
+      <div class="drawer-body" id="drawer-body"></div>
+    </section>
+
+    <!-- Compact log -->
+    <footer id="footer">
+      <pre id="log"></pre>
+    </footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

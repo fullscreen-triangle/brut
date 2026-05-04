@@ -20,7 +20,8 @@ import {
 
 export interface ObservatoryRecord {
   t: number;        // ms epoch
-  hr: number;       // bpm (0 if no estimate yet)
+  // Cardiac (0 if no camera / not yet estimated) -------------------------
+  hr: number;       // bpm
   rmssd: number;    // ms
   rc: number;       // [0, 1]
   sk: number;
@@ -28,6 +29,22 @@ export interface ObservatoryRecord {
   se: number;
   regime: number;   // 0 turbulent .. 4 phase-locked
   rrBpm: number;    // breaths/min
+  ees: number;      // mmHg/mL
+  ea: number;       // mmHg/mL
+  ef: number;       // 0..1
+  sv: number;       // mL
+  co: number;       // L/min
+  // Motor (always recorded) -------------------------------------------
+  keyCount: number;          // keystrokes in last 1 s
+  meanIki: number;           // ms; 0 if no events
+  meanDwell: number;         // ms
+  backspaceRate: number;     // 0..1
+  bursty: number;            // cv of IKIs
+  mouseDistance: number;     // px in last 1 s
+  mousePeakVel: number;      // px/s
+  ramblingPower: number;
+  tremblingPower: number;
+  rtRatio: number;           // rambling / (rambling + trembling)
 }
 
 export interface Dashboard {
@@ -48,12 +65,16 @@ interface CrossfilterStore {
     rmssd: Dimension<ObservatoryRecord, number>;
     regime: Dimension<ObservatoryRecord, number>;
     rrBpm: Dimension<ObservatoryRecord, number>;
+    ees: Dimension<ObservatoryRecord, number>;
+    ea: Dimension<ObservatoryRecord, number>;
+    ef: Dimension<ObservatoryRecord, number>;
+    meanIki: Dimension<ObservatoryRecord, number>;
+    mouseDistance: Dimension<ObservatoryRecord, number>;
+    rtRatio: Dimension<ObservatoryRecord, number>;
   };
   charts: ChartHandle[];
   redrawAll(): void;
 }
-
-const REGIME_NAMES = ['turb', 'apt', 'csc', 'coh', 'pl'];
 
 export function mountDashboard(container: HTMLElement): Dashboard {
   // Create store --------------------------------------------------------
@@ -65,6 +86,12 @@ export function mountDashboard(container: HTMLElement): Dashboard {
     rmssd: cf.dimension((d) => d.rmssd),
     regime: cf.dimension((d) => d.regime),
     rrBpm: cf.dimension((d) => d.rrBpm),
+    ees: cf.dimension((d) => d.ees),
+    ea: cf.dimension((d) => d.ea),
+    ef: cf.dimension((d) => d.ef),
+    meanIki: cf.dimension((d) => d.meanIki),
+    mouseDistance: cf.dimension((d) => d.mouseDistance),
+    rtRatio: cf.dimension((d) => d.rtRatio),
   };
   const charts: ChartHandle[] = [];
   const store: CrossfilterStore = {
@@ -76,15 +103,24 @@ export function mountDashboard(container: HTMLElement): Dashboard {
     },
   };
 
-  // Build six cells -----------------------------------------------------
+  // Build cells (4 × 3 grid) -------------------------------------------
   container.innerHTML = '';
   const cells = [
+    // Row 1 — cardiac measured
     { id: 'cell-hr', title: 'HR (bpm) — brushable', mount: (el: HTMLElement) => mountHrLine(el, store) },
     { id: 'cell-rc', title: 'R_c — brushable', mount: (el: HTMLElement) => mountRcLine(el, store) },
-    { id: 'cell-resp', title: 'respiration rate', mount: (el: HTMLElement) => mountRespLine(el, store) },
-    { id: 'cell-poincare', title: 'R_c × S_e (failure-mode plane)', mount: (el: HTMLElement) => mountFailureModeScatter(el, store) },
-    { id: 'cell-tachogram', title: 'RR tachogram (RMSSD ribbon)', mount: (el: HTMLElement) => mountRmssdLine(el, store) },
-    { id: 'cell-regime', title: 'regime occupancy', mount: (el: HTMLElement) => mountRegimeBar(el, store) },
+    { id: 'cell-rmssd', title: 'RMSSD (ms)', mount: (el: HTMLElement) => mountRmssdLine(el, store) },
+    { id: 'cell-resp', title: 'resp rate (bpm)', mount: (el: HTMLElement) => mountRespLine(el, store) },
+    // Row 2 — cardiac fitted
+    { id: 'cell-co', title: 'CO (L/min) · fitted', mount: (el: HTMLElement) => mountCoLine(el, store) },
+    { id: 'cell-ef', title: 'EF · fitted', mount: (el: HTMLElement) => mountEfLine(el, store) },
+    { id: 'cell-elast', title: 'E_es × E_a · fitted state plane', mount: (el: HTMLElement) => mountElastanceScatter(el, store) },
+    { id: 'cell-failure', title: 'R_c × S_e · failure-mode plane', mount: (el: HTMLElement) => mountFailureModeScatter(el, store) },
+    // Row 3 — motor (efferent half of the closed circulation)
+    { id: 'cell-iki', title: 'mean IKI (ms) · keystroke timing', mount: (el: HTMLElement) => mountIkiLine(el, store) },
+    { id: 'cell-mouse', title: 'mouse distance (px/s)', mount: (el: HTMLElement) => mountMouseLine(el, store) },
+    { id: 'cell-rt', title: 'rambling vs trembling (cursor)', mount: (el: HTMLElement) => mountRtSplit(el, store) },
+    { id: 'cell-coupling', title: 'cardio-motor: HR × keystrokes', mount: (el: HTMLElement) => mountCouplingScatter(el, store) },
   ];
 
   for (const c of cells) {
@@ -170,13 +206,38 @@ function mountTimeLine(
       );
     frame.g.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(3));
 
+    // Filled area underneath gives the chart visual weight; the line on top
+    // keeps the precise locus crisp.
+    const baseY = y.range()[0]; // bottom of plot area
+    const area = d3
+      .area<{ key: number; value: unknown }>()
+      .x((d) => x(+d.key))
+      .y0(baseY)
+      .y1((d) => y(yAccessor(d)))
+      .curve(d3.curveMonotoneX);
+
     const line = d3
       .line<{ key: number; value: unknown }>()
-      .x((d) => x(d.key))
+      .x((d) => x(+d.key))
       .y((d) => y(yAccessor(d)))
       .curve(d3.curveMonotoneX);
 
-    frame.g.append('path').datum(all).attr('class', 'line').attr('stroke', color).attr('d', line);
+    frame.g
+      .append('path')
+      .datum(all)
+      .attr('fill', color)
+      .attr('fill-opacity', 0.28)
+      .attr('stroke', 'none')
+      .attr('d', area);
+
+    frame.g
+      .append('path')
+      .datum(all)
+      .attr('class', 'line')
+      .attr('stroke', color)
+      .attr('stroke-width', 1.4)
+      .attr('fill', 'none')
+      .attr('d', line);
 
     // Brush.
     brush.extent([
@@ -224,6 +285,274 @@ function mountRmssdLine(container: HTMLElement, store: CrossfilterStore): void {
   const group = store.dims.t.group(Math.floor).reduceSum((d) => d.rmssd);
   mountTimeLine(container, store, group as unknown as Group<ObservatoryRecord, number, unknown>,
     (g) => g.value as number, '#5fafff', [0, 200]);
+}
+
+function mountCoLine(container: HTMLElement, store: CrossfilterStore): void {
+  const group = store.dims.t.group(Math.floor).reduceSum((d) => d.co);
+  mountTimeLine(container, store, group as unknown as Group<ObservatoryRecord, number, unknown>,
+    (g) => g.value as number, '#7fd47f', [0, 25]);
+}
+
+function mountEfLine(container: HTMLElement, store: CrossfilterStore): void {
+  const group = store.dims.t.group(Math.floor).reduceSum((d) => d.ef);
+  mountTimeLine(container, store, group as unknown as Group<ObservatoryRecord, number, unknown>,
+    (g) => g.value as number, '#ffaf5f', [0, 1]);
+}
+
+function mountIkiLine(container: HTMLElement, store: CrossfilterStore): void {
+  const group = store.dims.t.group(Math.floor).reduceSum((d) => d.meanIki);
+  mountTimeLine(container, store, group as unknown as Group<ObservatoryRecord, number, unknown>,
+    (g) => g.value as number, '#c89fff', [0, 800]);
+}
+
+function mountMouseLine(container: HTMLElement, store: CrossfilterStore): void {
+  const group = store.dims.t.group(Math.floor).reduceSum((d) => d.mouseDistance);
+  mountTimeLine(container, store, group as unknown as Group<ObservatoryRecord, number, unknown>,
+    (g) => g.value as number, '#ff9fcf', [0, 4000]);
+}
+
+// ── Rambling vs trembling stacked area (cursor motion) ─────────────────
+function mountRtSplit(container: HTMLElement, store: CrossfilterStore): void {
+  const frame = makeChart(container, { margin: { top: 6, right: 8, bottom: 22, left: 28 } });
+
+  function draw(): void {
+    if (!syncChartSize(container, frame) && frame.width === 0) return;
+    const W = plotWidth(frame);
+    const H = plotHeight(frame);
+    if (W <= 0 || H <= 0) return;
+
+    frame.g.selectAll('*').remove();
+
+    const all = store.cf.allFiltered().filter((d) => (d.ramblingPower + d.tremblingPower) > 0);
+    if (all.length === 0) {
+      frame.g
+        .append('text')
+        .attr('x', W / 2)
+        .attr('y', H / 2)
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'var(--dim)')
+        .style('font-size', '10px')
+        .text('move the cursor…');
+      return;
+    }
+
+    const tExtent = d3.extent(all, (d) => d.t) as [number, number];
+    const x = d3.scaleLinear().domain(tExtent).range([0, W]);
+    const y = d3.scaleLinear().domain([0, 1]).range([H, 0]);
+
+    frame.g
+      .append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${H})`)
+      .call(
+        d3.axisBottom(x).ticks(3).tickFormat((d) => {
+          const dt = new Date(+d);
+          return `${dt.getMinutes().toString().padStart(2, '0')}:${dt
+            .getSeconds()
+            .toString()
+            .padStart(2, '0')}`;
+        }),
+      );
+    frame.g
+      .append('g')
+      .attr('class', 'axis')
+      .call(d3.axisLeft(y).ticks(3).tickFormat((d) => `${(+d * 100).toFixed(0)}%`));
+
+    // Two areas stacked: rambling fraction at the bottom (warm), trembling on top (cool).
+    const ramblingFrac = (d: ObservatoryRecord): number => {
+      const total = d.ramblingPower + d.tremblingPower;
+      return total > 0 ? d.ramblingPower / total : 0;
+    };
+
+    const ramblingArea = d3
+      .area<ObservatoryRecord>()
+      .x((d) => x(d.t))
+      .y0(H)
+      .y1((d) => y(ramblingFrac(d)));
+
+    const tremblingArea = d3
+      .area<ObservatoryRecord>()
+      .x((d) => x(d.t))
+      .y0((d) => y(ramblingFrac(d)))
+      .y1(0);
+
+    frame.g
+      .append('path')
+      .datum(all)
+      .attr('fill', '#ffaf5f')
+      .attr('fill-opacity', 0.55)
+      .attr('d', ramblingArea);
+
+    frame.g
+      .append('path')
+      .datum(all)
+      .attr('fill', '#5fafff')
+      .attr('fill-opacity', 0.55)
+      .attr('d', tremblingArea);
+
+    frame.g
+      .append('text')
+      .attr('x', 4).attr('y', H - 4)
+      .attr('fill', '#ffaf5f').style('font-size', '8px')
+      .text('rambling (<0.5 Hz, supraspinal)');
+    frame.g
+      .append('text')
+      .attr('x', 4).attr('y', 10)
+      .attr('fill', '#5fafff').style('font-size', '8px')
+      .text('trembling (0.5-3 Hz, spinal loop)');
+  }
+
+  draw();
+  observeResize(container, draw);
+  store.charts.push({ redraw: draw });
+}
+
+// ── HR × keystroke-rate cardio-motor coupling ──────────────────────────
+function mountCouplingScatter(container: HTMLElement, store: CrossfilterStore): void {
+  const frame = makeChart(container, { margin: { top: 6, right: 8, bottom: 22, left: 28 } });
+
+  function draw(): void {
+    if (!syncChartSize(container, frame) && frame.width === 0) return;
+    const W = plotWidth(frame);
+    const H = plotHeight(frame);
+    if (W <= 0 || H <= 0) return;
+
+    frame.g.selectAll('*').remove();
+
+    const all = store.cf.allFiltered().filter((d) => d.hr > 0 && (d.keyCount > 0 || d.mouseDistance > 0));
+    const x = d3.scaleLinear().domain([40, 160]).range([0, W]);
+    const y = d3.scaleLinear().domain([0, 12]).range([H, 0]);
+
+    frame.g
+      .append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${H})`)
+      .call(d3.axisBottom(x).ticks(4));
+    frame.g
+      .append('g')
+      .attr('class', 'axis')
+      .call(d3.axisLeft(y).ticks(4));
+
+    frame.g
+      .append('text')
+      .attr('x', W / 2).attr('y', H + 18)
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'var(--dim)').style('font-size', '8px')
+      .text('HR (bpm)');
+    frame.g
+      .append('text')
+      .attr('x', -H / 2).attr('y', -22)
+      .attr('text-anchor', 'middle').attr('transform', 'rotate(-90)')
+      .attr('fill', 'var(--dim)').style('font-size', '8px')
+      .text('keystrokes/s');
+
+    frame.g
+      .selectAll('circle.cm')
+      .data(all)
+      .enter()
+      .append('circle')
+      .attr('class', 'point cm')
+      .attr('r', 2)
+      .attr('cx', (d) => x(d.hr))
+      .attr('cy', (d) => y(d.keyCount));
+  }
+
+  draw();
+  observeResize(container, draw);
+  store.charts.push({ redraw: draw });
+}
+
+// ── E_es × E_a fitted-state plane ──────────────────────────────────────
+function mountElastanceScatter(container: HTMLElement, store: CrossfilterStore): void {
+  const frame = makeChart(container, { margin: { top: 6, right: 8, bottom: 22, left: 28 } });
+  const brush = d3.brush();
+
+  function draw(): void {
+    if (!syncChartSize(container, frame) && frame.width === 0) return;
+    const W = plotWidth(frame);
+    const H = plotHeight(frame);
+    if (W <= 0 || H <= 0) return;
+
+    frame.g.selectAll('*').remove();
+
+    const all = store.cf.allFiltered().filter((d) => d.ees > 0 && d.ea > 0);
+    const x = d3.scaleLinear().domain([0, 8]).range([0, W]);
+    const y = d3.scaleLinear().domain([0, 4]).range([H, 0]);
+
+    frame.g
+      .append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${H})`)
+      .call(d3.axisBottom(x).ticks(4));
+    frame.g.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(4));
+
+    // Reference: E_es / E_a = 1 line (optimal coupling; cardiac-eos.tex Theorem 5.4).
+    const refLine: Array<[number, number]> = [
+      [0, 0],
+      [4, 4],
+    ];
+    const lineGen = d3
+      .line<[number, number]>()
+      .x((d) => x(d[0]))
+      .y((d) => y(d[1]));
+    frame.g
+      .append('path')
+      .datum(refLine)
+      .attr('class', 'line-secondary')
+      .attr('d', lineGen);
+
+    frame.g
+      .append('text')
+      .attr('x', x(2.0)).attr('y', y(2.0) - 4)
+      .attr('fill', 'var(--dim)')
+      .style('font-size', '8px')
+      .text('E_es = E_a (optimum)');
+
+    // Points.
+    frame.g
+      .selectAll('circle.pt')
+      .data(all)
+      .enter()
+      .append('circle')
+      .attr('class', 'point pt')
+      .attr('r', 2)
+      .attr('cx', (d) => x(d.ees))
+      .attr('cy', (d) => y(d.ea));
+
+    // Highlight latest point.
+    if (all.length > 0) {
+      const last = all[all.length - 1];
+      frame.g
+        .append('circle')
+        .attr('r', 5)
+        .attr('cx', x(last.ees))
+        .attr('cy', y(last.ea))
+        .attr('fill', 'var(--accent)')
+        .attr('stroke', 'var(--fg)')
+        .attr('stroke-width', 1);
+    }
+
+    // Brush filter on E_es range.
+    brush.extent([
+      [0, 0],
+      [W, H],
+    ]);
+    const brushG = frame.g.append('g').attr('class', 'brush');
+    brushG.call(brush);
+    brush.on('end', (ev) => {
+      if (!ev.selection) {
+        store.dims.ees.filterAll();
+      } else {
+        const sel = ev.selection as [[number, number], [number, number]];
+        store.dims.ees.filterRange([x.invert(sel[0][0]), x.invert(sel[1][0])]);
+      }
+      store.redrawAll();
+    });
+  }
+
+  draw();
+  observeResize(container, draw);
+  store.charts.push({ redraw: draw });
 }
 
 // ── R_c × S_e scatter (the failure-mode plane) ─────────────────────────
@@ -303,62 +632,3 @@ function mountFailureModeScatter(container: HTMLElement, store: CrossfilterStore
   store.charts.push({ redraw: draw });
 }
 
-// ── Regime occupancy bars ──────────────────────────────────────────────
-function mountRegimeBar(container: HTMLElement, store: CrossfilterStore): void {
-  const frame = makeChart(container, { margin: { top: 6, right: 8, bottom: 22, left: 28 } });
-  const group = store.dims.regime.group();
-
-  function draw(): void {
-    if (!syncChartSize(container, frame) && frame.width === 0) return;
-    const W = plotWidth(frame);
-    const H = plotHeight(frame);
-    if (W <= 0 || H <= 0) return;
-
-    frame.g.selectAll('*').remove();
-
-    const buckets = group.all();
-    const x = d3
-      .scaleBand<number>()
-      .domain([0, 1, 2, 3, 4])
-      .range([0, W])
-      .padding(0.2);
-    const y = d3
-      .scaleLinear()
-      .domain([0, Math.max(1, d3.max(buckets, (d) => d.value as number) ?? 1)])
-      .range([H, 0]);
-
-    frame.g
-      .append('g')
-      .attr('class', 'axis')
-      .attr('transform', `translate(0,${H})`)
-      .call(d3.axisBottom(x).tickFormat((d) => REGIME_NAMES[+d as number] ?? ''));
-    frame.g.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(3));
-
-    frame.g
-      .selectAll('rect.bar')
-      .data(buckets)
-      .enter()
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', (d) => x(+d.key) ?? 0)
-      .attr('y', (d) => y(d.value as number))
-      .attr('width', x.bandwidth())
-      .attr('height', (d) => H - y(d.value as number))
-      .attr('fill', (d) => regimeColor(+d.key));
-  }
-
-  draw();
-  observeResize(container, draw);
-  store.charts.push({ redraw: draw });
-}
-
-function regimeColor(r: number): string {
-  switch (r) {
-    case 0: return '#ff5f5f'; // turbulent
-    case 1: return '#ffaf5f'; // aperture
-    case 2: return '#ffd75f'; // cascade
-    case 3: return '#5fafff'; // coherent
-    case 4: return '#7fd47f'; // phase-locked
-    default: return '#888';
-  }
-}

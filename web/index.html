@@ -30,11 +30,33 @@
       </div>
     </section>
 
+    <!-- Central echo-plane strip — the model-based echocardiogram. -->
+    <section id="echo-strip" aria-label="echocardiographic planes">
+      <div class="echo-card" id="echo-a2c">
+        <canvas id="echo-a2c-canvas"></canvas>
+        <div class="echo-label">A2C · apical 2-chamber</div>
+      </div>
+      <div class="echo-card" id="echo-a5c">
+        <canvas id="echo-a5c-canvas"></canvas>
+        <div class="echo-label">A5C · apical 5-chamber</div>
+      </div>
+      <div class="echo-card" id="echo-psax">
+        <canvas id="echo-psax-canvas"></canvas>
+        <div class="echo-label">PSAX · aortic valve</div>
+      </div>
+    </section>
+
     <!-- Header strip with status + start/stop -->
     <header id="header">
       <h1>BRUT Observatory</h1>
       <div class="hdr-tools">
+        <span class="sensor-dots" aria-label="active sensors">
+          <span class="dot" id="dot-camera" title="camera (rPPG)">●</span>
+          <span class="dot" id="dot-keyboard" title="keyboard (motor)">●</span>
+          <span class="dot" id="dot-mouse" title="mouse (motor)">●</span>
+        </span>
         <span id="status">init</span>
+        <button id="stealth" title="hide self-view; pipeline keeps recording">stealth</button>
         <button id="start">start</button>
         <button id="stop" disabled>stop</button>
       </div>

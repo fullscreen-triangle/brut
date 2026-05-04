@@ -4,6 +4,7 @@
 // HR / RMSSD / R_c / S-entropy estimation.
 
 const BUFFER_SECONDS = 12;
+const BASELINE_SECONDS = 30;
 
 export interface BvpStats {
   hrBpm: number;            // 0 if not yet estimable
@@ -15,6 +16,10 @@ export interface BvpStats {
   se: number;               // S_e: entropy utilisation against max
   beats: number;            // detected beat count in window
   filled: number;           // how full the buffer is, [0, 1]
+  // Cycle-morphology features for the cardiac equations-of-state inverter:
+  amplitude: number;        // current AC amplitude (peak-to-trough mean over recent cycles)
+  relAmplitude: number;     // amplitude / 30 s rolling baseline; 1.0 = baseline
+  amplitudeBaseline: number;// the rolling baseline itself (for diagnostics)
 }
 
 export class BvpAnalyzer {
@@ -22,6 +27,9 @@ export class BvpAnalyzer {
   private sampleTimes: number[] = [];
   private sessionStartMs: number;
   private sampleRateHz = 30;
+  // Rolling baseline of cycle amplitude (longer window than the buffer).
+  private amplitudeHistory: number[] = [];
+  private amplitudeTimes: number[] = [];
 
   constructor() {
     this.sessionStartMs = performance.now();
@@ -58,6 +66,37 @@ export class BvpAnalyzer {
     // Peak detect: local maxima above adaptive threshold.
     const peaks = detectPeaks(band, 0.5);
 
+    // Per-cycle amplitude: peak value minus the trough between successive peaks.
+    let amplitude = 0;
+    if (peaks.length >= 2) {
+      let amps = 0;
+      let amplitudeCount = 0;
+      for (let i = 1; i < peaks.length; i++) {
+        const a = peaks[i - 1];
+        const b = peaks[i];
+        let trough = Infinity;
+        for (let k = a; k <= b; k++) if (band[k] < trough) trough = band[k];
+        const peakAvg = 0.5 * (band[a] + band[b]);
+        if (Number.isFinite(trough)) {
+          amps += peakAvg - trough;
+          amplitudeCount += 1;
+        }
+      }
+      if (amplitudeCount > 0) amplitude = amps / amplitudeCount;
+    }
+
+    // Update rolling amplitude baseline (30 s window).
+    if (amplitude > 0) {
+      const tNow = this.sampleTimes[this.sampleTimes.length - 1];
+      this.amplitudeHistory.push(amplitude);
+      this.amplitudeTimes.push(tNow);
+      const cutoff = tNow - BASELINE_SECONDS * 1000;
+      while (this.amplitudeTimes.length > 0 && this.amplitudeTimes[0] < cutoff) {
+        this.amplitudeHistory.shift();
+        this.amplitudeTimes.shift();
+      }
+    }
+
     // Convert peaks to RR intervals (ms).
     const rr: number[] = [];
     for (let i = 1; i < peaks.length; i++) {
@@ -67,7 +106,7 @@ export class BvpAnalyzer {
     }
 
     if (rr.length < 2) {
-      return zero(filled);
+      return zero(filled, amplitude);
     }
 
     const meanRR = mean(rr);
@@ -100,6 +139,10 @@ export class BvpAnalyzer {
     const refVar = Math.pow(0.1 * meanRR, 2); // 10% of mean RR as reference scale
     const se = Math.min(1, Math.max(0, Math.log(1 + rrVar / refVar) / Math.log(2)));
 
+    // Amplitude baseline: median of the 30 s history (robust to outliers).
+    const amplitudeBaseline = robustMedian(this.amplitudeHistory);
+    const relAmplitude = amplitudeBaseline > 1e-6 ? amplitude / amplitudeBaseline : 1.0;
+
     return {
       hrBpm,
       rmssdMs,
@@ -110,12 +153,26 @@ export class BvpAnalyzer {
       se,
       beats: rr.length + 1,
       filled,
+      amplitude,
+      relAmplitude,
+      amplitudeBaseline,
     };
   }
 }
 
-function zero(filled: number): BvpStats {
-  return { hrBpm: 0, rmssdMs: 0, rc: 0, cv: 0, sk: 0, st: 0, se: 0, beats: 0, filled };
+function zero(filled: number, amplitude = 0): BvpStats {
+  return {
+    hrBpm: 0, rmssdMs: 0, rc: 0, cv: 0, sk: 0, st: 0, se: 0,
+    beats: 0, filled, amplitude, relAmplitude: 1.0, amplitudeBaseline: amplitude,
+  };
+}
+
+function robustMedian(a: number[]): number {
+  if (a.length === 0) return 0;
+  const sorted = a.slice().sort((p, q) => p - q);
+  const m = sorted.length;
+  if (m % 2 === 1) return sorted[(m - 1) / 2];
+  return 0.5 * (sorted[m / 2 - 1] + sorted[m / 2]);
 }
 
 function linearDetrend(a: number[]): Float32Array {

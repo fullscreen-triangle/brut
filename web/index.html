@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BRUT Observatory</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>BRUT Observatory</h1>
+        <span id="status">init</span>
+      </header>
+
+      <main>
+        <section id="stage">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+          <canvas id="gpu"></canvas>
+        </section>
+
+        <aside id="panel">
+          <div class="row"><label>HR</label><span id="hr">—</span><span class="unit">bpm</span></div>
+          <div class="row"><label>RMSSD</label><span id="rmssd">—</span><span class="unit">ms</span></div>
+          <div class="row"><label>R_c</label><span id="rc">—</span></div>
+          <div class="row"><label>regime</label><span id="regime">—</span></div>
+          <div class="row"><label>S_k</label><span id="sk">—</span></div>
+          <div class="row"><label>S_t</label><span id="st">—</span></div>
+          <div class="row"><label>S_e</label><span id="se">—</span></div>
+          <div class="row"><label>face SNR</label><span id="snr">—</span><span class="unit">dB</span></div>
+          <div class="row"><label>spatial R_c spread</label><span id="rcspread">—</span></div>
+          <hr />
+          <button id="start">start</button>
+          <button id="stop" disabled>stop</button>
+        </aside>
+      </main>
+
+      <footer>
+        <pre id="log"></pre>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

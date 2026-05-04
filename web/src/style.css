@@ -1,0 +1,153 @@
+:root {
+  --bg: #0a0e14;
+  --fg: #c5c8c6;
+  --accent: #5fafff;
+  --warn: #ffaf5f;
+  --ok: #7fd47f;
+  --dim: #5f6470;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid #1a1f28;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+#status {
+  color: var(--dim);
+  font-size: 11px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  min-height: 0;
+}
+
+#stage {
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+#overlay, #gpu {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+#gpu {
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+#panel {
+  border-left: 1px solid #1a1f28;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px dotted #1a1f28;
+}
+
+.row label {
+  color: var(--dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.row span:not(.unit) {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+
+.row .unit {
+  color: var(--dim);
+  font-size: 10px;
+}
+
+button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--dim);
+  font-family: var(--mono);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+footer {
+  border-top: 1px solid #1a1f28;
+  padding: 6px 14px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+#log {
+  margin: 0;
+  font-size: 10px;
+  color: var(--dim);
+  white-space: pre-wrap;
+}

@@ -14,7 +14,9 @@
       "Bash(ls -la c:/Users/kunda/Documents/health/brut/demo/src/validation/results/pchr* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/sentropy* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/tcc* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/csci* c:/Users/kunda/Documents/health/brut/demo/src/validation/results/rars*)",
       "Bash(npm run:*)",
       "Bash(npx next:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx tsc *)",
+      "Bash(npx vite *)"
     ]
   }
 }

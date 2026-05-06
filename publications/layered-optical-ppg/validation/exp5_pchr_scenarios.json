@@ -1,0 +1,46 @@
+[
+  {
+    "HR_obs": 70,
+    "HR_intrinsic": 60.0,
+    "dHR_met": 0.0,
+    "dHR_o2": 0.0,
+    "dHR_auto": 10.0,
+    "name": "Rest",
+    "T_skin": 33.0,
+    "spo2": 0.97,
+    "HR": 70
+  },
+  {
+    "HR_obs": 85,
+    "HR_intrinsic": 60.0,
+    "dHR_met": 12.0,
+    "dHR_o2": 0.0,
+    "dHR_auto": 13.0,
+    "name": "Fever",
+    "T_skin": 35.5,
+    "spo2": 0.97,
+    "HR": 85
+  },
+  {
+    "HR_obs": 85,
+    "HR_intrinsic": 60.0,
+    "dHR_met": 0.0,
+    "dHR_o2": 10.799999999999999,
+    "dHR_auto": 14.200000000000001,
+    "name": "Hypoxia",
+    "T_skin": 33.0,
+    "spo2": 0.85,
+    "HR": 85
+  },
+  {
+    "HR_obs": 120,
+    "HR_intrinsic": 60.0,
+    "dHR_met": 7.199999999999999,
+    "dHR_o2": 0.9000000000000008,
+    "dHR_auto": 51.9,
+    "name": "Exercise",
+    "T_skin": 34.5,
+    "spo2": 0.96,
+    "HR": 120
+  }
+]

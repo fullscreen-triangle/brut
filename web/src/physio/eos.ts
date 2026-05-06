@@ -126,6 +126,51 @@ export interface BvpFeatures {
   rel_amplitude: number;     // current AC amplitude / 30 s baseline (1.0 = baseline)
   rel_dicrotic?: number;     // dicrotic notch position 0..1; 0.5 = baseline
                              // (lower = earlier notch = stiffer arteries / higher E_a)
+  /**
+   * Skin temperature in °C, optional. When supplied, drives Q_10 metabolic
+   * decomposition of HR per sensor-disambiguation.tex Eq. 22 (PCHR):
+   *
+   *   ΔHR_met  = α_T · ΔT_skin · HR₀
+   *   ΔHR_auto = HR_obs − HR_intrinsic − ΔHR_met − ΔHR_O₂
+   *
+   * α_T ≈ 0.08 °C⁻¹ from Q_10 ≈ 2.3 (sensor-disambiguation Theorem 2.1).
+   */
+  T_skin_C?: number;
+  /** Optional SpO₂ proxy (0..1). Drives the hypoxic ΔHR_O2 term. */
+  SpO2?: number;
+}
+
+/** PCHR decomposition: how the observed HR splits into physiological drivers. */
+export interface PchrDecomposition {
+  HR_obs: number;        // bpm — the raw observation
+  HR_intrinsic: number;  // bpm — sino-atrial pacemaker baseline
+  dHR_metabolic: number; // bpm — metabolic / thermal drive (Q_10 term)
+  dHR_hypoxic: number;   // bpm — hypoxic compensation
+  dHR_autonomic: number; // bpm — autonomic residual (sympathovagal balance)
+}
+
+const ALPHA_T_PER_C = 0.08;     // °C⁻¹ — sensor-disambiguation Theorem 2.1
+const BETA_O2 = 0.15;           // per 10% SpO₂ drop — sensor-disambiguation Theorem 2.2
+const T_REF_C = 33.0;           // resting forehead reference (°C)
+const HR_INTRINSIC_DEFAULT = 60;
+
+export function pchrDecompose(
+  HR_obs: number,
+  T_skin_C: number | undefined,
+  SpO2: number | undefined,
+  HR_intrinsic = HR_INTRINSIC_DEFAULT,
+): PchrDecomposition {
+  const dT = T_skin_C !== undefined ? T_skin_C - T_REF_C : 0;
+  const dHR_metabolic = ALPHA_T_PER_C * dT * HR_intrinsic;
+  const dHR_hypoxic = SpO2 !== undefined ? BETA_O2 * (1 - SpO2) * HR_intrinsic : 0;
+  const dHR_autonomic = HR_obs - HR_intrinsic - dHR_metabolic - dHR_hypoxic;
+  return {
+    HR_obs,
+    HR_intrinsic,
+    dHR_metabolic,
+    dHR_hypoxic,
+    dHR_autonomic,
+  };
 }
 
 /**
@@ -151,8 +196,15 @@ export function inferState(obs: BvpFeatures, prior: CardiacState = REST_STATE): 
   const HR = clamp(obs.HR_bpm, 30, 220);
   const HR_rest = prior.HR;
 
-  // Inotropy: E_es scales with HR (paper Eq. M2 — sympathetic inotropy).
-  const inotropyFactor = 1 + 0.04 * (HR - HR_rest);
+  // Subtract metabolic and hypoxic drives before scaling inotropy. The
+  // autonomic residual (HR_obs − HR_intrinsic − ΔHR_met − ΔHR_O2) is what
+  // actually reflects sympathetic activation; using raw HR overestimates
+  // contractility when the user is just warm.
+  const pchr = pchrDecompose(HR, obs.T_skin_C, obs.SpO2, prior.HR);
+  const autonomicHR = pchr.HR_intrinsic + pchr.dHR_autonomic;
+
+  // Inotropy: E_es scales with the autonomic-driven part of HR (paper Eq. M2).
+  const inotropyFactor = 1 + 0.04 * (autonomicHR - HR_rest);
   const Ees = clamp(prior.Ees * inotropyFactor, 0.4, 8.0);
 
   // Afterload: dicrotic notch position carries E_a information.

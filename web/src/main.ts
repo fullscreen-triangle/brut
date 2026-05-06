@@ -19,9 +19,19 @@ import { createRppgPipeline, type RppgPipeline } from './gpu/rppg';
 import { BvpAnalyzer } from './physio/bvp';
 import { RespirationEstimator } from './physio/respiration';
 import { classifyRegime, type Regime } from './physio/regimes';
-import { inferState, derive, REST_STATE, StateSmoother, type CardiacState } from './physio/eos';
+import { inferState, derive, REST_STATE, StateSmoother, pchrDecompose, type CardiacState } from './physio/eos';
+import {
+  inferSkinState,
+  skinTemperatureC,
+  VasodilationTracker,
+  SKIN_BASELINE,
+  type SkinState,
+} from './physio/skin-optics';
 import { KeyboardSensor } from './sensors/keyboard';
 import { MouseSensor } from './sensors/mouse';
+import { BlinkDetector } from './sensors/blinks';
+import { MelanopicTracker } from './sensors/melanopic';
+import { FaceColorSensor } from './sensors/face-color';
 import { Overlay } from './ui/overlay';
 import { mountAnatomyCorners, type AnatomyHandles } from './anatomy/corners';
 import './ui/panels';
@@ -53,6 +63,11 @@ interface AppState {
   smoother: StateSmoother;
   keyboard: KeyboardSensor;
   mouse: MouseSensor;
+  blinks: BlinkDetector;
+  melanopic: MelanopicTracker;
+  faceColor: FaceColorSensor;
+  vaso: VasodilationTracker;
+  lastSkinState: SkinState;
   running: boolean;
   rafId: number | null;
   fpsAcc: number;
@@ -76,6 +91,11 @@ const state: AppState = {
   smoother: new StateSmoother(0.18),
   keyboard: new KeyboardSensor(),
   mouse: new MouseSensor(),
+  blinks: new BlinkDetector(),
+  melanopic: new MelanopicTracker(),
+  faceColor: new FaceColorSensor(),
+  vaso: new VasodilationTracker(),
+  lastSkinState: { ...SKIN_BASELINE },
   running: false,
   rafId: null,
   fpsAcc: 0,
@@ -119,6 +139,10 @@ stopBtn.addEventListener('click', () => { stop(); });
 const dashboardHost = document.getElementById('drawer-body')!;
 state.dashboard = mountDashboard(dashboardHost);
 
+// Default: live-only on page load. The user can opt in to historical
+// replay via the drawer's "history" selector (1 d / 3 d / 7 d / 30 d).
+// This avoids the confusion of stale records appearing to be current.
+
 // 1-Hz aggregator for motor-only mode (when the camera isn't running).
 setInterval(() => {
   if (state.running) return; // camera path pushes its own records
@@ -133,8 +157,16 @@ function setSensorDot(el: HTMLElement, level: 'live' | 'idle' | 'warn' | 'dead')
 function pushMotorRecord(): void {
   const kw = state.keyboard.windowStats(1000);
   const mw = state.mouse.windowStats(1000);
-  // Only push if anything happened — keeps the dashboard responsive.
-  if (kw.count === 0 && mw.distance < 1 && mw.clicks === 0 && mw.scrollDelta === 0) {
+  const ml = state.melanopic.tick();
+  const bw = state.blinks.windowStats();
+  // Only push if any sensor actually has fresh data this tick.
+  if (
+    kw.count === 0 &&
+    mw.distance < 1 &&
+    mw.clicks === 0 &&
+    mw.scrollDelta === 0 &&
+    bw.countLastSecond === 0
+  ) {
     setSensorDot(dotKeyboard, state.keyboard.msSinceLastEvent() < 5000 ? 'idle' : 'idle');
     setSensorDot(dotMouse, state.mouse.msSinceLastEvent() < 5000 ? 'idle' : 'idle');
     return;
@@ -155,6 +187,15 @@ function pushMotorRecord(): void {
     ramblingPower: mw.ramblingPower,
     tremblingPower: mw.tremblingPower,
     rtRatio: mw.rtRatio,
+    blinks: bw.countLastSecond,
+    blinksPerMin: bw.bpmRate,
+    melFlux: ml.flux,
+    melSensitivity: ml.sensitivity,
+    melLoadMlxH: ml.cumulativeMlxHours,
+    T_skin_C: 0,
+    vasodilation: 0,
+    spo2Optical: 0,
+    dHRautonomic: 0,
   });
 }
 
@@ -239,6 +280,12 @@ function stop(): void {
   state.bvp = new BvpAnalyzer();
   state.resp = new RespirationEstimator();
   state.smoother = new StateSmoother(0.18);
+  state.blinks = new BlinkDetector();
+  state.vaso.reset();
+  state.lastSkinState = { ...SKIN_BASELINE };
+  // Reset corner labels — anatomy is destroyed but the DOM text persists.
+  hrMini.textContent = '— bpm';
+  rrMini.textContent = '— bpm';
   setSensorDot(dotCamera, 'idle');
   startBtn.disabled = false;
   stopBtn.disabled = true;
@@ -270,6 +317,9 @@ async function frame(tNowDom: number): Promise<void> {
   const lmResult = detectFace(video, tNowDom);
   const roi = extractFaceROI(lmResult);
 
+  // Blink detection runs whenever a face is visible — independent of rPPG.
+  state.blinks.ingest(lmResult);
+
   state.overlay.clear();
   state.overlay.drawROI(roi);
 
@@ -282,34 +332,95 @@ async function frame(tNowDom: number): Promise<void> {
     const stats = state.bvp.compute();
     const respEst = state.resp.estimate();
 
+    // Skin-optics inversion: sample face ROI mean RGB, invert the layered
+    // optical model to recover (melanin, [Hb], oxygenation), and combine with
+    // the BVP amplitude to derive a vasodilation factor → skin temperature.
+    const colorSample = state.faceColor.sample(video, roi);
+    const vaso = state.vaso.update(stats.relAmplitude, 1.0);
+    let skinState: SkinState = state.lastSkinState;
+    if (colorSample) {
+      skinState = inferSkinState(colorSample.combined, vaso, state.lastSkinState);
+      state.lastSkinState = skinState;
+    } else {
+      skinState = { ...skinState, vasodilation: vaso };
+    }
+    const T_skin_C = skinTemperatureC(vaso);
+    const spo2 = skinState.oxygenation;
+
     // Cardiac equations-of-state inversion. Only run once we have a stable HR.
+    // Now feeds T_skin and SpO₂ into the PCHR decomposition so HR is split
+    // into intrinsic + metabolic + hypoxic + autonomic, instead of attributing
+    // everything to the autonomic axis.
     let cardiacState: CardiacState = REST_STATE;
+    let pchr = pchrDecompose(0, undefined, undefined);
     if (stats.hrBpm >= 30) {
       const inferred = inferState({
         HR_bpm: stats.hrBpm,
         rel_amplitude: stats.relAmplitude,
-        // dicrotic-notch detection from rPPG is not yet implemented; default to baseline.
+        T_skin_C,
+        SpO2: spo2,
       });
       cardiacState = state.smoother.update(inferred);
+      pchr = pchrDecompose(stats.hrBpm, T_skin_C, spo2, cardiacState.HR);
     }
 
-    // Drive anatomy tempo from the fitted state (HR canonical from inverter).
-    if (cardiacState.HR > 30 && state.anatomy) state.anatomy.setHeartHr(cardiacState.HR);
-    if (respEst.rateBpm > 4 && state.anatomy) state.anatomy.setLungsRespRate(respEst.rateBpm);
+    // Compute derived hemodynamics once and reuse for shader, panels, dashboard.
+    const der = derive(cardiacState);
 
-    // Corner mini labels.
-    hrMini.textContent = stats.hrBpm > 0 ? `${cardiacState.HR.toFixed(0)} bpm` : '— bpm';
-    rrMini.textContent = respEst.rateBpm > 0 ? `${respEst.rateBpm.toFixed(0)} bpm` : '— bpm';
+    // Drive anatomy tempo + strain shader ONLY when we have a real fit.
+    // Gating on stats.hrBpm (the raw measurement) — not on cardiacState.HR,
+    // which is REST_STATE.HR=70 by default and would mislead before any
+    // actual measurement.
+    const haveCardiacFit = stats.hrBpm >= 30;
+    if (state.anatomy) {
+      if (haveCardiacFit) {
+        state.anatomy.setHeartHr(cardiacState.HR);
+        state.anatomy.setCardiacFit({
+          HR: cardiacState.HR,
+          Ees: cardiacState.Ees,
+          Ea: cardiacState.Ea,
+          EDV: cardiacState.EDV,
+          ESV: der.ESV,
+          EF: der.EF,
+          Rc: stats.rc > 0 ? stats.rc : 0.85,
+        });
+      } else {
+        // No fit yet — pause cardiac glb tempo and put strain shader into
+        // its neutral / no-signal mode (uHR=0 triggers the grey fragment path).
+        state.anatomy.setHeartHr(0);
+        state.anatomy.setCardiacFit({
+          HR: 0, Ees: 0, Ea: 0, EDV: 0, ESV: 0, EF: 0, Rc: 0,
+        });
+      }
+      if (respEst.rateBpm > 4) {
+        state.anatomy.setLungsRespRate(respEst.rateBpm);
+      } else {
+        state.anatomy.setLungsRespRate(0);
+      }
+    }
 
-    // Side panels driven by the fitted state.
+    // Corner mini labels — keep them honest about whether there's a live signal.
+    hrMini.textContent = haveCardiacFit ? `${cardiacState.HR.toFixed(0)} bpm` : '— bpm';
+    rrMini.textContent = respEst.rateBpm > 4 ? `${respEst.rateBpm.toFixed(0)} bpm` : '— bpm';
+
+    // Side panels driven by the fitted state. Pass an HR=0 marker when no
+    // fit exists yet, so the heart panel shows '—' instead of REST_STATE
+    // defaults that would look like real numbers.
     const regimeRc = classifyRegime(stats.rc);
-    state.heartPanel?.update(cardiacState, {
+    const panelState: CardiacState = haveCardiacFit
+      ? cardiacState
+      : { ...cardiacState, HR: 0 };
+    state.heartPanel?.update(panelState, {
       rmssd: stats.rmssdMs,
       rc: stats.rc,
       sk: stats.sk,
       st: stats.st,
       se: stats.se,
       regimeRc,
+      T_skin_C: haveCardiacFit ? T_skin_C : undefined,
+      vasodilation: haveCardiacFit ? vaso : undefined,
+      spo2_proxy: haveCardiacFit ? spo2 : undefined,
+      pchr: haveCardiacFit ? pchr : undefined,
     });
 
     state.lungsPanel?.update({
@@ -319,12 +430,13 @@ async function frame(tNowDom: number): Promise<void> {
       paco2: 40,            // typical resting; later derived from respiration
     });
 
-    // Dashboard push: one record per second, fusing cardiac + motor.
+    // Dashboard push: one record per second, fusing cardiac + motor + blinks + melanopic.
     if (now - state.lastDashPush > 1000 && stats.beats >= 2) {
       state.lastDashPush = now;
-      const der = derive(cardiacState);
       const kw = state.keyboard.windowStats(1000);
       const mw = state.mouse.windowStats(1000);
+      const bw = state.blinks.windowStats();
+      const ml = state.melanopic.tick();
       setSensorDot(dotKeyboard, kw.count > 0 ? 'live' : 'idle');
       setSensorDot(dotMouse, mw.distance > 1 ? 'live' : 'idle');
       state.dashboard?.push({
@@ -352,6 +464,15 @@ async function frame(tNowDom: number): Promise<void> {
         ramblingPower: mw.ramblingPower,
         tremblingPower: mw.tremblingPower,
         rtRatio: mw.rtRatio,
+        blinks: bw.countLastSecond,
+        blinksPerMin: bw.bpmRate,
+        melFlux: ml.flux,
+        melSensitivity: ml.sensitivity,
+        melLoadMlxH: ml.cumulativeMlxHours,
+        T_skin_C,
+        vasodilation: vaso,
+        spo2Optical: spo2,
+        dHRautonomic: pchr.dHR_autonomic,
       });
     }
   } else {

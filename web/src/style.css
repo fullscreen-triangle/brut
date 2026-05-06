@@ -379,7 +379,7 @@ button:disabled {
   left: 0;
   right: 0;
   bottom: 0;
-  height: min(64vh, 640px);
+  height: min(80vh, 880px);
   z-index: 15;
   background: var(--panel-bg);
   backdrop-filter: blur(6px);
@@ -410,13 +410,55 @@ button:disabled {
   color: var(--accent);
 }
 
+.drawer-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.drawer-tools .ds-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.drawer-tools select {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--dim);
+  padding: 3px 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.drawer-tools select:hover {
+  border-color: var(--accent);
+}
+
+.drawer-tools .ds-btn {
+  padding: 4px 9px;
+  font-size: 10px;
+}
+
+.drawer-tools .ds-btn-danger:hover {
+  border-color: var(--hot);
+  color: var(--hot);
+}
+
 .drawer-body {
   flex: 1;
   padding: 10px 12px;
   overflow: hidden;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   gap: 10px;
 }
 

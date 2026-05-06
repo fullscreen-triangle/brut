@@ -6,7 +6,7 @@
 
 import { mountPvLoop, type PvLoopHandle } from '../charts/pv-loop';
 import { mountFrankStarling, type FrankStarlingHandle } from '../charts/frank-starling';
-import type { CardiacState, DerivedHemodynamics } from '../physio/eos';
+import type { CardiacState, DerivedHemodynamics, PchrDecomposition } from '../physio/eos';
 import { derive } from '../physio/eos';
 
 export interface HeartPanelStats {
@@ -16,6 +16,11 @@ export interface HeartPanelStats {
   st: number;
   se: number;
   regimeRc: string;
+  // Skin-optics derived metabolic inputs
+  T_skin_C?: number;
+  vasodilation?: number;
+  spo2_proxy?: number;       // 0..1
+  pchr?: PchrDecomposition;
 }
 
 export interface HeartPanelHandle {
@@ -39,6 +44,11 @@ export function mountHeartPanel(): HeartPanelHandle {
     <div class="row"><label>P_es / P_ed</label><span data-k="press">—</span><span class="unit">mmHg</span></div>
     <div class="row"><label>MAP · pulse</label><span data-k="map">—</span><span class="unit">mmHg</span></div>
     <div class="row"><label>stroke work</label><span data-k="sw">—</span><span class="unit">mmHg·mL</span></div>
+    <div class="row"><label>T_skin (model)</label><span data-k="tskin">—</span><span class="unit">°C</span></div>
+    <div class="row"><label>vasodilation</label><span data-k="vaso">—</span><span class="unit"></span></div>
+    <div class="row"><label>SpO₂ (model)</label><span data-k="spo2pchr">—</span><span class="unit">%</span></div>
+    <div class="row"><label>HR intrinsic</label><span data-k="hrint">—</span><span class="unit">bpm</span></div>
+    <div class="row"><label>ΔHR met / hypox / auto</label><span data-k="hrcomps">—</span><span class="unit">bpm</span></div>
     <div class="row"><label>EOS regime</label><span data-k="eosregime">—</span><span class="unit"></span></div>
     <div class="row"><label>R_c regime</label><span data-k="rcregime">—</span><span class="unit"></span></div>
     <div class="row"><label>RMSSD · R_c</label><span data-k="hrv">—</span><span class="unit"></span></div>
@@ -63,11 +73,22 @@ export function mountHeartPanel(): HeartPanelHandle {
   const fs: FrankStarlingHandle = mountFrankStarling(fsBlock.querySelector('.chart-host') as HTMLElement);
 
   function update(state: CardiacState, hpStats: HeartPanelStats): void {
-    const d: DerivedHemodynamics = derive(state);
     const set = (k: string, v: string): void => {
       const el = body.querySelector(`[data-k="${k}"]`);
       if (el) el.textContent = v;
     };
+    // No live fit yet — show '—' across the readout instead of REST_STATE
+    // defaults, which would mislead the user into thinking those are their
+    // numbers. The PV loop and Frank-Starling charts also pause updates.
+    if (state.HR <= 0) {
+      const dash = ['hr', 'svef', 'co', 'vols', 'elast', 'ratio', 'press', 'map', 'sw',
+                    'tskin', 'vaso', 'spo2pchr', 'hrint', 'hrcomps',
+                    'eosregime', 'rcregime', 'hrv', 'sentropy'];
+      for (const k of dash) set(k, '—');
+      return;
+    }
+
+    const d: DerivedHemodynamics = derive(state);
     set('hr', state.HR.toFixed(1));
     set('svef', `${d.SV.toFixed(0)} · ${(d.EF * 100).toFixed(0)}`);
     set('co', d.CO.toFixed(2));
@@ -77,6 +98,17 @@ export function mountHeartPanel(): HeartPanelHandle {
     set('press', `${d.Pes.toFixed(0)} · ${d.Ped.toFixed(0)}`);
     set('map', `${d.MAP.toFixed(0)} · ${d.pulse.toFixed(0)}`);
     set('sw', d.SW.toFixed(0));
+    set('tskin', hpStats.T_skin_C !== undefined ? hpStats.T_skin_C.toFixed(1) : '—');
+    set('vaso', hpStats.vasodilation !== undefined ? hpStats.vasodilation.toFixed(2) : '—');
+    set('spo2pchr', hpStats.spo2_proxy !== undefined ? (hpStats.spo2_proxy * 100).toFixed(1) : '—');
+    if (hpStats.pchr) {
+      set('hrint', hpStats.pchr.HR_intrinsic.toFixed(0));
+      const fmt = (x: number): string => `${x >= 0 ? '+' : ''}${x.toFixed(1)}`;
+      set('hrcomps', `${fmt(hpStats.pchr.dHR_metabolic)} · ${fmt(hpStats.pchr.dHR_hypoxic)} · ${fmt(hpStats.pchr.dHR_autonomic)}`);
+    } else {
+      set('hrint', '—');
+      set('hrcomps', '—');
+    }
     set('eosregime', d.regime);
     set('rcregime', hpStats.regimeRc);
     set('hrv', hpStats.rmssd > 0 ? `${hpStats.rmssd.toFixed(0)} ms · ${hpStats.rc.toFixed(3)}` : '—');

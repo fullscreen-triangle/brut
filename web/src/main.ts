@@ -39,6 +39,7 @@ import { mountHeartPanel, type HeartPanelHandle } from './ui/heart-panel';
 import { mountLungsPanel, type LungsPanelHandle } from './ui/lungs-panel';
 import { mountDashboard, type Dashboard } from './charts/dashboard';
 import { initStealthToggle } from './ui/stealth';
+import { mountLanding } from './ui/landing';
 import { log, setStatus } from './util/log';
 
 const REGIME_INDEX: Record<Regime, number> = {
@@ -121,33 +122,42 @@ const dotCamera = document.getElementById('dot-camera')!;
 const dotKeyboard = document.getElementById('dot-keyboard')!;
 const dotMouse = document.getElementById('dot-mouse')!;
 
-initStealthToggle();
+// ── Boot sequence: landing first, observatory after begin ────────────
+// Show the minimal landing screen with the liquid-fill heart. Sensors
+// and the dashboard mount only AFTER the user clicks begin, so the
+// landing stays clean and nothing about the observatory is computed
+// before the user has consented to engage with it.
 
-// Motor sensors run from page load — independent of the camera. Even if
-// the user never clicks "start", we record their motor activity in the
-// dashboard. This matches the framework's claim that all data is useful.
-state.keyboard.start();
-state.mouse.start();
-setSensorDot(dotKeyboard, 'idle');
-setSensorDot(dotMouse, 'idle');
+const landing = mountLanding();
+void landing.beginPromise.then(() => {
+  initObservatory();
+});
 
-startBtn.addEventListener('click', () => { void start(); });
-stopBtn.addEventListener('click', () => { stop(); });
+function initObservatory(): void {
+  initStealthToggle();
 
-// Mount the dashboard immediately too, so motor data is collected and
-// visualised before the camera is ever started.
-const dashboardHost = document.getElementById('drawer-body')!;
-state.dashboard = mountDashboard(dashboardHost);
+  // Motor sensors run from begin — independent of the camera. Even if
+  // the user never clicks "start", we record their motor activity in the
+  // dashboard. This matches the framework's claim that all data is useful.
+  state.keyboard.start();
+  state.mouse.start();
+  setSensorDot(dotKeyboard, 'idle');
+  setSensorDot(dotMouse, 'idle');
 
-// Default: live-only on page load. The user can opt in to historical
-// replay via the drawer's "history" selector (1 d / 3 d / 7 d / 30 d).
-// This avoids the confusion of stale records appearing to be current.
+  startBtn.addEventListener('click', () => { void start(); });
+  stopBtn.addEventListener('click', () => { stop(); });
 
-// 1-Hz aggregator for motor-only mode (when the camera isn't running).
-setInterval(() => {
-  if (state.running) return; // camera path pushes its own records
-  pushMotorRecord();
-}, 1000);
+  // Mount the dashboard immediately so motor data is collected and
+  // visualised before the camera is ever started.
+  const dashboardHost = document.getElementById('drawer-body')!;
+  state.dashboard = mountDashboard(dashboardHost);
+
+  // 1-Hz aggregator for motor-only mode (when the camera isn't running).
+  setInterval(() => {
+    if (state.running) return; // camera path pushes its own records
+    pushMotorRecord();
+  }, 1000);
+}
 
 function setSensorDot(el: HTMLElement, level: 'live' | 'idle' | 'warn' | 'dead'): void {
   el.classList.remove('live', 'idle', 'warn', 'dead');

@@ -44,8 +44,42 @@ npm install
 npm run dev
 ```
 
-Then open the URL printed by Vite (default `http://127.0.0.1:5173`) and
-click **start**. Allow camera access.
+Then open the URL printed by Vite (default `http://127.0.0.1:5173`).
+The landing screen shows a single liquid-filled beating heart;
+click **begin** to enter the observatory, then **start** to enable
+the camera-based rPPG pipeline.
+
+## Deploy (Vercel)
+
+The repo includes a `vercel.json` configured for Vite static
+deployment. From the `web/` directory:
+
+```bash
+# one-time setup (project root)
+npx vercel link
+
+# preview deploy
+npx vercel
+
+# production deploy
+npx vercel --prod
+```
+
+Vercel will detect the framework as Vite, run `npm run build`, and
+serve the `dist/` directory. The `vercel.json` adds the headers
+required for camera access and long-cache for `/glb/*` assets.
+
+## Layers
+
+The app boots in two stages:
+
+1. **Landing** — a black screen with a single liquid-filled beating
+   heart (mounted via `anatomy/liquid-heart.ts`, using the shader in
+   `anatomy/liquid-shader.ts` ported from the r3f bottle reference).
+   Nothing else is initialised; sensors do not start until you click
+   **begin**.
+2. **Observatory** — full pipeline with corner anatomies, echo
+   planes, side panels, and the crossfilter dashboard.
 
 ## Build
 

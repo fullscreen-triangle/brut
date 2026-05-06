@@ -239,6 +239,21 @@ export function mountDashboard(container: HTMLElement): Dashboard {
 }
 
 // ── Brushable line chart over time ─────────────────────────────────────
+//
+// Brush behaviour:
+//   - Drag on empty space  → draw a new selection rectangle
+//   - Drag inside selection → MOVE the selection along the time axis
+//   - Drag a handle         → resize one side of the selection
+//   - Click without drag    → does NOT clear the brush (we override d3's
+//     default click-clears behaviour because users find it surprising)
+//   - Selection persists across data redraws — the closure remembers the
+//     current selection in domain (time) coordinates and reapplies it via
+//     `brush.move` after each redraw.
+//
+// Distinguishing user-driven brush events from our own programmatic
+// reapplications is critical: programmatic moves come through with
+// `event.sourceEvent === null`. Only user events update the persisted
+// selection.
 function mountTimeLine(
   container: HTMLElement,
   store: CrossfilterStore,
@@ -249,7 +264,8 @@ function mountTimeLine(
 ): void {
   const frame = makeChart(container, { margin: { top: 6, right: 8, bottom: 18, left: 28 } });
   const brush = d3.brushX();
-  let brushG: d3.Selection<SVGGElement, unknown, null, undefined> | null = null;
+  // Persisted selection in time-domain (ms) coordinates; null means cleared.
+  let savedSelectionDomain: [number, number] | null = null;
 
   function draw(): void {
     if (!syncChartSize(container, frame) && frame.width === 0) return;
@@ -331,21 +347,60 @@ function mountTimeLine(
       .attr('fill', 'none')
       .attr('d', line);
 
-    // Brush.
-    brush.extent([
-      [0, 0],
-      [W, H],
-    ]);
-    brushG = frame.g.append('g').attr('class', 'brush');
+    // Brush — see header comment for behaviour spec.
+    brush.extent([[0, 0], [W, H]]);
+    const brushG = frame.g.append('g').attr('class', 'brush');
     brushG.call(brush);
-    brush.on('end', (ev) => {
-      if (!ev.selection) {
-        store.dims.t.filterAll();
-      } else {
-        const [x0, x1] = ev.selection as [number, number];
-        store.dims.t.filterRange([x.invert(x0), x.invert(x1)]);
+
+    // User-driven brush events (drag, move, resize): commit to persisted
+    // selection and apply the filter. Programmatic restoration calls also
+    // fire `brush` events but with `sourceEvent == null`; we ignore those.
+    brush.on('brush end', (ev) => {
+      if (ev.sourceEvent == null) return; // programmatic, don't recurse
+      if (ev.selection == null) {
+        // User cleared the brush by clicking the empty area. We treat a
+        // CLICK (no drag) as a no-op — keep the existing selection — and
+        // only honour an explicit "clear" gesture (Esc or programmatic).
+        // d3-brush distinguishes click-clear by emitting null selection
+        // on `end` only; if we got null on `brush`, it means actually
+        // empty mid-drag which we ignore here too.
+        if (ev.type === 'end' && savedSelectionDomain != null) {
+          // Restore the previous selection so the click doesn't dismiss it.
+          const [d0, d1] = savedSelectionDomain;
+          brushG.call(brush.move, [x(d0), x(d1)]);
+        }
+        return;
       }
+      const [px0, px1] = ev.selection as [number, number];
+      const t0 = x.invert(px0);
+      const t1 = x.invert(px1);
+      savedSelectionDomain = [t0, t1];
+      store.dims.t.filterRange([t0, t1]);
       store.redrawAll();
+    });
+
+    // Reapply the saved selection after a redraw (the new x-scale may have
+    // shifted as records come in). Programmatic — does not trigger filter.
+    if (savedSelectionDomain != null) {
+      const [d0, d1] = savedSelectionDomain;
+      const tExtentNew = x.domain();
+      // If the saved selection has fallen completely off-screen because
+      // the data range moved, drop it.
+      if (d1 < tExtentNew[0] || d0 > tExtentNew[1]) {
+        savedSelectionDomain = null;
+      } else {
+        brushG.call(brush.move, [x(d0), x(d1)]);
+      }
+    }
+
+    // Allow Esc anywhere to clear the brush on this chart.
+    brushG.on('keydown', (ev) => {
+      if (ev.key === 'Escape' && savedSelectionDomain != null) {
+        savedSelectionDomain = null;
+        brushG.call(brush.move, null);
+        store.dims.t.filterAll();
+        store.redrawAll();
+      }
     });
   }
 

@@ -3,100 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
     <title>BRUT Observatory</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <!-- Camera + per-pixel coherence layer (full-screen, behind everything) -->
-    <video id="video" autoplay playsinline muted></video>
-    <canvas id="overlay"></canvas>
-    <canvas id="gpu"></canvas>
 
-    <!-- Top-left lungs corner widget -->
-    <section id="lungs-corner" class="corner corner-tl" aria-label="lungs">
-      <canvas id="lungs-canvas"></canvas>
-      <div class="corner-label">
-        <span class="lbl">respiration</span>
-        <span class="val" id="rr-mini">— bpm</span>
-      </div>
-    </section>
-
-    <!-- Top-right heart corner widget -->
-    <section id="heart-corner" class="corner corner-tr" aria-label="heart">
-      <canvas id="heart-canvas"></canvas>
-      <div class="corner-label">
-        <span class="lbl">cardiac</span>
-        <span class="val" id="hr-mini">— bpm</span>
-      </div>
-    </section>
-
-    <!-- Central echo-plane strip — the model-based echocardiogram. -->
-    <section id="echo-strip" aria-label="echocardiographic planes">
-      <div class="echo-card" id="echo-a2c">
-        <canvas id="echo-a2c-canvas"></canvas>
-        <div class="echo-label">A2C · apical 2-chamber</div>
-      </div>
-      <div class="echo-card" id="echo-a5c">
-        <canvas id="echo-a5c-canvas"></canvas>
-        <div class="echo-label">A5C · apical 5-chamber</div>
-      </div>
-      <div class="echo-card" id="echo-psax">
-        <canvas id="echo-psax-canvas"></canvas>
-        <div class="echo-label">PSAX · aortic valve</div>
-      </div>
-    </section>
-
-    <!-- Header strip with status + start/stop -->
-    <header id="header">
-      <h1>BRUT Observatory</h1>
-      <div class="hdr-tools">
-        <span class="sensor-dots" aria-label="active sensors">
-          <span class="dot" id="dot-camera" title="camera (rPPG)">●</span>
-          <span class="dot" id="dot-keyboard" title="keyboard (motor)">●</span>
-          <span class="dot" id="dot-mouse" title="mouse (motor)">●</span>
-        </span>
-        <span id="status">init</span>
-        <button id="stealth" title="hide self-view; pipeline keeps recording">stealth</button>
-        <button id="start">start</button>
-        <button id="stop" disabled>stop</button>
-      </div>
-    </header>
-
-    <!-- Left slide-in panel: respiration analysis -->
-    <aside id="lungs-panel" class="side-panel side-panel-left" aria-hidden="true">
-      <header>
-        <h2>respiration analysis</h2>
-        <button class="close" data-close="lungs-panel" aria-label="close">×</button>
+    <!-- Landing screen — minimal, just the liquid heart -->
+    <section id="landing">
+      <canvas id="landing-canvas"></canvas>
+      <header id="landing-header">
+        <h1>BRUT</h1>
+        <span class="subtitle">closed-circuit physiological observatory</span>
       </header>
-      <div class="panel-body" id="lungs-panel-body"></div>
-    </aside>
+      <button id="landing-begin">begin</button>
+      <p id="landing-hint">camera stays off until you press begin · stealth is default</p>
+    </section>
 
-    <!-- Right slide-in panel: cardiac analysis -->
-    <aside id="heart-panel" class="side-panel side-panel-right" aria-hidden="true">
-      <header>
-        <h2>cardiac analysis</h2>
-        <button class="close" data-close="heart-panel" aria-label="close">×</button>
+    <!-- Observatory (revealed after landing) -->
+    <div id="observatory" aria-hidden="true">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <canvas id="gpu"></canvas>
+
+      <section id="lungs-corner" class="corner corner-tl" aria-label="lungs">
+        <canvas id="lungs-canvas"></canvas>
+        <div class="corner-label">
+          <span class="lbl">respiration</span>
+          <span class="val" id="rr-mini">— bpm</span>
+        </div>
+      </section>
+
+      <section id="heart-corner" class="corner corner-tr" aria-label="heart">
+        <canvas id="heart-canvas"></canvas>
+        <div class="corner-label">
+          <span class="lbl">cardiac</span>
+          <span class="val" id="hr-mini">— bpm</span>
+        </div>
+      </section>
+
+      <section id="echo-strip" aria-label="echocardiographic planes">
+        <div class="echo-card" id="echo-a2c">
+          <canvas id="echo-a2c-canvas"></canvas>
+          <div class="echo-label">A2C · apical 2-chamber</div>
+        </div>
+        <div class="echo-card" id="echo-a5c">
+          <canvas id="echo-a5c-canvas"></canvas>
+          <div class="echo-label">A5C · apical 5-chamber</div>
+        </div>
+        <div class="echo-card" id="echo-psax">
+          <canvas id="echo-psax-canvas"></canvas>
+          <div class="echo-label">PSAX · aortic valve</div>
+        </div>
+      </section>
+
+      <header id="header">
+        <h1>BRUT Observatory</h1>
+        <div class="hdr-tools">
+          <span class="sensor-dots" aria-label="active sensors">
+            <span class="dot" id="dot-camera" title="camera (rPPG)">●</span>
+            <span class="dot" id="dot-keyboard" title="keyboard (motor)">●</span>
+            <span class="dot" id="dot-mouse" title="mouse (motor)">●</span>
+          </span>
+          <span id="status">idle</span>
+          <button id="stealth" title="hide self-view; pipeline keeps recording">stealth</button>
+          <button id="start">start</button>
+          <button id="stop" disabled>stop</button>
+        </div>
       </header>
-      <div class="panel-body" id="heart-panel-body"></div>
-    </aside>
 
-    <!-- Bottom drawer: crossfilter dashboard -->
-    <div id="drawer-handle" class="drawer-handle" aria-label="open dashboard">
-      <span>dashboard</span>
-      <span class="caret">▲</span>
+      <aside id="lungs-panel" class="side-panel side-panel-left" aria-hidden="true">
+        <header>
+          <h2>respiration</h2>
+          <button class="close" data-close="lungs-panel" aria-label="close">×</button>
+        </header>
+        <div class="panel-body" id="lungs-panel-body"></div>
+      </aside>
+
+      <aside id="heart-panel" class="side-panel side-panel-right" aria-hidden="true">
+        <header>
+          <h2>cardiac</h2>
+          <button class="close" data-close="heart-panel" aria-label="close">×</button>
+        </header>
+        <div class="panel-body" id="heart-panel-body"></div>
+      </aside>
+
+      <div id="drawer-handle" class="drawer-handle" aria-label="open dashboard">
+        <span>dashboard</span>
+        <span class="caret">▲</span>
+      </div>
+      <section id="drawer" class="drawer" aria-hidden="true">
+        <header>
+          <h2>crossfilter dashboard</h2>
+          <button class="close" data-close="drawer" aria-label="close">×</button>
+        </header>
+        <div class="drawer-body" id="drawer-body"></div>
+      </section>
+
+      <footer id="footer">
+        <pre id="log"></pre>
+      </footer>
     </div>
-    <section id="drawer" class="drawer" aria-hidden="true">
-      <header>
-        <h2>crossfilter dashboard</h2>
-        <button class="close" data-close="drawer" aria-label="close">×</button>
-      </header>
-      <div class="drawer-body" id="drawer-body"></div>
-    </section>
-
-    <!-- Compact log -->
-    <footer id="footer">
-      <pre id="log"></pre>
-    </footer>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

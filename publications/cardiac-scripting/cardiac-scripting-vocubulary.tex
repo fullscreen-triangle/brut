@@ -1,0 +1,1331 @@
+\documentclass[10pt,twocolumn,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.2cm,columnsep=0.55cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{mdframed}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage{siunitx}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+            citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{cleveref}
+
+\captionsetup{font=small,labelfont=bf,textfont=it}
+
+% ─── Theorem environments ────────────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ─── BrutScript listing style ────────────────────────────────────────
+\definecolor{kw}{RGB}{0,100,180}
+\definecolor{cm}{RGB}{100,100,100}
+\definecolor{str}{RGB}{160,32,32}
+\definecolor{num}{RGB}{0,128,0}
+\definecolor{bg}{RGB}{248,248,252}
+
+\lstdefinelanguage{BrutScript}{
+  morekeywords={source,signal,rate,layer,invert,derive,clamp,given,using,
+                decompose,from,term,baseline,window,percentile,coord,
+                regime,classify,when,failure,detect,otherwise,
+                watch,and,or,not,emit,confidence,is,
+                model,hub,task,input,output,
+                explain,match,agree,diverge,trace,flag,annotate,with,
+                first_match,aligns},
+  sensitive=true,
+  morecomment=[l]{--},
+  morestring=[b]",
+}
+
+\lstset{
+  language=BrutScript,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{kw}\bfseries,
+  commentstyle=\color{cm}\itshape,
+  stringstyle=\color{str},
+  numberstyle=\tiny\color{cm},
+  backgroundcolor=\color{bg},
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{cm!40},
+  numbers=left,
+  numbersep=5pt,
+  xleftmargin=10pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+  captionpos=b,
+}
+
+% ─── Custom commands ─────────────────────────────────────────────────
+\newcommand{\kB}{k_{\mathrm{B}}}
+\newcommand{\BS}{\textsc{BrutScript}}
+\newcommand{\Ees}{E_{\mathrm{es}}}
+\newcommand{\Ea}{E_{\mathrm{a}}}
+\newcommand{\EDV}{\mathrm{EDV}}
+\newcommand{\ESV}{\mathrm{ESV}}
+\newcommand{\EF}{\mathrm{EF}}
+\newcommand{\CO}{\mathrm{CO}}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\HR}{\mathrm{HR}}
+\newcommand{\SE}{S_{\mathrm{e}}}
+\newcommand{\SK}{S_{\mathrm{k}}}
+\newcommand{\ST}{S_{\mathrm{t}}}
+\newcommand{\Rc}{R_c}
+\newcommand{\PCHR}{\mathrm{PCHR}}
+\newcommand{\CSCI}{\mathrm{CSCI}}
+\newcommand{\TCC}{\mathrm{TCC}}
+\newcommand{\Ra}{\mathrm{Ra}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\vaso}{\eta}
+\newcommand{\melan}{m}
+\newcommand{\Hbconc}{[\mathrm{Hb}]_{\mathrm{tot}}}
+\newcommand{\Soxy}{S_{\mathrm{O_2}}}
+
+% ─────────────────────────────────────────────────────────────────────
+\title{\textbf{BrutScript: A Partition-Theoretic Domain-Specific Language\\
+for Auditable Physiological AI Pipelines}\\[0.3em]
+\large Syntax, Semantics, and Formal Specification}
+
+\author{
+Kundai Farai Sachikonye\\[0.3em]
+AIMe Registry for Artificial Intelligence\\
+Experimental Bioinformatics, Maximus-von-Imhof-Forum 3\\
+85354 Freising, Germany\\
+\texttt{kundai.sachikonye@bitspark.com}
+}
+
+\date{\today}
+
+\begin{document}
+
+\twocolumn[
+\begin{@twocolumnfalse}
+\maketitle
+\begin{abstract}
+\noindent
+We introduce \BS{}, a domain-specific language (DSL) for writing
+\emph{auditable} physiological signal processing pipelines that can run
+alongside black-box machine learning models and produce step-by-step
+explanations of their outputs.  The problem \BS{} addresses is
+fundamental: AI models trained on physiological sensor data are opaque
+--- they map raw camera pixels or wrist-sensor streams to health labels
+without exposing which physical quantities drove each prediction.  \BS{}
+resolves this by providing a typed, traceable scripting vocabulary whose
+primitives correspond one-to-one with the partition-theoretic quantities
+derived in the Bounded Phase Space framework: Beer--Lambert optical
+inversion layers, Partition-Coupled Heart Rate (PCHR) decomposition
+terms, S-entropy health coordinates, Kuramoto regime classifiers,
+Cross-Scale Coherence Index (CSCI) coupling pairs, and rambling--trembling
+motor decomposition.  A \BS{} script declares signal sources, named
+inversion layers, physiological decompositions, model bindings (including
+HuggingFace Hub checkpoints), and alignment blocks that run both the
+rule-based and neural pipelines simultaneously.  The compiler emits a
+structured JSON execution trace in which every intermediate value is
+named, time-stamped, and attributed to the source line that produced it.
+Divergences between the rule-based trace and the neural model's
+predictions are flagged with a pointer to the specific decomposition term
+responsible.  We specify the complete grammar of \BS{}, define the
+denotational semantics of each block type, and state the correctness
+theorems that govern trace fidelity, type safety, and signal closure.
+The language is implemented as a TypeScript compiler targeting the
+BRUT Observatory web application, where it runs in real time against
+live WebGPU rPPG data, face RGB inversions, and keyboard/mouse motor
+sensors.
+
+\vspace{4pt}
+\noindent\textbf{Keywords:} domain-specific language, explainable AI,
+physiological computing, remote photoplethysmography, S-entropy,
+partition theory, cardiac equations of state, HuggingFace, audit trail,
+wearable sensors.
+\end{abstract}
+\vspace{10pt}
+\end{@twocolumnfalse}
+]
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+% =====================================================================
+
+\subsection{The Black-Box Problem in Physiological AI}
+
+Modern AI systems applied to physiological sensing are effective but
+opaque.  A model trained on face video can output ``elevated stress'' at
+14:32 without revealing which pixels drove the prediction, whether the
+elevated heart rate was thermal, hypoxic, or autonomic in origin, whether
+the cardiac oscillator was coherent or turbulent at the time, or whether
+the model was operating in a data regime where its training generalises.
+This opacity is not merely inconvenient --- it is a fundamental obstacle
+to clinical adoption, regulatory approval, and developer debugging.
+
+The standard response --- post-hoc explainability methods such as SHAP
+or LIME --- applies input perturbations and observes output changes, but
+this approach is agnostic to the biophysical meaning of the perturbed
+features.  Knowing that the green channel had high SHAP weight says
+nothing about whether the signal was carrying cardiac or vasodilatory
+information, and says nothing about whether the layered optical model
+would have agreed with the neural attribution.
+
+\subsection{The Partition-Theoretic Alternative}
+
+The Bounded Phase Space framework~\cite{sachikonye2024integration,
+sachikonye2024fluid,sachikonye2024gas,sachikonye2024transport} provides
+a first-principles mathematical description of every quantity that a
+consumer physiological sensor touches.  Cardiac coherence $\Rc$ is a
+Kuramoto order parameter~\cite{kuramoto1984}.  Heart rate decomposes into
+intrinsic, metabolic, hypoxic, and autonomic components via the PCHR
+equation~\cite{sachikonye2024disambiguation}.  RGB pixel values invert to
+melanin index, haemoglobin concentration, oxygenation, and vasodilation
+via layered Beer--Lambert optics~\cite{sachikonye2024optical}.  Keystroke
+timing decomposes into rambling (supraspinal) and trembling (spinal)
+motor components~\cite{sachikonye2024motor}.
+
+Each of these quantities has a formal definition, a derivation from first
+principles, and a computable form from sensor data.  \BS{} is a scripting
+language whose vocabulary \emph{is} these quantities.  A \BS{} program
+is a physics-grounded specification of what is happening in the pipeline,
+and the compiler is the mechanism by which that specification becomes an
+executable audit trail.
+
+\subsection{Design Goals}
+
+\BS{} is designed around four requirements:
+
+\begin{enumerate}[leftmargin=*,nosep]
+\item \textbf{Traceability.} Every intermediate value produced during
+  execution must be named, time-stamped, and attributed to a source line.
+\item \textbf{Physical fidelity.} The language primitives must correspond
+  to physically meaningful quantities, not to ML feature indices or
+  opaque tensors.
+\item \textbf{Model alignment.} The language must be able to declare a
+  neural model (including a HuggingFace Hub checkpoint) as a named
+  participant in the pipeline and compare its output against the
+  rule-based trace at each step.
+\item \textbf{Real-time execution.} Scripts must compile to code that
+  runs inside a WebGPU-accelerated browser at $\geq$1\,Hz against live
+  sensor streams.
+\end{enumerate}
+
+\subsection{Contributions}
+
+\begin{enumerate}[leftmargin=*,nosep]
+\item A complete formal grammar for \BS{} (\cref{sec:grammar}).
+\item Denotational semantics for each block type (\cref{sec:semantics}).
+\item Correctness theorems governing type safety, trace fidelity, and
+  signal closure (\cref{sec:theorems}).
+\item A specification of the JSON trace format produced by the compiler
+  (\cref{sec:trace}).
+\item A reference vocabulary table mapping \BS{} identifiers to
+  their partition-theoretic definitions (\cref{sec:vocabulary}).
+\item An annotated implementation blueprint for the TypeScript
+  compiler (\cref{sec:implementation}).
+\end{enumerate}
+
+% =====================================================================
+\section{Background and Motivation}
+\label{sec:background}
+% =====================================================================
+
+\subsection{Signal Provenance in rPPG Pipelines}
+
+Remote photoplethysmography (rPPG) extracts cardiac signals from face
+video~\cite{verkruysse2008,wang2017posrPPG,dehaan2013chrom}.  The BRUT
+Observatory~\cite{sachikonye2024optical} extends this to a full
+biophysical inversion: a WebGPU compute shader extracts per-patch cardiac
+coherence $\Rc$ across a $64\times64$ face grid, the CPU layer extracts
+a global BVP sample, and the algebraic inverter recovers the four-dimensional
+optical state $(\melan, \Hbconc, \Soxy, \vaso)$ from mean face RGB at
+1\,Hz.  From $\vaso$ the system derives skin temperature $T_{\mathrm{skin}}$
+and the PCHR decomposition of heart rate into components $(\HR_{\mathrm{int}},
+\Delta\HR_{\mathrm{met}}, \Delta\HR_{\mathrm{O}_2}, \Delta\HR_{\mathrm{auto}})$.
+
+Every quantity in this chain has a mathematical definition
+(\cref{tab:vocabulary}).  The problem is that when a neural model outputs
+a label such as ``stress'' or ``cardiac risk'', its internal computation
+does not respect these definitions --- it operates on raw feature vectors
+and produces a scalar or categorical output without indicating which
+physical pathway drove it.
+
+\subsection{Sensor Disambiguation}
+
+The sensor disambiguation framework~\cite{sachikonye2024disambiguation}
+establishes formally (Theorem~1 therein) that a single sensor reading is
+$k$-degenerate: $\HR = 90\,\mathrm{bpm}$ is consistent with exercise
+recovery, fever, hypoxia, stress, heart failure, and altitude
+acclimatisation simultaneously.  Disambiguation requires at least three
+independent sensor projections plus two partition coupling equations.
+The PCHR decomposition achieves this: given simultaneous $\HR$,
+$T_{\mathrm{skin}}$, and $\Soxy$, the four components are uniquely
+determined.  A neural model that does not perform this decomposition
+internally cannot distinguish these physiological states.
+
+\BS{} makes the PCHR decomposition a first-class language construct,
+so a developer can write the decomposition explicitly alongside the
+neural model's prediction and observe whether they agree.
+
+\subsection{Motor Signals as Physiological Channels}
+
+The neuromuscular derivation~\cite{sachikonye2024motor} establishes that
+keystroke inter-keystroke intervals (IKI) are direct readouts of efferent
+motor commands: the IKI sequence is a discretised version of the
+continuous motor programme output.  The rambling--trembling decomposition
+of cursor velocity~\cite{sachikonye2024posture} separates supraspinal
+voluntary adjustments ($\Ra$, 0.05--0.5\,Hz) from spinal stabilisation
+oscillations ($\Tr$, 0.5--3.0\,Hz).  The ratio $\Ra/(\Ra+\Tr)$
+quantifies the balance between voluntary and reflex motor control.
+
+\BS{} includes these motor channels as first-class source signals,
+enabling scripts that combine cardiac, optical, and motor pathways
+in a single audit trace.
+
+\subsection{Cardiac Equations of State}
+
+The cardiac equations of state (EOS)~\cite{sachikonye2024eos} provide a
+closed-form algebraic inversion from BVP-derived features
+$(\HR, A_{\mathrm{rel}}, T_{\mathrm{skin}}, \Soxy)$ to hemodynamic
+state $(\Ees, \Ea, \EDV, \SV, \EF, \CO)$.  The end-systolic elastance
+$\Ees$ quantifies left ventricular contractility; arterial elastance
+$\Ea$ quantifies afterload; their ratio $\Ees/\Ea$ characterises
+ventricular--arterial coupling efficiency.  These quantities are
+derivable from consumer camera data without contact sensors.
+
+\BS{} exposes the EOS inversion as a decompose block, so developers
+can write scripts that reason about contractility and coupling efficiency
+and compare these derived quantities against a neural model's output.
+
+% =====================================================================
+\section{Formal Grammar}
+\label{sec:grammar}
+% =====================================================================
+
+\subsection{Lexical Structure}
+
+\BS{} source files are UTF-8 text.  Comments begin with \texttt{--} and
+extend to end of line.  Whitespace (space, tab, newline) is
+non-significant except as a token separator.  String literals are
+delimited by double quotes.  Numeric literals are IEEE-754 floating
+point.  Identifiers match \texttt{[a-zA-Z\_][a-zA-Z0-9\_\.]*}.
+
+\subsection{Context-Free Grammar}
+
+The complete grammar is given in BNF notation below.  Non-terminals
+are written in angle brackets; terminals are in \texttt{typewriter};
+$\epsilon$ denotes the empty production; $\{X\}$ denotes zero or more
+repetitions of $X$; $[X]$ denotes optional $X$.
+
+\begin{mdframed}[backgroundcolor=bg,linecolor=cm!40,linewidth=0.4pt]
+\scriptsize
+\begin{verbatim}
+<program>   ::= { <block> }
+
+<block>     ::= <source-block>
+              | <layer-block>
+              | <decompose-block>
+              | <watch-block>
+              | <model-block>
+              | <explain-block>
+
+<source-block> ::=
+  "source" IDENT "{" { <signal-decl> | <rate-decl> } "}"
+
+<signal-decl> ::=
+  "signal" IDENT { "," IDENT } [ "--" COMMENT ]
+
+<rate-decl>   ::= "rate" NUM "hz"
+
+<layer-block> ::=
+  "layer" IDENT "from" <ident-list> "{"
+    { <invert-stmt> | <derive-stmt> }
+  "}"
+
+<invert-stmt> ::=
+  "invert" IDENT "from" IDENT
+    [ "given" <ident-list> ]
+    "using" IDENT
+    [ "baseline" NUM ( "s" | "m" | "h" | "d" ) ]
+    [ "sqrt_compress" ]
+    [ "--" COMMENT ]
+
+<derive-stmt> ::=
+  "derive" IDENT "=" <expr>
+    [ "clamp" "[" NUM "," NUM "]" ]
+    [ "--" COMMENT ]
+
+<decompose-block> ::=
+  "decompose" IDENT "from" <ident-list> "{"
+    { <term-stmt>
+    | <coord-stmt>
+    | <regime-stmt>
+    | <failure-stmt>
+    | <pair-stmt> }
+  "}"
+
+<term-stmt> ::=
+  "term" IDENT "=" <expr> [ "--" COMMENT ]
+
+<coord-stmt> ::=
+  "coord" IDENT "=" <expr> [ "--" COMMENT ]
+
+<regime-stmt> ::=
+  "regime" "=" "classify" "(" IDENT ")" "{"
+    { IDENT "when" IDENT <cmp-op> NUM }
+    "otherwise" IDENT
+  "}"
+
+<failure-stmt> ::=
+  "failure" "=" "detect" "{"
+    { IDENT "when" <condition> }
+    "none" "otherwise"
+  "}"
+
+<pair-stmt> ::=
+  "pair" IDENT
+    "predicted" "=" <expr>
+    "observed"  "=" <expr>
+    [ "--" COMMENT ]
+
+<watch-block> ::=
+  "watch" IDENT "{"
+    "when" <condition>
+    { ( "and" | "or" ) <condition> }
+    "emit" STRING "confidence" NUM
+    [ "--" COMMENT ]
+  "}"
+
+<condition> ::=
+  IDENT <cmp-op> NUM
+  | IDENT "is" IDENT
+  | IDENT "aligns" IDENT
+  | "not" <condition>
+
+<cmp-op>    ::= ">" | "<" | ">=" | "<=" | "==" | "!="
+
+<model-block> ::=
+  "model" IDENT "{"
+    "hub"    STRING
+    "task"   IDENT
+    "input"  "{" { <input-binding> } "}"
+    "output" { IDENT }
+  "}"
+
+<input-binding> ::=
+  IDENT { "," IDENT } "from" IDENT [ "." IDENT ]
+
+<explain-block> ::=
+  "explain" IDENT "{"
+    "brut_prediction"  "=" <expr>
+    "model_prediction" "=" IDENT "." IDENT
+    "match" "{"
+      "agree"   "when" <condition>
+      "diverge" "when" <condition> "{"
+        { <trace-stmt> | <flag-stmt> }
+      "}"
+    "}"
+    [ "annotate" IDENT "with" "{" { <annot-item> } "}" ]
+  "}"
+
+<trace-stmt>  ::= "trace" IDENT [ "." IDENT ]
+<flag-stmt>   ::= "flag" STRING
+<annot-item>  ::= IDENT ":" IDENT
+
+<ident-list>  ::= IDENT { "," IDENT }
+
+<expr>        ::= <term> { ( "+" | "-" ) <term> }
+<term>        ::= <factor> { ( "*" | "/" ) <factor> }
+<factor>      ::= "(" <expr> ")"
+               | IDENT [ "." IDENT ]
+               | NUM
+               | <builtin-call>
+<builtin-call> ::= IDENT "(" [ <expr> { "," <expr> } ] ")"
+\end{verbatim}
+\end{mdframed}
+
+\subsection{Reserved Identifiers}
+
+The following identifiers are reserved as built-in functions
+(\cref{tab:builtins}):
+
+\begin{table}[H]
+\centering
+\caption{Built-in functions available in \BS{} expressions.}
+\label{tab:builtins}
+\footnotesize
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+\textbf{Identifier} & \textbf{Semantics} \\
+\midrule
+\texttt{baseline(x,window,pct)} & Running $p$-th percentile of $x$ over rolling window \\
+\texttt{shannon\_entropy(x)}    & $-\sum p_i \ln p_i$ over histogram of $x$ \\
+\texttt{sqrt\_compress(x)}      & $\sqrt{\max(0.1,\, x)}$ (vasodilation stabiliser) \\
+\texttt{mean(x)}                & Rolling mean \\
+\texttt{std(x)}                 & Rolling standard deviation \\
+\texttt{first\_match(...)}      & Returns first fired \texttt{watch} event \\
+\texttt{classify(x)}            & Dispatch to enclosing regime block \\
+\texttt{detect(...)}            & Dispatch to enclosing failure block \\
+\texttt{log2(x)}                & $\log_2 x$ \\
+\texttt{exp(x)}                 & $e^x$ \\
+\texttt{cos(x)}                 & $\cos x$ \\
+\texttt{abs(x)}                 & $|x|$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Denotational Semantics}
+\label{sec:semantics}
+% =====================================================================
+
+We define the denotational semantics of each \BS{} block type by giving
+its \emph{value domain}, \emph{evaluation rule}, and \emph{trace contribution}.
+
+\subsection{Value Domains}
+
+\begin{definition}[Value domains]
+\label{def:domains}
+Let $\mathbb{R}$ denote floating-point reals, $\mathbb{S}$ the set of
+string literals, $\mathbb{B} = \{\top,\bot\}$ boolean truth values,
+and $\mathbb{L}$ the set of regime labels.  A \emph{signal} is a
+function $\sigma: \mathbb{T} \to \mathbb{R}$ where $\mathbb{T}$ is
+discrete time indexed by the session clock in milliseconds.  The
+\emph{environment} $\Gamma: \mathrm{Ident} \to \mathbb{R} \cup \mathbb{S}
+\cup \mathbb{B} \cup \mathbb{L}$ maps identifiers to their current values.
+\end{definition}
+
+\subsection{Source Block}
+
+\begin{definition}[Source semantics]
+\label{def:source}
+A \texttt{source} block with name $s$ and signal declarations
+$\{n_1,\ldots,n_k\}$ at rate $f_s$ extends the environment by
+\[
+  \Gamma \leftarrow \Gamma \cup \{n_i \mapsto \sigma_{n_i}(t) \mid i=1,\ldots,k\}
+\]
+where $\sigma_{n_i}$ is the live sensor stream for channel $n_i$ sampled
+at $f_s$ Hz.  The source block emits a trace entry
+$\langle\texttt{source},\, s,\, t,\, \{n_i \mapsto v_i\}\rangle$
+at each sample tick.
+\end{definition}
+
+\subsection{Layer Block}
+
+\begin{definition}[Layer semantics]
+\label{def:layer}
+A \texttt{layer} block $\ell$ with invert statements
+$\{\texttt{invert}\; y_j\; \texttt{from}\; x_j\; \texttt{given}\;
+G_j\; \texttt{using}\; f_j\}_{j=1}^{m}$
+evaluates each inversion in order:
+\[
+  y_j = f_j\!\left(x_j,\; \{g \mid g \in G_j\}\right)
+\]
+and extends the environment $\Gamma \leftarrow \Gamma \cup \{y_j \mapsto v_j\}$.
+Each inversion emits a trace entry
+$\langle\texttt{layer},\;\ell,\;\texttt{invert}\;y_j,\;t,\;\mathrm{inputs},\;v_j,\;\mathrm{line}\rangle$.
+\end{definition}
+
+The canonical inversion functions $f_j$ for optical inversion are given by:
+
+\begin{align}
+\melan &= -\frac{\ln \ell_B}{2\,\bar\mu_{\mathrm{mel},B} L_2}
+\label{eq:melanin} \\
+\Hbconc &= -\frac{\ln \tilde\ell_R}{2\,\bar\mu_{\Hb,R} L_{3,0}\,\vaso}
+\label{eq:hbconc} \\
+\Soxy &= \frac{\tilde\ell_G - t_{\mathrm{deox}}}{t_{\mathrm{oxy}} - t_{\mathrm{deox}}}
+\label{eq:spo2} \\
+\vaso &= \sqrt{\max\!\left(0.1,\; A^{\mathrm{ac}}_G / A^{\mathrm{base}}_G\right)}
+\label{eq:vaso}
+\end{align}
+as derived in~\cite{sachikonye2024optical}
+(equations~\ref{eq:melanin}--\ref{eq:vaso} here correspond to
+equations~(5)--(8) therein).  The skin temperature follows from the
+thermoregulatory linearisation
+\begin{equation}
+T_{\mathrm{skin}} = 33 + 4(\vaso - 1)\ {}^{\circ}\mathrm{C},
+\quad T_{\mathrm{skin}} \in [27,37]
+\label{eq:tskin}
+\end{equation}
+as established in~\cite{sachikonye2024optical} and
+\cite{sachikonye2024disambiguation}.
+
+\subsection{Decompose Block}
+
+\begin{definition}[Decompose semantics]
+\label{def:decompose}
+A \texttt{decompose} block $d$ with term statements
+$\{\texttt{term}\; z_i = e_i\}_{i=1}^{n}$ evaluates each expression
+$e_i$ in the current environment and binds $z_i \leftarrow \llbracket e_i
+\rrbracket_\Gamma$, extending $\Gamma$ after each binding so later terms
+may reference earlier ones.  Each term emits a trace entry
+$\langle\texttt{decompose},\;d,\;\texttt{term}\;z_i,\;t,\;v_i,\;\mathrm{line}\rangle$.
+\end{definition}
+
+The PCHR decomposition~\cite{sachikonye2024disambiguation} is the
+canonical instance, with terms:
+\begin{align}
+\HR_{\mathrm{int}} &= \mathrm{baseline}(\HR, 7\,\mathrm{d}, p_5)
+\label{eq:hr_int} \\
+\Delta\HR_{\mathrm{met}} &= \alpha_T \cdot (T_{\mathrm{skin}} - T_{\mathrm{rest}}) \cdot \HR_{\mathrm{int}}
+\label{eq:dhr_met} \\
+\Delta\HR_{\mathrm{O}_2} &= \beta_{O_2} \cdot (1 - \Soxy) \cdot \HR_{\mathrm{int}}
+\label{eq:dhr_o2} \\
+\Delta\HR_{\mathrm{auto}} &= \HR_{\mathrm{obs}} - \HR_{\mathrm{int}} - \Delta\HR_{\mathrm{met}} - \Delta\HR_{\mathrm{O}_2}
+\label{eq:dhr_auto}
+\end{align}
+with coupling constants $\alpha_T = 0.08\,{}^{\circ}\mathrm{C}^{-1}$ (from
+$Q_{10}=2.3$)~\cite{sachikonye2024disambiguation,sachikonye2024optical}
+and $\beta_{O_2} = 0.15$ per 10\% SpO$_2$ drop.
+
+The S-entropy health coordinates~\cite{sachikonye2024disambiguation} are:
+\begin{align}
+\SK &= \frac{\mathrm{RMSSD} \cdot (60000/\HR)}{\SK_{\max}}
+\label{eq:sk} \\
+\ST &= 1 - e^{-t_{\mathrm{awake}}/24\mathrm{h}} \cos(2\pi t_{\mathrm{awake}}/24\mathrm{h})
+\label{eq:st} \\
+\SE &= -\sum_i p_i \log_2 p_i \;/\; \log_2 N_{\mathrm{bins}}
+\label{eq:se}
+\end{align}
+The healthy region is $\mathcal{H} = [0.4,0.9]\times[0.2,0.8]\times[0.6,0.95]
+\subset [0,1]^3$~\cite{sachikonye2024disambiguation}.
+
+The CSCI~\cite{sachikonye2024disambiguation} is:
+\begin{equation}
+\CSCI = 1 - \frac{1}{N_p}\sum_{(i,j)\in\mathcal{P}}
+\left|\frac{r_{ij}^{\mathrm{obs}} - r_{ij}^{\mathrm{pred}}}{r_{ij}^{\mathrm{pred}}}\right|
+\label{eq:csci}
+\end{equation}
+with the partition-predicted coupling pairs listed in~\cref{tab:coupling}.
+
+\begin{table}[H]
+\centering
+\caption{Partition-predicted coupling pairs used in CSCI computation.}
+\label{tab:coupling}
+\footnotesize
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+\textbf{Pair} & \textbf{Predicted ratio} \\
+\midrule
+$\Rc$ vs $\HR$ & $\partial\Rc/\partial\HR = -4\pi^2\mathrm{CV}^2\Rc/\HR$ \\
+$\HR$ vs $\Delta T$ & $\Delta\HR/\Delta T = \alpha_T \HR_{\mathrm{int}}$ \\
+$\HR$ vs $\Soxy$ & $\Delta\HR/\Delta\Soxy = -\beta_{O_2}\HR_{\mathrm{int}}/10$ \\
+$\mathrm{RMSSD}$ vs $\HR$ & $\mathrm{RMSSD} \propto \HR^{-1.5}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Watch Block}
+
+\begin{definition}[Watch semantics]
+\label{def:watch}
+A \texttt{watch} block $w$ with compound condition
+$C = c_1 \wedge c_2 \wedge \cdots \wedge c_n$ evaluates each
+sub-condition $c_i \in \mathbb{B}$ in the current environment.
+If $\bigwedge_i c_i = \top$, the watch block emits
+$\langle\texttt{fired},\;w,\;t,\;\mathrm{label},\;\mathrm{confidence}\rangle$
+together with a per-condition trace:
+$\langle c_i,\;\llbracket c_i \rrbracket_\Gamma,\;\mathrm{value},\;\mathrm{line}\rangle$
+for each $i$.  If any $c_i = \bot$, the block emits
+$\langle\texttt{not\_fired},\;w,\;t,\;\{c_i \mapsto \bot : c_i = \bot\}\rangle$.
+\end{definition}
+
+This per-condition tracing is the primary mechanism by which \BS{} makes
+the reasoning of the rule-based pipeline auditable: the developer can
+read exactly which sub-condition was true, what its measured value was,
+and which source line declared it.
+
+\subsection{Model Block}
+
+\begin{definition}[Model semantics]
+\label{def:model}
+A \texttt{model} block $m$ with hub identifier $h$, task $\tau$, and
+input bindings $\{(q_j, s_j)\}$ declares a deferred inference call.
+At evaluation time, the block assembles an input tensor
+$\mathbf{x} = \{q_j \mapsto \Gamma(s_j)\}$, submits it to the
+HuggingFace Inference API endpoint resolved from $h$, and binds
+each declared output identifier $o_k$ to the corresponding tensor
+slice of the model response.  Each model block emits a trace entry
+$\langle\texttt{model},\;m,\;t,\;\mathbf{x},\;\{o_k \mapsto v_k\}\rangle$.
+\end{definition}
+
+The model block is not a training construct --- it invokes a
+\emph{pre-trained} checkpoint at inference time.  The input bindings
+use identifiers that must exist in $\Gamma$, enforcing that the model
+receives values produced by prior \texttt{source}, \texttt{layer}, and
+\texttt{decompose} blocks.  This makes the model's inputs auditable:
+the trace shows exactly which decomposition terms were passed as features.
+
+\subsection{Explain Block}
+
+\begin{definition}[Explain semantics]
+\label{def:explain}
+An \texttt{explain} block $e$ evaluates:
+\begin{enumerate}[nosep]
+\item $b \leftarrow \llbracket \texttt{brut\_prediction} \rrbracket_\Gamma$
+  (the rule-based event or label).
+\item $m \leftarrow \llbracket \texttt{model\_prediction} \rrbracket_\Gamma$
+  (the neural model's output).
+\item The \texttt{agree} condition: if $\llbracket \texttt{agree.when}
+  \rrbracket_\Gamma = \top$, emit
+  $\langle\texttt{agree},\;e,\;t,\;b,\;m\rangle$.
+\item The \texttt{diverge} condition: if $\llbracket \texttt{diverge.when}
+  \rrbracket_\Gamma = \top$, evaluate all \texttt{trace} and \texttt{flag}
+  statements and emit $\langle\texttt{diverge},\;e,\;t,\;b,\;m,\;
+  \mathrm{traces},\;\mathrm{flags}\rangle$.
+\item If \texttt{annotate} is present, attach the named decomposition
+  blocks to the model prediction entry in the trace.
+\end{enumerate}
+\end{definition}
+
+% =====================================================================
+\section{Correctness Theorems}
+\label{sec:theorems}
+% =====================================================================
+
+\begin{theorem}[Type safety]
+\label{thm:type}
+Let $\mathcal{P}$ be a well-formed \BS{} program (i.e., one that parses
+without error under the grammar of \cref{sec:grammar}).  If every
+identifier referenced in an expression $e$ is bound in the environment
+$\Gamma$ at the point of evaluation, then $\llbracket e \rrbracket_\Gamma
+\in \mathbb{R}$ (or the appropriate declared domain).
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By structural induction on the grammar.  Base case: numeric literals are
+in $\mathbb{R}$; identifiers in $\Gamma$ are bound by a prior \texttt{source},
+\texttt{layer}, or \texttt{decompose} block.  Inductive step: each
+arithmetic operator and built-in function maps $\mathbb{R}^k \to \mathbb{R}$.
+Regime and failure classifiers map $\mathbb{R} \to \mathbb{L}$.
+Watch conditions map $\mathbb{R} \times \mathbb{R} \to \mathbb{B}$.
+No block can reference an identifier bound in a later block (programs are
+evaluated sequentially), so the environment is always well-defined at the
+point of use. $\square$
+\end{proof}
+
+\begin{theorem}[Signal closure]
+\label{thm:closure}
+A well-formed \BS{} program is \emph{signal-closed} if every identifier
+referenced in a \texttt{layer}, \texttt{decompose}, \texttt{watch},
+\texttt{model}, or \texttt{explain} block is either (a) declared in a
+\texttt{source} block that appears before it in program order, (b) bound
+by a prior \texttt{layer} or \texttt{decompose} statement, or (c) a
+built-in function.  Signal closure is decidable by a single forward pass
+over the program.
+\end{theorem}
+
+\begin{proof}
+The compiler maintains a scope set $\mathcal{S}$ initialised to the
+built-in function names.  Processing each block in order: a
+\texttt{source} block adds its declared signal names to $\mathcal{S}$;
+a \texttt{layer} or \texttt{decompose} statement adds its output name
+after verifying all input names are in $\mathcal{S}$; all other
+references are checked against $\mathcal{S}$ and rejected if absent.
+The single-pass algorithm runs in $O(|\mathcal{P}|)$ time.  $\square$
+\end{proof}
+
+\begin{theorem}[Trace fidelity]
+\label{thm:fidelity}
+Let $\mathcal{P}$ be a signal-closed \BS{} program and let
+$\mathcal{T}_\mathcal{P}(t)$ be the trace produced at time $t$.  Then
+for every intermediate value $v$ produced during evaluation,
+$\mathcal{T}_\mathcal{P}(t)$ contains a unique entry
+$\langle\mathrm{block},\;\mathrm{step},\;t,\;\mathrm{inputs},\;v,\;\mathrm{line}\rangle$
+where $\mathrm{line}$ identifies the source statement that produced $v$.
+\end{theorem}
+
+\begin{proof}
+By inspection of the evaluation rules in \cref{sec:semantics}: each
+evaluation rule emits exactly one trace entry per bound identifier per
+time step.  The \texttt{line} field is populated by the parser, which
+attaches source position to each AST node.  Uniqueness follows from
+sequential evaluation within a block.  $\square$
+\end{proof}
+
+\begin{theorem}[Divergence completeness]
+\label{thm:divergence}
+If a \BS{} \texttt{explain} block fires its \texttt{diverge} branch,
+then for every \texttt{trace} statement listed in the diverge body,
+the trace $\mathcal{T}_\mathcal{P}(t)$ contains the complete evaluation
+history of the referenced decomposition term, including all its inputs
+and the source lines that produced them.
+\end{theorem}
+
+\begin{proof}
+Follows from \cref{thm:fidelity}: every term in a \texttt{decompose}
+block has a trace entry by the time the \texttt{explain} block evaluates.
+The \texttt{trace} statement retrieves this entry by identifier lookup
+in $\mathcal{T}_\mathcal{P}(t)$ and includes it in the diverge output.
+Since the explain block is evaluated after all referenced blocks (signal
+closure), no entry is missing.  $\square$
+\end{proof}
+
+% =====================================================================
+\section{Execution Trace Format}
+\label{sec:trace}
+% =====================================================================
+
+The compiler emits traces as newline-delimited JSON (NDJSON), one
+object per event.  \cref{lst:trace} shows a representative trace
+fragment for a stress-onset audit at time $t = 14{:}32{:}07$.
+
+\begin{lstlisting}[
+  language={},
+  caption={Representative BrutScript execution trace (NDJSON).},
+  label={lst:trace},
+  basicstyle=\scriptsize\ttfamily,
+  numbers=none
+]
+{"t":87127000,"block":"skin_optics",
+ "step":"invert melanin","line":7,
+ "in":{"b":0.41},"out":{"melanin":0.18}}
+
+{"t":87127000,"block":"skin_optics",
+ "step":"invert hb_conc","line":8,
+ "in":{"r":0.38,"melanin":0.18},
+ "out":{"hb_conc":13.2}}
+
+{"t":87127000,"block":"skin_optics",
+ "step":"derive t_skin","line":11,
+ "in":{"vasodilation":1.02},
+ "out":{"t_skin":33.08}}
+
+{"t":87127000,"block":"pchr",
+ "step":"term dhr_metabolic","line":16,
+ "in":{"t_skin":33.08,"hr_int":58.0},
+ "out":{"dhr_metabolic":0.37}}
+
+{"t":87127000,"block":"pchr",
+ "step":"term dhr_autonomic","line":18,
+ "in":{"hr":97,"dhr_met":0.37,"dhr_o2":0.0},
+ "out":{"dhr_autonomic":18.6}}
+
+{"t":87127000,"block":"s_entropy",
+ "step":"regime classify","line":23,
+ "in":{"rc_mean":0.71},"out":{"regime":"turbulent"}}
+
+{"t":87127000,"block":"watch stress_onset",
+ "step":"cond dhr_autonomic > 15","line":38,
+ "eval":true,"value":18.6}
+
+{"t":87127000,"block":"watch stress_onset",
+ "step":"cond regime is turbulent","line":39,
+ "eval":true,"value":"turbulent"}
+
+{"t":87127000,"block":"watch stress_onset",
+ "step":"cond rt_ratio < 0.3","line":40,
+ "eval":true,"value":0.21}
+
+{"t":87127000,"block":"watch stress_onset",
+ "step":"FIRED","emit":"stress_onset",
+ "confidence":0.8,"line":41}
+
+{"t":87127000,"block":"model stress_detector",
+ "step":"inference","line":45,
+ "in":{"dhr_auto":18.6,"rt_ratio":0.21,
+       "mean_iki":142.0},
+ "out":{"stress_score":0.34}}
+
+{"t":87127000,"block":"explain stress_audit",
+ "step":"diverge","brut":"stress_onset",
+ "model_score":0.34,"line":50,
+ "flag":"model may be confounding thermal
+         with autonomic drive",
+ "traces":{"pchr.dhr_metabolic":0.37,
+           "skin_optics.t_skin":33.08}}
+\end{lstlisting}
+
+Every trace entry carries: a session-relative timestamp \texttt{t} in
+milliseconds, the block name and step name, the source line number,
+the input values, and the output value(s).  Watch entries additionally
+carry the boolean evaluation result and the measured value.  Explain
+entries carry the BRUT prediction, the model output, and the full text
+of any flags.
+
+% =====================================================================
+\section{Reference Vocabulary}
+\label{sec:vocabulary}
+% =====================================================================
+
+\cref{tab:vocabulary} provides the complete mapping from \BS{}
+identifiers to their partition-theoretic definitions.  Every identifier
+in the table is a legal \BS{} signal name, term name, or output name
+in the corresponding block type.
+
+\begin{table*}[ht]
+\centering
+\caption{BrutScript reference vocabulary. Column ``Block'' indicates
+the block type where the identifier is produced or consumed.
+Column ``Definition'' cites the equation or paper where the quantity
+is formally defined.}
+\label{tab:vocabulary}
+\footnotesize
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Identifier} & \textbf{Type} & \textbf{Units} & \textbf{Block} & \textbf{Definition / provenance} \\
+\midrule
+\multicolumn{5}{l}{\textit{rPPG source signals}} \\
+\texttt{bvp}            & $\mathbb{R}$ & a.u.      & source & Global BVP sample from WebGPU rPPG shader~\cite{sachikonye2024optical} \\
+\texttt{rc\_mean}       & $[0,1]$      & —         & source & Spatial mean Kuramoto coherence $\Rc$~\cite{kuramoto1984,sachikonye2024disambiguation} \\
+\texttt{rc\_std}        & $[0,1]$      & —         & source & Spatial std of $\Rc$ (heterogeneity)~\cite{sachikonye2024optical} \\
+\texttt{snr}            & $\mathbb{R}$ & dB        & source & Mean SNR over face patches~\cite{sachikonye2024optical} \\
+\texttt{hr}             & $\mathbb{R}$ & bpm       & source & Heart rate from BVP analyser~\cite{sachikonye2024optical} \\
+\texttt{rmssd}          & $\mathbb{R}$ & ms        & source & RMSSD of RR intervals~\cite{malik1996,sachikonye2024disambiguation} \\
+\texttt{sk}             & $[0,1]$      & —         & source & S-entropy knowledge coordinate $\SK$~\cite{sachikonye2024disambiguation} \\
+\texttt{st}             & $[0,1]$      & —         & source & S-entropy temporal coordinate $\ST$~\cite{sachikonye2024disambiguation} \\
+\texttt{se}             & $[0,1]$      & —         & source & S-entropy entropy utilisation $\SE$~\cite{sachikonye2024disambiguation} \\
+\midrule
+\multicolumn{5}{l}{\textit{Face RGB source signals}} \\
+\texttt{r, g, b}        & $[0,1]$      & —         & source & Mean normalised RGB from face ROI~\cite{sachikonye2024optical} \\
+\texttt{bvp.ac\_amplitude} & $\mathbb{R}$ & a.u.   & source & AC pulsatile amplitude of BVP~\cite{sachikonye2024optical} \\
+\midrule
+\multicolumn{5}{l}{\textit{Motor source signals}} \\
+\texttt{mean\_iki}      & $\mathbb{R}$ & ms        & source & Mean inter-keystroke interval~\cite{sachikonye2024motor} \\
+\texttt{rt\_ratio}      & $[0,1]$      & —         & source & Rambling power / (Rambling + Trembling)~\cite{sachikonye2024posture} \\
+\texttt{blinks\_min}    & $\mathbb{R}$ & min$^{-1}$& source & Blinks per minute from MediaPipe~\cite{sachikonye2024optical} \\
+\midrule
+\multicolumn{5}{l}{\textit{Optical inversion layer outputs}} \\
+\texttt{melanin}        & $[0,1]$      & —         & layer  & Melanin index $\melan$ via blue-channel inversion~\cite{sachikonye2024optical}, \cref{eq:melanin} \\
+\texttt{hb\_conc}       & $\mathbb{R}$ & g/dL      & layer  & Total haemoglobin $\Hbconc$ via red-channel inversion~\cite{sachikonye2024optical}, \cref{eq:hbconc} \\
+\texttt{spo2}           & $[0,1]$      & —         & layer  & Oxygenation $\Soxy$ via green-channel inversion~\cite{sachikonye2024optical}, \cref{eq:spo2} \\
+\texttt{vasodilation}   & $[0.6,1.6]$  & —         & layer  & Vasodilation factor $\vaso$ from AC amplitude~\cite{sachikonye2024optical}, \cref{eq:vaso} \\
+\texttt{t\_skin}        & $[27,37]$    & ${}^\circ$C & layer & Skin temperature via linearisation~\cite{sachikonye2024optical,sachikonye2024disambiguation}, \cref{eq:tskin} \\
+\midrule
+\multicolumn{5}{l}{\textit{PCHR decomposition terms}} \\
+\texttt{hr\_intrinsic}  & $\mathbb{R}$ & bpm       & decompose & Sino-atrial intrinsic rate (7-day $p_5$ baseline)~\cite{sachikonye2024disambiguation}, \cref{eq:hr_int} \\
+\texttt{dhr\_metabolic} & $\mathbb{R}$ & bpm       & decompose & Thermal drive $\Delta\HR_{\mathrm{met}}$~\cite{sachikonye2024disambiguation,sachikonye2024optical}, \cref{eq:dhr_met} \\
+\texttt{dhr\_hypoxic}   & $\mathbb{R}$ & bpm       & decompose & Hypoxic compensation $\Delta\HR_{O_2}$~\cite{sachikonye2024disambiguation}, \cref{eq:dhr_o2} \\
+\texttt{dhr\_autonomic} & $\mathbb{R}$ & bpm       & decompose & Genuine neural drive $\Delta\HR_{\mathrm{auto}}$~\cite{sachikonye2024disambiguation}, \cref{eq:dhr_auto} \\
+\midrule
+\multicolumn{5}{l}{\textit{S-entropy and regime}} \\
+\texttt{sk, st, se}     & $[0,1]^3$    & —         & decompose & S-entropy health coordinates~\cite{sachikonye2024disambiguation}, \cref{eq:sk,eq:st,eq:se} \\
+\texttt{regime}         & $\mathbb{L}$ & —         & decompose & Kuramoto regime: phase\_locked $|$ coherent $|$ cascade $|$ aperture $|$ turbulent~\cite{sachikonye2024disambiguation} \\
+\texttt{failure}        & $\mathbb{L}$ & —         & decompose & Failure mode: rigidity $|$ decoherence $|$ none~\cite{sachikonye2024disambiguation} \\
+\texttt{csci}           & $[0,1]$      & —         & decompose & Cross-Scale Coherence Index~\cite{sachikonye2024disambiguation}, \cref{eq:csci} \\
+\midrule
+\multicolumn{5}{l}{\textit{Cardiac EOS outputs}} \\
+\texttt{ees}            & $\mathbb{R}$ & mmHg/mL   & decompose & End-systolic elastance (contractility)~\cite{sachikonye2024eos} \\
+\texttt{ea}             & $\mathbb{R}$ & mmHg/mL   & decompose & Arterial elastance (afterload)~\cite{sachikonye2024eos} \\
+\texttt{ef}             & $[0,1]$      & —         & decompose & Ejection fraction $\EF = \SV/\EDV$~\cite{sachikonye2024eos} \\
+\texttt{co}             & $\mathbb{R}$ & L/min     & decompose & Cardiac output~\cite{sachikonye2024eos,sachikonye2024cardiovascular} \\
+\texttt{ees\_ea\_ratio} & $\mathbb{R}$ & —         & decompose & V-A coupling ratio $\Ees/\Ea$~\cite{sachikonye2024eos} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+% =====================================================================
+\section{Complete Example Script}
+\label{sec:example}
+% =====================================================================
+
+\cref{lst:full} presents a complete \BS{} script auditing a
+cardiac stress episode.  The script is the formal basis for the
+implementation blueprint in \cref{sec:implementation}.
+
+\begin{lstlisting}[
+  language=BrutScript,
+  caption={Complete BrutScript stress audit script.
+    All identifiers map to entries in \cref{tab:vocabulary}.},
+  label={lst:full},
+  float=*
+]
+-- BrutScript: stress episode audit
+-- All primitives ground to partition theory (see vocabulary table)
+
+source rppg {
+  signal bvp, rc_mean, rc_std, snr
+  signal hr, rmssd, sk, st, se
+  rate   30hz
+}
+
+source face_rgb {
+  signal r, g, b        -- mean normalised RGB from face ROI
+  rate   1hz
+}
+
+source motor {
+  signal mean_iki       -- inter-keystroke interval (ms)
+  signal rt_ratio       -- rambling / (rambling + trembling)
+  signal blinks_min
+  rate   1hz
+}
+
+-- Stage 1: Beer-Lambert optical inversion (layered-optical-ppg)
+layer skin_optics from face_rgb {
+  invert melanin      from b  using beer_lambert.blue
+  -- eq. (5): m = -ln(l_B) / (2 * mu_mel_B * L2)
+
+  invert hb_conc      from r  given melanin
+                              using beer_lambert.red
+  -- eq. (6): [Hb] = -ln(l_R_tilde) / (2 * mu_Hb_R * L3 * eta)
+
+  invert spo2         from g  given melanin, hb_conc
+                              using beer_lambert.green
+  -- eq. (7): S_O2 = (l_G_tilde - t_deox) / (t_oxy - t_deox)
+
+  invert vasodilation from bvp.ac_amplitude
+                              baseline 30s  sqrt_compress
+  -- eq. (8): eta = sqrt(max(0.1, A_ac / A_base))
+
+  derive t_skin = 33.0 + 4.0 * (vasodilation - 1.0)  clamp [27, 37]
+  -- eq. (9): T_skin = 33 + 4*(eta-1), thermoregulatory linearisation
+}
+
+-- Stage 2: PCHR decomposition (sensor-disambiguation)
+decompose pchr from rppg, skin_optics {
+  term hr_intrinsic  = baseline(hr, window 7d, percentile p5)
+  -- 7-day 5th-percentile deep-sleep HR = sino-atrial intrinsic rate
+
+  term dhr_metabolic = 0.08 * (t_skin - 33.0) * hr_intrinsic
+  -- alpha_T = 0.08 /degC from Q10 = 2.3 (Theorem alpha_T)
+
+  term dhr_hypoxic   = 0.15 * (1.0 - spo2) * hr_intrinsic
+  -- beta_O2 = 0.15 per 10% SpO2 drop (Theorem beta_O2)
+
+  term dhr_autonomic = hr - hr_intrinsic - dhr_metabolic - dhr_hypoxic
+  -- residual = genuine sympathovagal drive (eq. dHR_auto)
+}
+
+-- Stage 3: S-entropy and regime (sensor-disambiguation)
+decompose s_entropy from rppg {
+  coord sk = rmssd * (60000.0 / hr) / 1000.0
+  coord se = shannon_entropy(rr_intervals) / log2(32.0)
+
+  regime = classify(rc_mean) {
+    phase_locked  when rc_mean >= 0.947
+    coherent      when rc_mean >= 0.930
+    cascade       when rc_mean >= 0.900
+    aperture      when rc_mean >= 0.850
+    turbulent     otherwise
+  }
+
+  failure = detect {
+    rigidity    when rc_mean > 0.95 and se < 0.5
+    decoherence when rc_mean < 0.30
+    none        otherwise
+  }
+}
+
+-- Stage 4: Cross-scale coupling index (sensor-disambiguation, eq. CSCI)
+decompose coupling from rppg, skin_optics {
+  pair hr_vs_temp
+    predicted = 0.08 * hr_intrinsic
+    observed  = dhr_metabolic / (t_skin - 33.0 + 0.001)
+
+  pair rmssd_vs_hr
+    predicted = hr ^ -1.5
+    observed  = rmssd / 1000.0
+
+  -- csci = 1 - mean(|obs - pred| / |pred|)
+  term csci = 1.0 - mean(abs(hr_vs_temp.error), abs(rmssd_vs_hr.error))
+}
+
+-- Stage 5: Neural model binding (HuggingFace Hub)
+model stress_detector {
+  hub   "bitspark/autonomic-stress-classifier"
+  task  classification
+
+  input {
+    dhr_autonomic       from pchr
+    rt_ratio            from motor
+    mean_iki            from motor
+    rc_mean, se         from rppg
+  }
+
+  output stress_label   -- "low" | "moderate" | "high"
+  output stress_prob    -- confidence vector over 3 classes
+}
+
+-- Stage 6: Watch conditions (rule-based)
+watch stress_onset {
+  when  dhr_autonomic > 15.0   -- genuine neural drive elevated
+  and   regime        is turbulent
+  and   rt_ratio      < 0.3    -- spinal, not cortical motor pattern
+  and   csci          > 0.70   -- coupling maintained (not artefact)
+  emit  "stress_onset"  confidence 0.8
+}
+
+watch stress_thermal_confound {
+  when  dhr_metabolic > 8.0    -- thermal drive dominant
+  and   dhr_autonomic < 5.0    -- true autonomic drive is low
+  and   regime        is coherent
+  emit  "thermal_elevation_not_stress"  confidence 0.85
+}
+
+-- Stage 7: Alignment and explanation
+explain stress_audit {
+  brut_prediction   = first_match(stress_onset, stress_thermal_confound)
+  model_prediction  = stress_detector.stress_label
+  model_confidence  = stress_detector.stress_prob
+
+  match {
+    agree when brut_prediction aligns model_prediction
+
+    diverge when brut_prediction is "stress_onset"
+            and model_prediction is "low" {
+      -- Model says low stress; BRUT says onset. Expose the decomposition.
+      trace pchr.dhr_autonomic
+      trace pchr.dhr_metabolic
+      trace skin_optics.t_skin
+      trace motor.rt_ratio
+      trace s_entropy.regime
+      flag "Possible thermal confound: check t_skin and dhr_metabolic"
+      flag "Check training regime: model may not separate PCHR components"
+    }
+
+    diverge when brut_prediction is "thermal_elevation_not_stress"
+            and model_prediction is "high" {
+      trace pchr.dhr_metabolic
+      trace skin_optics.vasodilation
+      trace skin_optics.t_skin
+      flag "Model is classifying thermal tachycardia as stress"
+      flag "dhr_autonomic is low; elevated HR is metabolic in origin"
+    }
+  }
+
+  annotate model_prediction with {
+    hr_components : pchr
+    optical_state : skin_optics
+    coupling      : coupling
+    motor_state   : motor
+  }
+}
+\end{lstlisting}
+
+% =====================================================================
+\section{Implementation Blueprint}
+\label{sec:implementation}
+% =====================================================================
+
+\subsection{Compiler Architecture}
+
+The \BS{} compiler is a four-stage pipeline implemented in TypeScript
+and bundled by Vite into the BRUT Observatory web application.  The
+four stages are:
+
+\begin{enumerate}[leftmargin=*,nosep]
+\item \textbf{Lexer.} Converts source text to a flat token stream.
+  Token types: \texttt{KEYWORD}, \texttt{IDENT}, \texttt{NUMBER},
+  \texttt{STRING}, \texttt{PUNCT}, \texttt{COMMENT} (discarded),
+  \texttt{EOF}.
+
+\item \textbf{Parser.} Recursive-descent parser over the grammar of
+  \cref{sec:grammar}.  Produces an Abstract Syntax Tree (AST) whose
+  node types correspond one-to-one to the block and statement types.
+  Every AST node carries a \texttt{sourceLocation} field (line, column).
+
+\item \textbf{Compiler.} Single-pass over the AST.  Performs
+  signal-closure checking (\cref{thm:closure}), type checking
+  (\cref{thm:type}), and emits a \emph{wiring plan}: a serialisable
+  JSON object describing the evaluation order, the signal names,
+  and the inversion functions to call at each step.
+
+\item \textbf{Runtime.} Executes the wiring plan against the live
+  signal bus provided by the Observatory's frame loop.  At each
+  1\,Hz tick, the runtime evaluates all blocks in order, emits
+  NDJSON trace entries to the sandbox output panel, and resolves
+  model inference calls via the HuggingFace Inference API.
+\end{enumerate}
+
+\subsection{AST Node Types}
+
+\cref{tab:ast} lists the TypeScript interface for each AST node type.
+
+\begin{table}[H]
+\centering
+\caption{TypeScript AST node interfaces.}
+\label{tab:ast}
+\footnotesize
+\begin{tabularx}{\columnwidth}{lX}
+\toprule
+\textbf{Interface} & \textbf{Key fields} \\
+\midrule
+\texttt{SourceBlock}   & \texttt{name}, \texttt{signals: string[]}, \texttt{rateHz} \\
+\texttt{LayerBlock}    & \texttt{name}, \texttt{from: string[]}, \texttt{stmts: (InvertStmt | DeriveStmt)[]} \\
+\texttt{InvertStmt}    & \texttt{output}, \texttt{inputSignal}, \texttt{given?: string[]}, \texttt{using}, \texttt{baseline?}, \texttt{sqrtCompress?} \\
+\texttt{DeriveStmt}    & \texttt{output}, \texttt{expr: Expr}, \texttt{clamp?: [number,number]} \\
+\texttt{DecomposeBlock}& \texttt{name}, \texttt{from: string[]}, \texttt{stmts: DecomposeStmt[]} \\
+\texttt{TermStmt}      & \texttt{output}, \texttt{expr: Expr} \\
+\texttt{CoordStmt}     & \texttt{output}, \texttt{expr: Expr} \\
+\texttt{RegimeStmt}    & \texttt{input}, \texttt{cases: \{label, cond\}[]}, \texttt{otherwise} \\
+\texttt{FailureStmt}   & \texttt{cases: \{label, cond\}[]}, \texttt{none} \\
+\texttt{PairStmt}      & \texttt{name}, \texttt{predicted: Expr}, \texttt{observed: Expr} \\
+\texttt{WatchBlock}    & \texttt{name}, \texttt{conds: Condition[]}, \texttt{emit: string}, \texttt{confidence} \\
+\texttt{ModelBlock}    & \texttt{name}, \texttt{hub}, \texttt{task}, \texttt{inputs: InputBinding[]}, \texttt{outputs: string[]} \\
+\texttt{ExplainBlock}  & \texttt{name}, \texttt{brutPred: Expr}, \texttt{modelPred: Expr}, \texttt{agree: Condition}, \texttt{divergeBranches: DivergeBranch[]}, \texttt{annotate?} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Signal Bus Interface}
+
+The runtime connects to the Observatory frame loop via a typed signal
+bus interface:
+
+\begin{lstlisting}[
+  language={},
+  numbers=none,
+  basicstyle=\scriptsize\ttfamily,
+  caption={TypeScript signal bus interface.},
+  label={lst:bus}
+]
+interface SignalBus {
+  get(name: string): number | string;
+  subscribe(name: string,
+    cb: (v: number|string, t: number) => void): void;
+  emit(event: string, payload: TraceEntry): void;
+}
+
+interface TraceEntry {
+  t: number;       // session ms
+  block: string;
+  step: string;
+  line: number;
+  in?: Record<string, number | string>;
+  out?: Record<string, number | string>;
+  eval?: boolean;
+  value?: number | string;
+  emit?: string;
+  confidence?: number;
+  flag?: string;
+  traces?: Record<string, number | string>;
+}
+\end{lstlisting}
+
+\subsection{HuggingFace Model Resolution}
+
+Model blocks resolve their \texttt{hub} identifier against the
+HuggingFace Inference API (\texttt{api-inference.huggingface.co}).
+The runtime sends a POST request with the assembled input tensor
+and receives a JSON response.  The task type (\texttt{classification},
+\texttt{regression}, \texttt{token-classification}) determines the
+response schema.  The runtime maps response fields to the declared
+\texttt{output} identifiers by position.
+
+For offline or low-latency use, the \texttt{hub} field may also
+resolve to a local ONNX or TensorFlow.js checkpoint loaded into the
+browser via \texttt{@xenova/transformers} or \texttt{onnxruntime-web}.
+The compiler generates different call sites for remote vs local
+resolution based on URL scheme: \texttt{"org/name"} for remote,
+\texttt{"file:..."} for local.
+
+% =====================================================================
+\section{Discussion}
+\label{sec:discussion}
+% =====================================================================
+
+\subsection{Relationship to Existing Explainability Methods}
+
+\BS{} is not a post-hoc explainability method.  SHAP~\cite{lundberg2017shap}
+and LIME~\cite{ribeiro2016lime} perturb inputs and measure output
+changes, but they are agnostic to the physical meaning of the perturbed
+features.  A SHAP value on the green channel pixel mean says nothing
+about whether that pixel was carrying cardiac, vasodilatory, or melanin
+information.  \BS{} is a \emph{pre-hoc} specification: the developer
+writes what the physics says is happening, compiles it, and the runtime
+shows whether the neural model agrees at each step.
+
+The closest related paradigm is Concept Bottleneck
+Models~\cite{koh2020concept}, which impose interpretable intermediate
+representations.  \BS{} differs in that it does not modify the model
+architecture --- the model remains a black box, and \BS{} provides an
+external parallel pipeline that can be compared against it.  This makes
+\BS{} applicable to any pre-trained model without retraining.
+
+\subsection{The PCHR Decomposition as a Disambiguation Primitive}
+
+The central insight of the sensor disambiguation
+framework~\cite{sachikonye2024disambiguation} is that multi-sensor
+data is a set of coupled projections from a five-dimensional partition
+manifold.  A neural model that takes raw features as input does not
+respect this manifold structure --- it may confound the thermal and
+autonomic components of heart rate because they are correlated in
+typical training data.  The \texttt{dhr\_autonomic} term in a \BS{}
+script is the quantity that isolates genuine neural drive from thermal
+and hypoxic contributions.  When the model disagrees with the
+\BS{} trace on this term, it indicates a specific failure mode: the
+model has not learned to disambiguate physiological state.
+
+\subsection{Motor Channels as Independent Audit Signals}
+
+The rambling--trembling decomposition~\cite{sachikonye2024posture}
+provides a motor channel that is physiologically independent of the
+optical rPPG channel.  Supraspinal rambling power reflects voluntary
+cortical target-tracking; spinal trembling power reflects reflex
+stabilisation.  A high-stress state should elevate trembling power
+and lower the $\Ra/(\Ra+\Tr)$ ratio independently of cardiac
+coherence.  A \BS{} \texttt{watch} block that requires both
+$\Delta\HR_{\mathrm{auto}} > 15$ and $\Ra/(\Ra+\Tr) < 0.3$ is
+thus requiring convergent evidence from two independent physiological
+pathways, making the audit trail more robust to single-channel noise.
+
+\subsection{Limitations and Future Work}
+
+\BS{} in its current form has three limitations.
+
+First, the language is synchronous: all blocks in a script are
+evaluated at the same tick.  Future work should introduce
+\texttt{async} blocks for model inference that can fire on a slower
+clock than the main sensor loop.
+
+Second, the \texttt{baseline} built-in requires a rolling window of
+historical data.  A newly started session will not have a 7-day
+baseline for $\HR_{\mathrm{int}}$.  A calibration block type should
+be added to allow scripts to specify fallback constants.
+
+Third, the diverge branch of \texttt{explain} currently emits a flag
+string.  A more powerful design would allow \texttt{diverge} branches
+to \emph{spawn} a secondary model query with the PCHR decomposition
+terms as additional context features --- a structured prompting
+pattern for language model-based interpretation.
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =====================================================================
+
+We have presented \BS{}, a domain-specific language whose vocabulary
+is the partition-theoretic quantity set of the Bounded Phase Space
+framework.  The language provides six block types --- \texttt{source},
+\texttt{layer}, \texttt{decompose}, \texttt{watch}, \texttt{model},
+and \texttt{explain} --- whose semantics are formally defined, whose
+correctness is governed by four theorems, and whose compiled output
+is a structured JSON execution trace in which every intermediate
+value is named, time-stamped, and attributed to the source line that
+produced it.
+
+The core contribution is that \BS{} makes the black-box problem in
+physiological AI tractable without retraining: a developer writes a
+physics-grounded script, binds a HuggingFace model as a named
+participant, and the runtime shows exactly where the rule-based
+trace and the neural prediction agree or diverge, with a pointer to
+the specific decomposition term responsible.  The language is
+implementable as a TypeScript compiler in the BRUT Observatory web
+application and is designed to run in real time against live WebGPU
+rPPG data.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

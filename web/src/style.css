@@ -708,6 +708,62 @@ body.stealth #stealth {
   letter-spacing: 0.04em;
 }
 
+/* ── Pulse SVG ECG animations ──────────────────────────────────── */
+
+@keyframes pulse-march {
+  from { stroke-dashoffset:  814; }
+  to   { stroke-dashoffset: -814; }
+}
+
+.pulse-svg { display: block; overflow: visible; }
+
+.pulse-svg .pulse-path {
+  stroke: var(--dim);
+  stroke-dasharray: var(--pulse-dasharray, 281);
+  animation: pulse-march var(--pulse-duration, 2.5s) infinite linear;
+}
+
+.pulse-svg.live .pulse-path { stroke: var(--accent-2); }
+.pulse-svg.idle .pulse-path { stroke: var(--dim); }
+.pulse-svg.warn .pulse-path { stroke: var(--warn); }
+.pulse-svg.dead .pulse-path { stroke: var(--hot); }
+
+/* Landing logo pulse — full ECG path, accent-coloured */
+#landing-pulse {
+  margin: 14px auto 0;
+  width: 240px;
+  height: 44px;
+  display: block;
+}
+
+#landing-pulse .pulse-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Override state colours: landing always shows the blue accent */
+#landing-pulse .pulse-svg .pulse-path {
+  stroke: var(--accent) !important;
+  opacity: 0.8;
+  stroke-width: 2.5;
+}
+
+/* Observatory header sensor indicators */
+.sensor-pulse {
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+}
+
+.sensor-pulse .pulse-svg {
+  width: 52px;
+  height: 18px;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.sensor-pulse:hover .pulse-svg { opacity: 1; }
+
 /* ── Footer log ────────────────────────────────────────────────── */
 
 #footer {

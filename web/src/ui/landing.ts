@@ -4,6 +4,7 @@
 // to avoid eating cycles before the user wants it.
 
 import { mountLiquidHeart, type LiquidHeartHandle } from '../anatomy/liquid-heart';
+import { createPulseSvg } from './pulse-svg';
 import { setStatus } from '../util/log';
 
 export interface LandingHandle {
@@ -20,6 +21,21 @@ export function mountLanding(): LandingHandle {
       beginPromise: Promise.resolve(),
       destroy(): void {},
     };
+  }
+
+  // Inject the ECG pulse SVG logo into the landing header.
+  const pulseDiv = document.getElementById('landing-pulse');
+  if (pulseDiv) {
+    // pulsar variant: 2.5 s loop feels like a resting-HR visual without
+    // being tied to a specific BPM — the liquid heart runs at 60 bpm which
+    // is 1 s/beat, but the travelling-signal aesthetic reads better slightly
+    // slower.
+    const logo = createPulseSvg('pulsar', {
+      viewBox: '100 60 420 76',
+      strokeWidth: 2.5,
+    });
+    logo.setState('live');
+    pulseDiv.appendChild(logo.el);
   }
 
   let heart: LiquidHeartHandle | null = null;

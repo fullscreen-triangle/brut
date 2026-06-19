@@ -40,6 +40,7 @@ import { mountLungsPanel, type LungsPanelHandle } from './ui/lungs-panel';
 import { mountDashboard, type Dashboard } from './charts/dashboard';
 import { initStealthToggle } from './ui/stealth';
 import { mountLanding } from './ui/landing';
+import { createPulseSvg, type PulseSvgHandle, type PulseState } from './ui/pulse-svg';
 import { log, setStatus } from './util/log';
 
 const REGIME_INDEX: Record<Regime, number> = {
@@ -106,6 +107,11 @@ const state: AppState = {
   lastDashPush: 0,
 };
 
+// Sensor indicator pulse SVG handles — created in initObservatory().
+let cameraPulse:   PulseSvgHandle | null = null;
+let keyboardPulse: PulseSvgHandle | null = null;
+let mousePulse:    PulseSvgHandle | null = null;
+
 const startBtn = document.getElementById('start') as HTMLButtonElement;
 const stopBtn = document.getElementById('stop') as HTMLButtonElement;
 const video = document.getElementById('video') as HTMLVideoElement;
@@ -135,14 +141,15 @@ void landing.beginPromise.then(() => {
 
 function initObservatory(): void {
   initStealthToggle();
+  initSensorPulses();
 
   // Motor sensors run from begin — independent of the camera. Even if
   // the user never clicks "start", we record their motor activity in the
   // dashboard. This matches the framework's claim that all data is useful.
   state.keyboard.start();
   state.mouse.start();
-  setSensorDot(dotKeyboard, 'idle');
-  setSensorDot(dotMouse, 'idle');
+  setSensorDot(dotKeyboard, 'idle', keyboardPulse);
+  setSensorDot(dotMouse, 'idle', mousePulse);
 
   startBtn.addEventListener('click', () => { void start(); });
   stopBtn.addEventListener('click', () => { stop(); });
@@ -159,9 +166,31 @@ function initObservatory(): void {
   }, 1000);
 }
 
-function setSensorDot(el: HTMLElement, level: 'live' | 'idle' | 'warn' | 'dead'): void {
+function setSensorDot(el: HTMLElement, level: PulseState, pulse?: PulseSvgHandle | null): void {
   el.classList.remove('live', 'idle', 'warn', 'dead');
   el.classList.add(level);
+  pulse?.setState(level);
+}
+
+function initSensorPulses(): void {
+  // Camera → jugular (1.4 s ≈ 60 BPM visual; duration updated from live HR).
+  const camEl = document.getElementById('dot-camera');
+  if (camEl) {
+    cameraPulse = createPulseSvg('jugular', { viewBox: '228 63 180 68', strokeWidth: 2 });
+    camEl.appendChild(cameraPulse.el);
+  }
+  // Keyboard → pulsar (2.5 s, deliberate; matches inter-keystroke cadence).
+  const kbEl = document.getElementById('dot-keyboard');
+  if (kbEl) {
+    keyboardPulse = createPulseSvg('pulsar', { viewBox: '228 63 180 68', strokeWidth: 2 });
+    kbEl.appendChild(keyboardPulse.el);
+  }
+  // Mouse → bleed (1.2 s, erratic; matches trembling/rambling character).
+  const msEl = document.getElementById('dot-mouse');
+  if (msEl) {
+    mousePulse = createPulseSvg('bleed', { viewBox: '228 63 180 68', strokeWidth: 2 });
+    msEl.appendChild(mousePulse.el);
+  }
 }
 
 function pushMotorRecord(): void {
@@ -177,12 +206,12 @@ function pushMotorRecord(): void {
     mw.scrollDelta === 0 &&
     bw.countLastSecond === 0
   ) {
-    setSensorDot(dotKeyboard, state.keyboard.msSinceLastEvent() < 5000 ? 'idle' : 'idle');
-    setSensorDot(dotMouse, state.mouse.msSinceLastEvent() < 5000 ? 'idle' : 'idle');
+    setSensorDot(dotKeyboard, 'idle', keyboardPulse);
+    setSensorDot(dotMouse, 'idle', mousePulse);
     return;
   }
-  setSensorDot(dotKeyboard, kw.count > 0 ? 'live' : 'idle');
-  setSensorDot(dotMouse, mw.distance > 1 ? 'live' : 'idle');
+  setSensorDot(dotKeyboard, kw.count > 0 ? 'live' : 'idle', keyboardPulse);
+  setSensorDot(dotMouse, mw.distance > 1 ? 'live' : 'idle', mousePulse);
   state.dashboard?.push({
     t: performance.now(),
     hr: 0, rmssd: 0, rc: 0, sk: 0, st: 0, se: 0, regime: 0, rrBpm: 0,
@@ -249,7 +278,7 @@ async function start(): Promise<void> {
     state.resp.setSampleRate(30);
     state.smoother.reset();
 
-    setSensorDot(dotCamera, 'live');
+    setSensorDot(dotCamera, 'live', cameraPulse);
 
     state.running = true;
     stopBtn.disabled = false;
@@ -296,7 +325,7 @@ function stop(): void {
   // Reset corner labels — anatomy is destroyed but the DOM text persists.
   hrMini.textContent = '— bpm';
   rrMini.textContent = '— bpm';
-  setSensorDot(dotCamera, 'idle');
+  setSensorDot(dotCamera, 'idle', cameraPulse);
   startBtn.disabled = false;
   stopBtn.disabled = true;
   setStatus('stopped');
@@ -382,6 +411,11 @@ async function frame(tNowDom: number): Promise<void> {
     // which is REST_STATE.HR=70 by default and would mislead before any
     // actual measurement.
     const haveCardiacFit = stats.hrBpm >= 30;
+    // Sync camera pulse indicator speed to measured HR so the ECG animation
+    // travels at the user's actual cardiac cadence.
+    if (haveCardiacFit && cameraPulse) {
+      cameraPulse.setDuration(60 / cardiacState.HR);
+    }
     if (state.anatomy) {
       if (haveCardiacFit) {
         state.anatomy.setHeartHr(cardiacState.HR);
@@ -447,8 +481,8 @@ async function frame(tNowDom: number): Promise<void> {
       const mw = state.mouse.windowStats(1000);
       const bw = state.blinks.windowStats();
       const ml = state.melanopic.tick();
-      setSensorDot(dotKeyboard, kw.count > 0 ? 'live' : 'idle');
-      setSensorDot(dotMouse, mw.distance > 1 ? 'live' : 'idle');
+      setSensorDot(dotKeyboard, kw.count > 0 ? 'live' : 'idle', keyboardPulse);
+      setSensorDot(dotMouse, mw.distance > 1 ? 'live' : 'idle', mousePulse);
       state.dashboard?.push({
         t: now,
         hr: cardiacState.HR,

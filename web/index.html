@@ -14,6 +14,7 @@
       <canvas id="landing-canvas"></canvas>
       <header id="landing-header">
         <h1>BRUT</h1>
+        <div id="landing-pulse"></div>
         <span class="subtitle">closed-circuit physiological observatory</span>
       </header>
       <button id="landing-begin">begin</button>
@@ -61,9 +62,9 @@
         <h1>BRUT Observatory</h1>
         <div class="hdr-tools">
           <span class="sensor-dots" aria-label="active sensors">
-            <span class="dot" id="dot-camera" title="camera (rPPG)">●</span>
-            <span class="dot" id="dot-keyboard" title="keyboard (motor)">●</span>
-            <span class="dot" id="dot-mouse" title="mouse (motor)">●</span>
+            <span class="sensor-pulse" id="dot-camera" title="camera · rPPG cardiac"></span>
+            <span class="sensor-pulse" id="dot-keyboard" title="keyboard · motor rhythm"></span>
+            <span class="sensor-pulse" id="dot-mouse" title="mouse · rambling / trembling"></span>
           </span>
           <span id="status">idle</span>
           <button id="stealth" title="hide self-view; pipeline keeps recording">stealth</button>

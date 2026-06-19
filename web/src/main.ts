@@ -42,6 +42,7 @@ import { initStealthToggle } from './ui/stealth';
 import { mountLanding } from './ui/landing';
 import { createPulseSvg, type PulseSvgHandle, type PulseState } from './ui/pulse-svg';
 import { log, setStatus } from './util/log';
+import { openSandbox, closeSandbox, type BrutScriptSandbox } from './brutscript/sandbox';
 
 const REGIME_INDEX: Record<Regime, number> = {
   turbulent: 0,
@@ -139,9 +140,26 @@ void landing.beginPromise.then(() => {
   initObservatory();
 });
 
+let sandbox: BrutScriptSandbox | null = null;
+
 function initObservatory(): void {
   initStealthToggle();
   initSensorPulses();
+
+  // BrutScript sandbox toggle
+  const bsBtn = document.getElementById('bs-open-btn');
+  if (bsBtn) {
+    bsBtn.addEventListener('click', () => {
+      if (sandbox) {
+        closeSandbox();
+        sandbox = null;
+        bsBtn.textContent = '⬡ brutscript';
+      } else {
+        sandbox = openSandbox();
+        bsBtn.textContent = '⬡ close';
+      }
+    });
+  }
 
   // Motor sensors run from begin — independent of the camera. Even if
   // the user never clicks "start", we record their motor activity in the
@@ -236,6 +254,12 @@ function pushMotorRecord(): void {
     spo2Optical: 0,
     dHRautonomic: 0,
   });
+
+  // Feed motor signals to the sandbox if open
+  if (sandbox) {
+    sandbox.feedSignal('mean_iki', kw.meanIki);
+    sandbox.feedSignal('rt_ratio', mw.rtRatio);
+  }
 }
 
 async function start(): Promise<void> {
@@ -518,6 +542,27 @@ async function frame(tNowDom: number): Promise<void> {
         spo2Optical: spo2,
         dHRautonomic: pchr.dHR_autonomic,
       });
+
+      // Feed live signals to BrutScript sandbox
+      if (sandbox) {
+        sandbox.feedSignal('hr',          cardiacState.HR);
+        sandbox.feedSignal('rmssd',       stats.rmssdMs);
+        sandbox.feedSignal('rc_mean',     stats.rc);
+        sandbox.feedSignal('sk',          stats.sk);
+        sandbox.feedSignal('st',          stats.st);
+        sandbox.feedSignal('se',          stats.se);
+        sandbox.feedSignal('bvp',         stats.amplitude);
+        sandbox.feedSignal('r',           colorSample?.combined.r ?? 0.4);
+        sandbox.feedSignal('g',           colorSample?.combined.g ?? 0.35);
+        sandbox.feedSignal('b',           colorSample?.combined.b ?? 0.3);
+        sandbox.feedSignal('mean_iki',    state.keyboard.windowStats(1000).meanIki);
+        sandbox.feedSignal('rt_ratio',    state.mouse.windowStats(1000).rtRatio);
+        sandbox.feedSignal('ees',         cardiacState.Ees);
+        sandbox.feedSignal('ea',          cardiacState.Ea);
+        sandbox.feedSignal('edv',         cardiacState.EDV);
+        sandbox.feedSignal('esv',         der.ESV);
+        sandbox.feedSignal('ef',          der.EF);
+      }
     }
   } else {
     setStatus('searching for face');

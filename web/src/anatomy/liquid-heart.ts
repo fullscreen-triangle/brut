@@ -63,7 +63,7 @@ export async function mountLiquidHeart(canvas: HTMLCanvasElement): Promise<Liqui
     foamColor: new Color(1.0, 0.85, 0.88),
     topColor: new Color(0.85, 0.10, 0.15),
     rimColor: new Color(1.0, 0.55, 0.55),
-    rim: 0.05,
+    rim: 0.14,
     rimPower: 3.5,
   });
 
@@ -145,9 +145,6 @@ export async function mountLiquidHeart(canvas: HTMLCanvasElement): Promise<Liqui
     phase = (phase + 2 * Math.PI * hz * dt) % (2 * Math.PI);
 
     pulse.tick(phase, dt);
-
-    // A slow ambient yaw so the heart presents from multiple angles.
-    container.rotation.y += dt * 0.18;
 
     renderer.render(scene, camera);
     requestAnimationFrame(tick);

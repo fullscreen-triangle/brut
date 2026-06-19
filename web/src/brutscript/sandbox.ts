@@ -160,10 +160,16 @@ export class BrutScriptSandbox {
     this.root.className = 'bs-sandbox';
 
     // Title bar
+    const hfToken = (import.meta.env.VITE_HF_TOKEN as string | undefined) || undefined;
+    const hfPill = hfToken
+      ? `<span class="bs-hf-pill bs-hf-ok" title="HuggingFace token active">HF ●</span>`
+      : `<span class="bs-hf-pill bs-hf-none" title="No VITE_HF_TOKEN — model blocks will fail">HF ○</span>`;
+
     const titleBar = div('bs-title-bar', `
       <div class="bs-title-left">
         <span class="bs-icon">⬡</span>
         <span class="bs-title-text">BrutScript — Cardiac Pipeline Sandbox</span>
+        ${hfPill}
       </div>
       <div class="bs-title-right">
         <button class="bs-close-btn" title="Close sandbox">×</button>
@@ -404,8 +410,10 @@ export class BrutScriptSandbox {
     this.sessionStart = performance.now();
 
     const source = this.textarea.value;
+    const hfToken = (import.meta.env.VITE_HF_TOKEN as string | undefined) || undefined;
     this.bs = new BrutScript(source, {
       onTrace: (entry) => this.onTrace(entry),
+      hfToken,
     }, this.sessionStart);
 
     const errCount = document.getElementById('bs-err-count');

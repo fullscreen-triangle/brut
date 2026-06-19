@@ -159,7 +159,7 @@ export function createLiquidMaterial(opts: LiquidMaterialOptions = {}): LiquidMa
     uTopColor: { value: new Vector4(top.r, top.g, top.b, 1.0) },
     uRimColor: { value: new Vector4(rimC.r, rimC.g, rimC.b, 1.0) },
     uFoamColor: { value: new Vector4(foam.r, foam.g, foam.b, 1.0) },
-    uRim: { value: 0.04 },
+    uRim: { value: opts.rim ?? 0.12 },
     uRimPower: { value: 4.0 },
     uOpacity: { value: opts.opacity ?? 1.0 },
   };

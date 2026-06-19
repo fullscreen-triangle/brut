@@ -293,9 +293,6 @@ export async function mountGlbViewer(
     strain.uniforms.uPhase.value = phaseRad;
     strain.uniforms.uTime.value += dt;
 
-    // Subtle ambient yaw so model stays visually alive
-    container.rotation.y += 0.003 * dt * 60;
-
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
   }

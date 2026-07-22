@@ -20,6 +20,20 @@ import { BrutScript } from './index';
 import type { TraceEntry } from './runtime';
 import { mountChartPanel } from './sandbox-charts';
 import {
+  BeatClock,
+  effortIndex,
+  effortRegime,
+  protocolFor,
+  type BeatPosition,
+} from './beatclock';
+import {
+  EXERCISE_ROSTER,
+  FIRST_EXERCISE,
+  evaluateTransition,
+  type ExerciseAgent,
+  type PhraseEvidence,
+} from './exercise-agents';
+import {
   CARDIAC_GLB_CATALOGUE,
   parseGlb,
   mountGlbViewer,
@@ -141,6 +155,12 @@ export class BrutScriptSandbox {
 
   private bs: BrutScript | null = null;
   private tickInterval: ReturnType<typeof setInterval> | null = null;
+  private beatClock: BeatClock | null = null;
+  /** When true, the running session is agent-driven: exercise agents swap
+   *  scripts at phrase boundaries. When false, the editor script runs as-is. */
+  private agentMode = false;
+  private activeExercise: ExerciseAgent | null = null;
+  private effortSamples: number[] = [];
   private chartPanel: ReturnType<typeof mountChartPanel> | null = null;
   private glbViewer: GlbViewerHandle | null = null;
   private sessionStart = performance.now();
@@ -232,6 +252,7 @@ export class BrutScriptSandbox {
       <div class="bs-toolbar-right">
         <button class="bs-btn" id="bs-clear-btn">clear</button>
         <button class="bs-btn bs-btn-run" id="bs-run-btn">▶ run</button>
+        <button class="bs-btn bs-btn-run" id="bs-train-btn" title="Beat-gated exercise agents: the body chooses the exercise">▶ train</button>
         <button class="bs-btn bs-btn-stop" id="bs-stop-btn" disabled>■ stop</button>
       </div>`;
     editorPane.appendChild(editorToolbar);
@@ -322,6 +343,7 @@ export class BrutScriptSandbox {
 
     // ── Wire up buttons ───────────────────────────────────────────────────
     document.getElementById('bs-run-btn')?.addEventListener('click', () => this.run());
+    document.getElementById('bs-train-btn')?.addEventListener('click', () => this.runAgents());
     document.getElementById('bs-stop-btn')?.addEventListener('click', () => this.stop());
     document.getElementById('bs-clear-btn')?.addEventListener('click', () => this.clearConsole());
     document.getElementById('bs-export-btn')?.addEventListener('click', () => this.exportTrace());
@@ -403,11 +425,49 @@ export class BrutScriptSandbox {
 
   // ── Run / stop ─────────────────────────────────────────────────────────────
 
+  /**
+   * Start a beat-gated training session driven by exercise agents. Unlike
+   * `run()`, which executes the editor script as-is, this loads the first
+   * exercise agent's own analysis script and lets the agents hand off to one
+   * another at phrase boundaries as the body's evidence warrants. The athlete
+   * does not pick the exercise — the beat-read body makes the case.
+   */
+  private runAgents(): void {
+    this.stop();
+    this.clearConsole();
+    this.traceLines = [];
+    this.sessionStart = performance.now();
+    this.agentMode = true;
+    this.effortSamples = [];
+
+    const first = EXERCISE_ROSTER[FIRST_EXERCISE];
+    this.loadExercise(first);
+    if (!this.bs) return;   // compile error already reported
+
+    const errCount = document.getElementById('bs-err-count');
+    if (errCount) errCount.textContent = '';
+    (document.getElementById('bs-run-btn') as HTMLButtonElement).disabled = true;
+    (document.getElementById('bs-train-btn') as HTMLButtonElement).disabled = true;
+    (document.getElementById('bs-stop-btn') as HTMLButtonElement).disabled = false;
+
+    const initialBpm = asNum(this.signalFeed.get('bpm'), 128);
+    this.beatClock = new BeatClock({
+      bpm: initialBpm,
+      beatsPerBar: 4,
+      barsPerPhrase: 4,
+      onBeat: (pos) => { void this.onBeatTick(pos); },
+      onPhrase: (pos) => { if (this.agentMode) this.onPhraseBoundary(pos); },
+    });
+    this.beatClock.start();
+    this.setStatus(`training — ${first.label} (beat-gated)`);
+  }
+
   private run(): void {
     this.stop();
     this.clearConsole();
     this.traceLines = [];
     this.sessionStart = performance.now();
+    this.agentMode = false;
 
     const source = this.textarea.value;
     const hfToken = (import.meta.env.VITE_HF_TOKEN as string | undefined) || undefined;
@@ -435,39 +495,133 @@ export class BrutScriptSandbox {
     (document.getElementById('bs-run-btn') as HTMLButtonElement).disabled = true;
     (document.getElementById('bs-stop-btn') as HTMLButtonElement).disabled = false;
 
-    // Push live signals from the observatory into the BrutScript environment
-    this.tickInterval = setInterval(() => {
-      if (!this.bs) return;
-      // Push whatever the observatory has emitted into the signal bus.
-      // The sandbox registers as a listener on the observatory event bus
-      // which is populated by observatorySignalFeed (set externally).
-      for (const [name, value] of this.signalFeed) {
-        this.bs.push(name, value);
-      }
-      void this.bs.tick().then(() => {
-        const entries = this.bs!.drain();
-        if (entries.length > 0) this.chartPanel?.ingestTrace(entries);
-        // Update GLB viewer with cardiac state from env
-        if (this.glbViewer) {
-          this.glbViewer.updateCardiacState({
-            HR:  asNum(this.bs!.read('hr'),  70),
-            Ees: asNum(this.bs!.read('ees'), 2.0),
-            Ea:  asNum(this.bs!.read('ea'),  1.3),
-            EDV: asNum(this.bs!.read('edv'), 120),
-            ESV: asNum(this.bs!.read('esv'), 50),
-            EF:  asNum(this.bs!.read('ef'),  0.58),
-            Rc:  asNum(this.bs!.read('rc_mean'), 0.85),
-          });
-          this.glbViewer.setTempoHz(asNum(this.bs!.read('hr'), 60) / 60);
-        }
+    // The beat is the clock. Instead of a fixed timer, the script is ticked on
+    // the musical grid: each beat fires an evaluation, and beat position selects
+    // the capture protocol (beat 1 → DC baseline, beat 3 → AC amplitude, phrase
+    // boundary → full inversion). BPM, beat, bar, and phrase go onto the signal
+    // bus, so `derive effort = hr / bpm` and beat-gated watches are scriptable.
+    const initialBpm = asNum(this.signalFeed.get('bpm'), 128);
+    this.beatClock = new BeatClock({
+      bpm: initialBpm,
+      beatsPerBar: 4,
+      barsPerPhrase: 4,
+      onBeat: (pos) => { void this.onBeatTick(pos); },
+      onPhrase: (pos) => { if (this.agentMode) this.onPhraseBoundary(pos); },
+    });
+    this.beatClock.start();
+  }
+
+  /**
+   * Phrase boundary: the body makes its case. Read the accumulated
+   * physiological evidence off the live script, evaluate two-factor relevance
+   * against the active exercise agent's purpose, and — only if the evidence
+   * both advances the purpose and is physiologically coherent — swap the live
+   * script to the successor exercise. The athlete never asks; the body argues.
+   */
+  private onPhraseBoundary(_pos: BeatPosition): void {
+    if (!this.bs || !this.activeExercise) return;
+
+    const samples = this.effortSamples;
+    const meanEffort = samples.length ? samples.reduce((a, b) => a + b, 0) / samples.length : 0;
+    const trend = samples.length >= 2 ? samples[samples.length - 1] - samples[0] : 0;
+    this.effortSamples = [];
+
+    const evidence: PhraseEvidence = {
+      effort:        meanEffort,
+      dhr_autonomic: asNum(this.bs.read('dhr_autonomic'), 0),
+      dhr_metabolic: asNum(this.bs.read('dhr_metabolic'), 0),
+      dhr_hypoxic:   asNum(this.bs.read('dhr_hypoxic'), 0),
+      vasodilation:  asNum(this.bs.read('vasodilation'), 1.0),
+      t_skin:        asNum(this.bs.read('t_skin'), 33.0),
+      rc_mean:       asNum(this.bs.read('rc_mean'), 0.85),
+      effort_trend:  trend,
+    };
+
+    const verdict = evaluateTransition(this.activeExercise, evidence);
+    this.logConsole(`[phrase] ${this.activeExercise.label}: ${verdict.reason}`, verdict.relevant ? 'event' : 'trace');
+
+    if (verdict.relevant && verdict.next) {
+      const next = EXERCISE_ROSTER[verdict.next];
+      if (next) this.loadExercise(next);
+    }
+  }
+
+  /** Swap the live script to an exercise agent's own analysis script. */
+  private loadExercise(agent: ExerciseAgent): void {
+    this.activeExercise = agent;
+    this.effortSamples = [];
+    this.textarea.value = agent.script;
+    this.updateEditor();
+    const hfToken = (import.meta.env.VITE_HF_TOKEN as string | undefined) || undefined;
+    this.bs = new BrutScript(agent.script, { onTrace: (e) => this.onTrace(e), hfToken }, this.sessionStart);
+    if (this.bs.errors.length) {
+      for (const e of this.bs.errors) this.logConsole(`[${e.phase}] line ${e.line}:${e.col} — ${e.message}`, 'error');
+      this.setStatus(`exercise ${agent.label}: compile error`);
+      this.bs = null;
+      return;
+    }
+    this.setStatus(`exercise: ${agent.label}`);
+    this.logConsole(`▶ exercise agent active: ${agent.label} — effort target ${agent.purpose.effortTarget}`, 'event');
+  }
+
+  /**
+   * One beat of the clock: fold beat position + effort index onto the bus,
+   * evaluate the script, then drive the GLB agent from BPM.
+   */
+  private async onBeatTick(pos: BeatPosition): Promise<void> {
+    if (!this.bs || !this.beatClock) return;
+
+    // If an external BPM estimate has arrived, re-lock the clock to it.
+    const busBpm = this.signalFeed.get('bpm');
+    if (typeof busBpm === 'number' && busBpm > 0) this.beatClock.setBpm(busBpm);
+
+    // Push observatory signals, then overlay the beat-clock signals.
+    for (const [name, value] of this.signalFeed) this.bs.push(name, value);
+
+    const beat = this.beatClock.signals();
+    const hr = asNum(this.signalFeed.get('hr'), asNum(this.bs.read('hr'), 0));
+    const effort = effortIndex(hr, beat.bpm);
+    const protocol = protocolFor(pos);
+    if (this.agentMode) this.effortSamples.push(effort);
+
+    this.bs.push('bpm', beat.bpm);
+    this.bs.push('beat', beat.beat);
+    this.bs.push('bar_pos', beat.bar_pos);
+    this.bs.push('phrase', beat.phrase);
+    this.bs.push('beat_index', beat.beat_index);
+    this.bs.push('effort', effort);
+    this.bs.push('effort_regime', effortRegime(effort));
+    this.bs.push('protocol', protocol);
+
+    await this.bs.tick();
+    const entries = this.bs.drain();
+    if (entries.length > 0) this.chartPanel?.ingestTrace(entries);
+
+    // Drive the GLB agent. Tempo comes from the music (BPM), not HR: the model
+    // moves with the track, while HR/BPM reads out as the effort index.
+    if (this.glbViewer) {
+      this.glbViewer.updateCardiacState({
+        HR:  asNum(this.bs.read('hr'),  70),
+        Ees: asNum(this.bs.read('ees'), 2.0),
+        Ea:  asNum(this.bs.read('ea'),  1.3),
+        EDV: asNum(this.bs.read('edv'), 120),
+        ESV: asNum(this.bs.read('esv'), 50),
+        EF:  asNum(this.bs.read('ef'),  0.58),
+        Rc:  asNum(this.bs.read('rc_mean'), 0.85),
       });
-    }, 1000);
+      this.glbViewer.setTempoHz(beat.bpm / 60);
+    }
   }
 
   private stop(): void {
     if (this.tickInterval) { clearInterval(this.tickInterval); this.tickInterval = null; }
+    if (this.beatClock) { this.beatClock.stop(); this.beatClock = null; }
     this.bs = null;
+    this.agentMode = false;
+    this.activeExercise = null;
+    this.effortSamples = [];
     (document.getElementById('bs-run-btn') as HTMLButtonElement | null)?.removeAttribute('disabled');
+    (document.getElementById('bs-train-btn') as HTMLButtonElement | null)?.removeAttribute('disabled');
     (document.getElementById('bs-stop-btn') as HTMLButtonElement | null)?.setAttribute('disabled', '');
     this.setStatus('stopped');
   }

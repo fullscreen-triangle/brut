@@ -1,0 +1,19 @@
+{
+  "name": "BRUT Train",
+  "short_name": "BRUT Train",
+  "description": "Beat-gated training: your heart, read from the camera, and the beat, heard from the room, decide the exercise.",
+  "start_url": "/train.html",
+  "scope": "/train.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05070a",
+  "theme_color": "#05070a",
+  "icons": [
+    {
+      "src": "/train-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#05070a"/>
+  <!-- beat grid -->
+  <g stroke="#1c2733" stroke-width="6">
+    <line x1="128" y1="96" x2="128" y2="416"/>
+    <line x1="256" y1="96" x2="256" y2="416"/>
+    <line x1="384" y1="96" x2="384" y2="416"/>
+  </g>
+  <!-- pulse waveform locked to the grid -->
+  <path d="M64 256 H128 l24 -96 24 192 24 -128 24 64 H256 l24 -72 24 128 24 -96 24 40 H384 l32 -32 H448"
+        fill="none" stroke="#4fd1c5" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

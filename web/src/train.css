@@ -1,0 +1,184 @@
+/* BRUT Train — fullscreen portrait mobile training shell. */
+
+:root {
+  --bg: #05070a;
+  --fg: #e8eef5;
+  --dim: #7d8b9c;
+  --accent: #4fd1c5;
+  --hot: #ff6b5c;
+  --warm: #ffb454;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#train-root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* GLB avatar fills the screen behind the HUD. */
+#train-glb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Camera + gpu are working surfaces: a small self-view, not the focus. */
+#train-video {
+  position: absolute;
+  top: calc(var(--safe-t) + 88px);
+  right: 12px;
+  width: 84px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 12px;
+  opacity: 0.5;
+  transform: scaleX(-1);   /* mirror the front camera */
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+#train-gpu { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+/* ── Start card ─────────────────────────────────────────────────────────── */
+
+.train-card {
+  position: relative;
+  z-index: 5;
+  margin: auto;
+  padding: 32px 28px calc(28px + var(--safe-b));
+  max-width: 440px;
+  text-align: center;
+}
+
+.train-card h1 {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.train-card h1 span {
+  display: block;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  margin-top: 6px;
+}
+
+.train-lede { margin-top: 24px; font-size: 22px; font-weight: 600; }
+.train-sub  { margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--dim); }
+
+.train-begin {
+  margin-top: 32px;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.train-begin:active { transform: scale(0.97); }
+
+.train-perms { margin-top: 16px; font-size: 12px; color: var(--dim); }
+
+/* ── HUD ────────────────────────────────────────────────────────────────── */
+
+#train-hud {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: calc(var(--safe-t) + 12px) 16px calc(var(--safe-b) + 16px);
+  pointer-events: none;
+}
+#train-hud button { pointer-events: auto; }
+
+.train-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.train-stat { text-align: center; flex: 1; }
+.train-stat-val { display: block; font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.train-stat-lbl { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin-top: 2px; }
+.train-effort-stat .train-stat-val { color: var(--accent); font-size: 34px; }
+
+.train-exercise-band {
+  margin-top: auto;
+  text-align: center;
+  background: linear-gradient(to top, rgba(5, 7, 10, 0.85), rgba(5, 7, 10, 0));
+  padding: 24px 0 8px;
+}
+.train-exercise-band h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.01em; }
+.train-exercise-band p  { font-size: 14px; color: var(--dim); margin-top: 4px; }
+.train-meta { font-size: 11px !important; color: var(--dim); font-variant-numeric: tabular-nums; }
+
+.train-regime {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.train-regime-entrained  { background: rgba(79, 209, 197, 0.18); color: var(--accent); }
+.train-regime-working    { background: rgba(255, 107, 92, 0.18); color: var(--hot); }
+.train-regime-recovering { background: rgba(255, 180, 84, 0.18); color: var(--warm); }
+
+.train-log {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 130px;
+  overflow: hidden;
+}
+.train-log-line { color: var(--dim); padding: 2px 0; }
+.train-log-hi   { color: var(--fg); font-weight: 600; }
+
+.train-stop {
+  margin-top: 16px;
+  align-self: center;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  background: rgba(255, 107, 92, 0.15);
+  border: 1px solid rgba(255, 107, 92, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.train-status {
+  position: absolute;
+  bottom: calc(var(--safe-b) + 4px);
+  left: 0; right: 0;
+  z-index: 6;
+  text-align: center;
+  font-size: 11px;
+  color: var(--dim);
+  pointer-events: none;
+}

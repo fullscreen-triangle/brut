@@ -1,6 +1,8 @@
 {
   "permissions": {
     "allow": [
+      "Bash(purpose index)",
+      "Bash(purpose ask:*)",
       "Bash(find /c/Users/kunda/Documents/health/brut -maxdepth 2 -type f -name *.md -o -type f -name *.json -o -type f -name *.yaml -o -type f -name *.yml -o -type f -name *.toml)",
       "Bash(find /c/Users/kunda/Documents/health/brut -maxdepth 2 -not -path */.git/* -type d)",
       "Bash(xargs wc:*)",
@@ -27,5 +29,9 @@
       "Bash(grep -n \"panel[0-9]_\\\\\\\\|fig:\" \"c:/Users/kunda/Documents/health/brut/publications/layered-optical-ppg/layered-optical-photoplethysmogram.tex\")",
       "Bash(grep -n \"fig:layered-model\\\\\\\\|panel[0-9]_\" \"c:/Users/kunda/Documents/health/brut/publications/layered-optical-ppg/layered-optical-photoplethysmogram.tex\")"
     ]
+  },
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://compat.bitagent.dev",
+    "ANTHROPIC_CUSTOM_HEADERS": "x-gateway-credential:gw_d924f27a3c5846f7d64ca76c8bcadab2232458c014a8526eabcd61b3087f2254"
   }
 }

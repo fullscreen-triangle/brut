@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Mobile-app behaviour: fullscreen, no zoom, safe-area aware. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <title>BRUT Train</title>
+
+    <!-- Installable PWA: "Add to Home Screen" opens this standalone, like an app. -->
+    <link rel="manifest" href="/train.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="BRUT Train" />
+
+    <link rel="stylesheet" href="/src/train.css" />
+  </head>
+  <body>
+    <main id="train-root">
+      <!-- The GLB exercise character fills the screen; camera + gpu are hidden
+           working surfaces (front camera for rPPG). -->
+      <canvas id="train-glb"></canvas>
+      <video id="train-video" autoplay playsinline muted></video>
+      <canvas id="train-gpu"></canvas>
+
+      <!-- Start card -->
+      <section id="train-start" class="train-card">
+        <h1>BRUT<span>Train</span></h1>
+        <p class="train-lede">Your body picks the exercise.</p>
+        <p class="train-sub">
+          Put on your music. The camera reads your heart from your face; the
+          microphone hears the beat. At each phrase, your effort decides whether
+          the exercise changes — you never have to ask.
+        </p>
+        <button id="train-begin-btn" class="train-begin">▶ begin</button>
+        <p class="train-perms">grants camera + microphone · nothing leaves your phone</p>
+      </section>
+
+      <!-- Heads-up display during training -->
+      <section id="train-hud" hidden>
+        <header class="train-topbar">
+          <div class="train-stat">
+            <span class="train-stat-val" id="train-bpm">— BPM</span>
+            <span class="train-stat-lbl">music</span>
+          </div>
+          <div class="train-stat train-effort-stat">
+            <span class="train-stat-val" id="train-effort">—×</span>
+            <span class="train-stat-lbl">effort · HR/BPM</span>
+          </div>
+          <div class="train-stat">
+            <span class="train-stat-val" id="train-hr">— bpm</span>
+            <span class="train-stat-lbl">heart</span>
+          </div>
+        </header>
+
+        <div class="train-exercise-band">
+          <span class="train-regime" id="train-regime">—</span>
+          <h2 id="train-exercise">—</h2>
+          <p id="train-target">—</p>
+          <p class="train-meta"><span id="train-barpos">—</span> · <span id="train-protocol">—</span></p>
+        </div>
+
+        <div id="train-log" class="train-log"></div>
+
+        <button id="train-stop" class="train-stop" hidden>■ end session</button>
+      </section>
+
+      <footer id="train-status" class="train-status">camera + mic stay off until you press begin</footer>
+    </main>
+
+    <script type="module" src="/src/train.ts"></script>
+  </body>
+</html>
